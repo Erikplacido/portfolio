@@ -1,10 +1,8 @@
 {
   "name": "portfolio-erik-placido-2026",
   "version": "1.0.0",
-  "description": "Portfólio Senior UI Designer - Erik Placido",
   "type": "module",
   "scripts": {
-    "build": "echo 'Static site ready'",
     "start": "node server.js",
     "dev": "node server.js"
   }
