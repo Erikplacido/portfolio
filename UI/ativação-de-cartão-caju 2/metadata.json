@@ -1,0 +1,6 @@
+{
+  "name": "Ativação de Cartão Caju",
+  "description": "Fluxo mobile interativo de ativação de cartão Caju Benefícios com validação de senha em tempo real, vinculação à carteira digital e specs de motion.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

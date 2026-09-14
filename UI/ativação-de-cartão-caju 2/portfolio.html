@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onboarding e Ativação do Cartão Físico — Erik Placido | UI Designer</title>
+  <meta name="description" content="Case study: Fluxo mobile de ativação do cartão Caju Benefícios com validação de senha em tempo real, NFC e vinculação imediata à carteira digital." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../../portfolio.css" />
+  <style>
+    /* Accent override: Caju Red (#EA3C36) already is default */
+
+    /* Pillar icon backgrounds */
+    .pillar-bg-red  { background: rgba(234,60,54,0.15); }
+    .pillar-bg-gold { background: rgba(245,158,11,0.15); }
+    .pillar-bg-green{ background: rgba(16,185,129,0.15); }
+
+    /* Pillar tags */
+    .tag-red    { background: rgba(234,60,54,0.15);   color: #FF7A76; }
+    .tag-gold   { background: rgba(245,158,11,0.15);  color: #FBB945; }
+    .tag-green  { background: rgba(16,185,129,0.15);  color: #34D399; }
+
+    /* Screens row */
+    .screens-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    @media (max-width: 720px) {
+      .screens-row { grid-template-columns: 1fr; }
+    }
+
+    .screen-card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .screen-card:hover {
+      border-color: rgba(234,60,54,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .screen-card-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .screen-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-caju);
+    }
+    .screen-type {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .screen-type.functional { background: rgba(59,130,246,0.15); color: #60A5FA; }
+    .screen-type.expressive { background: rgba(16,185,129,0.15); color: #34D399; }
+    .screen-card-body { padding: 20px; }
+    .screen-card-body h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .screen-card-body p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .screen-elements {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .screen-elements li {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.4;
+    }
+    .screen-elements li i {
+      color: var(--accent-caju);
+      font-size: 10px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    /* AI usage block */
+    .ai-block {
+      background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(59,130,246,0.06));
+      border: 1px solid rgba(168,85,247,0.25);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    @media (max-width: 640px) { .ai-block { flex-direction: column; } }
+    .ai-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: rgba(168,85,247,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .ai-block h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .ai-block p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .ai-prompt {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #C084FC;
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Navegação principal">
+    <a href="../../index.html" class="nav-brand" aria-label="Voltar ao portfólio de Erik Placido">
+      <div class="nav-logo" aria-hidden="true">E</div>
+      <div>
+        <div class="nav-title">Erik Placido</div>
+        <div class="nav-subtitle">Senior UI Designer</div>
+      </div>
+    </a>
+    <a href="mailto:erik.placido@gmail.com" class="nav-cta" id="nav-contact-btn">
+      <span><i class="fa-solid fa-envelope"></i> Contato</span>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1 class="hero-h1 reveal reveal-delay-1" id="hero-title">
+        Onboarding e <span class="highlight">Ativação do Cartão Físico</span><br/>
+        com Vinculação Digital Instantânea
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        Fluxo de ativação do cartão físico Caju com validação em tempo real, NFC e vinculação imediata à carteira digital.
+      </p>
+      <div class="hero-metrics reveal reveal-delay-3">
+        <div class="metric-pill caju">
+          <div>
+            <div class="metric-value" data-counter="38" data-suffix="%">38%</div>
+            <div class="metric-label">Demoravam +10 dias<br/>para 1ª compra</div>
+          </div>
+        </div>
+        <div class="metric-pill gold">
+          <div>
+            <div class="metric-value">3</div>
+            <div class="metric-label">Telas sequenciais<br/>390 × 844 px</div>
+          </div>
+        </div>
+        <div class="metric-pill green">
+          <div>
+            <div class="metric-value">5</div>
+            <div class="metric-label">Edge cases mapeados<br/>com microcopy empático</div>
+          </div>
+        </div>
+        <div class="metric-pill blue">
+          <div>
+            <div class="metric-value"><i class="fa-solid fa-arrow-trend-down" style="font-size: 18px;"></i></div>
+            <div class="metric-label">Redução drástica<br/>de fricção no onboarding</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-ctas reveal reveal-delay-4">
+        <a href="#prototype" class="btn-primary" id="hero-view-prototype-btn"><i class="fa-solid fa-play"></i> Ver Protótipo Interativo</a>
+        <a href="#context" class="btn-secondary" id="hero-read-case-btn">Ler Case</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEXT / PROBLEM -->
+  <section class="context-section" id="context" aria-labelledby="context-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-briefcase"></i> Contexto & Problema</span>
+        <h2 class="section-title" id="context-title">O Desafio de Ativação</h2>
+      </div>
+      <div class="context-grid">
+        <div class="pull-quote reveal">
+          <p class="pull-quote-text">
+            "Na Caju Benefícios, identificou-se que cerca de <strong>38% dos colaboradores</strong> que recebiam o cartão físico demoravam mais de 10 dias para utilizá-lo pela primeira vez, gerando um alto volume de chamados de suporte com dúvidas sobre validação de senha e localização de CVV. O desafio foi reduzir o tempo até a primeira transação através de um fluxo seguro e com menor esforço cognitivo."
+          </p>
+        </div>
+        <div class="context-body reveal reveal-delay-2">
+          <p>
+            A nova solução eliminou a fricção conectando a ativação física diretamente à carteira digital (Apple Pay e Google Wallet) logo após a conclusão.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS BREAKDOWN -->
+  <section style="padding: 80px 0; background: linear-gradient(180deg, transparent, rgba(234,60,54,0.03) 50%, transparent);" aria-labelledby="screens-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-layer-group"></i> Decisões de UI</span>
+        <h2 class="section-title" id="screens-title">Anatomia das 3 Telas</h2>
+      </div>
+      <div class="screens-row">
+
+        <!-- Tela 1 -->
+        <div class="screen-card reveal">
+          <div class="screen-card-header">
+            <span class="screen-num">Tela 01</span>
+            <span class="screen-type functional">Momento Funcional</span>
+          </div>
+          <div class="screen-card-body">
+            <h3>Identificação do Cartão Recebido</h3>
+            <p>Entrada dos 4 dígitos de validação impressos no verso, com alternativas por QR Code do envelope e NFC por aproximação.</p>
+            <ul class="screen-elements">
+              <li><i class="fa-solid fa-arrow-right"></i> Input PIN com 4 caixas isoladas e cursor pulsante</li>
+              <li><i class="fa-solid fa-arrow-right"></i> Suporte a NFC por aproximação</li>
+              <li><i class="fa-solid fa-arrow-right"></i> Botão "Escanear QR do envelope" com câmera nativa</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tela 2 -->
+        <div class="screen-card reveal reveal-delay-2">
+          <div class="screen-card-header">
+            <span class="screen-num">Tela 02</span>
+            <span class="screen-type functional">Segurança Ativa</span>
+          </div>
+          <div class="screen-card-body">
+            <h3>Criação de Senha com Validação em Tempo Real</h3>
+            <p>O usuário cria seu PIN de 4 dígitos com feedback instantâneo de regras de segurança — eliminando erros comuns.</p>
+            <ul class="screen-elements">
+              <li><i class="fa-solid fa-arrow-right"></i> 3 regras com check dinâmico cinza→verde</li>
+              <li><i class="fa-solid fa-arrow-right"></i> Bloqueia sequências (1234), datas, repetições</li>
+              <li><i class="fa-solid fa-arrow-right"></i> Teclado numérico customizado integrado</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tela 3 -->
+        <div class="screen-card reveal reveal-delay-3">
+          <div class="screen-card-header">
+            <span class="screen-num">Tela 03</span>
+            <span class="screen-type expressive">Momento Expressivo</span>
+          </div>
+          <div class="screen-card-body">
+            <h3>Ativação Concluída e Vinculação Digital</h3>
+            <p>Celebração da ativação com microinteração de rotação 3D do cartão e CTA imediato para Apple Pay / Google Wallet.</p>
+            <ul class="screen-elements">
+              <li><i class="fa-solid fa-arrow-right"></i> Animação 3D: cartão cinza fosco → visual Caju ativo</li>
+              <li><i class="fa-solid fa-arrow-right"></i> CTA nativo: Adicionar ao Apple Wallet / Google Pay</li>
+              <li><i class="fa-solid fa-arrow-right"></i> Motion spec com curvas cubic-bezier para handoff</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS SECTION -->
+  <section class="solutions-section" aria-labelledby="solutions-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-lightbulb"></i> Soluções Apresentadas</span>
+        <h2 class="section-title" id="solutions-title">Abordagem Híbrida</h2>
+      </div>
+      <div class="solutions-grid">
+
+        <div class="solution-card reveal">
+          <span class="solution-badge not-chosen">Abordagem A</span>
+          <div class="solution-icon blue"><i class="fa-solid fa-camera" style="color: #60A5FA;"></i></div>
+          <h3>Leitura Exclusiva de QR Code</h3>
+          <p>Ativação 100% dependente da câmera e do envelope físico recebido pelo colaborador.</p>
+          <ul class="solution-pros">
+            <li>Menos campos manuais em condições perfeitas</li>
+            <li>Inviabilizada em baixa luminosidade ou avaria física</li>
+          </ul>
+        </div>
+
+        <div class="solution-card chosen reveal reveal-delay-2">
+          <span class="solution-badge chosen"><i class="fa-solid fa-check"></i> Escolhida</span>
+          <div class="solution-icon red"><i class="fa-solid fa-shuffle" style="color: var(--accent-caju);"></i></div>
+          <h3>Solução Híbrida: PIN + NFC + QR Code</h3>
+          <p>Foram prototipadas duas abordagens: uma baseada exclusivamente em leitura de QR Code da carta-berço e outra com digitação assistida de PIN de segurança e suporte a NFC. A solução híbrida foi a escolhida por cobrir falhas de câmera e permitir ativação instantânea por aproximação.</p>
+          <ul class="solution-pros">
+            <li>Ativação por aproximação NFC instantânea</li>
+            <li>Fallback resiliente com PIN de 4 dígitos e QR Code</li>
+            <li>5 edge cases mapeados com microcopy empático em PT-BR</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WAS SOLVED — 3 PILLARS -->
+  <section class="pillars-section" aria-labelledby="pillars-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-cubes-stacked"></i> Como Foi Resolvido</span>
+        <h2 class="section-title" id="pillars-title">Estrutura em 3 Etapas</h2>
+      </div>
+      <div class="pillars-grid">
+
+        <div class="pillar-card reveal" data-num="1">
+          <div class="pillar-icon-wrap pillar-bg-red"><i class="fa-solid fa-lock" style="color: var(--accent-caju);"></i></div>
+          <h3>Validação em Tempo Real</h3>
+          <p>Feedback dinâmico na criação de senha que previne sequências óbvias e datas, eliminando erros antes da submissão.</p>
+          <span class="pillar-tag tag-red">Segurança · UX</span>
+        </div>
+
+        <div class="pillar-card reveal reveal-delay-2" data-num="2">
+          <div class="pillar-icon-wrap pillar-bg-gold"><i class="fa-solid fa-wand-magic-sparkles" style="color: #FBB945;"></i></div>
+          <h3>Microinteração 3D Expressiva</h3>
+          <p>Transição 3D do cartão (inativo &rarr; ativo Caju) que gera certeza visual de sucesso e celebra a conquista.</p>
+          <span class="pillar-tag tag-gold">Motion · Produto</span>
+        </div>
+
+        <div class="pillar-card reveal reveal-delay-3" data-num="3">
+          <div class="pillar-icon-wrap pillar-bg-green"><i class="fa-solid fa-wallet" style="color: #34D399;"></i></div>
+          <h3>Vinculação Digital Instantânea</h3>
+          <p>Atalho direto para Apple Pay / Google Wallet que converte a ativação em 1ª compra imediata sem atrito.</p>
+          <span class="pillar-tag tag-green">Monetização · Mobile</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY & TOOLS -->
+  <section style="padding: 80px 0;" aria-labelledby="methodology-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-screwdriver-wrench"></i> Ferramentas</span>
+        <h2 class="section-title" id="methodology-title">Edge Cases e Validação</h2>
+      </div>
+      <div class="ai-block reveal">
+        <div class="ai-icon-wrap"><i class="fa-solid fa-microscope" style="color: var(--accent-purple);"></i></div>
+        <div>
+          <h3>5 cenários de falha documentados com microcopy empático</h3>
+          <p>Chip danificado, CPF divergente, código expirado, limite de tentativas e falha de NFC — cada cenário validado com prototipagem em código antes do handoff.</p>
+          <div class="ai-prompt" style="color: var(--text-muted); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-screwdriver-wrench"></i> Figma · Antigravity IDE · React + Framer Motion</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROTOTYPE SECTION -->
+  <section class="prototype-section" id="prototype" aria-labelledby="prototype-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-play"></i> Protótipo Interativo</span>
+        <h2 class="section-title" id="prototype-title">Experimente o Fluxo</h2>
+      </div>
+      <div class="prototype-wrapper">
+        <div class="prototype-glow" aria-hidden="true"></div>
+        <div class="prototype-frame-outer" style="display: flex; align-items: center; justify-content: center; gap: 48px; max-width: 1080px; margin: 0 auto;">
+          <div class="prototype-image-wrap" id="prototype-wrap" style="flex: 1.2; max-width: 580px; width: 100%; display: flex; align-items: center; justify-content: center;">
+            <img src="telas_caju.png" alt="Telas do fluxo de ativação do Cartão Caju Benefícios" style="width: 100%; height: auto; display: block; object-fit: contain; filter: drop-shadow(0 24px 48px rgba(0,0,0,0.6));" />
+          </div>
+          <div class="prototype-hints" style="flex: 1; max-width: 420px; width: 100%; display: flex; flex-direction: column; gap: 14px;">
+            <div class="hint-card">
+              <div class="hint-icon" style="background:rgba(234,60,54,0.15);"><i class="fa-solid fa-hashtag" style="color: var(--accent-caju);"></i></div>
+              <div>
+                <h4>PIN de Ativação</h4>
+                <p>Digite <span class="pin-code">7291</span> na Tela 1 para avançar rapidamente para a criação de senha.</p>
+              </div>
+            </div>
+            <div class="hint-card">
+              <div class="hint-icon" style="background:rgba(59,130,246,0.15);"><i class="fa-solid fa-mobile-screen-button" style="color: #60A5FA;"></i></div>
+              <div>
+                <h4>iOS e Android</h4>
+                <p>Use o seletor no topo do app para alternar entre Apple Pay e Google Wallet na Tela 3.</p>
+              </div>
+            </div>
+            <div class="hint-card">
+              <div class="hint-icon" style="background:rgba(245,158,11,0.15);"><i class="fa-solid fa-triangle-exclamation" style="color: #FBB945;"></i></div>
+              <div>
+                <h4>Simular Falhas (PM)</h4>
+                <p>No painel lateral do app, acione os 5 edge cases para ver o microcopy de erro empático.</p>
+              </div>
+            </div>
+            <div class="hint-card">
+              <div class="hint-icon" style="background:rgba(168,85,247,0.15);"><i class="fa-solid fa-ruler-combined" style="color: #C084FC;"></i></div>
+              <div>
+                <h4>Specs de Motion</h4>
+                <p>Clique em "Specs Motion & PM" no topo do app para ver as curvas de animação para handoff.</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; justify-content:flex-start; flex-wrap:wrap; margin-top: 8px;">
+              <a href="dist/index.html" target="_blank" class="btn-primary" style="font-size:13px;padding:12px 20px;text-decoration:none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Protótipo Completo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills-section" aria-labelledby="skills-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-layer-group"></i> Competências</span>
+        <h2 class="section-title" id="skills-title">O que este case evidencia</h2>
+      </div>
+      <div class="skills-cloud">
+        <span class="skill-chip"><i class="fa-solid fa-credit-card"></i> Ciclo de vida do cartão</span>
+        <span class="skill-chip"><i class="fa-solid fa-mobile-screen-button"></i> Mobile-first (iOS & Android)</span>
+        <span class="skill-chip"><i class="fa-solid fa-wand-magic-sparkles"></i> Microinterações & Motion 3D</span>
+        <span class="skill-chip"><i class="fa-solid fa-shield-halved"></i> Conformidade PCI-DSS</span>
+        <span class="skill-chip"><i class="fa-solid fa-shuffle"></i> NFC + QR + PIN híbrido</span>
+        <span class="skill-chip"><i class="fa-solid fa-clipboard-list"></i> Edge cases & microcopy</span>
+        <span class="skill-chip"><i class="fa-solid fa-wallet"></i> Carteira Digital</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer-bar" role="contentinfo">
+    <p>© 2026 Erik Placido — Senior UI Designer · <a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></p>
+    <div style="display:flex;gap:16px;">
+      <a href="../../index.html"><i class="fa-solid fa-arrow-left"></i> Portfólio</a>
+      <a href="../méliuz-omnichannel---gestão-de-fatura-e-limite/portfolio.html">Próximo Case <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </footer>
+
+  <script src="../../portfolio.js"></script>
+</body>
+</html>

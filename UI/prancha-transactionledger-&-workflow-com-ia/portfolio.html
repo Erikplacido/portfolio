@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System: Família de Componentes de Transação Financeira — Erik Placido | UI Designer</title>
+  <meta name="description" content="Case study: Evolução do design system Conta Simples — família de componentes TransactionLedger com anatomia estrutural, matriz de estados, design tokens e automação de handoff com IA." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="../../portfolio.css" />
+  <style>
+
+    /* Pillar backgrounds */
+    .pillar-bg-blue   { background: rgba(59,130,246,0.15); }
+    .pillar-bg-purple { background: rgba(168,85,247,0.15); }
+    .pillar-bg-green  { background: rgba(16,185,129,0.15); }
+    .tag-blue         { background: rgba(59,130,246,0.15); color: #60A5FA; }
+    .tag-purple       { background: rgba(168,85,247,0.15); color: #C084FC; }
+    .tag-green        { background: rgba(16,185,129,0.15); color: #34D399; }
+
+    /* Component anatomy */
+    .anatomy-card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      padding: 32px;
+      margin-top: 40px;
+    }
+    .anatomy-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .anatomy-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    /* Live component mockup */
+    .tr-mockup {
+      border-radius: var(--radius-md);
+      background: #0D1117;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .tr-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+    .tr-row:last-child { border-bottom: none; }
+    .tr-row:hover { background: rgba(255,255,255,0.03); }
+
+    .tr-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .tr-content { flex: 1; min-width: 0; }
+    .tr-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tr-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tr-cost-tag {
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.07);
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .tr-trailing {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .tr-value {
+      font-size: 13px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .tr-value.debit  { color: var(--text-primary); }
+    .tr-value.credit { color: var(--accent-green); }
+    .tr-value.declined{ color: var(--text-muted); text-decoration: line-through; }
+    .tr-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+    .badge-approved  { background: rgba(16,185,129,0.12); color: #34D399; }
+    .badge-pending   { background: rgba(245,158,11,0.12); color: #FBB945; }
+    .badge-declined  { background: rgba(239,68,68,0.12); color: #F87171; }
+    .badge-refunded  { background: rgba(168,85,247,0.12); color: #C084FC; }
+
+    /* International transaction sub-line */
+    .tr-intl-note {
+      font-size: 10px;
+      color: #A855F7;
+      font-family: 'Courier New', monospace;
+      margin-top: 2px;
+    }
+
+    /* States matrix */
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    @media (max-width: 900px) { .states-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .states-grid { grid-template-columns: 1fr; } }
+
+    .state-card {
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .state-name {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .state-demo {
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .state-default { background: rgba(255,255,255,0.03); color: var(--text-secondary); border: 1px solid var(--border); }
+    .state-hover   { background: rgba(255,255,255,0.08); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.15); }
+    .state-active  { background: rgba(234,60,54,0.15); color: #FF7A76; border: 1px solid rgba(234,60,54,0.3); }
+    .state-focus   { background: rgba(59,130,246,0.15); color: #60A5FA; border: 2px solid #3B82F6; outline: none; }
+
+    /* Design Tokens Table */
+    .tokens-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    .tokens-table th {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .tokens-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+    }
+    .token-name {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #A855F7;
+      background: rgba(168,85,247,0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .token-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .token-contrast {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .wcag-aaa { background: rgba(16,185,129,0.15); color: #34D399; }
+    .wcag-aa  { background: rgba(59,130,246,0.15); color: #60A5FA; }
+
+    /* Spacing system grid */
+    .spacing-grid {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      margin-top: 20px;
+      padding: 20px;
+      background: #0D1117;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .spacing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 44px;
+    }
+    .spacing-bar {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(168,85,247,0.4), rgba(59,130,246,0.4));
+      border-radius: 3px 3px 0 0;
+    }
+    .spacing-label { font-size: 10px; font-weight: 700; color: var(--text-muted); font-family: monospace; }
+    .spacing-value { font-size: 11px; font-weight: 800; color: var(--accent-purple); }
+
+    /* Accessibility specs box */
+    .a11y-block {
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(16,185,129,0.22);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .a11y-block h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #34D399;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .a11y-label {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #A7F3D0;
+      background: rgba(0,0,0,0.35);
+      padding: 12px 16px;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    /* AI Impact numbers */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 640px) { .impact-grid { grid-template-columns: 1fr; } }
+    .impact-card {
+      padding: 24px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .impact-value {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .impact-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* AI Block */
+    .ai-block {
+      background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(59,130,246,0.06));
+      border: 1px solid rgba(168,85,247,0.25);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    @media (max-width: 640px) { .ai-block { flex-direction: column; } }
+    .ai-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-sm);
+      background: rgba(168,85,247,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+    .ai-block h3 { font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+    .ai-block p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
+    .ai-prompt {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #C084FC;
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Navegação principal">
+    <a href="../../index.html" class="nav-brand" aria-label="Voltar ao portfólio de Erik Placido">
+      <div class="nav-logo" aria-hidden="true">E</div>
+      <div>
+        <div class="nav-title">Erik Placido</div>
+        <div class="nav-subtitle">Senior UI Designer</div>
+      </div>
+    </a>
+    <a href="mailto:erik.placido@gmail.com" class="nav-cta" id="nav-contact-btn">
+      <span><i class="fa-solid fa-envelope"></i> Contato</span>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1 class="hero-h1 reveal reveal-delay-1" id="hero-title">
+        Evolução do Design System:<br/>
+        <span class="highlight">Família TransactionLedger</span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        Família modular de componentes de extrato financeiro com anatomia estrutural, matriz de estados e handoff automatizado.
+      </p>
+      <div class="hero-metrics reveal reveal-delay-3">
+        <div class="metric-pill caju">
+          <div>
+            <div class="metric-value" data-counter="30" data-suffix="%">30%</div>
+            <div class="metric-label">Redução de retrabalho<br/>entre squads</div>
+          </div>
+        </div>
+        <div class="metric-pill gold">
+          <div>
+            <div class="metric-value" data-counter="40">40</div>
+            <div class="metric-label">Edge cases<br/>validados</div>
+          </div>
+        </div>
+        <div class="metric-pill green">
+          <div>
+            <div class="metric-value">WCAG</div>
+            <div class="metric-label">AA+ em todos<br/>os estados do componente</div>
+          </div>
+        </div>
+        <div class="metric-pill blue">
+          <div>
+            <div class="metric-value">4/8pt</div>
+            <div class="metric-label">Grade de espaçamento<br/>token-based</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-ctas reveal reveal-delay-4">
+        <a href="#prototype" class="btn-primary" id="hero-view-prototype-btn"><i class="fa-solid fa-play"></i> Ver Prancha do Design System</a>
+        <a href="#context" class="btn-secondary" id="hero-read-case-btn">Ler Case Completo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEXT -->
+  <section class="context-section" id="context" aria-labelledby="context-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-briefcase"></i> Problema de Negócio</span>
+        <h2 class="section-title" id="context-title">Inconsistência que virou custo</h2>
+      </div>
+      <div class="context-grid">
+        <div class="pull-quote reveal">
+          <p class="pull-quote-text">
+            "Na Conta Simples, o crescimento do produto de múltiplos cartões corporativos gerou <strong>inconsistências graves de interface</strong>. As equipes de mobile e web utilizavam soluções visuais divergentes para apresentar compras parceladas, transações internacionais e compras recusadas — gerando retrabalho no time de engenharia."
+          </p>
+        </div>
+        <div class="context-body reveal reveal-delay-2">
+          <p>
+            O desafio foi criar uma <strong>fonte única de verdade</strong> — um componente que cobrisse todos os estados e variações de dados reais, documentado para implementação sem dúvida.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENT ANATOMY -->
+  <section style="padding: 80px 0; background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03) 50%, transparent);" aria-labelledby="anatomy-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-microscope"></i> Anatomia do Componente</span>
+        <h2 class="section-title" id="anatomy-title">TransactionRow — Ao Vivo</h2>
+      </div>
+
+      <div class="anatomy-card reveal">
+        <h3>Componente TransactionRow em Produção</h3>
+        <p>Height: 72px · Container: surface-neutral-0 · Borda inferior: border-subtle-1px · Alinhamento tabular à direita para valores monetários</p>
+
+        <div class="tr-mockup" role="list" aria-label="Lista de transações financeiras">
+
+          <!-- Default approved -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(234,160,40,0.15);" aria-hidden="true"><i class="fa-solid fa-burger" style="color:#F59E0B;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">iFood · Burger King</div>
+              <div class="tr-sub">
+                <span>Cartão Comercial · João Silva</span>
+                <span class="tr-cost-tag">Alimentação</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value debit" aria-label="Débito de R$ 89,90">- R$ 89,90</div>
+              <span class="tr-badge badge-approved" aria-label="Status: aprovado">Conciliado</span>
+            </div>
+          </div>
+
+          <!-- Pending -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(59,130,246,0.15);" aria-hidden="true"><i class="fa-solid fa-car" style="color:#60A5FA;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Uber</div>
+              <div class="tr-sub">
+                <span>Cartão Combustível · Ana Costa</span>
+                <span class="tr-cost-tag" style="background:rgba(245,158,11,0.15);color:#F59E0B;">Transporte</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value debit" aria-label="Débito de R$ 34,70">- R$ 34,70</div>
+              <span class="tr-badge badge-pending" aria-label="Status: pendente">Pendente</span>
+            </div>
+          </div>
+
+          <!-- International -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(168,85,247,0.15);" aria-hidden="true"><i class="fa-solid fa-cloud" style="color:#C084FC;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Adobe Creative Cloud</div>
+              <div class="tr-sub">
+                <span>Cartão Virtual · TI</span>
+                <span class="tr-cost-tag" style="background:rgba(168,85,247,0.15);color:#C084FC;">Internacional</span>
+              </div>
+              <div class="tr-intl-note">US$ 54,99 · IOF 6,38% · Spread 4%</div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value debit" aria-label="Débito de R$ 312,40 equivalente a 54.99 dólares">- R$ 312,40</div>
+              <span class="tr-badge badge-approved">Conciliado</span>
+            </div>
+          </div>
+
+          <!-- Installment -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(16,185,129,0.15);" aria-hidden="true"><i class="fa-solid fa-cart-shopping" style="color:#34D399;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Mercado Livre</div>
+              <div class="tr-sub">
+                <span>Cartão Comercial · 2/6x</span>
+                <span class="tr-cost-tag" style="background:rgba(16,185,129,0.15);color:#34D399;">Compras</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value debit" aria-label="Débito de R$ 420,00 parcela 2 de 6">- R$ 420,00</div>
+              <span class="tr-badge badge-approved">Conciliado</span>
+            </div>
+          </div>
+
+          <!-- Declined -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(239,68,68,0.12);" aria-hidden="true"><i class="fa-solid fa-gas-pump" style="color:#EF4444;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Posto Ipiranga</div>
+              <div class="tr-sub">
+                <span>Cartão Combustível</span>
+                <span class="tr-cost-tag" style="background:rgba(239,68,68,0.12);color:#EF4444;">Saldo insuficiente</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value declined" aria-label="Transação recusada de R$ 250,00">- R$ 250,00</div>
+              <span class="tr-badge badge-declined" aria-label="Status: recusado">Recusado</span>
+            </div>
+          </div>
+
+          <!-- Refunded / cashback -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(168,85,247,0.15);" aria-hidden="true"><i class="fa-solid fa-pills" style="color:#C084FC;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Drogaria Ultrafarma Express</div>
+              <div class="tr-sub">
+                <span>Cartão Saúde · Estornado</span>
+                <span class="tr-cost-tag" style="background:rgba(168,85,247,0.15);color:#C084FC;">Saúde</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value credit" aria-label="Crédito de estorno de R$ 187,50">+ R$ 187,50</div>
+              <span class="tr-badge badge-refunded" aria-label="Status: estornado">Estornado</span>
+            </div>
+          </div>
+
+          <!-- Long text edge case -->
+          <div class="tr-row" role="listitem">
+            <div class="tr-avatar" style="background:rgba(245,158,11,0.15);" aria-hidden="true"><i class="fa-solid fa-hotel" style="color:#F59E0B;"></i></div>
+            <div class="tr-content">
+              <div class="tr-title">Grand Hyatt São Paulo Marginal Pinheiros</div>
+              <div class="tr-sub">
+                <span>Cartão Corporativo · Viagem</span>
+                <span class="tr-cost-tag">Hospedagem</span>
+              </div>
+            </div>
+            <div class="tr-trailing">
+              <div class="tr-value debit" aria-label="Débito de R$ 3.200,00">- R$ 3.200,00</div>
+              <span class="tr-badge badge-pending">Pendente</span>
+            </div>
+          </div>
+
+        </div>
+
+        <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 8px;">
+          <i class="fa-solid fa-arrow-up"></i> Componente TransactionRow renderizado com dados realistas — inclui nome longo (truncado), valor internacional com IOF, estorno em verde e transação recusada com tachado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATES MATRIX -->
+  <section style="padding: 80px 0;" aria-labelledby="states-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-table-cells"></i> Matriz de Estados</span>
+        <h2 class="section-title" id="states-title">Estados Interativos</h2>
+      </div>
+      <div class="states-grid reveal">
+        <div class="state-card">
+          <div class="state-name" style="color: var(--text-muted);">Default</div>
+          <div class="state-demo state-default">Repouso</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">background: surface-neutral-0</p>
+        </div>
+        <div class="state-card">
+          <div class="state-name" style="color: var(--accent-blue);">Hover</div>
+          <div class="state-demo state-hover">Desktop only</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">background: #F8F9FA @ 4% opacity</p>
+        </div>
+        <div class="state-card">
+          <div class="state-name" style="color: var(--accent-caju);">Pressed</div>
+          <div class="state-demo state-active">Active state</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">background: caju-red @ 8%</p>
+        </div>
+        <div class="state-card">
+          <div class="state-name" style="color: var(--accent-blue);">Focus</div>
+          <div class="state-demo state-focus"><i class="fa-solid fa-keyboard"></i> Keyboard</div>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">outline: 2px blue — WCAG 2.4.7</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKENS TABLE -->
+  <section style="padding: 80px 0; background: linear-gradient(180deg, transparent, rgba(59,130,246,0.03) 50%, transparent);" aria-labelledby="tokens-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-palette"></i> Design Tokens</span>
+        <h2 class="section-title" id="tokens-title">Tokens Semânticos (Padrão Andes)</h2>
+      </div>
+
+      <div class="anatomy-card reveal">
+        <h3>Cores Semânticas</h3>
+        <p>Todos os tokens foram auditados para conformidade WCAG 2.1 — o componente atinge AA em estado padrão e AAA para texto primário.</p>
+        <table class="tokens-table" aria-label="Tabela de design tokens de cor">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Valor</th>
+              <th>Uso</th>
+              <th>Contraste</th>
+              <th>WCAG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="token-name">color-surface-base</span></td>
+              <td><span class="token-swatch" style="background:#111827;"></span>#111827</td>
+              <td>Fundo do componente</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-text-primary</span></td>
+              <td><span class="token-swatch" style="background:#F1F5F9;"></span>#F1F5F9</td>
+              <td>Nome do estabelecimento</td>
+              <td>14.2:1</td>
+              <td><span class="token-contrast wcag-aaa">AAA</span></td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-text-secondary</span></td>
+              <td><span class="token-swatch" style="background:#6B7280;"></span>#6B7280</td>
+              <td>Nome do portador + tags</td>
+              <td>4.8:1</td>
+              <td><span class="token-contrast wcag-aa">AA</span></td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-status-warning-surface</span></td>
+              <td><span class="token-swatch" style="background:#FEF3C7;"></span>#FEF3C7</td>
+              <td>Fundo do badge Pendente</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-status-warning-text</span></td>
+              <td><span class="token-swatch" style="background:#92400E;"></span>#92400E</td>
+              <td>Texto do badge Pendente</td>
+              <td>6.2:1</td>
+              <td><span class="token-contrast wcag-aaa">AAA</span></td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-status-error-text</span></td>
+              <td><span class="token-swatch" style="background:#EF4444;"></span>#EF4444</td>
+              <td>Badge Recusado (dark mode)</td>
+              <td>3.1:1</td>
+              <td><span class="token-contrast wcag-aa">AA (large)</span></td>
+            </tr>
+            <tr>
+              <td><span class="token-name">color-value-positive</span></td>
+              <td><span class="token-swatch" style="background:#10B981;"></span>#10B981</td>
+              <td>Valor de crédito / estorno</td>
+              <td>5.1:1</td>
+              <td><span class="token-contrast wcag-aa">AA</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top: 32px; margin-bottom: 12px;">Grade de Espaçamento (4/8pt System)</h3>
+        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:4px;">Todos os espaçamentos internos do componente são múltiplos de 4px — garantindo alinhamento pixel-perfect entre plataformas.</p>
+        <div class="spacing-grid">
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:4px;"></div>
+            <div class="spacing-label">xs</div>
+            <div class="spacing-value">4px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:8px;"></div>
+            <div class="spacing-label">sm</div>
+            <div class="spacing-value">8px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:12px;"></div>
+            <div class="spacing-label">md-s</div>
+            <div class="spacing-value">12px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:16px;"></div>
+            <div class="spacing-label">md</div>
+            <div class="spacing-value">16px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:24px;"></div>
+            <div class="spacing-label">lg</div>
+            <div class="spacing-value">24px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:32px;"></div>
+            <div class="spacing-label">xl</div>
+            <div class="spacing-value">32px</div>
+          </div>
+          <div class="spacing-item">
+            <div class="spacing-bar" style="height:44px;"></div>
+            <div class="spacing-label">2xl</div>
+            <div class="spacing-value">44px</div>
+          </div>
+        </div>
+
+        <div class="a11y-block" style="margin-top: 32px;">
+          <h4><i class="fa-solid fa-universal-access"></i> Acessibilidade — Ordem de Leitura para Screen Readers</h4>
+          <div class="a11y-label" aria-label="Exemplo de aria-label estruturado para o componente de transação">
+            aria-label="Transação em <strong>Posto Ipiranga</strong>, valor de <strong>250 reais</strong>,<br/>
+            status <strong>recusado</strong>, cartão <strong>Combustível Corporativo</strong>,<br/>
+            motivo: <strong>Saldo insuficiente</strong>"
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS -->
+  <section class="solutions-section" aria-labelledby="solutions-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-lightbulb"></i> Processo de Design</span>
+        <h2 class="section-title" id="solutions-title">Estratégias de Padronização</h2>
+      </div>
+      <div class="solutions-grid">
+        <div class="solution-card reveal">
+          <span class="solution-badge not-chosen">Abordagem A</span>
+          <div class="solution-icon blue"><i class="fa-solid fa-box-archive" style="color: #60A5FA;"></i></div>
+          <h3>Componente Monolítico</h3>
+          <p>Um único componente com muitos props para cobrir todos os casos — mais simples de manter, mas com alta complexidade interna e dificuldade de extensão.</p>
+          <ul class="solution-pros">
+            <li>API de uso mais simples para engenheiros</li>
+            <li>Menos componentes para documentar</li>
+            <li>Menor overhead de importação</li>
+          </ul>
+        </div>
+        <div class="solution-card chosen reveal reveal-delay-2">
+          <span class="solution-badge chosen"><i class="fa-solid fa-check"></i> Escolhida</span>
+          <div class="solution-icon purple"><i class="fa-solid fa-shapes" style="color: #C084FC;"></i></div>
+          <h3>Família Modular (TransactionRow + LedgerGroup)</h3>
+          <p>Componentes focados e compostos — TransactionRow para linhas individuais e LedgerGroup para agrupamento por data — permitindo extensão sem quebrar contratos.</p>
+          <ul class="solution-pros">
+            <li>Cada componente tem uma única responsabilidade</li>
+            <li>LedgerGroup abstrai a lógica de agrupamento por data</li>
+            <li>Props bien tipados com JSON Schema facilitam handoff</li>
+            <li>40+ edge cases validados com dados reais antes de congelar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars-section" aria-labelledby="pillars-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-cubes-stacked"></i> Como foi Resolvido</span>
+        <h2 class="section-title" id="pillars-title">Os 3 Pilares da Solução</h2>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card reveal" data-num="1">
+          <div class="pillar-icon-wrap pillar-bg-blue"><i class="fa-solid fa-palette" style="color: #60A5FA;"></i></div>
+          <h3>Tokens Semânticos como Fundação</h3>
+          <p>A definição de tokens semânticos (surface, text-primary, status-warning) ao invés de valores hard-coded permite que o mesmo componente funcione em modo claro, escuro e high-contrast sem reescrever CSS.</p>
+          <span class="pillar-tag tag-blue">Design System · Tokens</span>
+        </div>
+        <div class="pillar-card reveal reveal-delay-2" data-num="2">
+          <div class="pillar-icon-wrap pillar-bg-purple"><i class="fa-solid fa-microscope" style="color: #C084FC;"></i></div>
+          <h3>Stress Test com Dados Reais</h3>
+          <p>Mais de 40 edge cases de dados bancários reais foram simulados antes de congelar o componente — desde nomes de lojas com 60+ caracteres até transações internacionais com IOF e spread variável.</p>
+          <span class="pillar-tag tag-purple">Validação · Edge Cases</span>
+        </div>
+        <div class="pillar-card reveal reveal-delay-3" data-num="3">
+          <div class="pillar-icon-wrap pillar-bg-green"><i class="fa-solid fa-clipboard-list" style="color: #34D399;"></i></div>
+          <h3>Documentação Técnica de Handoff</h3>
+          <p>Produzi documentação técnica em Markdown com exemplos de implementação em React Native e Jetpack Compose — eliminando o gargalo de alinhamento entre design e engenharia que antes consumia horas por sprint.</p>
+          <span class="pillar-tag tag-green">Handoff · Engenharia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHODOLOGY & TOOLS -->
+  <section style="padding: 80px 0;" aria-labelledby="methodology-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-screwdriver-wrench"></i> Ferramentas</span>
+        <h2 class="section-title" id="methodology-title">Do Schema ao Handoff</h2>
+      </div>
+      <div class="ai-block reveal">
+        <div class="ai-icon-wrap"><i class="fa-solid fa-microscope" style="color: var(--accent-purple);"></i></div>
+        <div>
+          <h3>Schema JSON do componente + documentação de implementação</h3>
+          <p>Props tipados para React Native e Jetpack Compose, eliminando o gargalo de alinhamento entre squads em mais de 30%.</p>
+          <div class="ai-prompt" style="color: var(--text-muted); border-color: rgba(255,255,255,0.08);"><i class="fa-solid fa-screwdriver-wrench"></i> Figma · Antigravity IDE · JSON Schema · React Native · Jetpack Compose</div>
+        </div>
+      </div>
+
+      <!-- Impact numbers -->
+      <div class="impact-grid reveal" style="margin-top: 60px;">
+        <div class="impact-card">
+          <div class="impact-value" style="color: var(--accent-caju);" data-counter="30" data-suffix="%">30%</div>
+          <div class="impact-label">Aceleração na entrega<br/>de novas telas</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-value" style="color: var(--accent-gold);" data-counter="40">40</div>
+          <div class="impact-label">Edge cases<br/>validados</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-value" style="color: var(--accent-green);">100%</div>
+          <div class="impact-label">Squads usando<br/>o mesmo componente</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROTOTYPE -->
+  <section class="prototype-section" id="prototype" aria-labelledby="prototype-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-shapes"></i> Prancha do Design System</span>
+        <h2 class="section-title" id="prototype-title">Documentação Interativa</h2>
+      </div>
+      <div class="prototype-wrapper">
+        <div class="prototype-glow" aria-hidden="true"></div>
+        <div class="prototype-frame-outer" style="flex-direction: column; align-items: center;">
+          <div class="prototype-iframe-wrap wide-device" id="prototype-wrap" style="width: 100%; max-width: 1000px;">
+            <iframe
+              id="main-prototype-iframe"
+              class="prototype-iframe wide"
+              src="dist/index.html"
+              title="Prancha do Design System: TransactionLedger & Workflow com IA"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap;justify-content:center;">
+            <div class="hint-card" style="max-width:220px;">
+              <div class="hint-icon" style="background:rgba(59,130,246,0.15);"><i class="fa-solid fa-microscope" style="color: #60A5FA;"></i></div>
+              <div>
+                <h4>Anatomia Explodida</h4>
+                <p>Veja os elementos numerados do componente e suas especificações de height e padding.</p>
+              </div>
+            </div>
+            <div class="hint-card" style="max-width:220px;">
+              <div class="hint-icon" style="background:rgba(168,85,247,0.15);"><i class="fa-solid fa-ruler-combined" style="color: #C084FC;"></i></div>
+              <div>
+                <h4>Matriz de Estados</h4>
+                <p>4 estados interativos × 3 variações de negócio — 12 células na matriz visual.</p>
+              </div>
+            </div>
+            <div class="hint-card" style="max-width:220px;">
+              <div class="hint-icon" style="background:rgba(16,185,129,0.15);"><i class="fa-solid fa-file-code" style="color: #34D399;"></i></div>
+              <div>
+                <h4>Schema Técnico</h4>
+                <p>Painel lateral com o JSON Schema completo de props do componente.</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top: 12px; width: 100%;">
+              <a href="dist/index.html" target="_blank" class="btn-primary" style="font-size:13px;padding:10px 18px;text-decoration:none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Prancha em Nova Janela</a>
+              <button id="expand-prototype" class="btn-secondary" style="font-size:13px;padding:10px 18px;"><i class="fa-solid fa-expand"></i> Tela Cheia</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills-section" aria-labelledby="skills-title">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="label-tag"><i class="fa-solid fa-layer-group"></i> Competências</span>
+        <h2 class="section-title" id="skills-title">O que este case evidencia</h2>
+      </div>
+      <div class="skills-cloud">
+        <span class="skill-chip"><i class="fa-solid fa-shapes"></i> Design System escalável</span>
+        <span class="skill-chip"><i class="fa-solid fa-palette"></i> Design tokens semânticos</span>
+        <span class="skill-chip"><i class="fa-solid fa-universal-access"></i> WCAG 2.1 AA/AAA</span>
+        <span class="skill-chip"><i class="fa-solid fa-chart-line"></i> Matriz de estados UI</span>
+        <span class="skill-chip"><i class="fa-solid fa-microscope"></i> Edge cases financeiros</span>
+        <span class="skill-chip"><i class="fa-solid fa-clipboard-list"></i> Documentação técnica</span>
+        <span class="skill-chip"><i class="fa-solid fa-building"></i> Multi-squad colaboração</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer-bar" role="contentinfo">
+    <p>© 2026 Erik Placido — Senior UI Designer · <a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></p>
+    <div style="display:flex;gap:16px;">
+      <a href="../méliuz-omnichannel---gestão-de-fatura-e-limite/portfolio.html"><i class="fa-solid fa-arrow-left"></i> Case Anterior</a>
+      <a href="../../index.html">Ver todos os cases <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </footer>
+
+  <script src="../../portfolio.js"></script>
+</body>
+</html>

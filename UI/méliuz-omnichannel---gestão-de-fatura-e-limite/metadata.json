@@ -1,0 +1,6 @@
+{
+  "name": "Méliuz Omnichannel - Gestão de Fatura e Limite",
+  "description": "Protótipo Omnichannel de Gestão de Fatura, Limite Dinâmico e Parcelamento inspirado no Méliuz, com paridade Mobile (390×844) e Desktop Web (1440×900) e auditoria de transparência regulatória Banco Central.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

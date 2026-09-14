@@ -1,0 +1,6 @@
+{
+  "name": "Prancha TransactionLedger & Workflow com IA",
+  "description": "Prancha de documentação de Design System (Figma Canvas 1920x1080) para o componente TransactionLedger da Conta Simples, com anatomia estrutural, matriz de estados e edge cases, design tokens Andes e automação de handoff com Google AI Studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
