@@ -6,6 +6,7 @@
 import { json, readJson, ipHash, SID } from '../_lib/http.js';
 import * as store from '../_lib/store.js';
 import { notify, tgReady } from '../_lib/telegram.js';
+import { toPortuguese, translateReady } from '../_lib/translate.js';
 
 var LANGS = ['pt', 'en', 'es', 'fr'];
 var MAX_LEN = 1000;
@@ -34,8 +35,13 @@ export async function POST(request){
     if (n >= MAX_MSGS) return json({ error: 'rate_limited' }, 429);
 
     var code = await store.codeFor(sid);
+    // a língua que vale é a da mensagem, não a do site; é nela que o Erik vai responder
+    var prev = await store.getStr('vlang:' + sid);
+    var tr = translateReady() ? await toPortuguese(text, { site: lang, prev: prev }) : null;
+    var said = tr ? tr.lang : prev || lang;
+    await store.setStr('vlang:' + sid, said, store.TTL);
     // primeiro entrega no Telegram; só grava se a entrega deu certo
-    var msgId = await notify(sid, { code: code, lang: lang, page: page, text: text, first: n === 0 });
+    var msgId = await notify(sid, { code: code, lang: said, page: page, text: text, pt: tr ? tr.pt : '', untranslated: !tr && translateReady() && said !== 'pt', first: n === 0 });
     await store.setStr('ctx:' + msgId, sid, store.TTL);
     var index = await store.append(sid, { from: 'v', text: text, ts: Date.now() });
     return json({ ok: true, index: index });

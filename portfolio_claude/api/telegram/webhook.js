@@ -5,9 +5,11 @@
      2. qualquer mensagem dentro do tópico do visitante (grupo com Tópicos);
      3. "Responder" (deslizar) numa mensagem de visitante.
    Fora disso nada é enviado, e o bot avisa no grupo que a mensagem não
-   foi pra ninguém. */
+   foi pra ninguém. Se o visitante escreveu em outra língua, a resposta
+   (em português) vai traduzida, e o bot mostra no grupo o que foi. */
 import * as store from '../_lib/store.js';
 import { chatId, send, react, sidForTopic, validSecret } from '../_lib/telegram.js';
+import { fromPortuguese, translateReady } from '../_lib/translate.js';
 
 export async function POST(request){
   if (!validSecret(request.headers.get('x-telegram-bot-api-secret-token'))) return new Response('forbidden', { status: 403 });
@@ -53,6 +55,17 @@ async function handle(m){
   if (!m.text) return warn('⚠️ Por enquanto o chat do site só repassa texto. Isso não foi pro visitante.');
   if (!text) return warn('⚠️ Mensagem vazia — nada foi enviado.');
 
-  await store.append(sid, { from: 'e', text: text.slice(0, 4000), ts: Date.now() });
+  text = text.slice(0, 4000);
+  var lang = await store.getStr('vlang:' + sid);
+  var out = lang && lang !== 'pt' && translateReady() ? await fromPortuguese(text, lang) : null;
+  await store.append(sid, out ? { from: 'e', text: out, pt: text, ts: Date.now() } : { from: 'e', text: text, ts: Date.now() });
   try { await react(m.message_id, '👍') } catch (e) { console.error('[telegram/webhook] reação:', e.message) }
+  if (!lang || lang === 'pt' || !translateReady()) return;
+  // mostra no grupo o que o visitante recebeu
+  try {
+    await send(out
+      ? '🌐 Foi em ' + lang.toUpperCase() + ':\n' + out
+      : '⚠️ Não consegui traduzir pra ' + lang.toUpperCase() + '; foi em português mesmo.',
+      { replyTo: m.message_id, thread: thread, silent: true });
+  } catch (e) { console.error('[telegram/webhook] aviso da tradução:', e.message) }
 }

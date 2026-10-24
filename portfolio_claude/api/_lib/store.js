@@ -6,6 +6,8 @@
 
    Chaves (prefixo pfchat:):
      msgs:<sid>   lista JSON {from:'v'|'e', text, ts} — 'v' visitante, 'e' Erik
+                  (resposta traduzida guarda também `pt`, o que o Erik escreveu)
+     vlang:<sid>  língua em que o visitante escreveu por último (fr, en…)
      code:<CODE>  sid da conversa com esse código curto (#A7K2)
      sidcode:<sid> código curto da conversa
      ctx:<id>     sid da conversa que gerou essa mensagem no grupo do Telegram

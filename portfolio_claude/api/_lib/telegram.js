@@ -42,6 +42,7 @@ export async function send(text, opts){
   var body = { chat_id: chatId(), text: text, link_preview_options: { is_disabled: true } };
   if (opts.thread) body.message_thread_id = Number(opts.thread);
   if (opts.replyTo) body.reply_parameters = { message_id: opts.replyTo, allow_sending_without_reply: true };
+  if (opts.silent) body.disable_notification = true;
   return (await call('sendMessage', body)).message_id;
 }
 
@@ -71,16 +72,19 @@ async function topicFor(sid, m){
 
 /* Posta a mensagem do visitante e devolve o message_id, que o webhook
    usa pra saber a qual visitante pertence uma resposta deslizada. Se o
-   Erik apagou o tópico, cria outro e tenta de novo. */
+   Erik apagou o tópico, cria outro e tenta de novo. Com tradução, vai o
+   original e, embaixo, o português. */
 export async function notify(sid, m){
   var head = '💬 #' + m.code + ' · ' + m.lang.toUpperCase() + (m.page ? ' · ' + m.page : '');
+  var body = m.text + (m.pt ? '\n\n🇧🇷 ' + m.pt : m.untranslated ? '\n\n⚠️ Não consegui traduzir esta.' : '');
   for (var attempt = 0; attempt < 2; attempt++) {
     var thread = await topicFor(sid, m);
     var hint = !m.first ? '' : thread
       ? '\n\n↩️ Responda aqui neste tópico — tudo que você escrever nele vai pra esse visitante.'
       : '\n\n↩️ Responda deslizando esta mensagem (ou comece com #' + m.code + ').';
+    if (m.first && m.pt) hint += ' Escreva em português: o visitante recebe em ' + m.lang.toUpperCase() + '.';
     try {
-      return await send(head + '\n' + m.text + hint, { thread: thread });
+      return await send(head + '\n' + body + hint, { thread: thread });
     } catch (e) {
       if (!thread || attempt) throw e;
       console.error('[telegram] tópico sumiu, criando outro:', e.message);

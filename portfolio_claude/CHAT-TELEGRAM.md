@@ -13,6 +13,7 @@ visitante ◀── /api/chat/poll ◀── Upstash Redis ◀── /api/telegr
 | Recebe a mensagem do visitante e posta no grupo | `api/chat/send.js` |
 | Entrega as respostas ao widget | `api/chat/poll.js` |
 | Recebe as suas respostas (webhook do Telegram) | `api/telegram/webhook.js` |
+| Tradução (Claude API) | `api/_lib/translate.js` |
 | Redis, Telegram, utilidades | `api/_lib/` |
 | Configurar o bot e conferir o grupo | `dev/telegram-setup.mjs` |
 | Servidor local com modo de teste | `dev/server.mjs`, `dev/reply.mjs` |
@@ -40,7 +41,29 @@ Uma mensagem que não indica o visitante (escrita fora de um tópico de visitant
 
 Por enquanto só texto chega ao visitante. Foto, áudio e figurinha não são repassados, e o bot avisa quando isso acontece.
 
-O "EN" é o idioma em que o site estava quando o visitante escreveu. Responda no idioma em que ele escreveu.
+### Tradução automática
+
+Com `ANTHROPIC_API_KEY` configurada (passo 2.3), você conversa sempre em português, seja qual for a língua do visitante:
+
+- **Mensagem do visitante:** chega o original e, embaixo, a tradução. O "FR" no cabeçalho é a língua em que ele escreveu, detectada no texto (não a língua do site).
+
+  ```
+  💬 #A7K2 · FR · /caju-cartao/
+  Bonjour, j'adore votre portfolio !
+
+  🇧🇷 Olá, adorei seu portfólio!
+  ```
+
+- **Sua resposta:** escreva em português. O visitante recebe na língua da última mensagem dele, e o bot responde à sua mensagem, sem notificar, mostrando o que foi:
+
+  ```
+  🌐 Foi em FR:
+  Merci beaucoup ! Parlons-en.
+  ```
+
+Se o visitante escreveu em português, nada é traduzido. Se a tradução falhar, a mensagem segue mesmo assim: a do visitante chega só no original (com ⚠️) e a sua vai em português (com ⚠️ avisando). Sem `ANTHROPIC_API_KEY`, o chat funciona como antes, sem tradução, e o "EN" volta a ser a língua do site.
+
+A tradução usa o modelo `claude-opus-5-5` com esforço baixo. A mensagem do visitante é tratada só como texto a traduzir: instruções escritas nela não são seguidas.
 
 ---
 
@@ -127,6 +150,7 @@ Em **Settings → Environment Variables**, ambiente **Production**:
 | `TELEGRAM_BOT_TOKEN` | o token do passo 1.1 |
 | `TELEGRAM_CHAT_ID` | o id do passo 1.3 (com o sinal de menos) |
 | `TELEGRAM_WEBHOOK_SECRET` | o texto gerado acima |
+| `ANTHROPIC_API_KEY` | opcional: chave da Claude API ([console.anthropic.com](https://console.anthropic.com) → API Keys). Liga a tradução automática |
 | `CHAT_MAX_PER_HOUR` | opcional, padrão `60`: teto de mensagens de visitantes por hora, somando todos |
 
 Coloque o mesmo `TELEGRAM_WEBHOOK_SECRET` também no seu `.env.local`. O passo 3 precisa dele.
@@ -175,6 +199,7 @@ Com `python3 -m http.server` não há `/api`. O chat abre, mas o envio mostra a 
 ## Custos e limites
 
 - **Telegram:** grátis.
+- **Tradução (Claude API):** paga por uso. Cada mensagem traduzida, de qualquer lado, é uma chamada curta, na casa de um centavo de dólar ou menos. Mensagens em português não chamam a API. O teto `CHAT_MAX_PER_HOUR` também limita esse gasto.
 - **Vercel Hobby e Upstash Free:** o widget só consulta o servidor com a aba visível e só se aquele visitante já mandou mensagem. A cada 3s com o chat aberto e conversa recente, 8s quando ela esfria e 30s com o chat fechado. Para um portfólio isso fica dentro dos planos grátis. Se um dia apertar, aumente esses intervalos em `schedule()` no widget.
 - **Proteção contra spam:**
   - até 6 mensagens por minuto por conversa;
@@ -186,7 +211,7 @@ Com `python3 -m http.server` não há `/api`. O chat abre, mas o envio mostra a 
 
 ## Privacidade
 
-O que fica guardado no Upstash Redis por **30 dias** depois da última mensagem: o texto das mensagens dos dois lados, o idioma e a página de onde o visitante escreveu. O IP não é guardado. Só um hash dele entra no contador de limite, que expira em 10 minutos. O visitante é identificado só por um código aleatório no `localStorage` do navegador dele. O texto também fica no grupo do Telegram.
+O que fica guardado no Upstash Redis por **30 dias** depois da última mensagem: o texto das mensagens dos dois lados, o idioma e a página de onde o visitante escreveu. O IP não é guardado. Só um hash dele entra no contador de limite, que expira em 10 minutos. O visitante é identificado só por um código aleatório no `localStorage` do navegador dele. O texto também fica no grupo do Telegram. Com a tradução ligada, o texto das mensagens em outra língua (e das suas respostas a elas) também é enviado à Claude API da Anthropic para ser traduzido.
 
 ## Problemas comuns
 
