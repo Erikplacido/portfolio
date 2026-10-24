@@ -1,6 +1,6 @@
 # Chat do site ↔ seu Telegram
 
-O visitante escreve no chat do site e a mensagem chega num grupo do Telegram chamado **Chat Site**, onde estão só você e o bot do site. Você responde lá, deslizando a mensagem, e a resposta aparece no chat do site. O visitante nunca sai da página e não precisa ter Telegram nem WhatsApp. Tudo usa a API oficial de bots do Telegram, que é grátis e não pede número extra.
+O visitante escreve no chat do site e a mensagem chega num grupo do Telegram chamado **Chat Site**, onde estão só você e o bot do site. Com Tópicos ligados, cada visitante vira um tópico do grupo. Você responde lá e a resposta aparece no chat do site. O visitante nunca sai da página e não precisa ter Telegram nem WhatsApp. Tudo usa a API oficial de bots do Telegram, que é grátis e não pede número extra.
 
 ```
 visitante ──▶ /api/chat/send ──▶ bot ──▶ grupo "Chat Site" (você)
@@ -14,26 +14,29 @@ visitante ◀── /api/chat/poll ◀── Upstash Redis ◀── /api/telegr
 | Entrega as respostas ao widget | `api/chat/poll.js` |
 | Recebe as suas respostas (webhook do Telegram) | `api/telegram/webhook.js` |
 | Redis, Telegram, utilidades | `api/_lib/` |
-| Configurar o bot | `dev/telegram-setup.mjs` |
+| Configurar o bot e conferir o grupo | `dev/telegram-setup.mjs` |
 | Servidor local com modo de teste | `dev/server.mjs`, `dev/reply.mjs` |
 
 ---
 
 ## Como responder (uso diário)
 
-Cada visitante tem um código curto, por exemplo **#A7K2**. A mensagem chega no grupo assim:
+Cada visitante tem um código curto, por exemplo **#A7K2**. A mensagem chega assim:
 
 ```
 💬 #A7K2 · EN · /caju-cartao/
 Hi! I loved the Caju case…
 ```
 
-- **Deslize a mensagem do visitante para a esquerda** (ou toque e segure → Responder) e escreva. É o jeito normal.
-- Ou **comece com o código:** `#A7K2 Obrigado! Me conta mais.`
+**Com Tópicos ligados no grupo (recomendado, passo 1.5):** cada visitante ganha um tópico próprio, chamado `#A7K2 · EN · /caju-cartao/`. Funciona como uma lista de conversas. Abra o tópico e escreva normalmente: tudo que você mandar ali vai para aquele visitante, sem precisar deslizar.
 
-Quando a resposta chega ao visitante, sua mensagem ganha a reação 👍. Se algo der errado, o bot responde com ⚠️ explicando o motivo.
+**Sem Tópicos:** tudo cai no chat do grupo. Para responder:
+- **deslize a mensagem do visitante para a esquerda** (ou toque e segure → Responder) e escreva;
+- ou **comece com o código:** `#A7K2 Obrigado! Me conta mais.` Isso também funciona com Tópicos ligados, de qualquer lugar do grupo.
 
-Uma mensagem solta no grupo, sem deslizar e sem código, **não vai para ninguém**. Dá para usar o grupo para anotações.
+Quando a resposta chega ao visitante, sua mensagem ganha a reação 👍. Sem 👍, a mensagem não foi.
+
+Uma mensagem que não indica o visitante (escrita fora de um tópico de visitante, sem deslizar e sem código) **não vai para ninguém**, e o bot responde com ℹ️ avisando. Nada vai para o visitante errado.
 
 Por enquanto só texto chega ao visitante. Foto, áudio e figurinha não são repassados, e o bot avisa quando isso acontece.
 
@@ -79,6 +82,16 @@ Rode o mesmo comando de novo. A última linha deve dizer `o bot é: administrato
 ### 1.4 Travar o bot nesse grupo
 
 No @BotFather: `/setjoingroups` → escolha o bot → **Disable**. Assim ninguém consegue adicionar o bot em outros grupos. O código também ignora qualquer conversa que não seja o "Chat Site".
+
+### 1.5 Ligar Tópicos (um tópico por visitante)
+
+1. No grupo: toque no nome → **Editar** → ligue **Tópicos** (Topics).
+2. Em **Administradores**, abra o bot e confira que **Gerenciar tópicos** (Manage Topics) está ligado.
+3. Rode `node dev/telegram-setup.mjs`. Deve aparecer `Tópicos: ligados ✓`.
+
+Vale a partir da próxima conversa nova. Se o site tentou criar tópico com eles desligados, espera até 10 minutos para tentar de novo. Conversas que já existiam continuam no chat geral; responda deslizando ou com `#CÓDIGO`.
+
+Se você apagar o tópico de um visitante, a próxima mensagem dele cria um tópico novo.
 
 ---
 
@@ -183,6 +196,8 @@ Primeiro rode `node dev/telegram-setup.mjs`. Ele mostra se o webhook está ligad
 - **Suas respostas não aparecem no site (sem 👍):**
   - se o último erro for `403`, o `TELEGRAM_WEBHOOK_SECRET` da Vercel é diferente do usado no passo 3: rode o passo 3 de novo;
   - se não houver erro, confira se você deslizou a mensagem certa;
-  - para `#CÓDIGO` solto, o bot precisa ser administrador.
+  - para `#CÓDIGO` solto e para mensagens dentro de tópicos, o bot precisa ser administrador.
+- **Respondi e veio ℹ️ "Isso não foi pra nenhum visitante":** você escreveu fora de um tópico de visitante e sem deslizar. Deslize a mensagem do visitante ou comece com `#CÓDIGO`.
+- **Tópicos ligados, mas as conversas novas continuam no chat geral:** confira a permissão **Gerenciar tópicos** do bot e espere até 10 minutos. Veja também `[telegram] sem tópico` em **Vercel → Logs**.
 - **⚠️ "Não achei a conversa":** a conversa passou de 30 dias, ou você deslizou uma mensagem que não é de visitante (por exemplo um aviso do próprio bot).
 - **Quero listar os grupos de novo e o script diz que o webhook está ligado:** `node dev/telegram-setup.mjs --off`, liste, depois ligue de novo com o passo 3.

@@ -9,6 +9,9 @@
      code:<CODE>  sid da conversa com esse código curto (#A7K2)
      sidcode:<sid> código curto da conversa
      ctx:<id>     sid da conversa que gerou essa mensagem no grupo do Telegram
+     sidtopic:<sid> tópico do grupo dessa conversa (quando o grupo usa tópicos)
+     topic:<id>   sid da conversa desse tópico
+     notopics     marca temporária: o grupo não aceitou criar tópico
      seen:<id>    update do webhook já processado (o Telegram reenvia)
      rl:*         contadores de limite de envio */
 
@@ -44,6 +47,7 @@ function memRun(c){
     memSet(k, c[2], exi > -1 ? Number(c[exi + 1]) : 0);
     return 'OK';
   }
+  if (op === 'DEL') return mem.delete(k) ? 1 : 0;
   if (op === 'INCR') { var n = Number(memGet(k) || 0) + 1; var e = mem.get(k); mem.set(k, { v: String(n), exp: e ? e.exp : 0 }); return n }
   if (op === 'EXPIRE') { var x = mem.get(k); if (x) x.exp = Date.now() + Number(c[2]) * 1000; return x ? 1 : 0 }
   if (op === 'TTL') { var y = mem.get(k); return !y ? -2 : (y.exp ? Math.ceil((y.exp - Date.now()) / 1000) : -1) }
@@ -74,6 +78,7 @@ async function one(){ return (await pipe([Array.from(arguments)]))[0] }
 /* ---- operações do chat ---- */
 export async function getStr(key){ return one('GET', P + key) }
 export async function setStr(key, val, ttl){ return ttl ? one('SET', P + key, String(val), 'EX', String(ttl)) : one('SET', P + key, String(val)) }
+export async function del(key){ return one('DEL', P + key) }
 export async function setOnce(key, val, ttl){ return (await one('SET', P + key, String(val), 'NX', 'EX', String(ttl))) === 'OK' }
 
 // Conta um evento numa janela de `windowSec` segundos e devolve o total.
@@ -94,6 +99,8 @@ export async function append(sid, msg){
   ]);
   var code = await getStr('sidcode:' + sid);
   if (code) await one('EXPIRE', P + 'code:' + code, String(TTL));
+  var topic = await getStr('sidtopic:' + sid);
+  if (topic) await pipe([['EXPIRE', P + 'sidtopic:' + sid, String(TTL)], ['EXPIRE', P + 'topic:' + topic, String(TTL)]]);
   return r[0] - 1;
 }
 

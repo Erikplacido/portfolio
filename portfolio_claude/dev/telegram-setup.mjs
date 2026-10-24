@@ -60,5 +60,9 @@ if (arg === '--off') {
   if (cid) {
     var member = await tg('getChatMember', { chat_id: cid, user_id: me.id }).catch(function(e){ return { status: 'erro: ' + e.message } });
     console.log('No grupo ' + cid + ' o bot é: ' + member.status + (member.status === 'administrator' ? ' ✓' : '  ← precisa ser administrador pra ver as mensagens com #CÓDIGO'));
+    var chat = await tg('getChat', { chat_id: cid }).catch(function(){ return {} });
+    console.log(chat.is_forum
+      ? 'Tópicos: ligados ✓ (um tópico por visitante)' + (member.can_manage_topics ? '' : '  ← o bot precisa da permissão "Gerenciar tópicos"')
+      : 'Tópicos: desligados (respostas por deslizar). Pra um tópico por visitante, ligue Tópicos nas configurações do grupo.');
   }
 }

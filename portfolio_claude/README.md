@@ -61,7 +61,7 @@ Para adicionar um segmento novo: acrescente um objeto em `PORTFOLIO_GROUPS` (`id
 
 `shared/chat-widget.js` (injetado por `frame.js` em toda página, junto com `chat-widget.css`) desenha o avatar flutuante no canto inferior direito, com um balão de saudação animado. Ao clicar, abre um mini-chat no idioma atual do site. Tudo acontece dentro do chat: nenhum pop-up, nova aba ou redirecionamento.
 
-A mensagem do visitante vai para `api/chat/send`, que a posta num grupo "Chat Site" no Telegram do Erik, por um bot oficial. O Erik responde deslizando a mensagem, a resposta volta por `api/telegram/webhook` e o widget a busca em `api/chat/poll`. Arquitetura, configuração do bot e da Vercel, custos e uso diário: **`CHAT-TELEGRAM.md`**.
+A mensagem do visitante vai para `api/chat/send`, que a posta num grupo "Chat Site" no Telegram do Erik, por um bot oficial. Cada visitante vira um tópico do grupo (ou, sem Tópicos, o Erik desliza a mensagem para responder). A resposta volta por `api/telegram/webhook` e o widget a busca em `api/chat/poll`. Arquitetura, configuração do bot e da Vercel, custos e uso diário: **`CHAT-TELEGRAM.md`**.
 
 Para testar o chat localmente, use `npm run dev` (http://127.0.0.1:8780, com modo de teste sem Telegram) em vez do `python3 -m http.server`, que não roda `/api`.
 

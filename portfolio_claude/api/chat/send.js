@@ -35,7 +35,7 @@ export async function POST(request){
 
     var code = await store.codeFor(sid);
     // primeiro entrega no Telegram; só grava se a entrega deu certo
-    var msgId = await notify({ code: code, lang: lang, page: page, text: text, first: n === 0 });
+    var msgId = await notify(sid, { code: code, lang: lang, page: page, text: text, first: n === 0 });
     await store.setStr('ctx:' + msgId, sid, store.TTL);
     var index = await store.append(sid, { from: 'v', text: text, ts: Date.now() });
     return json({ ok: true, index: index });

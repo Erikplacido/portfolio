@@ -3,15 +3,19 @@
 
      node dev/reply.mjs A7K2 "Oi! Obrigado pela mensagem."        → "#A7K2 texto"
      node dev/reply.mjs --reply 1001 "Oi! Obrigado pela mensagem." → deslizando a mensagem 1001
+     node dev/reply.mjs --topic 1001 "Oi! Obrigado pela mensagem." → escrevendo no tópico 1001
+     node dev/reply.mjs --loose "anotação"                         → mensagem solta no grupo
 
    O código (#A7K2) e o número da mensagem aparecem no console do
    `npm run dev` quando o visitante escreve. Só no modo de teste. */
 var args = process.argv.slice(2);
-var replyTo = null, code = null;
+var replyTo = null, topic = null, code = null, loose = false;
 if (args[0] === '--reply') { replyTo = Number(args[1]); args = args.slice(2) }
+else if (args[0] === '--topic') { topic = Number(args[1]); args = args.slice(2) }
+else if (args[0] === '--loose') { loose = true; args = args.slice(1) }
 else { code = args[0]; args = args.slice(1) }
 var text = args.join(' ');
-if ((!code && !replyTo) || !text) { console.error('uso: node dev/reply.mjs CODIGO "texto"  |  node dev/reply.mjs --reply ID "texto"'); process.exit(1) }
+if ((!code && !replyTo && !topic && !loose) || !text) { console.error('uso: node dev/reply.mjs CODIGO "texto" | --reply ID "texto" | --topic ID "texto" | --loose "texto"'); process.exit(1) }
 
 var base = process.env.CHAT_URL || 'http://127.0.0.1:8780';
 var chat = Number(process.env.TELEGRAM_CHAT_ID || -1000);
@@ -20,6 +24,7 @@ var message = {
   chat: { id: chat, type: 'group', title: 'Chat Site' }, from: { id: 42, is_bot: false, first_name: 'Erik' },
   text: code ? '#' + code + ' ' + text : text
 };
+if (topic) { message.message_thread_id = topic; message.is_topic_message = true }
 if (replyTo) message.reply_to_message = { message_id: replyTo, chat: message.chat, from: { id: 1, is_bot: true } };
 
 var res = await fetch(base + '/api/telegram/webhook', {
