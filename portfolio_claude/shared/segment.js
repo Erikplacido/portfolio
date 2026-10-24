@@ -35,13 +35,37 @@
       '<button type="button" class="seg-scroll-cue" id="seg-scroll-cue" aria-label="Rolar para ver os cases"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>';
   }
 
+  var LINK_LABELS = {
+    pt: 'Ver case completo',
+    en: 'View full case',
+    es: 'Ver caso completo',
+    fr: 'Voir le projet'
+  };
+
   var track = document.querySelector('[data-seg-track]');
-  if (track) {
+  var cue = document.getElementById('seg-scroll-cue');
+  if (cue) cue.addEventListener('click', function(){
+    var first = track && track.querySelector('[data-seg-case]');
+    if (first) scrollToEl(first);
+  });
+
+  var reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sections = [];
+
+  // Reveal + troca de case: fade/scale ao entrar na viewport.
+  var io = (typeof IntersectionObserver === 'function' && !reduced) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ e.target.classList.toggle('in-view', e.isIntersecting) });
+  }, { threshold: .45 }) : null;
+
+  function renderTrack(lang) {
+    if (!track) return;
+    lang = lang || (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.getLang ? window.PORTFOLIO_I18N.getLang() : 'en');
+    var label = LINK_LABELS[lang] || LINK_LABELS.en;
     track.innerHTML = cases.map(function(c, i){
       var title = c.displayTitle || c.title;
       var blurb = c.displayBlurb || c.blurb;
       var tags = (c.displayTags || c.tags || []).slice(0,3).map(esc).join('</span><span>');
-      return '<a class="seg-case" data-seg-case href="' + root + c.slug + '/index.html" aria-label="' + esc(title) + ': ver case completo">' +
+      return '<a class="seg-case" data-seg-case href="' + root + c.slug + '/index.html" aria-label="' + esc(title) + ': ' + esc(label) + '">' +
         '<img class="seg-case-bg" src="' + root + esc(c.cover) + '" alt="" loading="' + (i===0?'eager':'lazy') + '">' +
         '<div class="seg-case-scrim" aria-hidden="true"></div>' +
         '<div class="seg-case-content">' +
@@ -49,31 +73,22 @@
           '<div class="seg-case-tags"><span>' + tags + '</span></div>' +
           '<h2>' + esc(title) + '</h2>' +
           '<p>' + esc(blurb) + '</p>' +
-          '<span class="seg-case-link">Ver case completo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>' +
+          '<span class="seg-case-link">' + esc(label) + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>' +
         '</div>' +
       '</a>';
     }).join('');
+    sections = Array.prototype.slice.call(track.querySelectorAll('[data-seg-case]'));
+    if (reduced) {
+      sections.forEach(function(s){ s.classList.add('in-view') });
+    } else if (io) {
+      sections.forEach(function(s){ io.observe(s) });
+    }
   }
+  renderTrack();
 
-  var cue = document.getElementById('seg-scroll-cue');
-  if (cue) cue.addEventListener('click', function(){
-    var first = track && track.querySelector('[data-seg-case]');
-    if (first) scrollToEl(first);
+  window.addEventListener('portfolio-lang-change', function(e){
+    renderTrack(e.detail ? e.detail.lang : null);
   });
-
-  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var sections = track ? Array.prototype.slice.call(track.querySelectorAll('[data-seg-case]')) : [];
-
-  if (reduced || !sections.length) {
-    sections.forEach(function(s){ s.classList.add('in-view') });
-    return;
-  }
-
-  // Reveal + troca de case: fade/scale ao entrar na viewport.
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ e.target.classList.toggle('in-view', e.isIntersecting) });
-  }, { threshold: .45 });
-  sections.forEach(function(s){ io.observe(s) });
 
   // Parallax: o fundo de cada case se desloca mais devagar que o scroll.
   var ticking = false;

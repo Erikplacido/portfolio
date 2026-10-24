@@ -6,7 +6,7 @@
   'use strict';
 
   var LANGS = ['pt', 'en', 'es', 'fr'];
-  var DEFAULT_LANG = 'pt';
+  var DEFAULT_LANG = 'en';
 
   var DICT = {
     // Top Bar & Global Nav
@@ -529,11 +529,30 @@
     if (!caseTrans) return;
     lang = lang || getLang();
 
-    var sample = caseTrans.en || caseTrans.es || caseTrans.fr || {};
+    var sample = caseTrans.en || caseTrans.es || caseTrans.fr || caseTrans.pt || {};
     var allSelectors = Object.keys(sample);
 
+    // Salva o HTML original de cada elemento antes de qualquer alteração
+    allSelectors.forEach(function(sel){
+      var el = document.querySelector(sel);
+      if (el && el._origHTML === undefined) {
+        el._origHTML = el.innerHTML;
+      }
+    });
+
+    if (caseTrans[lang]) {
+      var dict = caseTrans[lang];
+      allSelectors.forEach(function(sel){
+        var el = document.querySelector(sel);
+        if (el && dict[sel] !== undefined) {
+          el.innerHTML = dict[sel];
+        }
+      });
+      return;
+    }
+
     if (lang === 'pt') {
-      // Restore original Portuguese
+      // Restaura o português original do HTML base
       allSelectors.forEach(function(sel){
         var el = document.querySelector(sel);
         if (el && el._origHTML !== undefined) {
@@ -543,24 +562,18 @@
       return;
     }
 
-    var dict = caseTrans[lang] || caseTrans.en;
-    if (!dict) return;
-
+    var fallbackDict = caseTrans.en || sample;
     allSelectors.forEach(function(sel){
       var el = document.querySelector(sel);
-      if (el) {
-        if (el._origHTML === undefined) {
-          el._origHTML = el.innerHTML;
-        }
-        if (dict[sel] !== undefined) {
-          el.innerHTML = dict[sel];
-        }
+      if (el && fallbackDict[sel] !== undefined) {
+        el.innerHTML = fallbackDict[sel];
       }
     });
   }
 
   // Helper function to get current language
   function getLang() {
+    // 1. ?lang= na URL
     try {
       if (typeof window !== 'undefined' && window.location && window.location.search) {
         var params = new URLSearchParams(window.location.search);
@@ -570,18 +583,37 @@
         }
       }
     } catch(e){}
+
+    // 2. Escolha manual salva no localStorage
     try {
       var saved = localStorage.getItem('portfolio_lang');
       if (saved && LANGS.indexOf(saved) > -1) return saved;
     } catch(e){}
-    var navLang = (typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage || '')).toLowerCase().slice(0, 2);
-    return LANGS.indexOf(navLang) > -1 ? navLang : DEFAULT_LANG;
+
+    // 3. Lista completa do navegador (navigator.languages)
+    try {
+      if (typeof navigator !== 'undefined') {
+        var navList = navigator.languages || (navigator.language ? [navigator.language] : []) || [];
+        for (var i = 0; i < navList.length; i++) {
+          var code = String(navList[i] || '').toLowerCase().slice(0, 2);
+          if (LANGS.indexOf(code) > -1) {
+            return code;
+          }
+        }
+        var single = (navigator.language || navigator.userLanguage || '').toLowerCase().slice(0, 2);
+        if (LANGS.indexOf(single) > -1) return single;
+      }
+    } catch(e){}
+
+    // 4. Fallback padrão: en (Inglês)
+    return DEFAULT_LANG;
   }
 
   // Helper function to translate a key
   function t(key, lang) {
     lang = lang || getLang();
     if (DICT[key] && DICT[key][lang]) return DICT[key][lang];
+    if (DICT[key] && DICT[key]['pt']) return DICT[key]['pt'];
     if (DICT[key] && DICT[key][DEFAULT_LANG]) return DICT[key][DEFAULT_LANG];
     return key;
   }

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blue Services — UX/UI Case Study</title>
-<meta name="description" content="Case study: designing a three-sided home-services platform — customer booking, professional field app and admin operations — with a Liquid Glass design system.">
-<meta property="og:title" content="Blue Services — UX/UI Case Study">
-<meta property="og:description" content="One platform, three audiences: booking, live tracking and operations for a home-services marketplace.">
+<title>Blue Services — Estudo de Caso UX/UI</title>
+<meta name="description" content="Estudo de caso: projetando uma plataforma em três pontas para serviços residenciais — reserva pelo cliente, app de campo para profissionais e console de operações — com design system Liquid Glass.">
+<meta property="og:title" content="Blue Services — Estudo de Caso UX/UI">
+<meta property="og:description" content="Uma plataforma, três públicos: agendamento com preço ao vivo, rastreamento em tempo real e operações para um marketplace de serviços residenciais.">
 <meta property="og:image" content="assets/home_cleaning_banner-1024x683.webp">
 <link rel="icon" href="assets/logo_header_blue.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -624,11 +624,11 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
   <div class="wrap">
     <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Blue Services</span></a>
     <ul class="pf-links">
-      <li><a href="#booking">Booking</a></li>
-      <li><a href="#system">System</a></li>
-      <li><a href="#lifecycle">Lifecycle</a></li>
-      <li><a href="#field">Field app</a></li>
-      <li><a href="#proposals">Proposals</a></li>
+      <li><a href="#booking">Reserva</a></li>
+      <li><a href="#system">Design System</a></li>
+      <li><a href="#lifecycle">Ciclo de vida</a></li>
+      <li><a href="#field">App de campo</a></li>
+      <li><a href="#proposals">Propostas</a></li>
       <li><a href="#honest">Trade-offs</a></li>
     </ul>
     <div class="pf-cases" role="group" aria-label="Cases" data-auto><a href="../blue-services/index.html" aria-current="page" style="--c:#11284B">Blue Services</a><a href="../cobra-kai/index.html" style="--c:#E3120B">Cobra Kai</a></div>
@@ -639,14 +639,14 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <header class="pf-hero">
   <div class="wrap">
     <p class="eyebrow"><b>Case 01</b> · Product design · 0 → 1</p>
-    <h1>Booking a clean should feel like <em>booking a flight,</em> not filing a form.</h1>
-    <p class="lede">Blue Services is a home-services marketplace in Australia. I designed and built the whole product: the customer booking flow, the professional's field app with live GPS tracking, and the admin operations console.</p>
+    <h1>Reservar uma limpeza deve parecer <em>comprar uma passagem aérea,</em> não preencher um formulário.</h1>
+    <p class="lede">Blue Services é um marketplace australiano de serviços residenciais. Desenhei e programei o produto de ponta a ponta: o fluxo de reserva do cliente, o aplicativo de campo dos profissionais com GPS em tempo real e o console de operações.</p>
 
     <dl class="pf-meta">
-      <div><dt>Role</dt><dd>Product designer &amp; front-end engineer (end to end)</dd></div>
-      <div><dt>Platforms</dt><dd>Responsive web, PWA, native shells for iOS &amp; Android (Capacitor)</dd></div>
-      <div><dt>Audiences</dt><dd>Customers, cleaning professionals, operations admins</dd></div>
-      <div><dt>Scope</dt><dd>Research → IA → UI → design system → production code</dd></div>
+      <div><dt>Função</dt><dd>Product designer &amp; front-end engineer (end-to-end)</dd></div>
+      <div><dt>Plataformas</dt><dd>Web responsiva, PWA, shells nativos para iOS &amp; Android (Capacitor)</dd></div>
+      <div><dt>Públicos</dt><dd>Clientes, diaristas/profissionais, operadores da central</dd></div>
+      <div><dt>Escopo</dt><dd>Pesquisa → IA → UI → design system → código em produção</dd></div>
     </dl>
 
   </div>
@@ -665,35 +665,20 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
         <div class="bs-live"><small id="hlStep">Step 1 of 4</small><b id="hlTotal">$105.60</b><span id="hlTime">≈ 2h 50m</span><span class="pips"><i class="on"></i><i></i><i></i><i></i></span></div>
       </div>
     </div>
-    <p class="bs-tag">Real screens<span> · local build of the production code</span>, test data</p>
+    <p class="bs-tag">Telas reais<span> · build local do código de produção</span>, dados de teste</p>
   </div>
 </header>
-
-<section id="resumo" class="pf-sec" lang="pt-BR" aria-labelledby="resumo-h">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow">Resumo executivo · em português</p>
-      <h2 id="resumo-h">O case em três pontos.</h2>
-      <p class="lede">O texto completo abaixo está em inglês (o produto é australiano). Para a leitura rápida:</p>
-    </div>
-    <div class="pf-cards rv" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
-      <div class="pf-card"><span class="tag">O problema</span><h3>Preço e agenda que mudam a cada escolha</h3><p>Valor depende de imóvel, extras e recorrência; a disponibilidade depende de cada profissional; e o cliente entrega a chave de casa. Três públicos precisam ver a mesma verdade.</p></div>
-      <div class="pf-card"><span class="tag">A solução</span><h3>Reserva numa página só, com preço ao vivo</h3><p>Endereço, data, horário e extras atualizam o resumo em tempo real, numa linguagem visual translúcida (liquid glass). App do profissional e console de operações usam o mesmo fluxo de localização.</p></div>
-      <div class="pf-card"><span class="tag">O impacto</span><h3>Menos fricção até a reserva</h3><p>Nenhuma etapa pede compromisso antes de mostrar o preço. Desenhei e programei o produto de ponta a ponta, com design system e tokens prontos para o front-end.</p></div>
-    </div>
-  </div>
-</section>
 
 <section id="context" class="pf-sec">
   <div class="wrap two">
     <div class="rv">
-      <p class="eyebrow">The problem</p>
-      <h2>Two-sided trust, priced by the hour, scheduled by the minute.</h2>
+      <p class="eyebrow">O problema</p>
+      <h2>Confiança bilateral, precificada por hora e agendada ao minuto.</h2>
     </div>
     <div class="rv">
-      <p class="lede">Home cleaning looks simple until you design it. Price depends on property, extras and recurrence. Availability depends on the individual professional. And the customer is handing over their home.</p>
-      <p>The typical experience in this category is a long form that ends in a quote by email: people commit before knowing the price, and operations chase confirmations by phone.</p>
-      <div class="callout"><b>Design brief I set myself:</b> show the real price and the real availability at every step, and make every promise the product makes verifiable, including where the professional is right now.</div>
+      <p class="lede">Limpeza residencial parece simples até você tentar desenhá-la. O valor varia conforme o imóvel, os extras e a frequência. A disponibilidade depende de cada profissional individualmente. E o cliente está abrindo a sua casa para um estranho.</p>
+      <p>A experiência típica dessa categoria é um formulário longo que termina num orçamento enviado por e-mail: as pessoas se comprometem antes de saber o valor, e o setor operacional perde tempo cobrando confirmações por telefone.</p>
+      <div class="callout"><b>Brief de design que defini para mim mesmo:</b> mostrar o preço real e a disponibilidade exata a cada escolha, tornando auditável cada promessa feita pelo produto — incluindo a localização exata do profissional no mapa.</div>
     </div>
   </div>
 </section>
@@ -701,28 +686,28 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="ecosystem" class="pf-sec alt">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">System map</p>
-      <h2>One platform, three very different jobs-to-be-done.</h2>
-      <p class="lede">The hardest design problem was not any single screen. It was keeping three audiences, with different devices and different anxieties, looking at the same truth.</p>
+      <p class="eyebrow">Mapa do sistema</p>
+      <h2>Uma plataforma, três objetivos muito diferentes.</h2>
+      <p class="lede">O maior desafio de design não foi uma tela isolada, mas garantir que três públicos distintos, com dispositivos e níveis de ansiedade diferentes, enxergassem a mesma verdade em tempo real.</p>
     </div>
     <div class="three rv" style="margin-top:48px">
       <article class="card">
-        <span class="tag">Customer · web &amp; app</span>
-        <h3>Book, track, manage</h3>
-        <p>"Tell me what it costs, when it happens, and who's coming."</p>
-        <ul><li>Live-priced booking flow</li><li>Subscriptions: pause, modify, cancel</li><li>Real-time professional tracking</li><li>Referral Club with reward levels</li></ul>
+        <span class="tag">Cliente · web &amp; app</span>
+        <h3>Reservar, acompanhar, gerenciar</h3>
+        <p>"Me diga quanto custa, quando vai acontecer e quem está vindo."</p>
+        <ul><li>Fluxo de reserva com preço ao vivo</li><li>Assinaturas: pausar, modificar, cancelar</li><li>Rastreamento do profissional em tempo real</li><li>Clube de indicações com níveis de recompensa</li></ul>
       </article>
       <article class="card">
-        <span class="tag">Professional · PWA + native</span>
-        <h3>Work the day</h3>
-        <p>"Show me the next job, the route and exactly what to do. One-handed."</p>
-        <ul><li>Job queue with new-job alerts</li><li>Per-service checklists</li><li>Background GPS broadcast</li><li>Availability &amp; earnings</li></ul>
+        <span class="tag">Profissional · PWA + nativo</span>
+        <h3>Trabalhar o dia</h3>
+        <p>"Me mostre o próximo serviço, a rota e exatamente o que fazer. Com apenas uma mão."</p>
+        <ul><li>Fila de serviços com alertas de novas oportunidades</li><li>Checklists específicos por tipo de limpeza</li><li>Transmissão de GPS em segundo plano</li><li>Disponibilidade e extrato de ganhos</li></ul>
       </article>
       <article class="card">
         <span class="tag">Admin · desktop</span>
-        <h3>Keep the promise</h3>
-        <p>"Tell me what's about to go wrong, before the customer does."</p>
-        <ul><li>Live map of all professionals</li><li>Assignment &amp; schedules</li><li>Services, coupons, levels, reports</li><li>Security &amp; rate-limit dashboard</li></ul>
+        <h3>Cumprir a promessa</h3>
+        <p>"Me avise o que está prestes a dar errado, antes que o cliente perceba."</p>
+        <ul><li>Mapa ao vivo de todos os profissionais</li><li>Atribuição inteligente e grade de horários</li><li>Serviços, cupons, níveis e relatórios</li><li>Painel de segurança e monitoramento de taxa de requisições</li></ul>
       </article>
     </div>
   </div>
@@ -731,15 +716,15 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="process" class="pf-sec">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Process</p>
-      <h2>Ship, observe, tighten.</h2>
-      <p>I worked in production, with a short loop between design decision and real usage. 206 commits in the repository tell the story of that loop; the design-system document records the state of the system, including where it's still rough.</p>
+      <p class="eyebrow">Processo</p>
+      <h2>Publicar, observar, calibrar.</h2>
+      <p>Trabalhei direto no ambiente de produção, com um ciclo curto entre a decisão de design e o uso real. 206 commits no repositório contam a história desse ciclo; o documento do design system registra a maturidade do sistema, incluindo onde ele ainda demanda refinamento.</p>
     </div>
     <div class="steps rv">
-      <div><b>Frame</b><span>Map the three journeys, list every state a booking can be in, define the price and availability rules.</span></div>
-      <div><b>Prototype in code</b><span>Build the flow directly in the browser to test real pricing, real calendars, real addresses.</span></div>
-      <div><b>Systematise</b><span>Extract tokens and components once patterns repeat three times. Document them.</span></div>
-      <div><b>Audit</b><span>Review accessibility, motion, responsiveness and technical debt. Write down what to fix next.</span></div>
+      <div><b>Estruturar</b><span>Mapear as três jornadas, listar cada estado possível de uma reserva e definir as regras de preço e disponibilidade.</span></div>
+      <div><b>Prototipar em código</b><span>Construir o fluxo direto no navegador para testar precificação real, calendários reais e endereços verdadeiros.</span></div>
+      <div><b>Sistematizar</b><span>Extrair tokens e componentes assim que um padrão se repetisse três vezes. Documentar cada um.</span></div>
+      <div><b>Auditar</b><span>Revisar acessibilidade, animações, responsividade e débitos técnicos. Registrar o que corrigir em seguida.</span></div>
     </div>
   </div>
 </section>
@@ -747,9 +732,9 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="booking" class="pf-sec alt">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Decision 01 · Booking flow</p>
-      <h2>A single surface where price is always honest.</h2>
-      <p class="lede">I designed the flow as one live page rather than a multi-page form: address, date, time and extras update the summary as you go. No step ever asks for a commitment the previous one hasn't priced.</p>
+      <p class="eyebrow">Decisão 01 · Fluxo de reserva</p>
+      <h2>Uma única superfície onde o preço é sempre transparente.</h2>
+      <p class="lede">Desenhei o fluxo como uma página viva única em vez de um formulário com múltiplas etapas: endereço, data, horário e extras recalculam o resumo instantaneamente. Nenhuma etapa exige compromisso antes de precificar.</p>
     </div>
 
     <figure class="rv bk-wide">
@@ -825,24 +810,24 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
           <svg class="ghost" id="bkGhost" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#11284B" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
           <div class="toast" id="bkToast">Demo only — no payment taken</div>
         </div>
-        <div class="demo-bar"><span>Autoplay shows one path, then hands over to you. Prices are illustrative; the rules (live total, live duration, capacity states) are the real ones.</span><button type="button" class="btn ghost" id="bkReplay">↺ Replay</button></div>
+        <div class="demo-bar"><span>O autoplay demonstra um caminho e depois entrega o controle a você. Os preços são ilustrativos; as regras (total em tempo real, duração estimada e limites de capacidade) são reais.</span><button type="button" class="btn ghost" id="bkReplay">↺ Repetir</button></div>
       </div>
-      <figcaption><b>Interactive recreation of the production booking page,</b> drawn after the real screens below: the same labels, colours and states as <code>booking.php</code>, the real recurrence discounts and extra durations. Prices are illustrative.</figcaption>
+      <figcaption><b>Recriação interativa da página de agendamento em produção,</b> desenhada a partir das telas reais abaixo: os mesmos rótulos, cores e estados do <code>booking.php</code>, descontos reais de recorrência e duração de extras. Valores ilustrativos.</figcaption>
     </figure>
 
     <figure class="rv" style="margin-top:40px">
-      <div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/real-desktop-booking.webp" alt="Real booking page on desktop: address, date and start time filled, weekly plan with a 6-month contract summary, and the sticky bar with the live total, duration and Proceed to Checkout" width="1600" height="1000" loading="lazy"></div>
-      <figcaption><b>Real screenshot, desktop.</b> The same page at 1440 px: one surface, with the total and duration pinned to the bottom bar. Local build, test data.</figcaption>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/real-desktop-booking.webp" alt="Página de agendamento real no desktop: endereço, data e horário preenchidos, plano semanal com resumo de contrato de 6 meses e barra fixa com total ao vivo, duração e botão de checkout" width="1600" height="1000" loading="lazy"></div>
+      <figcaption><b>Captura de tela real, desktop.</b> A mesma página a 1440 px: uma única superfície, com o total e a duração fixados na barra inferior. Build local com dados de teste.</figcaption>
     </figure>
 
     <div class="two" style="margin-top:72px;align-items:center">
       <div class="rv">
-        <h3>Availability as colour, not a dead end</h3>
-        <p>The calendar fetches real capacity per day. Three states (available, limited, full) let people choose with context instead of discovering a conflict after submitting. Limited days still work; they just offer fewer arrival windows and say so.</p>
-        <p>Time is chosen as an <i>arrival window</i>, matching how cleaners actually travel, with its own loading and error states.</p>
-        <h3 style="margin-top:36px">Progressive disclosure on mobile</h3>
-        <p>Under 768px the page becomes a wizard with a persistent bottom bar: step label, running total, estimated duration and one primary action. The summary on desktop and the wizard on mobile are the same component logic with different containers.</p>
-        <p>The total and the duration estimate recalculate when hidden items such as minimum-quantity checklist items change the job length, so the promise made at checkout matches the job.</p>
+        <h3>Disponibilidade por cor, não por beco sem saída</h3>
+        <p>O calendário consulta a capacidade real por dia via API. Três estados visuais (disponível, limitado, esgotado) permitem ao cliente escolher com contexto, em vez de descobrir um conflito após preencher tudo. Dias com vagas limitadas continuam selecionáveis; eles apenas oferecem menos janelas de chegada e deixam isso claro.</p>
+        <p>O horário é escolhido como uma <i>janela de chegada</i>, refletindo como as equipes de limpeza realmente se deslocam na cidade, com seus próprios estados de carregamento e contingência.</p>
+        <h3 style="margin-top:36px">Apresentação progressiva no mobile</h3>
+        <p>Abaixo de 768px a página se transforma em um assistente guiado com barra inferior persistente: indicador da etapa, total acumulado, duração estimada e uma única ação primária. O resumo no desktop e o assistente no mobile compartilham a mesma lógica de componentes, apenas adaptando seus contêineres.</p>
+        <p>O total e a estimativa de tempo recalculam automaticamente quando itens com requisitos mínimos alteram o escopo, garantindo que a promessa feita no checkout corresponda exatamente à entrega física.</p>
       </div>
       <figure class="rv real-wiz" id="wiz">
         <div class="phone tilt" style="--pw:clamp(230px,26vw,280px)">
@@ -854,80 +839,80 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
           </div>
         </div>
         <div class="wiz-steps" role="group" aria-label="Show a step of the real mobile booking">
-          <button type="button" aria-pressed="true">1 · Where &amp; when</button><button type="button" aria-pressed="false">2 · Property</button><button type="button" aria-pressed="false">3 · Preferences</button><button type="button" aria-pressed="false">Summary</button>
+          <button type="button" aria-pressed="true">1 · Onde &amp; quando</button><button type="button" aria-pressed="false">2 · Imóvel</button><button type="button" aria-pressed="false">3 · Preferências</button><button type="button" aria-pressed="false">Resumo</button>
         </div>
-        <figcaption><b>Real screenshots</b> of the mobile wizard, captured from a local build of the production code with test data. Watch the bottom bar: total and duration change on every step.</figcaption>
+        <figcaption><b>Capturas de tela reais</b> do assistente mobile, obtidas de um build local do código de produção com dados de teste. Acompanhe a barra inferior: o total e a duração mudam a cada etapa.</figcaption>
       </figure>
     </div>
 
     <figure class="rv" style="margin-top:72px">
       <div class="real-flow">
-        <div><a href="assets/real-m1-address.webp"><img src="assets/real-m1-address.webp" alt="Step 1: address, date, time and recurring plan, with the contract summary" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>01</b>Where &amp; when, plan and contract</span></div>
-        <div><a href="assets/real-m2-calendar.webp"><img src="assets/real-m2-calendar.webp" alt="Date modal for October 2026: past days struck through, available days and a selected Thursday 22" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>02</b>Capacity per day, from the API</span></div>
-        <div><a href="assets/real-m3-windows.webp"><img src="assets/real-m3-windows.webp" alt="Arrival window modal grouped into morning, afternoon and evening, with 8 to 9 AM selected" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>03</b>Arrival windows by period</span></div>
-        <div><a href="assets/real-m4-extras.webp"><img src="assets/real-m4-extras.webp" alt="Property steppers and extras with an estimated duration per extra" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>04</b>Rooms and extras reprice live</span></div>
-        <div><a href="assets/real-m5-preferences.webp"><img src="assets/real-m5-preferences.webp" alt="Preferences step with a pet fee confirmed as applied" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>05</b>Preferences say what they cost</span></div>
-        <div><a href="assets/real-m6-summary.webp"><img src="assets/real-m6-summary.webp" alt="Booking summary sheet with the price breakdown and Secure Checkout" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>06</b>Summary before any payment</span></div>
+        <div><a href="assets/real-m1-address.webp"><img src="assets/real-m1-address.webp" alt="Step 1: address, date, time and recurring plan, with the contract summary" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>01</b>Onde &amp; quando, plano e contrato</span></div>
+        <div><a href="assets/real-m2-calendar.webp"><img src="assets/real-m2-calendar.webp" alt="Modal de data para outubro de 2026: dias passados riscados, dias disponíveis e uma quinta-feira 22 selecionada" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>02</b>Capacidade diária via API</span></div>
+        <div><a href="assets/real-m3-windows.webp"><img src="assets/real-m3-windows.webp" alt="Modal de janelas de chegada agrupadas em manhã, tarde e noite, com 8 às 9h selecionada" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>03</b>Janelas de chegada por período</span></div>
+        <div><a href="assets/real-m4-extras.webp"><img src="assets/real-m4-extras.webp" alt="Seletores de cômodos e extras com duração estimada por item" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>04</b>Cômodos e extras recalculam ao vivo</span></div>
+        <div><a href="assets/real-m5-preferences.webp"><img src="assets/real-m5-preferences.webp" alt="Etapa de preferências com confirmação de custo da taxa de animais" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>05</b>Preferências transparentes no preço</span></div>
+        <div><a href="assets/real-m6-summary.webp"><img src="assets/real-m6-summary.webp" alt="Folha de resumo da reserva com detalhamento de preços e Checkout Seguro" width="780" height="1688" loading="lazy"></a><span class="rf-l"><b>06</b>Resumo antes de qualquer pagamento</span></div>
       </div>
-      <figcaption><b>The real flow on a phone, in order.</b> Screenshots from a local build at 390 px wide. Test data: a public Sydney address and placeholder contact details. The Stripe payment step is not shown.</figcaption>
+      <figcaption><b>O fluxo real no celular, em ordem sequencial.</b> Telas capturadas de um build local a 390 px de largura. Dados de teste: endereço público de Sydney e contatos fictícios. A etapa de pagamento com Stripe não é exibida.</figcaption>
     </figure>
 
     <div class="rv">
       <div class="ba" id="ba">
         <div class="side before">
-          <span class="lbl">Category pattern · quote form</span>
-          <div class="oldpage"><div class="oldbar"><span>Services · Pricing · About · Contact</span></div><div class="oldbody"><b>Request a cleaning quote</b><div class="oldform"><div>First name</div><div>Last name</div><div class="w">Email</div><div class="w">Phone</div><div class="w">Property address</div><div>Bedrooms ▾</div><div>Bathrooms ▾</div><div class="w">Preferred date (we'll confirm)</div><div class="w t">Tell us about your clean…</div><div class="oldnote"><span>Request a quote</span>We'll email you a price within 24 hours.</div></div></div></div>
+          <span class="lbl">Padrão do segmento · formulário de orçamento</span>
+          <div class="oldpage"><div class="oldbar"><span>Serviços · Preços · Sobre · Contato</span></div><div class="oldbody"><b>Solicitar orçamento de limpeza</b><div class="oldform"><div>Nome</div><div>Sobrenome</div><div class="w">E-mail</div><div class="w">Telefone</div><div class="w">Endereço do imóvel</div><div>Quartos ▾</div><div>Banheiros ▾</div><div class="w">Data preferencial (vamos confirmar)</div><div class="w t">Conte-nos sobre sua limpeza…</div><div class="oldnote"><span>Pedir orçamento</span>Enviaremos o valor por e-mail em até 24h.</div></div></div></div>
         </div>
         <div class="side after" aria-hidden="true">
-          <span class="lbl">Blue · live booking (real screen)</span>
+          <span class="lbl">Blue · agendamento ao vivo (tela real)</span>
           <picture><source media="(max-width:640px)" srcset="assets/real-m1-address.webp"><img src="assets/real-desktop-booking.webp" alt="" width="1600" height="1000" loading="lazy"></picture>
         </div>
         <input type="range" min="0" max="100" value="50" id="baR" aria-label="Compare the category quote form with the real Blue booking page">
         <span class="handle" aria-hidden="true"></span>
       </div>
-      <div class="ba-cap"><span><b style="color:var(--ink)">Before:</b> the common pattern in the category (not a previous Blue version). Commitment first, price later.</span><span><b style="color:var(--ink)">After:</b> the real booking page: address, date and plan on one surface, with the live total and duration pinned to the bar.</span></div>
+      <div class="ba-cap"><span><b style="color:var(--ink)">Antes:</b> o padrão comum no segmento (não uma versão anterior da Blue). Compromisso primeiro, preço depois.</span><span><b style="color:var(--ink)">Depois:</b> a tela de agendamento real: endereço, data e plano numa só superfície, com total e duração sempre visíveis na barra inferior.</span></div>
     </div>
 
-    <div class="callout rv"><b>Why it matters:</b> price and duration are the two numbers customers anchor on. Making both live means nobody has to wait for a quote to know what they are committing to.</div>
+    <div class="callout rv"><b>Por que isso importa:</b> preço e duração são os dois números em que os clientes se ancoram. Tornar ambos visíveis ao vivo significa que ninguém precisa esperar por um orçamento por e-mail para decidir se quer contratar.</div>
   </div>
 </section>
 
 <section id="system" class="pf-sec">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Decision 02 · Design system</p>
-      <h2>"Liquid Glass": calm surfaces for a task that's anxious by nature.</h2>
-      <p class="lede">Handing over your keys is emotional. The visual language had to be reassuring and clean, without becoming sterile. Translucent layers, a deep navy anchor and a single warm accent for the one action that matters.</p>
+      <p class="eyebrow">Decisão 02 · Design system</p>
+      <h2>"Liquid Glass": superfícies calmas para uma tarefa que gera ansiedade.</h2>
+      <p class="lede">Entregar as chaves de casa é um ato emocional. A linguagem visual precisava ser acolhedora e limpa, sem frieza: camadas translúcidas, base em azul-marinho profundo e um único destaque vibrante na ação primária.</p>
     </div>
 
     <div class="two" style="margin-top:56px">
       <div class="rv">
-        <div class="glassdemo" role="img" aria-label="Glass surface over drifting blue and yellow shapes"><b class="o1"></b><b class="o2"></b><b class="o3"></b><span>blur 16px · 35% white · inner highlight</span></div>
-        <figcaption style="margin-top:14px"><b>Surface recipe.</b> Blur, translucent fill, 1px light border, blue-tinted shadow and an inset top highlight, so depth reads as material, not decoration.</figcaption>
+        <div class="glassdemo" role="img" aria-label="Superfície translúcida sobre formas azuis e amarelas"><b class="o1"></b><b class="o2"></b><b class="o3"></b><span>blur 16px · 35% branco · realce interno</span></div>
+        <figcaption style="margin-top:14px"><b>Receita de superfície.</b> Desfoque, preenchimento translúcido, borda sutil de 1px, sombra azulada e um realce superior interno, para que a profundidade seja percebida como material físico, não mera decoração.</figcaption>
       </div>
       <div class="rv">
         <div class="sw">
-          <div style="background:#11284B"><b>Navy</b>#11284B<br>Brand · text · CTA</div>
-          <div style="background:#344966"><b>Slate</b>#344966<br>Gradient pair</div>
-          <div style="background:#78BEFF" class="lt"><b>Sky</b>#78BEFF<br>Glass primary</div>
-          <div style="background:#F0DF0A" class="lt"><b>Signal</b>Accent · next step</div>
-          <div style="background:#48BB78"><b>Available</b>#48BB78</div>
-          <div style="background:#ED8936"><b>Limited</b>#ED8936</div>
+          <div style="background:#11284B"><b>Navy</b>#11284B<br>Marca · texto · CTA</div>
+          <div style="background:#344966"><b>Slate</b>#344966<br>Par gradiente</div>
+          <div style="background:#78BEFF" class="lt"><b>Sky</b>#78BEFF<br>Vidro primário</div>
+          <div style="background:#F0DF0A" class="lt"><b>Signal</b>Destaque · ação</div>
+          <div style="background:#48BB78"><b>Disponível</b>#48BB78</div>
+          <div style="background:#ED8936"><b>Limitado</b>#ED8936</div>
         </div>
       </div>
     </div>
 
     <div class="three rv" style="margin-top:56px">
-      <div class="card"><span class="tag">Type</span><div class="type"><span class="s">Aa</span><b>Inter 300–700</b><p style="font-size:14px">One family, four weights. Hierarchy by size and weight; uppercase micro-labels for legends.</p></div></div>
-      <div class="card"><span class="tag">Motion</span><h3 style="font-size:22px">cubic-bezier(.23, 1, .32, 1)</h3><p style="font-size:14px">One "liquid" easing at 200ms and 400ms. Reduced-motion users get solid white surfaces with no blur.</p></div>
-      <div class="card"><span class="tag">Scale</span><h3 style="font-size:22px">8-step space, 4 radii</h3><p style="font-size:14px">0.25 → 3rem spacing; 12 / 14 / 16 / 20px radii by component role. Inputs fixed at 48px.</p></div>
+      <div class="card"><span class="tag">Tipografia</span><div class="type"><span class="s">Aa</span><b>Inter 300–700</b><p style="font-size:14px">Uma família, quatro pesos. Hierarquia por tamanho e peso; micro-etiquetas em caixa alta para legendas.</p></div></div>
+      <div class="card"><span class="tag">Movimento</span><h3 style="font-size:22px">cubic-bezier(.23, 1, .32, 1)</h3><p style="font-size:14px">Uma curva "líquida" em 200ms e 400ms. Usuários com preferência por redução de movimento recebem superfícies sólidas sem blur.</p></div>
+      <div class="card"><span class="tag">Escala</span><h3 style="font-size:22px">Espaçamento em 8 passos, 4 raios</h3><p style="font-size:14px">0.25 → 3rem de espaçamento; raios de 12 / 14 / 16 / 20px pela função do componente. Campos de entrada fixados em 48px.</p></div>
     </div>
 
     <div class="stats rv">
-      <div><b data-count="20">20</b><span>Documented component groups on the booking page alone</span></div>
-      <div><b data-count="3">3</b><span>Breakpoints (992 / 768 / 480) plus coarse-pointer and short-landscape rules</span></div>
-      <div><b data-count="11">11</b><span>Z-index layers, mapped and documented</span></div>
-      <div><b data-count="1">1</b><span>Handoff board built as a Figma-style artboard document</span></div>
+      <div><b data-count="20">20</b><span>Grupos de componentes documentados apenas na página de agendamento</span></div>
+      <div><b data-count="3">3</b><span>Breakpoints (992 / 768 / 480) além de regras para ponteiros touch e telas horizontais</span></div>
+      <div><b data-count="11">11</b><span>Camadas de profundidade (z-index) mapeadas e documentadas</span></div>
+      <div><b data-count="1">1</b><span>Painel de handoff estruturado como documento de artboards no estilo Figma</span></div>
     </div>
   </div>
 </section>
@@ -935,18 +920,18 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="lifecycle" class="pf-sec alt">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Decision 03 · Orchestration</p>
-      <h2>Seventeen handoffs, three people, one booking.</h2>
-      <p class="lede">Before drawing screens I mapped the full service lifecycle as swimlanes. Every state a booking can enter, who owns it, and what each person is allowed to see at that moment.</p>
+      <p class="eyebrow">Decisão 03 · Orquestração</p>
+      <h2>Dezessete transições de estado, três pessoas, uma única reserva.</h2>
+      <p class="lede">Antes de desenhar telas, formalizei o ciclo de vida completo do serviço em diagramas swimlanes: cada estado da reserva, quem é o responsável e o que cada pessoa tem permissão de visualizar naquele instante.</p>
     </div>
-    <div class="lanes rv" role="list" aria-label="Service lifecycle across customer, admin and professional">
-      <div class="lane c" role="listitem"><h4>Customer</h4><div class="st" style="--t:1"><b>1. Configure &amp; pay</b><span>Chooses the service and pays up front.</span><em>Up to 3 decline attempts</em></div><div class="st" style="--t:6"><b>2. Wait for a match</b><span>Told the payment cleared and a professional is being assigned.</span></div><div class="st" style="--t:8"><b>3. Preview the professional</b><span>Sees a preview of who is coming.</span><em>Can cancel any time</em></div><div class="st" style="--t:9"><b>4. Follow the route</b><span>On the day, watches the professional travel on the map.</span></div><div class="st" style="--t:13"><b>5. Execution screen</b><span>While the clean happens: a calm "in progress" view with the task summary.</span></div><div class="st" style="--t:16"><b>6. Rate &amp; escalate</b><span>Rates the service. Under 3 stars opens a ticket automatically.</span><em>Within 48h</em></div></div>
-      <div class="lane a" role="listitem"><h4>Admin</h4><div class="st" style="--t:2"><b>1. Escalation queue</b><span>Receives the paid booking and looks for a professional.</span></div><div class="st" style="--t:3"><b>2. Assign</b><span>Sends the invitation to the selected professional.</span></div><div class="st" style="--t:5"><b>3. Handle rejection</b><span>If declined, reads the feedback and escalates to the next in line.</span></div><div class="st" style="--t:12"><b>4. Monitor</b><span>If the system raises "Area abandonment", calls the professional.</span><em>Crisis management</em></div><div class="st" style="--t:17"><b>5. Financial close</b><span>Processes the payout; can apply discounts if the customer raised a complaint.</span></div></div>
-      <div class="lane p" role="listitem"><h4>Professional</h4><div class="st" style="--t:4"><b>1. Receive the job</b><span>Notified by escalation. Accepts or rejects.</span><em>Many rejections = alert</em></div><div class="st" style="--t:7"><b>2. Unlock the route</b><span>If accepted: GPS navigation, address and task list are released.</span></div><div class="st" style="--t:10"><b>3. Arrive &amp; gain access</b><span>Waits for the customer or uses the access code. If it fails, cancels and receives a partial payment.</span></div><div class="st" style="--t:11"><b>4. Perform the service</b><span>Works on site. Leaving the GPS radius flags "Abandonment".</span></div><div class="st" style="--t:14"><b>5. Photo report</b><span>Takes photos and writes the note that proves quality delivery.</span></div><div class="st" style="--t:15"><b>6. Rate &amp; close</b><span>Rates the customer. After closing, loses access to phone numbers and addresses.</span><em>End of cycle</em></div></div>
+    <div class="lanes rv" role="list" aria-label="Ciclo de vida do serviço entre cliente, admin e profissional">
+      <div class="lane c" role="listitem"><h4>Cliente</h4><div class="st" style="--t:1"><b>1. Configurar &amp; pagar</b><span>Escolhe o serviço e paga antecipadamente.</span><em>Até 3 tentativas de recusa</em></div><div class="st" style="--t:6"><b>2. Aguardar alocação</b><span>Avisado de que o pagamento foi aprovado e um profissional está sendo atribuído.</span></div><div class="st" style="--t:8"><b>3. Conhecer o profissional</b><span>Visualiza os dados de quem irá atendê-lo.</span><em>Pode cancelar a qualquer momento</em></div><div class="st" style="--t:9"><b>4. Acompanhar a rota</b><span>No dia agendado, acompanha o deslocamento do profissional no mapa.</span></div><div class="st" style="--t:13"><b>5. Tela de execução</b><span>Durante o atendimento: interface serena com o resumo das tarefas em andamento.</span></div><div class="st" style="--t:16"><b>6. Avaliar &amp; reportar</b><span>Avalia o serviço. Notas abaixo de 3 estrelas abrem um chamado automaticamente.</span><em>Em até 48h</em></div></div>
+      <div class="lane a" role="listitem"><h4>Admin</h4><div class="st" style="--t:2"><b>1. Fila de escalonamento</b><span>Recebe a reserva confirmada e busca o profissional mais adequado.</span></div><div class="st" style="--t:3"><b>2. Atribuir</b><span>Dispara o convite de serviço para o profissional selecionado.</span></div><div class="st" style="--t:5"><b>3. Tratar recusa</b><span>Em caso de recusa, analisa o motivo e repassa ao próximo da fila.</span></div><div class="st" style="--t:12"><b>4. Monitorar</b><span>Se o sistema acusar abandono de área, aciona o profissional por telefone.</span><em>Gestão de contingência</em></div><div class="st" style="--t:17"><b>5. Fechamento financeiro</b><span>Processa o repasse; pode aplicar descontos caso o cliente tenha aberto chamado.</span></div></div>
+      <div class="lane p" role="listitem"><h4>Profissional</h4><div class="st" style="--t:4"><b>1. Receber o serviço</b><span>Notificado por escalonamento. Aceita ou recusa a chamada.</span><em>Muitas recusas geram alerta</em></div><div class="st" style="--t:7"><b>2. Liberar rota</b><span>Ao aceitar: navegação por GPS, endereço e checklist são desbloqueados.</span></div><div class="st" style="--t:10"><b>3. Chegar &amp; acessar</b><span>Aguarda o cliente ou utiliza o código de acesso. Se houver falha, cancela e recebe taxa parcial.</span></div><div class="st" style="--t:11"><b>4. Executar a limpeza</b><span>Trabalha no local. Afastar-se do raio de GPS sinaliza alerta de abandono.</span></div><div class="st" style="--t:14"><b>5. Relatório fotográfico</b><span>Registra fotos e anotações que comprovam a qualidade da entrega.</span></div><div class="st" style="--t:15"><b>6. Avaliar &amp; encerrar</b><span>Avalia o cliente. Ao concluir, perde o acesso a telefones e endereços particulares.</span><em>Fim do ciclo</em></div></div>
     </div>
     <div class="two" style="margin-top:56px">
-      <div class="rv"><h3>Privacy is a state, not a setting</h3><p>Professionals see the address and phone only between "accepted" and "closed". The customer sees the professional only after a match. Permissions follow the booking's state, so there is no screen where someone sees more than they should.</p></div>
-      <div class="rv"><h3>Failure paths are designed, not discovered</h3><p>Declines, locked doors, leaving the radius and low ratings each have an owner and an outcome (retry, partial pay, a phone call, an automatic ticket). The glowing card above walks the happy path; the other branches are where the product earns trust.</p></div>
+      <div class="rv"><h3>Privacidade é um estado, não uma configuração</h3><p>Profissionais visualizam endereço e telefone apenas entre os status "aceito" e "concluído". O cliente só vê os dados do profissional após a correspondência ser confirmada. As permissões acompanham o estado da reserva, eliminando qualquer tela em que alguém veja mais do que deveria.</p></div>
+      <div class="rv"><h3>Caminhos de exceção são desenhados, não descobertos no improviso</h3><p>Recusas de serviço, portas trancadas, saída do raio geográfico e avaliações baixas têm, cada uma, um responsável e um desfecho definido (nova tentativa, pagamento parcial, ligação telefônica ou chamado automático de suporte). O fluxo principal ilustra o caminho ideal; as ramificações de exceção são onde o produto conquista a confiança.</p></div>
     </div>
   </div>
 </section>
@@ -954,9 +939,9 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="field" style="background:var(--navy);color:#fff" class="pf-sec">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow" style="color:#9fb4d4">Decision 04 · Field app &amp; tracking</p>
-      <h2 style="color:#fff">Designing for a person with wet hands and one thumb.</h2>
-      <p class="lede" style="color:#E6EEFA">The professional's app optimises for glanceability: next job, route, checklist. The customer's tracking view and the admin map reuse the same location stream, so all three see one truth.</p>
+      <p class="eyebrow" style="color:#9fb4d4">Decisão 04 · App de campo &amp; rastreamento</p>
+      <h2 style="color:#fff">Projetado para alguém com as mãos molhadas e apenas um polegar.</h2>
+      <p class="lede" style="color:#E6EEFA">O app do profissional prioriza leitura instantânea em movimento: próximo serviço, rota no mapa e checklist de cômodos. A central e o cliente consomem o mesmo stream de localização, garantindo uma única verdade operacional.</p>
     </div>
 
     <figure class="rv">
@@ -1030,17 +1015,17 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
           </div>
         </div>
       </div>
-      <figcaption><b>Recreated from the real screens in the product code</b> (<code>connectblue/professional/jobs.php</code> and <code>checklist.php</code>, <code>customer/track-professional.php</code>, <code>admin/live-tracking.php</code>): the same labels, statuses, colours and layout, with placeholder names, places and amounts. The maps are drawn, not Google Maps. Not screenshots: those screens run on live data.</figcaption>
+      <figcaption><b>Recriado a partir das telas reais no código do produto</b> (<code>connectblue/professional/jobs.php</code> e <code>checklist.php</code>, <code>customer/track-professional.php</code>, <code>admin/live-tracking.php</code>): os mesmos rótulos, status, cores e layout, com nomes, locais e valores demonstrativos. Os mapas são ilustrados, não Google Maps. Telas reais alimentadas por dados ao vivo.</figcaption>
     </figure>
 
     <div class="two" style="margin-top:56px">
       <div class="rv">
-        <h3 style="color:#fff">Tracking that survives the real world</h3>
-        <p style="color:#B9C7DD">Phones suspend web apps the moment a cleaner opens Maps. I wrapped the PWA in a native shell purely to keep background location alive, issuing scoped API tokens so the app can report without a browser session. The design problem was making that invisible: one permission prompt, plain language, no jargon.</p>
+        <h3 style="color:#fff">Rastreamento que funciona no mundo real</h3>
+        <p style="color:#B9C7DD">Smartphones suspendem aplicações web no instante em que o profissional abre o Google Maps. Empacotei a PWA em um shell nativo exclusivamente para manter a geolocalização em segundo plano ativa, emitindo tokens de API com escopo restrito para que o app transmita sua posição sem exigir uma sessão ativa no navegador. O desafio de design foi tornar isso invisível: apenas uma solicitação de permissão, em linguagem direta e sem jargões técnicos.</p>
       </div>
       <div class="rv">
-        <h3 style="color:#fff">Checklists as a quality contract</h3>
-        <p style="color:#B9C7DD">Each service has its own checklist. What the customer paid for, what the professional ticks and what admin can audit are one data structure, so "did they do the oven?" has an answer.</p>
+        <h3 style="color:#fff">Checklists como contrato de qualidade</h3>
+        <p style="color:#B9C7DD">Cada tipo de serviço possui seu próprio checklist estruturado. O que o cliente contratou, o que o profissional marca como concluído e o que o operador administrativo audita compartilham a mesma estrutura de dados — assim, a pergunta "o forno foi limpo?" sempre tem uma resposta auditável com foto do antes e depois.</p>
       </div>
     </div>
   </div>
@@ -1049,28 +1034,28 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 <section id="proposals" class="pf-sec band">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Decision 05 · UI proposals for the next iteration</p>
-      <h2>The logic already ships. These screens make it legible.</h2>
-      <p class="lede">Four flows where the rules exist in production code but the interface could explain them better. Each proposal says what exists today and what I would change.</p>
+      <p class="eyebrow">Decisão 05 · Propostas de interface para a próxima versão</p>
+      <h2>A lógica já roda em produção. Estas telas a tornam evidente.</h2>
+      <p class="lede">Quatro fluxos cujas regras já existem no código em produção, mas cuja interface poderia explicá-las com maior clareza. Cada proposta detalha o comportamento atual e o que eu aperfeiçoaria.</p>
     </div>
 
-    <div class="tabs rv" role="tablist" aria-label="UI proposals" id="tabs">
-      <button role="tab" aria-selected="true" aria-controls="tp1" id="t1">Pause, don't cancel<small>Subscriptions</small><i class="tp"></i></button>
-      <button role="tab" aria-selected="false" aria-controls="tp2" id="t2" tabindex="-1">Ratings that route<small>Quality loop</small><i class="tp"></i></button>
-      <button role="tab" aria-selected="false" aria-controls="tp3" id="t3" tabindex="-1">Referral progress<small>Referral Club</small><i class="tp"></i></button>
-      <button role="tab" aria-selected="false" aria-controls="tp4" id="t4" tabindex="-1">Night Liquid Glass<small>Theming</small><i class="tp"></i></button>
+    <div class="tabs rv" role="tablist" aria-label="Propostas de interface" id="tabs">
+      <button role="tab" aria-selected="true" aria-controls="tp1" id="t1">Pausar, não cancelar<small>Assinaturas</small><i class="tp"></i></button>
+      <button role="tab" aria-selected="false" aria-controls="tp2" id="t2" tabindex="-1">Avaliações com rota<small>Ciclo de qualidade</small><i class="tp"></i></button>
+      <button role="tab" aria-selected="false" aria-controls="tp3" id="t3" tabindex="-1">Progresso de indicações<small>Clube de Recompensas</small><i class="tp"></i></button>
+      <button role="tab" aria-selected="false" aria-controls="tp4" id="t4" tabindex="-1">Liquid Glass Noturno<small>Tema escuro</small><i class="tp"></i></button>
     </div>
 
     <div class="stage rv">
       <!-- 1 · pause -->
       <div class="tp-panel on" role="tabpanel" id="tp1" aria-labelledby="t1">
         <div class="tp-copy">
-          <span class="pill y">Proposal · edge case</span>
-          <h3>Postponing should show where the clean lands.</h3>
+          <span class="pill y">Proposta · caso de borda</span>
+          <h3>Adiar uma data deveria mostrar claramente quando será a próxima limpeza.</h3>
           <dl>
-            <div><dt>Exists today</dt><dd>One tap postpones the next service and moves it to the end of the plan. Each subscription allows 3 moves; cancelling carries a fee.</dd></div>
-            <div><dt>Proposal</dt><dd>Preview the move before it happens, show remaining postponements as pips, and offer “pause” above “cancel” so the cheaper path is the obvious one.</dd></div>
-            <div><dt>Why</dt><dd>The cap is a rule customers only learn when they hit it. Making it visible turns a refusal into a choice.</dd></div>
+            <div><dt>Como é hoje</dt><dd>Um toque adia o próximo serviço para o final do plano. Cada assinatura permite até 3 adiamentos; o cancelamento antecipado envolve cobrança de taxa.</dd></div>
+            <div><dt>Proposta</dt><dd>Pré-visualizar a nova data antes de confirmar, exibir os adiamentos restantes como marcadores visuais e destacar a opção "pausar" acima de "cancelar", tornando o caminho mais econômico a escolha natural.</dd></div>
+            <div><dt>Por quê</dt><dd>O limite é uma regra que o cliente só descobria ao atingi-lo. Torná-lo transparente transforma uma restrição em escolha consciente.</dd></div>
           </dl>
         </div>
         <div class="tp-dev" aria-hidden="true">
@@ -1094,12 +1079,12 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
       <!-- 2 · rating -->
       <div class="tp-panel" role="tabpanel" id="tp2" aria-labelledby="t2">
         <div class="tp-copy">
-          <span class="pill y">Proposal · quality loop</span>
-          <h3>A bad clean should end in a promise, not silence.</h3>
+          <span class="pill y">Proposta · ciclo de qualidade</span>
+          <h3>Uma limpeza insatisfatória deve terminar em compromisso concreto, não em silêncio.</h3>
           <dl>
-            <div><dt>Exists today</dt><dd>A rating under 3 stars opens a support ticket automatically and can lead to a discount at financial close.</dd></div>
-            <div><dt>Proposal</dt><dd>Branch the screen at the moment of the rating: quick-tap reasons instead of an empty text box, then a ticket receipt so the customer sees that someone owns it.</dd></div>
-            <div><dt>Why</dt><dd>The escalation already happens in admin. The customer just can't see it, so it feels like nothing happened.</dd></div>
+            <div><dt>Como é hoje</dt><dd>Uma nota abaixo de 3 estrelas abre um ticket de suporte automaticamente e pode conceder desconto no fechamento contábil.</dd></div>
+            <div><dt>Proposta</dt><dd>Ramificar a interface no momento da avaliação: motivos rápidos em botões clicáveis em vez de uma caixa de texto em branco, seguidos por um protocolo de chamado para que o cliente veja que alguém assumiu o problema imediatamente.</dd></div>
+            <div><dt>Por quê</dt><dd>O escalonamento já acontecia no back-office, mas o cliente não tinha visibilidade, ficando com a impressão de que nada foi feito.</dd></div>
           </dl>
         </div>
         <div class="tp-dev" aria-hidden="true">
@@ -1126,12 +1111,12 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
       <!-- 3 · referral -->
       <div class="tp-panel" role="tabpanel" id="tp3" aria-labelledby="t3">
         <div class="tp-copy">
-          <span class="pill y">Proposal · motivation</span>
-          <h3>One ring that answers “how far to the next level?”</h3>
+          <span class="pill y">Proposta · motivação</span>
+          <h3>Um anel visual que responde instantaneamente: "quanto falta para o próximo nível?"</h3>
           <dl>
-            <div><dt>Exists today</dt><dd>Referral Club levels are data-driven: each level has an earnings range, an icon and its own commission percentage.</dd></div>
-            <div><dt>Proposal</dt><dd>Lead with progress to the next level instead of a table of levels, and make sharing the link a one-tap action with clear feedback.</dd></div>
-            <div><dt>Why</dt><dd>People act on the gap, not the list. Values shown are sample data.</dd></div>
+            <div><dt>Como é hoje</dt><dd>Os níveis do Clube de Indicações são orientados por dados: cada faixa possui uma meta financeira, um ícone e sua respectiva porcentagem de comissão.</dd></div>
+            <div><dt>Proposta</dt><dd>Destacar a distância até o próximo nível em vez de apenas listar uma tabela estática, transformando o compartilhamento do link em uma ação de um toque com feedback imediato.</dd></div>
+            <div><dt>Por quê</dt><dd>As pessoas se motivam pela proximidade da meta, não pela leitura de tabelas. Valores exibidos são dados demonstrativos.</dd></div>
           </dl>
         </div>
         <div class="tp-dev" aria-hidden="true">
@@ -1156,11 +1141,11 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
       <!-- 4 · theme -->
       <div class="tp-panel" role="tabpanel" id="tp4" aria-labelledby="t4">
         <div class="tp-copy">
-          <span class="pill y">Proposal · system</span>
-          <h3>Dark mode as a token swap, not a rewrite.</h3>
+          <span class="pill y">Proposta · sistema</span>
+          <h3>Modo escuro como substituição de tokens, não como refatoração de código.</h3>
           <dl>
-            <div><dt>Exists today</dt><dd>Three overlapping <code>:root</code> token sets and <code>!important</code> on inputs make theming fragile (see trade-offs below).</dd></div>
-            <div><dt>Proposal</dt><dd>After consolidating to one semantic token file, a “night glass” theme only remaps surface, text and state tokens. Components don't change.</dd></div>
+            <div><dt>Como é hoje</dt><dd>Três blocos concorrentes de tokens em <code>:root</code> e uso excessivo de <code>!important</code> em campos tornam a troca de temas frágil (ver trade-offs abaixo).</dd></div>
+            <div><dt>Proposta</dt><dd>Após a consolidação em um arquivo semântico unificado, o tema "vidro noturno" apenas remapeia superfícies, tipografia e estados. A estrutura dos componentes permanece intacta.</dd></div>
           </dl>
           <div class="tokmap"><span class="h">Token</span><span class="h">Day</span><span class="h">Night</span>
             <span>--surface</span><span><i style="background:#F4F7FB"></i>#F4F7FB</span><span><i style="background:#0b1730"></i>#0B1730</span>
@@ -1184,55 +1169,55 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
         </div>
       </div>
     </div>
-    <p class="rv" style="margin-top:16px;font-size:14px">Tabs advance on their own; click one to stay on it. Everything on this stage is a proposal, not shipped UI.</p>
+    <p class="rv" style="margin-top:16px;font-size:14px">As abas avançam automaticamente; clique em uma para pausar nela. Tudo neste palco é uma proposta de evolução, não interface final em produção.</p>
   </div>
 </section>
 
 <section id="artefacts" class="pf-sec">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">From the working files</p>
-      <h2>The documents the team actually used.</h2>
-      <p class="lede">Two real artefacts from the repository, unedited: the swimlane flow I used to align customer, admin and professional behaviour, and the design-system board used for developer handoff. Labels are in Portuguese, the team's working language.</p>
+      <p class="eyebrow">Dos arquivos de trabalho</p>
+      <h2>Os documentos que a equipe realmente utilizou.</h2>
+      <p class="lede">Dois artefatos reais extraídos do repositório, sem edições: o fluxo em swimlanes utilizado para alinhar o comportamento do cliente, da administração e dos profissionais, e o painel do design system utilizado no handoff de engenharia. A nomenclatura original está em português, o idioma de trabalho da equipe técnica.</p>
     </div>
-    <figure class="rv"><div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/flow-swimlanes.png" alt="Original swimlane diagram of the booking system with customer, admin and professional lanes" loading="lazy"></div><figcaption><b>Interaction flow: Booking System.</b> The source of the lifecycle section above.</figcaption></figure>
-    <figure class="rv"><div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/board-tokens.png" alt="Design system board showing colour tokens and semantic booking colours" loading="lazy"></div><figcaption><b>Design-system board.</b> Tokens and semantic colours, with components styled by the real <code>blue.css</code>.</figcaption></figure>
+    <figure class="rv"><div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/flow-swimlanes.png" alt="Diagrama original em swimlanes do sistema de reservas com fluxos de cliente, admin e profissional" loading="lazy"></div><figcaption><b>Fluxo de interação: Sistema de Reservas.</b> A base conceitual da seção de ciclo de vida acima.</figcaption></figure>
+    <figure class="rv"><div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="assets/board-tokens.png" alt="Painel do design system exibindo tokens de cor e paleta semântica de reservas" loading="lazy"></div><figcaption><b>Painel do Design System.</b> Tokens e cores semânticas, com componentes estilizados pelo arquivo <code>blue.css</code> de produção.</figcaption></figure>
   </div>
 </section>
 
 <section id="honest" class="pf-sec alt">
   <div class="wrap">
     <div class="rv">
-      <p class="eyebrow">Trade-offs &amp; honesty</p>
-      <h2>What I'd fix next, and why I wrote it down.</h2>
-      <p class="lede">A design system that grew inside a shipping product accumulates debt. I audited mine and documented it for the team. Naming it is part of the job.</p>
+      <p class="eyebrow">Decisões técnicas e trade-offs</p>
+      <h2>O que eu refaria e por que documentei tudo abertamente.</h2>
+      <p class="lede">Um design system construído em ritmo acelerado dentro de um produto em lançamento inevitavelmente acumula dívida técnica. Auditei cada ponto com franqueza e documentei para o time de engenharia. Assumir isso faz parte do trabalho de um designer sênior.</p>
     </div>
     <table class="rv">
-      <thead><tr><th>Issue found</th><th>Impact</th><th>Planned direction</th></tr></thead>
+      <thead><tr><th>Problema identificado</th><th>Impacto</th><th>Direção planejada</th></tr></thead>
       <tbody>
-        <tr><td>Three overlapping <code>:root</code> token sets</td><td>Surface and border colours can silently diverge between pages.</td><td>Single token file; alias, then delete legacy names.</td></tr>
-        <tr><td>Heavy <code>!important</code> on form inputs</td><td>Theming and dark mode become fragile.</td><td>Move to cascade layers; one input component.</td></tr>
-        <tr><td>Two time-slot patterns</td><td>Inconsistent selection UI across flows.</td><td>Converge on the arrival-window pattern.</td></tr>
-        <tr><td>Inline styles in page templates</td><td>Hard to review, hard to reuse.</td><td>Extract to component CSS per section.</td></tr>
+        <tr><td>Três conjuntos sobrepostos de tokens em <code>:root</code></td><td>Cores de superfície e borda podem divergir silenciosamente entre páginas.</td><td>Arquivo único de tokens; criar aliases temporários e depois remover variáveis legadas.</td></tr>
+        <tr><td>Uso de <code>!important</code> em campos de formulário</td><td>Customização de temas e modo escuro tornam-se frágeis.</td><td>Migrar para cascade layers do CSS; componente único e padronizado de input.</td></tr>
+        <tr><td>Dois padrões distintos de seleção de horário</td><td>Interface inconsistente entre diferentes fluxos do produto.</td><td>Padronizar tudo sobre o modelo de janela de chegada.</td></tr>
+        <tr><td>Estilos inline em templates de páginas</td><td>Dificuldade de revisão de código e baixa reutilização.</td><td>Extrair para arquivos CSS modulares por componente.</td></tr>
       </tbody>
     </table>
-    <div class="callout rv"><b>Takeaway:</b> I chose to ship the flow first and systematise after patterns repeated. That bought speed at the cost of the debt above, a trade I'd make again for a 0→1 product, with a scheduled consolidation pass.</div>
+    <div class="callout rv"><b>Conclusão:</b> Optei por colocar o fluxo no ar primeiro e sistematizar os componentes após a repetição dos padrões. Essa escolha comprou velocidade de mercado ao custo da dívida técnica acima descrita — um trade-off que eu faria novamente em um produto 0→1, desde que acompanhado por uma etapa planejada de consolidação.</div>
   </div>
 </section>
 
 <section class="pf-sec">
   <div class="wrap two">
     <div class="rv">
-      <p class="eyebrow">Reflections</p>
-      <h2>What this project taught me.</h2>
+      <p class="eyebrow">Reflexões</p>
+      <h2>O que este projeto me ensinou.</h2>
     </div>
     <div class="rv">
-      <h3>Design the invisible states</h3>
-      <p>Most of the quality lives in loading, empty, partial and error states: limited availability, failed address lookup, a professional who's late. I specified these before the happy path polish.</p>
-      <h3 style="margin-top:28px">Own the seam between design and code</h3>
-      <p>Building what I designed meant every compromise (performance, a third-party map, iOS background limits) was a design decision I made with full information.</p>
-      <h3 style="margin-top:28px">Systems are products too</h3>
-      <p>The design-system document and handoff board were made for the next person on the team, including future me.</p>
+      <h3>Desenhe os estados invisíveis</h3>
+      <p>A maior parte da percepção de qualidade mora nos estados de carregamento, telas vazias, retornos parciais e cenários de erro: disponibilidade reduzida, falha na busca de endereço ou um profissional atrasado. Especifiquei cada um desses comportamentos antes mesmo de refinar o caminho feliz.</p>
+      <h3 style="margin-top:28px">Domine a transição entre design e código</h3>
+      <p>Desenvolver aquilo que projetei significou que cada compromisso técnico (performance de renderização, integração com mapas ou limitações de background do iOS) foi uma decisão de design consciente e tomada com pleno conhecimento de causa.</p>
+      <h3 style="margin-top:28px">Sistemas também são produtos</h3>
+      <p>O documento de design system e o quadro de handoff foram concebidos com empatia para o próximo profissional da equipe — incluindo o meu próprio eu do futuro.</p>
     </div>
   </div>
 </section>
@@ -1241,16 +1226,16 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
   <div class="wrap">
     <div class="pf-fgrid">
       <div>
-        <p class="eyebrow">Next case</p>
-        <a class="pf-next" data-auto href="../cobra-kai/index.html"><img src="../cobra-kai/assets/keyart.jpg" alt="" loading="lazy"><div><b>Cobra Kai · Season 3</b><span>A fighting game as a trailer: concept art, pixel art and UI for a mobile advergame.</span></div><i class="arr" aria-hidden="true">→</i></a>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../cobra-kai/index.html"><img src="../cobra-kai/assets/keyart.jpg" alt="" loading="lazy"><div><b>Cobra Kai · 3ª Temporada</b><span>Um jogo de luta como trailer: arte conceitual, pixel art e UI para um advergame mobile.</span></div><i class="arr" aria-hidden="true">→</i></a>
       </div>
       <div>
-        <h2>Let's talk about your product.</h2>
-        <p>Happy to walk through the flows, the system and the trade-offs live.</p>
+        <h2>Vamos conversar sobre o seu produto.</h2>
+        <p>Terei prazer em demonstrar os fluxos, o sistema visual e os trade-offs em uma conversa ao vivo.</p>
         <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
       </div>
     </div>
-    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Blue Services · case study</span></div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Blue Services · estudo de caso</span></div>
   </div>
 </footer>
 
