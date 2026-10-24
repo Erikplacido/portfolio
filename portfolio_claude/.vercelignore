@@ -3,3 +3,8 @@ dev/
 .claude/
 node_modules/
 
+# notas internas: ficam no repositório, mas não vão pro site
+/CLAUDE.md
+/AGENTS.md
+/PENDENCIAS.md
+/CHAT-TELEGRAM.md
