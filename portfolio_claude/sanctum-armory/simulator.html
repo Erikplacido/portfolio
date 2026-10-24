@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<script src="../shared/cases.js"></script>
+<script>
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSANGA // INVENTÁRIO — High-Density Loot, Spatial Inventory & Accessibility System (GAME UI/UX · CONCEITO)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel (Dark Fantasy/Sci-Fi Headers), Rajdhani (Tactical HUD), JetBrains Mono (Numbers & Deltas), Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --font-serif: 'Cinzel', serif;
+            --font-display: 'Rajdhani', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-sans: 'Inter', sans-serif;
+
+            /* Rarity Semantic Tokens */
+            --rarity-common: #94A3B8;
+            --rarity-rare: #38BDF8;
+            --rarity-epic: #C084FC;
+            --rarity-legendary: #FBBF24;
+
+            /* Delta Semantic Tokens (Standard vs Colorblind Safe toggled via class) */
+            --delta-pos-text: #4ADE80;
+            --delta-pos-bg: rgba(34, 197, 94, 0.16);
+            --delta-pos-border: rgba(74, 222, 128, 0.45);
+            --delta-neg-text: #FB7185;
+            --delta-neg-bg: rgba(244, 63, 94, 0.16);
+            --delta-neg-border: rgba(251, 113, 133, 0.45);
+        }
+
+        /* High-Contrast Colorblind-Safe Delta Palette (Cyan-Blue vs Warm Orange-Amber) */
+        body.cb-safe-deltas {
+            --delta-pos-text: #38BDF8;
+            --delta-pos-bg: rgba(56, 189, 248, 0.20);
+            --delta-pos-border: rgba(56, 189, 248, 0.65);
+            --delta-neg-text: #FB923C;
+            --delta-neg-bg: rgba(251, 146, 60, 0.20);
+            --delta-neg-border: rgba(251, 146, 60, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #06080E;
+            color: #E2E8F0;
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+        }
+
+        .font-serif-title { font-family: var(--font-serif); }
+        .font-display { font-family: var(--font-display); }
+        .font-mono-num { font-family: var(--font-mono); }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070A12; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* =================================================================
+           REDUNDANT RARITY PATTERNS & BORDERS (ACCESSIBILITY CORE)
+           Differentiates Common, Rare, Epic, Legendary even in 100% Grayscale
+        ================================================================== */
+        /* 1. COMUM: Smooth Matte Surface */
+        .rarity-surface-common {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(148, 163, 184, 0.35);
+        }
+
+        /* 2. REFORÇADO: Diagonal Technical Hatching */
+        .rarity-surface-rare {
+            background:
+                repeating-linear-gradient(
+                    -45deg,
+                    rgba(56, 189, 248, 0.08),
+                    rgba(56, 189, 248, 0.08) 6px,
+                    transparent 6px,
+                    transparent 12px
+                ),
+                linear-gradient(145deg, rgba(12, 45, 72, 0.88), rgba(8, 20, 38, 0.95));
+            border: 1.5px solid rgba(56, 189, 248, 0.65);
+            box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.15);
+        }
+
+        /* 3. APURADO: Arcane Cross-Grid Pattern */
+        .rarity-surface-epic {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(192, 132, 252, 0.18), transparent 55%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(192, 132, 252, 0.07) 0px,
+                    rgba(192, 132, 252, 0.07) 1px,
+                    transparent 1px,
+                    transparent 10px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(192, 132, 252, 0.07) 0px,
+                    rgba(192, 132, 252, 0.07) 1px,
+                    transparent 1px,
+                    transparent 10px
+                ),
+                linear-gradient(145deg, rgba(46, 16, 78, 0.9), rgba(17, 10, 32, 0.96));
+            border: 1.5px solid rgba(192, 132, 252, 0.75);
+            box-shadow: inset 0 0 16px rgba(192, 132, 252, 0.22);
+        }
+
+        /* 4. EXCEPCIONAL: Radiant Sunburst + Animated Shimmer & Double Frame */
+        @keyframes legendary-pulse {
+            0%, 100% {
+                box-shadow: inset 0 0 18px rgba(251, 191, 36, 0.3), 0 0 12px rgba(251, 191, 36, 0.25);
+                border-color: rgba(251, 191, 36, 0.9);
+            }
+            50% {
+                box-shadow: inset 0 0 28px rgba(251, 191, 36, 0.5), 0 0 20px rgba(245, 158, 11, 0.45);
+                border-color: #FEF08A;
+            }
+        }
+
+        .rarity-surface-legendary {
+            background:
+                repeating-conic-gradient(
+                    from 0deg at 50% 50%,
+                    rgba(251, 191, 36, 0.10) 0deg 12deg,
+                    transparent 12deg 24deg
+                ),
+                radial-gradient(circle at 50% 30%, rgba(251, 191, 36, 0.25), transparent 65%),
+                linear-gradient(145deg, rgba(69, 39, 10, 0.92), rgba(24, 15, 6, 0.97));
+            border: 2px solid rgba(251, 191, 36, 0.9);
+            animation: legendary-pulse 3s infinite ease-in-out;
+        }
+
+        /* Floating Particles inside Legendary & Epic Items */
+        @keyframes float-spark {
+            0% { transform: translateY(100%) scale(0.6); opacity: 0; }
+            40% { opacity: 0.95; }
+            100% { transform: translateY(-20%) scale(1.1); opacity: 0; }
+        }
+        .rarity-spark {
+            position: absolute;
+            pointer-events: none;
+            animation: float-spark 2.4s infinite linear;
+        }
+
+        /* Delta Badges (Dynamic Colorblind Support) */
+        .delta-badge-pos {
+            color: var(--delta-pos-text);
+            background-color: var(--delta-pos-bg);
+            border: 1px solid var(--delta-pos-border);
+        }
+        .delta-badge-neg {
+            color: var(--delta-neg-text);
+            background-color: var(--delta-neg-bg);
+            border: 1px solid var(--delta-neg-border);
+        }
+        .delta-bar-pos { background-color: var(--delta-pos-text); }
+        .delta-bar-neg {
+            background: repeating-linear-gradient(
+                45deg,
+                var(--delta-neg-text),
+                var(--delta-neg-text) 3px,
+                rgba(0,0,0,0.5) 3px,
+                rgba(0,0,0,0.5) 6px
+            );
+        }
+
+        /* Spatial Grid Cell Styling */
+        .tetris-grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, minmax(0, 1fr));
+            grid-template-rows: repeat(6, minmax(0, 1fr));
+            aspect-ratio: 10 / 6;
+            position: relative;
+        }
+
+        .tetris-item-card {
+            transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.16s ease;
+            cursor: grab;
+        }
+        .tetris-item-card:active {
+            cursor: grabbing;
+        }
+        .tetris-item-card:hover {
+            z-index: 25;
+            transform: scale(1.025);
+        }
+        .tetris-item-card.selected-item {
+            outline: 2px solid #F8FAFC;
+            outline-offset: 1px;
+            z-index: 30;
+        }
+
+        /* UX Annotation Pulse */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 0.5; }
+            100% { transform: scale(0.95); opacity: 0.9; }
+        }
+        .ux-callout-box {
+            animation: pulse-ring 3s infinite ease-in-out;
+        }
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Musanga material language: timber, abyss blue, copper, parchment. */
+body{background:#10191c!important;color:#e8dfca!important}header{background:#171b1a!important;border-color:#8a6947!important}.font-serif-title{font-family:Georgia,serif!important}#armory-viewport>section{background:#172125f5!important;border-color:#655b49!important;border-radius:5px!important}#armory-backdrop{opacity:.12!important}button{min-height:36px}button:focus-visible,[role=button]:focus-visible,a:focus-visible{outline:3px solid #f1d19a!important;outline-offset:3px}p,li{user-select:text!important}.musanga-portrait{width:100%;height:100%;object-fit:cover;object-position:29% center;border:1px solid #a08056;border-radius:3px}.musanga-context{display:flex;align-items:center;gap:30px;padding:22px 24px;border-bottom:1px solid #6f6048;background:linear-gradient(90deg,#1d282a,#30261e);color:#e7dac3}.musanga-context span{display:block;font:9px system-ui;letter-spacing:.17em;color:#d1ad79}.musanga-context strong{font:26px Georgia,serif;display:block;margin-top:6px}.musanga-context p{font:12px/1.7 system-ui;max-width:540px;color:#c8c9bd;margin-left:auto}.musanga-context a{white-space:nowrap;font-size:12px;color:#edc38d}.rarity-surface-common{background:#263032!important;border-color:#9ba7a2!important}.rarity-surface-rare{background:repeating-linear-gradient(135deg,#b7c5bf15 0 2px,transparent 2px 9px),#233339!important;border-color:#8caaa9!important}.rarity-surface-epic{background:repeating-linear-gradient(0deg,#c79f7318 0 1px,transparent 1px 10px),repeating-linear-gradient(90deg,#c79f7318 0 1px,transparent 1px 10px),#34302a!important;border-color:#c5a37b!important}.rarity-surface-legendary{background:radial-gradient(ellipse at top,#80624555,transparent),#312920!important;border:3px double #d4b780!important;animation:none!important;box-shadow:none!important}.rarity-spark{display:none!important}.musanga-keyboard{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1px solid #70654f;color:#ead8b9;background:#242c29;font-size:11px}.musanga-keyboard button{padding:4px 10px;border:1px solid #a28b66;background:#172328}.musanga-keyboard span{flex-basis:100%}.text-purple-300,.text-purple-200{color:#d7b58e!important}.text-amber-400,.text-amber-300{color:#e1bb83!important}.text-sky-300{color:#a9d3d2!important}@media(max-width:760px){.musanga-context{display:block;padding:18px}.musanga-context p{margin:12px 0}.musanga-context strong{font-size:24px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.musanga-persona{position:relative}.musanga-persona img{width:100%;height:215px;object-fit:cover;object-position:28% center}.musanga-persona span{display:block;padding:8px 10px;background:#d5c4a5;color:#342c20;font:9px system-ui;letter-spacing:.08em}.musanga-loadout{display:grid;grid-template-columns:1fr 1fr;gap:8px}.musanga-loadout>div{display:grid;gap:8px}#tooltip-comparison-grid .truncate{white-space:normal!important}#tooltip-comparison-grid h3{font-size:15px!important}#tooltip-comparison-grid .text-emerald-400{color:#acd2ce!important}.rarity-surface-legendary .text-purple-300{color:#d7b58e!important}</style>
+</head>
+<body class="min-h-screen bg-[#06080E] text-slate-100 flex flex-col selection:bg-amber-500/30">
+
+    <!-- =====================================================================
+         0. REAL-TIME SVG COLORBLINDNESS MATRICES (APPROXIMATE COLOR FILTERS)
+    ====================================================================== -->
+    <svg class="hidden" aria-hidden="true">
+        <defs>
+            <!-- Protanopia (Red-Blind) -->
+            <filter id="cb-protanopia">
+                <feColorMatrix type="matrix" values="
+                    0.567, 0.433, 0.000, 0, 0
+                    0.558, 0.442, 0.000, 0, 0
+                    0.000, 0.242, 0.758, 0, 0
+                    0.000, 0.000, 0.000, 1, 0" />
+            </filter>
+            <!-- Deuteranopia (Green-Blind) -->
+            <filter id="cb-deuteranopia">
+                <feColorMatrix type="matrix" values="
+                    0.625, 0.375, 0.000, 0, 0
+                    0.700, 0.300, 0.000, 0, 0
+                    0.000, 0.300, 0.700, 0, 0
+                    0.000, 0.000, 0.000, 1, 0" />
+            </filter>
+            <!-- Tritanopia (Blue-Yellow Blind) -->
+            <filter id="cb-tritanopia">
+                <feColorMatrix type="matrix" values="
+                    0.950, 0.050, 0.000, 0, 0
+                    0.000, 0.433, 0.567, 0, 0
+                    0.000, 0.475, 0.525, 0, 0
+                    0.000, 0.000, 0.000, 1, 0" />
+            </filter>
+            <!-- Achromatopsia (Monochromacy / Full Grayscale Redundancy Test) -->
+            <filter id="cb-achromatopsia">
+                <feColorMatrix type="matrix" values="
+                    0.299, 0.587, 0.114, 0, 0
+                    0.299, 0.587, 0.114, 0, 0
+                    0.299, 0.587, 0.114, 0, 0
+                    0.000, 0.000, 0.000, 1, 0" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- =====================================================================
+         1. TOP PORTFOLIO CONTROL BAR (UX CASE STUDY & ACCESSIBILITY LAB)
+    ====================================================================== -->
+    <header class="sticky top-0 z-50 bg-[#080C15]/95 backdrop-blur-md border-b border-amber-500/25 px-3 py-2 shadow-xl">
+        <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-2">
+
+            <!-- Brand & Case Title -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-400/50 flex items-center justify-center shadow-inner">
+                    <svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-serif-title font-bold tracking-wider text-sm md:text-base text-amber-100">MUSANGA // INVENTÁRIO</span>
+                        <span class="hidden sm:inline-block text-[10px] font-mono-num uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                            GAME UI/UX · CONCEITO
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-none hidden xl:block">
+                        Loot & Accessible Inventory · arquitetura de inventário para Musanga
+                    </p>
+                </div>
+            </div>
+
+            <!-- 1. Colorblindness Simulator & Safe Palette Toggle -->
+            <div class="flex flex-wrap items-center gap-1.5 bg-slate-950/90 p-1 rounded-lg border border-slate-800">
+                <span class="text-[10px] font-mono-num uppercase text-amber-400/90 px-1.5 flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/>
+                    </svg>
+                    <span class="hidden md:inline">Daltonismo:</span>
+                </span>
+                <select id="cb-filter-select" onchange="setColorblindMode(this.value)"
+                        aria-label="Simulador de Daltonismo"
+                        class="bg-slate-900 text-xs font-medium text-slate-200 border border-slate-700 rounded px-2 py-1 focus:outline-none focus:border-amber-400">
+                    <option value="none">Visão Padrão (Tricromata)</option>
+                    <option value="protanopia">Protanopia (Sem Vermelho)</option>
+                    <option value="deuteranopia">Deuteranopia (Sem Verde)</option>
+                    <option value="tritanopia">Tritanopia (Sem Azul/Amarelo)</option>
+                    <option value="achromatopsia">Acromatopsia (P&amp;B — Prova de Símbolos)</option>
+                </select>
+
+                <button id="btn-cb-safe-palette" onclick="toggleCbSafePalette()"
+                        class="px-2 py-1 rounded text-[11px] font-semibold border border-slate-700 bg-slate-900 text-slate-300 hover:text-white transition-all flex items-center gap-1"
+                        title="Alterna as cores de ganho/perda de Verde/Vermelho para Azul-Ciano/Âmbar de alto contraste">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    <span>Deltas Azul/Cobre</span>
+                </button>
+            </div>
+
+            <!-- 2. Inventory Grid Paradigm Switcher (Item Tetris vs Slots) -->
+            <div class="flex items-center gap-1 bg-slate-950/90 p-1 rounded-lg border border-slate-800">
+                <span class="text-[10px] font-mono-num uppercase text-slate-400 px-1.5 hidden lg:inline">Paradigma:</span>
+                <button id="btn-mode-tetris" onclick="setGridParadigm('tetris')"
+                        class="px-2.5 py-1 rounded text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/50 transition-all">
+                    Grid Tetris (10x6)
+                </button>
+                <button id="btn-mode-slots" onclick="setGridParadigm('slots')"
+                        class="px-2.5 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white transition-all">
+                    Slots Compactos
+                </button>
+            </div>
+
+            <!-- 3. Dynamic Input Glyphs Switcher -->
+            <div class="flex items-center gap-1 bg-slate-950/90 p-1 rounded-lg border border-slate-800">
+                <button id="btn-glyph-ps" onclick="setPlatformGlyphs('ps')"
+                        class="px-2 py-1 rounded text-xs font-semibold bg-slate-800 text-blue-300 border border-blue-400/40">
+                    PS5 △◯✕▢
+                </button>
+                <button id="btn-glyph-xbox" onclick="setPlatformGlyphs('xbox')"
+                        class="px-2 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white">
+                    Xbox YBAX
+                </button>
+                <button id="btn-glyph-pc" onclick="setPlatformGlyphs('pc')"
+                        class="px-2 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white">
+                    PC [E/R]
+                </button>
+            </div>
+
+            <!-- 4. UX Anatomy Overlay & Portfolio Guide -->
+            <div class="flex items-center gap-1.5">
+                <button id="btn-ux-anatomy" onclick="toggleUxAnatomyOverlay()"
+                        class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-400/40 transition-all">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <span>Análise UX</span>
+                </button>
+                <button onclick="togglePortfolioDrawer()"
+                        class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-400/40 transition-all">
+                    <span>Guia Portfólio</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         2. MAIN 3-COLUMN HIGH-DENSITY RPG ARMORY WORKSPACE
+         (Filtered by the Colorblindness Simulator)
+    ====================================================================== -->
+    <!-- Atmospheric Sanctum Forge Background Layer -->
+    <div id="armory-backdrop" class="fixed inset-0 bg-cover bg-center pointer-events-none opacity-20 -z-10"
+         style="background-image: url('assets/musanga-cena.jpg'); filter: brightness(0.6) contrast(1.25);"></div>
+
+    <div class="musanga-context"><div><span>ESTUDO DE INVENTÁRIO · DADOS DE TESTE</span><strong>O que levar muda o próximo passo.</strong></div><p>Objetos, vestuário e materiais propostos para a jornada. Esta carga de teste demonstra o sistema; não representa os pertences da protagonista no porão nem um recorte histórico validado.</p><a href="index.html" target="_top">Ver o case ↗</a></div><main id="armory-viewport" class="flex-1 max-w-[1920px] w-full mx-auto px-3 sm:px-5 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start relative">
+
+        <!-- =================================================================
+             COLUMN 1 (LEFT - 3 COLS): CHARACTER PAPERDOLL, EQUIPPED SLOTS & WEIGHT
+        ================================================================== -->
+        <section class="lg:col-span-3 bg-[#0B0F1A]/95 border border-slate-800/90 rounded-xl p-3.5 shadow-2xl flex flex-col gap-3">
+
+            <!-- Character Header & Power Level -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-mono-num uppercase tracking-widest px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-400/30">
+                            PROTAGONISTA / NAMBUELE
+                        </span>
+                        <span class="text-xs font-mono-num text-slate-400">PROPOSTA</span>
+                    </div>
+                    <h1 class="font-serif-title text-lg font-bold text-white tracking-wide mt-0.5">MUSANGA</h1>
+                </div>
+                <!-- Total Power Readout (Destiny 2 Style) -->
+                <div class="text-right bg-amber-500/10 border border-amber-400/40 rounded-lg px-2.5 py-1">
+                    <div class="text-[9px] font-mono-num uppercase tracking-widest text-amber-300">PREPARO</div>
+                    <div class="flex items-center justify-end gap-1 font-mono-num text-xl font-extrabold text-amber-400">
+                        <span>✦</span>
+                        <span id="char-total-power">885</span>
+                    </div>
+                </div>
+            </div>
+
+<div class="musanga-persona"><img src="assets/musanga-cena.jpg" alt="Musanga na arte pictórica fornecida"><span>MUSANGA / NAMBUELE · IDENTIDADE PROVISÓRIA</span></div><div class="musanga-loadout"><div id="paperdoll-left-slots"></div><div id="paperdoll-right-slots"></div></div>
+            <!-- Consolidated Character Attributes Panel -->
+            <div class="bg-slate-950/80 border border-slate-800/90 rounded-lg p-3 space-y-2">
+                <div class="flex items-center justify-between text-[11px] font-mono-num uppercase text-slate-400 border-b border-slate-800/80 pb-1">
+                    <span>ATRIBUTOS CONSOLIDADOS</span>
+                    <span class="text-emerald-400">TEMPO REAL</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-slate-900/70 p-2 rounded border border-slate-800/70">
+                        <div class="text-[10px] text-slate-400">UTILIDADE BASE</div>
+                        <div class="font-mono-num font-bold text-base text-white" id="stat-total-dps">1,420</div>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded border border-slate-800/70">
+                        <div class="text-[10px] text-slate-400">PROTEÇÃO TOTAL</div>
+                        <div class="font-mono-num font-bold text-base text-sky-300" id="stat-total-armor">1,180</div>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded border border-slate-800/70 flex justify-between items-center">
+                        <span class="text-[10px] text-slate-400">PRECISÃO</span>
+                        <span class="font-mono-num font-bold text-amber-300" id="stat-total-crit">28.5%</span>
+                    </div>
+                    <div class="bg-slate-900/70 p-2 rounded border border-slate-800/70 flex justify-between items-center">
+                        <span class="text-[10px] text-slate-400">AGILIDADE</span>
+                        <span class="font-mono-num font-bold text-emerald-300" id="stat-total-spd">1.24/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encumbrance / Carry Weight System (Peso de Carga) -->
+            <div class="bg-slate-950/90 border border-slate-800 rounded-lg p-3 space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-200">PESO DE CARGA</span>
+                    </div>
+                    <span id="weight-status-badge" class="text-[10px] font-mono-num font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                        EQUILIBRADO
+                    </span>
+                </div>
+
+                <!-- Segmented Weight Progress Bar -->
+                <div class="relative w-full h-3 bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-0.5">
+                    <div id="weight-bar-fill" class="h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 transition-all duration-300" style="width: 68%;"></div>
+                    <!-- Threshold Markers at 50% and 80% -->
+                    <div class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-slate-600/80" title="Limiar de 50%"></div>
+                    <div class="absolute top-0 bottom-0 left-[80%] w-0.5 bg-amber-400/90" title="Limiar de 80%"></div>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] font-mono-num">
+                    <span class="text-slate-400">CAPACIDADE: <strong id="weight-readout" class="text-white">41.2 / 60.0 kg</strong></span>
+                    <span id="weight-penalty-text" class="text-slate-400">Mobilidade: 100%</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================================================================
+             COLUMN 2 (CENTER - 5 COLS): SPATIAL ITEM TETRIS (10x6), FILTERS,
+             REDUNDANT RARITY LEGEND & GEM SOCKETING WORKBENCH
+        ================================================================== -->
+        <section class="lg:col-span-5 bg-[#0B0F1A]/95 border border-slate-800/90 rounded-xl p-3.5 shadow-2xl flex flex-col gap-3">
+
+            <!-- Row 1: Category Filter Tabs + Loot Generator -->
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+                <div class="flex flex-wrap items-center gap-1" role="tablist">
+                    <button onclick="setCategoryFilter('all')" id="tab-cat-all"
+                            class="cat-tab px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-200 border border-amber-400/50">
+                        Todos
+                    </button>
+                    <button onclick="setCategoryFilter('weapon')" id="tab-cat-weapon"
+                            class="cat-tab px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white">
+                        ⚔ Ferramentas
+                    </button>
+                    <button onclick="setCategoryFilter('armor')" id="tab-cat-armor"
+                            class="cat-tab px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white">
+                        🛡 Vestuário
+                    </button>
+                    <button onclick="setCategoryFilter('jewelry')" id="tab-cat-jewelry"
+                            class="cat-tab px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white">
+                        ◈ Pertences
+                    </button>
+                </div>
+
+                <button onclick="spawnRandomLootItem()"
+                        class="px-2.5 py-1 rounded-md text-xs font-bold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/40 transition-all flex items-center gap-1 shadow-sm">
+                    <span>+ Objeto de teste</span>
+                </button>
+            </div>
+
+            <!-- Row 2: Class Filter, Sort & Auto-Organize Bin-Packing -->
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-mono-num uppercase text-slate-400">Perfil:</span>
+                    <select id="class-filter-select" onchange="setClassFilter(this.value)"
+                            aria-label="Filtrar por Classe"
+                            class="bg-slate-900 text-xs text-slate-200 border border-slate-700 rounded px-2 py-1"><option value="all">Musanga / todos os objetos</option></select>
+
+                    <select id="sort-select" onchange="sortInventory(this.value)"
+                            aria-label="Ordenar Inventário"
+                            class="bg-slate-900 text-xs text-slate-200 border border-slate-700 rounded px-2 py-1">
+                        <option value="rarity">Ordenar: Raridade ✦</option>
+                        <option value="power">Ordenar: Preparo ▲</option>
+                        <option value="weight">Ordenar: Peso (kg)</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                    <button onclick="rotateSelectedItem()"
+                            class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 text-[11px] font-mono-num flex items-center gap-1"
+                            title="Gira a orientação espacial 90° (Ex: 1x3 vira 3x1)">
+                        <span>↻ Girar [R]</span>
+                    </button>
+                    <button onclick="autoPackTetrisGrid()"
+                            class="px-2.5 py-1 rounded bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/40 text-[11px] font-semibold flex items-center gap-1">
+                        <span>Auto-Encaixar Grid</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Row 3: ACCESSIBLE REDUNDANT RARITY KEY (Color + Shape + Pattern) -->
+            <div class="bg-slate-950/90 border border-slate-800/90 rounded-lg px-3 py-1.5 flex flex-wrap items-center justify-between gap-2">
+                <span class="text-[10px] font-mono-num uppercase tracking-wider text-slate-400">
+                    CODIFICAÇÃO REDUNDANTE (ACESSÍVEL P/ DALTÔNICOS):
+                </span>
+                <div class="flex flex-wrap items-center gap-3 text-xs font-display font-bold">
+                    <span class="flex items-center gap-1 text-slate-300" title="Comum: Forma Circular + Fundo Liso">
+                        <span class="text-slate-400 text-sm">●</span> COMUM
+                    </span>
+                    <span class="flex items-center gap-1 text-sky-300" title="Reforçado: Losango + Linhas diagonais">
+                        <span class="text-sky-400 text-sm">◆</span> REFORÇADO
+                    </span>
+                    <span class="flex items-center gap-1 text-purple-300" title="Apurado: Forma Octograma + Trama cruzada">
+                        <span class="text-purple-400 text-sm">❖</span> APURADO
+                    </span>
+                    <span class="flex items-center gap-1 text-amber-300" title="Excepcional: Estrela + Borda dupla">
+                        <span class="text-amber-400 text-sm">✦</span> EXCEPCIONAL
+                    </span>
+                </div>
+            </div>
+
+            <!-- Row 4: SPATIAL INVENTORY GRID (10x6 ITEM TETRIS OR COMPACT SLOTS) -->
+            <div class="relative bg-[#060911] border-2 border-slate-800 rounded-xl p-2 shadow-inner">
+                <!-- 10x6 Spatial Tetris Grid Mode -->
+                <div class="musanga-keyboard"><span>Selecione um objeto com Tab + Enter. Mova pelas setas abaixo ou por Alt + setas. Colisões são bloqueadas.</span><button onclick="moveSelected(-1,0)" aria-label="Mover objeto à esquerda">←</button><button onclick="moveSelected(0,-1)" aria-label="Mover objeto acima">↑</button><button onclick="moveSelected(0,1)" aria-label="Mover objeto abaixo">↓</button><button onclick="moveSelected(1,0)" aria-label="Mover objeto à direita">→</button><button onclick="rotateSelectedItem()">Girar objeto</button></div><div id="inventory-tetris-board" class="tetris-grid-container gap-1">
+                    <!-- Background 60 Cells + Positioned Spatial Items rendered by JS -->
+                </div>
+
+                <!-- Compact Uniform Slots Mode (Hidden by default) -->
+                <div id="inventory-compact-board" class="hidden grid-cols-5 sm:grid-cols-6 gap-2 min-h-[280px] p-1">
+                    <!-- Rendered by JS when 'slots' mode is active -->
+                </div>
+            </div>
+
+            <!-- Helper Instructions Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono-num text-slate-400 px-1">
+                <span>💡 <strong>Arraste</strong> itens no grid 10x6 • <strong>Clique</strong> para fixar comparação • <strong>Duplo-Clique / [E]</strong> para equipar</span>
+                <span id="grid-occupancy-readout" class="text-amber-300 font-bold">OCUPAÇÃO: 34/60 CÉLULAS</span>
+            </div>
+
+            <!-- Row 5: INTERACTIVE GEM & RUNE SOCKETING WORKBENCH -->
+            <div class="bg-slate-950/95 border border-slate-800 rounded-xl p-3 space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-amber-400 text-sm">❖</span>
+                        <div>
+                            <h2 class="text-xs font-bold uppercase tracking-wider text-white">BANCADA DE AJUSTES &amp; MATERIAIS</h2>
+                            <p class="text-[10px] text-slate-400">Clique em um ajuste abaixo para engastar no objeto selecionado (símbolos e rótulos redundantes)</p>
+                        </div>
+                    </div>
+                    <button onclick="unsocketAllGemsFromSelected()"
+                            class="px-2 py-1 rounded text-[10px] font-mono-num uppercase bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700">
+                        Remover Ajustes
+                    </button>
+                </div>
+
+                <!-- Available Gems Row -->
+                <div id="gem-workbench-list" class="grid grid-cols-3 gap-2 pt-1">
+                    <!-- Populated dynamically by JS: Offensive Triangle Ruby, Defensive Shield Sapphire, Utility Hex Topaz -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================================================================
+             COLUMN 3 (RIGHT - 4 COLS): SIDE-BY-SIDE COMPARATIVE TOOLTIP ANATOMY
+        ================================================================== -->
+        <section class="lg:col-span-4 bg-[#0B0F1A]/95 border border-slate-800/90 rounded-xl p-3.5 shadow-2xl flex flex-col gap-3">
+
+            <!-- Tooltip Control Header -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-200">
+                        INSPEÇÃO &amp; TOOLTIP COMPARATIVO
+                    </h2>
+                </div>
+                <button id="btn-toggle-compare" onclick="toggleComparisonMode()"
+                        class="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-bold bg-cyan-500/20 text-cyan-200 border border-cyan-400/50 transition-all">
+                    <span id="glyph-compare-slot" class="inline-flex items-center"></span>
+                    <span>Comparar Lado a Lado: ON</span>
+                </button>
+            </div>
+
+            <!-- SIDE-BY-SIDE TOOLTIP CARDS CONTAINER -->
+            <div id="tooltip-comparison-grid" class="grid grid-cols-1 xl:grid-cols-2 gap-3 items-stretch">
+                <!-- Card 1: Inspected / Hovered Inventory Item (With Deltas vs Equipped) -->
+                <div id="tooltip-primary-card" class="flex flex-col justify-between rounded-xl overflow-hidden border border-slate-700 bg-[#070A12] shadow-2xl">
+                    <!-- Populated dynamically by JS -->
+                </div>
+
+                <!-- Card 2: Currently Equipped Item in Matching Slot -->
+                <div id="tooltip-equipped-card" class="flex flex-col justify-between rounded-xl overflow-hidden border border-slate-800 bg-[#070A12]/90 opacity-95 shadow-xl">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+
+            <!-- Contextual Controller / Keyboard Action Bar (Bottom of Tooltip) -->
+            <div class="bg-slate-950/95 border border-slate-800 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2">
+                <button onclick="equipSelectedItem()"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-200 text-xs font-bold transition-all">
+                    <span id="glyph-equip" class="w-5 h-5 flex items-center justify-center"></span>
+                    <span>EQUIPAR ITEM</span>
+                </button>
+
+                <button onclick="socketFirstGemIntoSelected()"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 border border-purple-400/40 text-purple-200 text-xs font-bold transition-all">
+                    <span id="glyph-socket" class="w-5 h-5 flex items-center justify-center"></span>
+                    <span>APLICAR AJUSTE</span>
+                </button>
+
+                <button onclick="dismantleSelectedItem()"
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all">
+                    <span id="glyph-dismantle" class="w-5 h-5 flex items-center justify-center"></span>
+                    <span>DESMANTELAR</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- =================================================================
+             UX ANATOMY & COGNITIVE HIERARCHY OVERLAY (PORTFOLIO CALLOUTS)
+        ================================================================== -->
+        <div id="ux-anatomy-overlay"
+             class="fixed inset-0 z-40 pointer-events-none hidden bg-slate-950/60 backdrop-blur-[2px] flex items-center justify-center p-6">
+            <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-4 pointer-events-auto">
+
+                <!-- UX Callout 1: Redundant Rarity & Colorblindness -->
+                <div class="ux-callout-box bg-[#090D18]/95 border-2 border-amber-400 rounded-xl p-4 shadow-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono-num uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">
+                            PILAR UX #01 // ACESSIBILIDADE WCAG AAA
+                        </span>
+                        <span class="text-amber-400 font-mono-num font-bold">● ◆ ❖ ✦</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1">Codificação Tripla Redundante</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Jogadores com <strong>Protanopia, Deuteranopia ou Acromatopsia</strong> não dependem da cor roxa ou dourada para identificar um item Excepcional. Cada tier combina:
+                    </p>
+                    <ul class="text-xs text-slate-300 mt-2 space-y-1 font-mono-num">
+                        <li>1. <strong>Símbolo Geométrico Único</strong> (● Círculo, ◆ Losango, ❖ Octograma, ✦ Estrela)</li>
+                        <li>2. <strong>Textura Procedural de Fundo</strong> (Liso, Hachura Diagonal, Malha, Raios Solares)</li>
+                        <li>3. <strong>Moldura &amp; Partículas</strong> (Cantoneiras duplas + faíscas animadas)</li>
+                    </ul>
+                </div>
+
+                <!-- UX Callout 2: The 3-Second Tooltip Anatomy -->
+                <div class="ux-callout-box bg-[#090D18]/95 border-2 border-cyan-400 rounded-xl p-4 shadow-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono-num uppercase px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold">
+                            PILAR UX #02 // PREVENÇÃO DE FADIGA MENTAL
+                        </span>
+                        <span class="text-cyan-400 font-mono-num font-bold">REGRA DOS 3s</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1">Hierarquia de Leitura em 3 Camadas</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Para evitar sobrecarga cognitiva em RPGs densos (*Diablo IV / Destiny 2*), o Tooltip Comparativo separa a tomada de decisão em:
+                    </p>
+                    <ul class="text-xs text-slate-300 mt-2 space-y-1 font-mono-num">
+                        <li>• <strong>0.5s (Macro):</strong> Símbolo de Raridade + Número Gigante de DPS/Defesa com Seta Delta (`▲ +16.4%`).</li>
+                        <li>• <strong>1.5s (Meso):</strong> Barras duplas de progresso mostrando ganhos (`+12% Dano`) ou perdas (`-4% Velocidade`).</li>
+                        <li>• <strong>3.0s (Micro):</strong> Afixos secundários, Passiva Lendária e Slots de Ajustes.</li>
+                    </ul>
+                </div>
+
+                <!-- UX Callout 3: Spatial Tetris Ergonomics -->
+                <div class="ux-callout-box bg-[#090D18]/95 border-2 border-purple-400 rounded-xl p-4 shadow-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono-num uppercase px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold">
+                            PILAR UX #03 // GESTÃO DE CARGA &amp; TETRIS
+                        </span>
+                        <span class="text-purple-400 font-mono-num font-bold">10x6 GRID</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-1">Tangibilidade Fisica + Auto-Sort</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Grids espaciais dão <strong>peso físico e valor percebido</strong> ao loot (um Martelo 2x3 parece monumental perto de um Anel 1x1), mas exigem atalhos de qualidade de vida (QoL):
+                    </p>
+                    <ul class="text-xs text-slate-300 mt-2 space-y-1 font-mono-num">
+                        <li>• Rotação imediata via <strong>[R]</strong> com validação de colisão.</li>
+                        <li>• Algoritmo <strong>Bin-Packing (Auto-Encaixar)</strong> com 1 clique para eliminar atrito tedioso.</li>
+                    </ul>
+                    <button onclick="toggleUxAnatomyOverlay()" class="mt-3 w-full py-1.5 rounded bg-purple-500/30 hover:bg-purple-500/40 text-white font-bold text-xs border border-purple-300">
+                        FECHAR CAMADA DE ANÁLISE UX
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- =====================================================================
+         3. PORTFOLIO DOCUMENTATION DRAWER (FOR BEHANCE / ARTSTATION)
+    ====================================================================== -->
+    <aside id="portfolio-drawer"
+           class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-xl bg-[#070B14]/95 backdrop-blur-xl border-l border-amber-500/30 shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800">
+            <div>
+                <span class="text-[10px] font-mono-num uppercase tracking-widest text-amber-400">GUIA DE APRESENTAÇÃO // CASE #02</span>
+                <h2 class="text-lg font-serif-title font-bold text-white">ESTRUTURA DO CASE: MUSANGA // INVENTÁRIO</h2>
+            </div>
+            <button onclick="togglePortfolioDrawer()" class="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300">✕</button>
+        </div>
+
+<div class="p-6 overflow-y-auto space-y-5 text-sm text-slate-300"><h3 class="text-lg text-amber-200">Musanga · Loot &amp; Accessible Inventory</h3><p>O inventário pertence ao jogo Musanga. A protagonista, a madeira, o azul abismo, o cobre e os tecidos seguem as referências fornecidas. Ferramentas, roupas e materiais substituem o equipamento de fantasia do simulador-base.</p><p>Esta é uma carga de teste da jornada, não uma representação dos pertences disponíveis na cena do porão. Objetos e números são propostas de design, ainda sujeitos a pesquisa histórica e balanceamento.</p><h3 class="text-lg text-amber-200">O que experimentar</h3><ol><li>Selecione um objeto: compare seu efeito com o equipado.</li><li>Gire e mova objetos na grade 10 × 6; teste colisões.</li><li>Alterne para slots e aplique um ajuste de material.</li><li>Inspecione em escala de cinza: símbolo, nome e textura permanecem.</li><li>Use Tab + Enter para selecionar e Alt + setas para movimentar.</li></ol><p>As classificações Comum, Reforçado, Apurado e Excepcional são categorias de interface. Não representam hierarquias culturais.</p><p>Protótipo local: sem inventário persistente, conexão a engine ou suporte real a gamepad. Filtros cromáticos aproximados e recursos de teclado não constituem certificação de acessibilidade.</p></div>
+    </aside>
+
+    <!-- Toast Notification -->
+    <div id="armory-toast" role="status" aria-live="polite"
+         class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 px-4 py-2 rounded-full bg-slate-900/95 border border-amber-400/60 text-amber-200 font-mono-num text-xs shadow-2xl">
+        Ação realizada
+    </div>
+
+    <!-- =====================================================================
+         4. APPLICATION LOGIC, PROCEDURAL ITEM SVGS, TETRIS ENGINE & TOOLTIPS
+    ====================================================================== -->
+    <script>
+        /*********************************************************************
+         * 0. WEBAUDIO SOUND SYNTHESIZER (AAA TACTILE INVENTORY SFX)
+         *********************************************************************/
+        let armoryAudioCtx = null;
+        function playArmorySound(type) {
+            try {
+                if (!armoryAudioCtx) {
+                    armoryAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (armoryAudioCtx.state === 'suspended') armoryAudioCtx.resume();
+
+                const now = armoryAudioCtx.currentTime;
+                const osc = armoryAudioCtx.createOscillator();
+                const gain = armoryAudioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(armoryAudioCtx.destination);
+
+                if (type === 'equip') {
+                    // Heavy metallic latch
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(80, now + 0.12);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+                    osc.start(now);
+                    osc.stop(now + 0.13);
+                } else if (type === 'socket') {
+                    // Crystalline resonance chime
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(680, now);
+                    osc.frequency.exponentialRampToValueAtTime(1180, now + 0.22);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+                    osc.start(now);
+                    osc.stop(now + 0.24);
+                } else if (type === 'loot') {
+                    // Golden shimmer chord
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                } else if (type === 'dismantle') {
+                    // Salvage crunch
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.exponentialRampToValueAtTime(45, now + 0.16);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                } else if (type === 'click') {
+                    // Clean tactile tick
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(540, now);
+                    osc.frequency.exponentialRampToValueAtTime(720, now + 0.05);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                }
+            } catch(e) {}
+        }
+
+        /*********************************************************************
+         * 1. RARITY DEFINITIONS (REDUNDANT ACCESSIBLE ENCODING)
+         *********************************************************************/
+        const RARITY_TIERS = {
+            common: {
+                id: 'common',
+                rank: 1,
+                name: 'COMUM',
+                symbol: '●',
+                color: '#94A3B8',
+                textClass: 'text-slate-300',
+                badgeBg: 'bg-slate-800 text-slate-200 border-slate-600',
+                surfaceClass: 'rarity-surface-common',
+                patternDesc: 'Superfície Fosca',
+                svgCrest: `<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block"><circle cx="12" cy="12" r="7" fill="currentColor"/></svg>`
+            },
+            rare: {
+                id: 'rare',
+                rank: 2,
+                name: 'REFORÇADO',
+                symbol: '◆',
+                color: '#38BDF8',
+                textClass: 'text-sky-300',
+                badgeBg: 'bg-sky-950/90 text-sky-300 border-sky-400/60',
+                surfaceClass: 'rarity-surface-rare',
+                patternDesc: 'Hachura Diagonal',
+                svgCrest: `<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block"><polygon points="12,3 21,12 12,21 3,12" fill="currentColor"/></svg>`
+            },
+            epic: {
+                id: 'epic',
+                rank: 3,
+                name: 'APURADO',
+                symbol: '❖',
+                color: '#C084FC',
+                textClass: 'text-purple-300',
+                badgeBg: 'bg-purple-950/90 text-purple-200 border-purple-400/60',
+                surfaceClass: 'rarity-surface-epic',
+                patternDesc: 'Trama cruzada',
+                svgCrest: `<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block"><polygon points="12,2 15,9 22,12 15,15 12,22 9,15 2,12 9,9" fill="currentColor"/><circle cx="12" cy="12" r="2.5" fill="#090D16"/></svg>`
+            },
+            legendary: {
+                id: 'legendary',
+                rank: 4,
+                name: 'EXCEPCIONAL',
+                symbol: '✦',
+                color: '#FBBF24',
+                textClass: 'text-amber-300',
+                badgeBg: 'bg-amber-950/90 text-amber-200 border-amber-400/80',
+                surfaceClass: 'rarity-surface-legendary',
+                patternDesc: 'Borda dupla',
+                svgCrest: `<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block"><polygon points="12,1 14.5,8.5 22,8.5 16,13 18.5,20.5 12,16 5.5,20.5 8,13 2,8.5 9.5,8.5" fill="currentColor"/></svg>`
+            }
+        };
+
+        /*********************************************************************
+         * 2. GEM / RUNE DATABASE (SHAPES + COLORS FOR ACCESSIBILITY)
+         *********************************************************************/
+        const GEMS_DB = [
+            {
+                id: 'ruby_atk',
+                name: 'Rubi Solar (Ofensivo)',
+                shortName: 'Rubi ▲',
+                shapeSymbol: '▲',
+                color: '#FB7185',
+                statKey: 'damagePct',
+                bonusValue: 8,
+                desc: '+8% Eficácia',
+                svg: `<svg viewBox="0 0 28 28" class="w-6 h-6"><polygon points="14,3 25,23 3,23" fill="rgba(251,113,133,0.25)" stroke="#FB7185" stroke-width="2"/><polygon points="14,9 20,20 8,20" fill="#FB7185"/></svg>`
+            },
+            {
+                id: 'sapphire_crit',
+                name: 'Safira Ártica (Precisão)',
+                shortName: 'Safira ◆',
+                shapeSymbol: '◆',
+                color: '#38BDF8',
+                statKey: 'crit',
+                bonusValue: 5,
+                desc: '+5% Precisão',
+                svg: `<svg viewBox="0 0 28 28" class="w-6 h-6"><polygon points="14,2 25,14 14,26 3,14" fill="rgba(56,189,248,0.25)" stroke="#38BDF8" stroke-width="2"/><circle cx="14" cy="14" r="4.5" fill="#38BDF8"/></svg>`
+            },
+            {
+                id: 'topaz_spd',
+                name: 'Topázio Voltaico (Agilidade)',
+                shortName: 'Topázio ⬢',
+                shapeSymbol: '⬢',
+                color: '#FBBF24',
+                statKey: 'speed',
+                bonusValue: 6,
+                desc: '+6% Agilidade',
+                svg: `<svg viewBox="0 0 28 28" class="w-6 h-6"><polygon points="14,2 24,8 24,20 14,26 4,20 4,8" fill="rgba(251,191,36,0.25)" stroke="#FBBF24" stroke-width="2"/><polygon points="14,7 19,14 14,21 9,14" fill="#FBBF24"/></svg>`
+            }
+        ];
+
+        /*********************************************************************
+         * 3. CUSTOM PROCEDURAL SVG ARTWORK FOR WEAPONS, ARMOR & JEWELRY
+         *********************************************************************/
+        const ITEM_SVGS = {
+            greatsword: (color) => `<svg viewBox="0 0 120 120" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.5">
+                <path d="M98,14 L106,22 L42,86 L30,86 L30,74 Z" fill="${color}" fill-opacity="0.22"/>
+                <line x1="98" y1="22" x2="36" y2="84" stroke="#FFFFFF" stroke-width="1.5"/>
+                <path d="M22,66 L54,98 M28,84 L14,98 L22,106 L36,92" stroke-width="3"/>
+                <circle cx="16" cy="104" r="5" fill="${color}"/>
+            </svg>`,
+            halberd: (color) => `<svg viewBox="0 0 120 120" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.5">
+                <line x1="20" y1="102" x2="96" y2="26" stroke-width="3.5"/>
+                <path d="M68,26 C88,18 104,24 102,48 C86,44 76,52 64,62 Z" fill="${color}" fill-opacity="0.26"/>
+                <polygon points="96,26 108,14 98,34" fill="#FFFFFF"/>
+            </svg>`,
+            void_rifle: (color) => `<svg viewBox="0 0 140 80" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M12,48 L32,26 L108,26 L128,34 L122,44 L86,44 L76,60 L62,60 L66,44 L38,44 L26,62 L14,62 Z" fill="${color}" fill-opacity="0.2"/>
+                <circle cx="64" cy="35" r="5" fill="#FFFFFF"/>
+                <line x1="40" y1="18" x2="92" y2="18" stroke-width="2"/>
+            </svg>`,
+            sidearm: (color) => `<svg viewBox="0 0 100 80" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M18,26 L82,26 L86,38 L46,40 L36,64 L20,64 L26,38 Z" fill="${color}" fill-opacity="0.22"/>
+                <line x1="32" y1="32" x2="76" y2="32" stroke="#FFFFFF" stroke-width="1.8"/>
+            </svg>`,
+            grimoire: (color) => `<svg viewBox="0 0 100 100" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <rect x="22" y="16" width="56" height="68" rx="6" fill="${color}" fill-opacity="0.2"/>
+                <polygon points="50,30 64,50 50,70 36,50" fill="none" stroke="#FFFFFF" stroke-width="1.8"/>
+                <circle cx="50" cy="50" r="5" fill="${color}"/>
+            </svg>`,
+            helm: (color) => `<svg viewBox="0 0 100 100" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M26,42 C26,20 74,20 74,42 L78,76 L58,84 L50,66 L42,84 L22,76 Z" fill="${color}" fill-opacity="0.22"/>
+                <path d="M34,48 L66,48 L50,58 Z" fill="#FFFFFF"/>
+            </svg>`,
+            chest: (color) => `<svg viewBox="0 0 110 120" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M18,28 L38,18 L72,18 L92,28 L82,56 L74,98 L36,98 L28,56 Z" fill="${color}" fill-opacity="0.22"/>
+                <polygon points="55,34 66,48 55,62 44,48" fill="#FFFFFF" fill-opacity="0.8"/>
+            </svg>`,
+            gauntlets: (color) => `<svg viewBox="0 0 100 100" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M26,24 L54,20 L62,56 L46,82 L22,72 Z" fill="${color}" fill-opacity="0.22"/>
+                <path d="M48,28 L76,24 L78,72 L54,82 Z" fill="${color}" fill-opacity="0.15"/>
+            </svg>`,
+            greaves: (color) => `<svg viewBox="0 0 100 110" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.4">
+                <path d="M28,16 L48,16 L46,82 L58,92 L24,92 Z" fill="${color}" fill-opacity="0.22"/>
+                <path d="M56,16 L76,16 L74,82 L86,92 L52,92 Z" fill="${color}" fill-opacity="0.15"/>
+            </svg>`,
+            amulet: (color) => `<svg viewBox="0 0 90 90" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="2.2">
+                <path d="M24,18 C24,52 66,52 66,18" stroke-dasharray="4 3"/>
+                <polygon points="45,38 62,58 45,78 28,58" fill="${color}" fill-opacity="0.3" stroke="#FFFFFF" stroke-width="2"/>
+            </svg>`,
+            ring: (color) => `<svg viewBox="0 0 90 90" class="w-full h-full drop-shadow" fill="none" stroke="${color}" stroke-width="3">
+                <circle cx="45" cy="50" r="22" fill="${color}" fill-opacity="0.15"/>
+                <polygon points="45,16 55,28 45,34 35,28" fill="#FFFFFF" stroke="${color}" stroke-width="1.8"/>
+            </svg>`
+        };
+
+        /*********************************************************************
+         * 4. EQUIPPED ITEMS & INVENTORY ITEMS STATE
+         *********************************************************************/
+        const SLOT_LABELS = {
+            primary: { name: 'Arma Primária', category: 'weapon' },
+            secondary: { name: 'Arma Secundária', category: 'weapon' },
+            helm: { name: 'Elmo Neural', category: 'armor' },
+            chest: { name: 'Peitoral', category: 'armor' },
+            gauntlets: { name: 'Manoplas', category: 'armor' },
+            greaves: { name: 'Grevas', category: 'armor' },
+            amulet: { name: 'Amuleto', category: 'jewelry' },
+            ring: { name: 'Anel Sinete', category: 'jewelry' }
+        };
+
+        // Currently Equipped Loadout (8 Slots)
+        const EQUIPPED_LOADOUT = {
+            primary: {
+                id: 'eq_prim_1',
+                name: 'Lâmina de Éter Vanguard',
+                slot: 'primary',
+                category: 'weapon',
+                subType: 'Espada Longa Pesada',
+                rarity: 'epic',
+                reqClass: 'Todas',
+                power: 880,
+                primaryStatLabel: 'UTILIDADE BASE',
+                basePrimaryStat: 1120,
+                stats: { damagePct: 100, speed: 78, crit: 22, stability: 80, elemental: 65 },
+                affixes: ['+14% Dano contra Elites', '+180 Perfuração de Armadura', '+8% Dreno de Vida'],
+                passive: 'Ressonância Etérea: Ataques críticos liberam uma onda de choque arcana em 4m.',
+                maxSockets: 2,
+                sockets: ['ruby_atk'],
+                weight: 6.5,
+                gold: 1850,
+                w: 2, h: 3,
+                artKey: 'greatsword'
+            },
+            secondary: {
+                id: 'eq_sec_1',
+                name: 'Pistola de Íons Vesper',
+                slot: 'secondary',
+                category: 'weapon',
+                subType: 'Arma Curta Tática',
+                rarity: 'rare',
+                reqClass: 'Todas',
+                power: 850,
+                primaryStatLabel: 'UTILIDADE BASE',
+                basePrimaryStat: 790,
+                stats: { damagePct: 74, speed: 92, crit: 18, stability: 88, elemental: 50 },
+                affixes: ['+12% Velocidade de Recarga', '+9% Precisão'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 2.4,
+                gold: 640,
+                w: 2, h: 1,
+                artKey: 'sidearm'
+            },
+            helm: {
+                id: 'eq_helm_1',
+                name: 'Coroa Astral do Vigia',
+                slot: 'helm',
+                category: 'armor',
+                subType: 'Elmo Pesado',
+                rarity: 'epic',
+                reqClass: 'Arcanista',
+                power: 890,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 310,
+                stats: { damagePct: 68, speed: 75, crit: 20, stability: 85, elemental: 82 },
+                affixes: ['+15% Redução de Recarga', '+240 Vida Máxima', '+11% Resistência Solar'],
+                passive: 'Visão Astral: Destaca pontos fracos de inimigos com menos de 40% de vida.',
+                maxSockets: 2,
+                sockets: ['sapphire_crit'],
+                weight: 4.2,
+                gold: 1420,
+                w: 2, h: 2,
+                artKey: 'helm'
+            },
+            chest: {
+                id: 'eq_chest_1',
+                name: 'Couraça da Forja Estelar',
+                slot: 'chest',
+                category: 'armor',
+                subType: 'Armadura de Placas',
+                rarity: 'legendary',
+                reqClass: 'Todas',
+                power: 915,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 495,
+                stats: { damagePct: 82, speed: 70, crit: 24, stability: 94, elemental: 90 },
+                affixes: ['+22% Armadura Total', '+390 Vitalidade do Exotraje', '-14% Dano de Projéteis'],
+                passive: 'Núcleo Imortal: Ao sofrer dano letal, cria uma barreira solar de 50% de HP por 6s.',
+                maxSockets: 3,
+                sockets: ['ruby_atk', 'sapphire_crit'],
+                weight: 9.8,
+                gold: 3600,
+                w: 2, h: 3,
+                artKey: 'chest'
+            },
+            gauntlets: {
+                id: 'eq_gaunt_1',
+                name: 'Manoplas de Ferro Negro',
+                slot: 'gauntlets',
+                category: 'armor',
+                subType: 'Manoplas Táticas',
+                rarity: 'common',
+                reqClass: 'Todas',
+                power: 810,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 175,
+                stats: { damagePct: 55, speed: 68, crit: 12, stability: 65, elemental: 40 },
+                affixes: ['+6% Agilidade Corpo a Corpo'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 3.1,
+                gold: 220,
+                w: 2, h: 2,
+                artKey: 'gauntlets'
+            },
+            greaves: {
+                id: 'eq_greaves_1',
+                name: 'Grevas do Passo Fantasma',
+                slot: 'greaves',
+                category: 'armor',
+                subType: 'Botas Propulsoras',
+                rarity: 'rare',
+                reqClass: 'Todas',
+                power: 865,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 240,
+                stats: { damagePct: 62, speed: 88, crit: 16, stability: 78, elemental: 60 },
+                affixes: ['+14% Velocidade de Movimento', '+1 Carga de Esquiva'],
+                passive: null,
+                maxSockets: 1,
+                sockets: ['topaz_spd'],
+                weight: 4.0,
+                gold: 890,
+                w: 2, h: 2,
+                artKey: 'greaves'
+            },
+            amulet: {
+                id: 'eq_amulet_1',
+                name: 'Relicário de Hélio',
+                slot: 'amulet',
+                category: 'jewelry',
+                subType: 'Amuleto Sagrado',
+                rarity: 'epic',
+                reqClass: 'Todas',
+                power: 895,
+                primaryStatLabel: 'VERSATILIDADE',
+                basePrimaryStat: 340,
+                stats: { damagePct: 78, speed: 80, crit: 25, stability: 72, elemental: 88 },
+                affixes: ['+18% Dano Crítico', '+12% Geração de Energia'],
+                passive: 'Convergência: Habilidades elementais custam 15% menos energia.',
+                maxSockets: 1,
+                sockets: ['sapphire_crit'],
+                weight: 0.6,
+                gold: 1750,
+                w: 1, h: 1,
+                artKey: 'amulet'
+            },
+            ring: {
+                id: 'eq_ring_1',
+                name: 'Sinete da Alvorada',
+                slot: 'ring',
+                category: 'jewelry',
+                subType: 'Anel Ancestral',
+                rarity: 'rare',
+                reqClass: 'Todas',
+                power: 855,
+                primaryStatLabel: 'VERSATILIDADE',
+                basePrimaryStat: 260,
+                stats: { damagePct: 66, speed: 74, crit: 19, stability: 70, elemental: 64 },
+                affixes: ['+7.5% Precisão', '+90 Regeneração de Escudo'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 0.3,
+                gold: 780,
+                w: 1, h: 1,
+                artKey: 'ring'
+            }
+        };
+
+        // Inventory Items in the 10x6 Spatial Tetris Grid
+        let INVENTORY_ITEMS = [
+            {
+                id: 'inv_1',
+                name: 'Solari Prime // Alabarda Celestial',
+                slot: 'primary',
+                category: 'weapon',
+                subType: 'Arma de Haste Lendária',
+                rarity: 'legendary',
+                reqClass: 'Guardião',
+                power: 945,
+                primaryStatLabel: 'UTILIDADE BASE',
+                basePrimaryStat: 1255,
+                // Note: +12% Damage vs equipped, -4% Speed vs equipped (exactly as requested in prompt!)
+                stats: { damagePct: 112, speed: 74, crit: 31, stability: 86, elemental: 92 },
+                affixes: ['+12% Dano de Habilidade Solar', '-4% Agilidade (Lâmina Pesada)', '+24% Dano de Golpe Crítico'],
+                passive: 'Supernova de Hélio: Finalizar um inimigo invoca um pilar solar que causa 1.850 de dano térmico.',
+                maxSockets: 3,
+                sockets: ['ruby_atk', 'topaz_spd'],
+                weight: 7.4,
+                gold: 4800,
+                x: 0, y: 0, w: 2, h: 3,
+                artKey: 'halberd'
+            },
+            {
+                id: 'inv_2',
+                name: 'Canhão de Vórtice Nêmesis-X',
+                slot: 'primary',
+                category: 'weapon',
+                subType: 'Rifle de Fusão Pesado',
+                rarity: 'legendary',
+                reqClass: 'Todas',
+                power: 938,
+                primaryStatLabel: 'UTILIDADE BASE',
+                basePrimaryStat: 1290,
+                stats: { damagePct: 115, speed: 84, crit: 28, stability: 72, elemental: 95 },
+                affixes: ['+18% Perfuração de Escudo', '+14% Velocidade de Projétil', '+9% Chance de Sobrecarga'],
+                passive: 'Singularidade Gravitacional: Disparos carregados puxam inimigos próximos para o centro do impacto.',
+                maxSockets: 3,
+                sockets: ['sapphire_crit'],
+                weight: 6.2,
+                gold: 4550,
+                x: 2, y: 0, w: 3, h: 2,
+                artKey: 'void_rifle'
+            },
+            {
+                id: 'inv_3',
+                name: 'Manoplas do Eclipse Soberano',
+                slot: 'gauntlets',
+                category: 'armor',
+                subType: 'Manoplas Exóticas',
+                rarity: 'legendary',
+                reqClass: 'Todas',
+                power: 930,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 285,
+                stats: { damagePct: 86, speed: 84, crit: 27, stability: 88, elemental: 84 },
+                affixes: ['+16% Agilidade', '+11% Precisão', '+190 Armadura Cinética'],
+                passive: 'Toque de Quasar: Recarregar a arma após um abate concede +25% de dano por 5 segundos.',
+                maxSockets: 2,
+                sockets: ['ruby_atk'],
+                weight: 3.4,
+                gold: 3100,
+                x: 5, y: 0, w: 2, h: 2,
+                artKey: 'gauntlets'
+            },
+            {
+                id: 'inv_4',
+                name: 'Grimório das Cinzas Eternas',
+                slot: 'secondary',
+                category: 'weapon',
+                subType: 'Catalisador Arcano',
+                rarity: 'epic',
+                reqClass: 'Arcanista',
+                power: 910,
+                primaryStatLabel: 'UTILIDADE BASE',
+                basePrimaryStat: 940,
+                stats: { damagePct: 92, speed: 86, crit: 29, stability: 90, elemental: 94 },
+                affixes: ['+21% Dano Elemental', '+15% Regeneração de Mana/Energia'],
+                passive: 'Chama Rúnica: Feitiços deixam brasas que reduzem a armadura inimiga em 20%.',
+                maxSockets: 2,
+                sockets: ['sapphire_crit', 'topaz_spd'],
+                weight: 1.8,
+                gold: 2150,
+                x: 7, y: 0, w: 2, h: 2,
+                artKey: 'grimoire'
+            },
+            {
+                id: 'inv_5',
+                name: 'Elmo do Caçador de Cometas',
+                slot: 'helm',
+                category: 'armor',
+                subType: 'Visor Tático Leve',
+                rarity: 'rare',
+                reqClass: 'Caçador',
+                power: 860,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 265,
+                stats: { damagePct: 72, speed: 92, crit: 24, stability: 70, elemental: 62 },
+                affixes: ['+12% Velocidade de Mira', '+8% Esquiva'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 2.6,
+                gold: 920,
+                x: 2, y: 2, w: 2, h: 2,
+                artKey: 'helm'
+            },
+            {
+                id: 'inv_6',
+                name: 'Grevas de Titânio Balístico',
+                slot: 'greaves',
+                category: 'armor',
+                subType: 'Grevas Pesadas',
+                rarity: 'epic',
+                reqClass: 'Guardião',
+                power: 905,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 315,
+                stats: { damagePct: 70, speed: 76, crit: 20, stability: 95, elemental: 78 },
+                affixes: ['+24% Estabilidade contra Empurrão', '+210 Armadura Base'],
+                passive: 'Passo Sísmico: Aterrissar de grandes alturas atordoa inimigos próximos por 2s.',
+                maxSockets: 2,
+                sockets: ['ruby_atk'],
+                weight: 5.5,
+                gold: 1680,
+                x: 4, y: 2, w: 2, h: 2,
+                artKey: 'greaves'
+            },
+            {
+                id: 'inv_7',
+                name: 'Olho de un. de materialboros',
+                slot: 'ring',
+                category: 'jewelry',
+                subType: 'Anel Mítico',
+                rarity: 'legendary',
+                reqClass: 'Todas',
+                power: 940,
+                primaryStatLabel: 'VERSATILIDADE',
+                basePrimaryStat: 365,
+                stats: { damagePct: 88, speed: 86, crit: 32, stability: 82, elemental: 90 },
+                affixes: ['+11.5% Precisão', '+14% Velocidade de Conjuração', '+8% Roubo de Vida'],
+                passive: 'Ciclo Infinito: A cada 5º acerto crítico consecutivo, zera a recarga da habilidade ativa.',
+                maxSockets: 1,
+                sockets: ['topaz_spd'],
+                weight: 0.2,
+                gold: 3900,
+                x: 9, y: 0, w: 1, h: 1,
+                artKey: 'ring'
+            },
+            {
+                id: 'inv_8',
+                name: 'Talismã de Obsidiana Bruta',
+                slot: 'amulet',
+                category: 'jewelry',
+                subType: 'Amuleto Comum',
+                rarity: 'common',
+                reqClass: 'Todas',
+                power: 790,
+                primaryStatLabel: 'VERSATILIDADE',
+                basePrimaryStat: 210,
+                stats: { damagePct: 52, speed: 65, crit: 12, stability: 60, elemental: 55 },
+                affixes: ['+85 Vida Máxima'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 0.8,
+                gold: 180,
+                x: 9, y: 1, w: 1, h: 1,
+                artKey: 'amulet'
+            },
+            {
+                id: 'inv_9',
+                name: 'Peitoral doSentinela de Ferro',
+                slot: 'chest',
+                category: 'armor',
+                subType: 'Cota de Malha Pesada',
+                rarity: 'common',
+                reqClass: 'Todas',
+                power: 820,
+                primaryStatLabel: 'PROTEÇÃO BASE',
+                basePrimaryStat: 360,
+                stats: { damagePct: 58, speed: 60, crit: 14, stability: 78, elemental: 52 },
+                affixes: ['+140 Armadura Física'],
+                passive: null,
+                maxSockets: 1,
+                sockets: [],
+                weight: 8.6,
+                gold: 350,
+                x: 6, y: 2, w: 2, h: 3,
+                artKey: 'chest'
+            }
+        ];
+
+        /*********************************************************************
+         * 5. GLOBAL UI STATE & PLATFORM BUTTON GLYPHS
+         *********************************************************************/
+        const STATE = {
+            selectedItemId: 'inv_1',    // Pinned item for inspection
+            hoveredItemId: null,        // Temporarily hovered item
+            compareMode: true,          // Side-by-side Equipped vs New Loot
+            gridParadigm: 'tetris',     // 'tetris' (10x6) | 'slots'
+            categoryFilter: 'all',
+            classFilter: 'all',
+            platform: 'ps',             // 'ps' | 'xbox' | 'pc'
+            cbMode: 'none',             // 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia' | 'achromatopsia'
+            cbSafeDeltas: false,        // Cyan/Amber high-contrast delta toggle
+            maxWeight: 60.0,
+            draggedItemId: null
+        };
+
+        const GLYPHS = {
+            ps: {
+                equip: `<span class="px-1.5 py-0.5 rounded bg-blue-600/30 border border-blue-400 text-blue-300 font-mono-num text-[10px]">✕</span>`,
+                socket: `<span class="px-1.5 py-0.5 rounded bg-pink-600/30 border border-pink-400 text-pink-300 font-mono-num text-[10px]">▢</span>`,
+                dismantle: `<span class="px-1.5 py-0.5 rounded bg-emerald-600/30 border border-emerald-400 text-emerald-300 font-mono-num text-[10px]">△</span>`,
+                compare: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-500 text-slate-200 font-mono-num text-[10px]">L2</span>`
+            },
+            xbox: {
+                equip: `<span class="px-1.5 py-0.5 rounded bg-emerald-600/30 border border-emerald-400 text-emerald-300 font-mono-num text-[10px]">A</span>`,
+                socket: `<span class="px-1.5 py-0.5 rounded bg-blue-600/30 border border-blue-400 text-blue-300 font-mono-num text-[10px]">X</span>`,
+                dismantle: `<span class="px-1.5 py-0.5 rounded bg-amber-600/30 border border-amber-400 text-amber-300 font-mono-num text-[10px]">Y</span>`,
+                compare: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-500 text-slate-200 font-mono-num text-[10px]">LT</span>`
+            },
+            pc: {
+                equip: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-amber-400/60 text-amber-300 font-mono-num text-[10px]">[E]</span>`,
+                socket: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-purple-400/60 text-purple-300 font-mono-num text-[10px]">[G]</span>`,
+                dismantle: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-rose-400/60 text-rose-300 font-mono-num text-[10px]">[X]</span>`,
+                compare: `<span class="px-1.5 py-0.5 rounded bg-slate-800 border border-cyan-400/60 text-cyan-300 font-mono-num text-[10px]">[SHIFT]</span>`
+            }
+        };
+
+        /*********************************************************************
+         * 6. HELPER: CALCULATE EFFECTIVE ITEM STATS (INCLUDING SOCKETED GEMS)
+         *********************************************************************/
+        function getEffectiveItemStats(item) {
+            if (!item) return null;
+            const eff = {
+                power: item.power + (item.sockets.length * 8),
+                primaryStat: item.basePrimaryStat,
+                damagePct: item.stats.damagePct,
+                speed: item.stats.speed,
+                crit: item.stats.crit,
+                stability: item.stats.stability,
+                elemental: item.stats.elemental
+            };
+
+            item.sockets.forEach(gemId => {
+                const gem = GEMS_DB.find(g => g.id === gemId);
+                if (!gem) return;
+                if (gem.statKey === 'damagePct') {
+                    eff.damagePct += gem.bonusValue;
+                    eff.primaryStat = Math.round(eff.primaryStat * (1 + gem.bonusValue / 100));
+                } else if (gem.statKey === 'crit') {
+                    eff.crit += gem.bonusValue;
+                } else if (gem.statKey === 'speed') {
+                    eff.speed += gem.bonusValue;
+                }
+            });
+            return eff;
+        }
+
+        function findItemById(id) {
+            const invItem = INVENTORY_ITEMS.find(i => i.id === id);
+            if (invItem) return { item: invItem, isEquipped: false };
+            for (const slotKey of Object.keys(EQUIPPED_LOADOUT)) {
+                if (EQUIPPED_LOADOUT[slotKey] && EQUIPPED_LOADOUT[slotKey].id === id) {
+                    return { item: EQUIPPED_LOADOUT[slotKey], isEquipped: true };
+                }
+            }
+            return null;
+        }
+
+        /*********************************************************************
+         * 7. RENDER LEFT COLUMN: PAPERDOLL SLOTS, STATS & WEIGHT BAR
+         *********************************************************************/
+        function renderPaperdollAndStats() {
+            const leftSlots = ['helm', 'chest', 'primary', 'secondary'];
+            const rightSlots = ['gauntlets', 'greaves', 'amulet', 'ring'];
+
+            const buildSlotHtml = (slotKey) => {
+                const eqItem = EQUIPPED_LOADOUT[slotKey];
+                const rTier = RARITY_TIERS[eqItem.rarity];
+                const eff = getEffectiveItemStats(eqItem);
+                const isSelected = STATE.selectedItemId === eqItem.id;
+
+                return `
+                    <div role="button" tabindex="0" aria-label="Inspecionar ${eqItem.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectItem('${eqItem.id}')}" onclick="selectItem('${eqItem.id}')"
+                         onmouseenter="hoverItem('${eqItem.id}')"
+                         onmouseleave="hoverItem(null)"
+                         ondragover="event.preventDefault()"
+                         ondrop="handleDropOnEquipSlot(event, '${slotKey}')"
+                         class="relative group cursor-pointer rounded-lg p-1.5 transition-all ${rTier.surfaceClass} ${isSelected ? 'ring-2 ring-white' : 'hover:scale-[1.03]'}">
+                        <div class="flex items-center justify-between text-[10px] font-mono-num">
+                            <span class="font-bold ${rTier.textClass}" title="Raridade: ${rTier.name}">${rTier.symbol} ${eff.power}</span>
+                            <span class="text-[9px] text-slate-400 uppercase">${SLOT_LABELS[slotKey].name.split(' ')[0]}</span>
+                        </div>
+                        <div class="w-full h-10 my-0.5 flex items-center justify-center">
+                            ${ITEM_SVGS[eqItem.artKey](rTier.color)}
+                        </div>
+                        <div class="text-[10px] font-semibold text-white truncate leading-tight">${eqItem.name}</div>
+                        <!-- Socketed Gems Mini Dots -->
+                        <div class="flex items-center gap-1 mt-1">
+                            ${Array.from({ length: eqItem.maxSockets }).map((_, idx) => {
+                                const gemId = eqItem.sockets[idx];
+                                const gem = GEMS_DB.find(g => g.id === gemId);
+                                return gem
+                                    ? `<span class="text-[9px] leading-none" style="color:${gem.color}" title="${gem.name}">${gem.shapeSymbol}</span>`
+                                    : `<span class="w-2 h-2 rounded-full border border-slate-500 inline-block"></span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            document.getElementById('paperdoll-left-slots').innerHTML = leftSlots.map(buildSlotHtml).join('');
+            document.getElementById('paperdoll-right-slots').innerHTML = rightSlots.map(buildSlotHtml).join('');
+
+            // Calculate Consolidated Character Stats
+            let totalPower = 0;
+            let totalDps = 0;
+            let totalArmor = 0;
+            let totalCrit = 10;
+            let totalSpeed = 0;
+            let equippedWeight = 0;
+
+            Object.values(EQUIPPED_LOADOUT).forEach(eq => {
+                const eff = getEffectiveItemStats(eq);
+                totalPower += eff.power;
+                equippedWeight += eq.weight;
+                if (eq.category === 'weapon') totalDps += eff.primaryStat;
+                if (eq.category === 'armor') totalArmor += eff.primaryStat;
+                totalCrit += eff.crit * 0.12;
+                totalSpeed += eff.speed;
+            });
+
+            const avgPower = Math.round(totalPower / 8);
+            document.getElementById('char-total-power').textContent = avgPower;
+            document.getElementById('stat-total-dps').textContent = totalDps.toLocaleString('pt-BR');
+            document.getElementById('stat-total-armor').textContent = totalArmor.toLocaleString('pt-BR');
+            document.getElementById('stat-total-crit').textContent = `${totalCrit.toFixed(1)}%`;
+            document.getElementById('stat-total-spd').textContent = `${(0.8 + (totalSpeed / 1200)).toFixed(2)}/s`;
+
+            // Calculate Carry Weight (Equipped + Inventory)
+            const invWeight = INVENTORY_ITEMS.reduce((acc, it) => acc + it.weight, 0);
+            const currentWeight = +(equippedWeight + invWeight).toFixed(1);
+            const pctWeight = Math.min(100, (currentWeight / STATE.maxWeight) * 100);
+
+            document.getElementById('weight-readout').textContent = `${currentWeight} / ${STATE.maxWeight.toFixed(1)} kg`;
+            const weightFill = document.getElementById('weight-bar-fill');
+            const weightBadge = document.getElementById('weight-status-badge');
+            const weightPenalty = document.getElementById('weight-penalty-text');
+
+            weightFill.style.width = `${pctWeight}%`;
+
+            if (currentWeight > STATE.maxWeight) {
+                weightBadge.textContent = '⚠ SOBRECARREGADO';
+                weightBadge.className = 'text-[10px] font-mono-num font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/50 animate-pulse';
+                weightPenalty.textContent = 'Penalidade: -40% Mobilidade / Sem Sprint';
+                weightPenalty.className = 'text-rose-400 font-bold';
+            } else if (pctWeight >= 80) {
+                weightBadge.textContent = '▲ CARGA PESADA';
+                weightBadge.className = 'text-[10px] font-mono-num font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50';
+                weightPenalty.textContent = 'Penalidade: -15% Vel. Esquiva';
+                weightPenalty.className = 'text-amber-300';
+            } else {
+                weightBadge.textContent = '● EQUILIBRADO';
+                weightBadge.className = 'text-[10px] font-mono-num font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+                weightPenalty.textContent = 'Mobilidade: 100% (Nominal)';
+                weightPenalty.className = 'text-slate-400';
+            }
+        }
+
+        /*********************************************************************
+         * 8. SPATIAL 10x6 ITEM TETRIS ENGINE & COMPACT SLOTS RENDERER
+         *********************************************************************/
+        const GRID_COLS = 10;
+        const GRID_ROWS = 6;
+
+        function canPlaceItemAt(itemToPlace, targetX, targetY, w, h) {
+            if (targetX < 0 || targetY < 0 || targetX + w > GRID_COLS || targetY + h > GRID_ROWS) {
+                return false;
+            }
+            for (const other of INVENTORY_ITEMS) {
+                if (other.id === itemToPlace.id) continue;
+                const overlapX = targetX < other.x + other.w && targetX + w > other.x;
+                const overlapY = targetY < other.y + other.h && targetY + h > other.y;
+                if (overlapX && overlapY) return false;
+            }
+            return true;
+        }
+
+        function renderInventoryGrid() {
+            const tetrisBoard = document.getElementById('inventory-tetris-board');
+            const compactBoard = document.getElementById('inventory-compact-board');
+
+            // Filter items according to Category & Class
+            const filteredItems = INVENTORY_ITEMS.filter(item => {
+                const catMatch = STATE.categoryFilter === 'all' || item.category === STATE.categoryFilter;
+                const classMatch = STATE.classFilter === 'all' || item.reqClass === 'Todas' || item.reqClass === STATE.classFilter;
+                return catMatch && classMatch;
+            });
+
+            // Calculate cell occupancy
+            const usedCells = INVENTORY_ITEMS.reduce((sum, it) => sum + (it.w * it.h), 0);
+            document.getElementById('grid-occupancy-readout').textContent = `OCUPAÇÃO: ${usedCells}/${GRID_COLS * GRID_ROWS} CÉLULAS (${INVENTORY_ITEMS.length} ITENS)`;
+
+            if (STATE.gridParadigm === 'tetris') {
+                tetrisBoard.classList.remove('hidden');
+                compactBoard.classList.add('hidden');
+                compactBoard.classList.remove('grid');
+
+                // 1. Render 60 background cells for drop targets
+                let html = '';
+                for (let r = 0; r < GRID_ROWS; r++) {
+                    for (let c = 0; c < GRID_COLS; c++) {
+                        html += `
+                            <div style="grid-column:${c+1};grid-row:${r+1}" data-cell-x="${c}" data-cell-y="${r}"
+                                 ondragover="handleCellDragOver(event, ${c}, ${r})"
+                                 ondragleave="clearCellHighlights()"
+                                 ondrop="handleCellDrop(event, ${c}, ${r})"
+                                 class="tetris-empty-cell border border-slate-800/80 bg-slate-950/60 rounded-sm transition-colors flex items-center justify-center">
+                                <span class="w-1 h-1 rounded-full bg-slate-800/70"></span>
+                            </div>
+                        `;
+                    }
+                }
+
+                // 2. Render spatial items positioned on the 10x6 grid
+                INVENTORY_ITEMS.forEach(item => {
+                    const isVisible = filteredItems.includes(item);
+                    const rTier = RARITY_TIERS[item.rarity];
+                    const eff = getEffectiveItemStats(item);
+                    const isSelected = STATE.selectedItemId === item.id;
+                    const classRestricted = item.reqClass !== 'Todas' && item.reqClass !== 'Arcanista';
+
+                    html += `
+                        <div id="grid-item-${item.id}"
+                             draggable="true"
+                             ondragstart="handleItemDragStart(event, '${item.id}')"
+                             ondragend="clearCellHighlights()"
+                             role="button" tabindex="0" aria-label="Inspecionar ${item.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectItem('${item.id}')}" onclick="selectItem('${item.id}')"
+                             ondblclick="equipItemById('${item.id}')"
+                             onmouseenter="hoverItem('${item.id}')"
+                             onmouseleave="hoverItem(null)"
+                             style="grid-column: ${item.x + 1} / span ${item.w}; grid-row: ${item.y + 1} / span ${item.h};"
+                             class="tetris-item-card relative rounded-lg p-1.5 flex flex-col justify-between overflow-hidden ${rTier.surfaceClass} ${isSelected ? 'selected-item' : ''} ${!isVisible ? 'opacity-20 pointer-events-none' : ''}">
+
+                            <!-- Floating Legendary/Epic Sparks for Redundant Accessibility -->
+                            ${item.rarity === 'legendary' ? `
+                                <span class="rarity-spark left-[20%] bottom-1 text-[10px] text-amber-300" style="animation-delay:0.1s">✦</span>
+                                <span class="rarity-spark left-[75%] bottom-2 text-[9px] text-yellow-200" style="animation-delay:1.1s">✦</span>
+                            ` : ''}
+
+                            <!-- Top Bar: Accessible Rarity Symbol + Power -->
+                            <div class="flex items-center justify-between gap-1 z-10">
+                                <span class="text-[11px] font-mono-num font-extrabold px-1 rounded bg-slate-950/80 ${rTier.textClass} border border-white/10"
+                                      title="Raridade ${rTier.name} (${rTier.patternDesc})">
+                                    ${rTier.symbol} ${eff.power}
+                                </span>
+                                <span class="text-[9px] font-mono-num text-slate-300 bg-slate-950/75 px-1 rounded">
+                                    ${item.w}x${item.h}
+                                </span>
+                            </div>
+
+                            <!-- Center Item SVG Artwork -->
+                            <div class="flex-1 min-h-0 flex items-center justify-center p-1">
+                                ${ITEM_SVGS[item.artKey](rTier.color)}
+                            </div>
+
+                            <!-- Bottom Bar: Item Short Name + Socket Indicators -->
+                            <div class="z-10 flex items-center justify-between gap-1 bg-slate-950/75 px-1.5 py-0.5 rounded">
+                                <span class="text-[10px] font-semibold text-white truncate">${item.name}</span>
+                                <div class="flex items-center gap-0.5 shrink-0">
+                                    ${Array.from({ length: item.maxSockets }).map((_, idx) => {
+                                        const gemId = item.sockets[idx];
+                                        const gem = GEMS_DB.find(g => g.id === gemId);
+                                        return gem
+                                            ? `<span class="text-[9px]" style="color:${gem.color}">${gem.shapeSymbol}</span>`
+                                            : `<span class="w-1.5 h-1.5 rounded-full border border-slate-400"></span>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+
+                            ${classRestricted ? `
+                                <div class="absolute bottom-7 right-1 px-1 rounded bg-rose-950/90 border border-rose-500/60 text-[8px] font-mono-num text-rose-300 uppercase">
+                                    ${item.reqClass}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                tetrisBoard.innerHTML = html;
+            } else {
+                // COMPACT UNIFORM SLOTS MODE (Destiny 2 / Witcher 3 Style)
+                tetrisBoard.classList.add('hidden');
+                compactBoard.classList.remove('hidden');
+                compactBoard.classList.add('grid');
+
+                compactBoard.innerHTML = filteredItems.map(item => {
+                    const rTier = RARITY_TIERS[item.rarity];
+                    const eff = getEffectiveItemStats(item);
+                    const isSelected = STATE.selectedItemId === item.id;
+                    return `
+                        <div role="button" tabindex="0" aria-label="Inspecionar ${item.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectItem('${item.id}')}" onclick="selectItem('${item.id}')"
+                             ondblclick="equipItemById('${item.id}')"
+                             onmouseenter="hoverItem('${item.id}')"
+                             onmouseleave="hoverItem(null)"
+                             class="tetris-item-card aspect-square rounded-lg p-2 flex flex-col justify-between ${rTier.surfaceClass} ${isSelected ? 'selected-item' : ''}">
+                            <div class="flex items-center justify-between text-[10px] font-mono-num">
+                                <span class="font-bold ${rTier.textClass}">${rTier.symbol} ${eff.power}</span>
+                                <span class="text-[9px] text-slate-400">${item.weight}kg</span>
+                            </div>
+                            <div class="flex-1 flex items-center justify-center p-1">
+                                ${ITEM_SVGS[item.artKey](rTier.color)}
+                            </div>
+                            <div class="text-[10px] font-semibold text-white truncate text-center bg-slate-950/75 rounded px-1">
+                                ${item.name}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        /*********************************************************************
+         * 9. DRAG-AND-DROP, ROTATION & BIN-PACKING ALGORITHMS
+         *********************************************************************/
+        function handleItemDragStart(event, itemId) {
+            STATE.draggedItemId = itemId;
+            STATE.selectedItemId = itemId;
+            event.dataTransfer.setData('text/plain', itemId);
+        }
+
+        function handleCellDragOver(event, targetX, targetY) {
+            event.preventDefault();
+            const found = findItemById(STATE.draggedItemId);
+            if (!found || found.isEquipped) return;
+            const item = found.item;
+
+            const isValid = canPlaceItemAt(item, targetX, targetY, item.w, item.h);
+            clearCellHighlights();
+
+            for (let r = targetY; r < targetY + item.h; r++) {
+                for (let c = targetX; c < targetX + item.w; c++) {
+                    const cell = document.querySelector(`[data-cell-x="${c}"][data-cell-y="${r}"]`);
+                    if (cell) {
+                        cell.classList.add(isValid ? 'bg-emerald-500/35' : 'bg-rose-500/40');
+                        cell.classList.add(isValid ? 'border-emerald-400' : 'border-rose-500');
+                    }
+                }
+            }
+        }
+
+        function clearCellHighlights() {
+            document.querySelectorAll('.tetris-empty-cell').forEach(cell => {
+                cell.classList.remove('bg-emerald-500/35', 'bg-rose-500/40', 'border-emerald-400', 'border-rose-500');
+            });
+        }
+
+        function handleCellDrop(event, targetX, targetY) {
+            event.preventDefault();
+            clearCellHighlights();
+            const itemId = STATE.draggedItemId || event.dataTransfer.getData('text/plain');
+            const found = findItemById(itemId);
+            if (!found || found.isEquipped) return;
+
+            const item = found.item;
+            if (canPlaceItemAt(item, targetX, targetY, item.w, item.h)) {
+                item.x = targetX;
+                item.y = targetY;
+                renderInventoryGrid();
+                showToast(`Item movido para célula (${targetX + 1}, ${targetY + 1})`);
+            } else {
+                showToast('Espaço ocupado ou fora dos limites do Grid 10x6!');
+            }
+        }
+
+        function handleDropOnEquipSlot(event, slotKey) {
+            event.preventDefault();
+            const itemId = STATE.draggedItemId || event.dataTransfer.getData('text/plain');
+            const found = findItemById(itemId);
+            if (!found || found.isEquipped) return;
+
+            if (found.item.slot !== slotKey) {
+                showToast(`Slot incompatível: este item pertence ao slot ${SLOT_LABELS[found.item.slot].name}`);
+                return;
+            }
+            equipItemById(itemId);
+        }
+
+        function rotateSelectedItem() {
+            const found = findItemById(STATE.selectedItemId);
+            if (!found || found.isEquipped) {
+                showToast('Selecione um item da mochila para girar sua orientação.');
+                return;
+            }
+            const item = found.item;
+            if (item.w === item.h) {
+                showToast(`Item ${item.w}x${item.h} é simétrico.`);
+                return;
+            }
+            const newW = item.h;
+            const newH = item.w;
+            if (canPlaceItemAt(item, item.x, item.y, newW, newH)) {
+                item.w = newW;
+                item.h = newH;
+                renderInventoryGrid();
+                showToast(`Orientação girada para ${newW}x${newH}`);
+            } else {
+                showToast('Sem espaço livre adjacente para girar este item!');
+            }
+        }
+
+        function autoPackTetrisGrid() {
+            // Sort by area descending + rarity descending, then place greedily in 10x6 grid
+            const copy = [...INVENTORY_ITEMS].sort((a, b) => {
+                const areaDiff = (b.w * b.h) - (a.w * a.h);
+                if (areaDiff !== 0) return areaDiff;
+                return RARITY_TIERS[b.rarity].rank - RARITY_TIERS[a.rarity].rank;
+            });
+
+            // Temporarily move all off-grid
+            copy.forEach(it => { it.x = -99; it.y = -99; });
+
+            copy.forEach(item => {
+                let placed = false;
+                for (let r = 0; r < GRID_ROWS && !placed; r++) {
+                    for (let c = 0; c < GRID_COLS && !placed; c++) {
+                        if (canPlaceItemAt(item, c, r, item.w, item.h)) {
+                            item.x = c;
+                            item.y = r;
+                            placed = true;
+                        } else if (canPlaceItemAt(item, c, r, item.h, item.w)) {
+                            // Auto-rotate if needed to fit!
+                            const tmp = item.w;
+                            item.w = item.h;
+                            item.h = tmp;
+                            item.x = c;
+                            item.y = r;
+                            placed = true;
+                        }
+                    }
+                }
+            });
+
+            renderInventoryGrid();
+            showToast('Grid 10x6 otimizado via algoritmo Bin-Packing!');
+        }
+
+        /*********************************************************************
+         * 10. GEM SOCKETING WORKBENCH LOGIC
+         *********************************************************************/
+        function renderGemWorkbench() {
+            const container = document.getElementById('gem-workbench-list');
+            container.innerHTML = GEMS_DB.map(gem => `
+                <button onclick="socketGemIntoSelected('${gem.id}')"
+                        class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-amber-400/60 transition-all text-left group">
+                    <div class="shrink-0 group-hover:scale-110 transition-transform">${gem.svg}</div>
+                    <div class="min-w-0">
+                        <div class="text-xs font-bold text-white truncate">${gem.shortName}</div>
+                        <div class="text-[10px] font-mono-num" style="color:${gem.color}">${gem.desc}</div>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function socketGemIntoSelected(gemId) {
+            const activeId = STATE.hoveredItemId || STATE.selectedItemId;
+            const found = findItemById(activeId);
+            if (!found) return;
+            const item = found.item;
+
+            if (item.sockets.length >= item.maxSockets) {
+                showToast(`Todos os ${item.maxSockets} encaixes de ${item.name} já estão ocupados!`);
+                return;
+            }
+            item.sockets.push(gemId);
+            const gem = GEMS_DB.find(g => g.id === gemId);
+            playArmorySound('socket');
+            renderAll();
+            showToast(`${gem.name} engastada em ${item.name}!`);
+        }
+
+        function socketFirstGemIntoSelected() {
+            socketGemIntoSelected(GEMS_DB[0].id);
+        }
+
+        function unsocketAllGemsFromSelected() {
+            const activeId = STATE.hoveredItemId || STATE.selectedItemId;
+            const found = findItemById(activeId);
+            if (!found) return;
+            found.item.sockets = [];
+            playArmorySound('dismantle');
+            renderAll();
+            showToast(`Ajustes removidas de ${found.item.name}`);
+        }
+
+        /*********************************************************************
+         * 11. SIDE-BY-SIDE COMPARATIVE TOOLTIP ENGINE (5-LAYER ANATOMY)
+         *********************************************************************/
+        function formatDeltaBadge(diff, isPercent = true, unit = '%') {
+            if (diff === 0) {
+                return `<span class="text-[11px] font-mono-num text-slate-400 px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">= 0${unit}</span>`;
+            }
+            const sign = diff > 0 ? '+' : '';
+            const arrow = diff > 0 ? '▲' : '▼';
+            const cls = diff > 0 ? 'delta-badge-pos' : 'delta-badge-neg';
+            return `<span class="text-[11px] font-mono-num font-bold px-1.5 py-0.5 rounded ${cls}">${arrow} ${sign}${diff}${unit}</span>`;
+        }
+
+        function buildSingleTooltipCardHtml(item, compareAgainstItem, isEquippedCard = false) {
+            const rTier = RARITY_TIERS[item.rarity];
+            const eff = getEffectiveItemStats(item);
+            const compEff = compareAgainstItem ? getEffectiveItemStats(compareAgainstItem) : null;
+
+            const primaryDiff = compEff ? (eff.primaryStat - compEff.primaryStat) : 0;
+            const primaryPctDiff = compEff && compEff.primaryStat > 0
+                ? +(((eff.primaryStat - compEff.primaryStat) / compEff.primaryStat) * 100).toFixed(1)
+                : 0;
+
+            const statRows = [
+                { key: 'damagePct', label: 'Eficácia', val: eff.damagePct, comp: compEff ? compEff.damagePct : eff.damagePct },
+                { key: 'speed', label: 'Velocidade', val: eff.speed, comp: compEff ? compEff.speed : eff.speed },
+                { key: 'crit', label: 'Precisão', val: eff.crit, comp: compEff ? compEff.crit : eff.crit },
+                { key: 'stability', label: 'Estabilidade', val: eff.stability, comp: compEff ? compEff.stability : eff.stability },
+                { key: 'elemental', label: 'Versatilidade', val: eff.elemental, comp: compEff ? compEff.elemental : eff.elemental }
+            ];
+
+            return `
+                <div>
+                    <!-- LAYER 1: HEADER OF IDENTITY & REDUNDANT RARITY -->
+                    <div class="p-3 ${rTier.surfaceClass} border-b border-white/10 relative overflow-hidden">
+                        <div class="flex items-center justify-between gap-2 mb-1">
+                            <span class="inline-flex items-center gap-1 text-[10px] font-mono-num font-extrabold uppercase px-2 py-0.5 rounded border ${rTier.badgeBg}">
+                                <span>${rTier.symbol}</span>
+                                <span>${rTier.name}</span>
+                            </span>
+                            <span class="text-[10px] font-mono-num font-bold px-2 py-0.5 rounded ${isEquippedCard ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40' : 'bg-amber-500/20 text-amber-200 border border-amber-400/40'}">
+                                ${isEquippedCard ? '✓ EQUIPADO ATUALMENTE' : 'INSPECIONANDO'}
+                            </span>
+                        </div>
+
+                        <div class="flex items-center gap-2.5 mt-1">
+                            <div class="w-12 h-12 rounded-lg bg-slate-950/75 border border-white/15 p-1.5 shrink-0 flex items-center justify-center">
+                                ${ITEM_SVGS[item.artKey](rTier.color)}
+                            </div>
+                            <div class="min-w-0">
+                                <h3 class="font-serif-title font-bold text-sm text-white leading-tight truncate">${item.name}</h3>
+                                <div class="text-[11px] text-slate-300">${item.subType} • <span class="text-amber-300 font-mono-num">Poder ${eff.power}</span></div>
+                                <div class="text-[10px] font-mono-num text-slate-400">Perfil: <strong class="text-slate-200">${item.reqClass}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LAYER 2: PRIMARY STAT READOUT (<1 SECOND FOVEAL SCAN) -->
+                    <div class="p-3 bg-slate-950/90 border-b border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <div class="text-[9px] font-mono-num uppercase tracking-widest text-slate-400">${item.primaryStatLabel}</div>
+                            <div class="text-2xl font-mono-num font-extrabold text-white leading-none mt-0.5">
+                                ${eff.primaryStat.toLocaleString('pt-BR')}
+                            </div>
+                        </div>
+                        ${!isEquippedCard && compEff ? `
+                            <div class="text-right">
+                                ${formatDeltaBadge(primaryDiff, false, '')}
+                                <div class="text-[10px] font-mono-num mt-0.5 ${primaryPctDiff >= 0 ? 'text-emerald-400' : 'text-rose-400'}">
+                                    (${primaryPctDiff >= 0 ? '+' : ''}${primaryPctDiff}% vs Equipado)
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="text-right text-[10px] font-mono-num text-slate-400">
+                                BASE DE REFERÊNCIA
+                            </div>
+                        `}
+                    </div>
+
+                    <!-- LAYER 3: COMPARATIVE STAT BARS WITH POSITIVE/NEGATIVE DELTAS -->
+                    <div class="p-3 space-y-2 border-b border-slate-800/80">
+                        <div class="text-[10px] font-mono-num uppercase tracking-wider text-slate-400">COMPARAÇÃO DE ATRIBUTOS</div>
+                        ${statRows.map(row => {
+                            const diff = row.val - row.comp;
+                            const baseWidth = Math.min(100, Math.min(row.val, row.comp));
+                            const deltaWidth = Math.min(100 - baseWidth, Math.abs(diff));
+                            return `
+                                <div class="space-y-0.5">
+                                    <div class="flex items-center justify-between text-[11px]">
+                                        <span class="text-slate-300 font-medium">${row.label}</span>
+                                        <div class="flex items-center gap-1.5 font-mono-num">
+                                            <span class="text-white font-bold">${row.val}%</span>
+                                            ${!isEquippedCard && compEff ? formatDeltaBadge(diff, true, '%') : ''}
+                                        </div>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                                        <div class="h-full bg-slate-300" style="width: ${baseWidth}%"></div>
+                                        ${!isEquippedCard && diff > 0 ? `<div class="h-full delta-bar-pos" style="width: ${deltaWidth}%"></div>` : ''}
+                                        ${!isEquippedCard && diff < 0 ? `<div class="h-full delta-bar-neg" style="width: ${deltaWidth}%"></div>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <!-- LAYER 4: SECONDARY AFFIXES & LEGENDARY/EPIC PASSIVE -->
+                    <div class="p-3 space-y-2 border-b border-slate-800/80">
+                        <ul class="space-y-1 text-[11px] text-slate-300">
+                            ${item.affixes.map(af => `
+                                <li class="flex items-start gap-1.5">
+                                    <span class="${rTier.textClass} font-mono-num">◆</span>
+                                    <span>${af}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+
+                        ${item.passive ? `
+                            <div class="p-2 rounded-lg bg-amber-500/10 border border-amber-400/40 text-[11px] text-amber-200 leading-snug">
+                                <span class="font-bold text-amber-400">✦ USO NARRATIVO — </span>${item.passive}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <!-- LAYER 5: INTERACTIVE GEM SOCKETS & METADATA FOOTER -->
+                <div class="p-3 bg-slate-950/90 space-y-2">
+                    <div class="flex items-center justify-between text-[10px] font-mono-num uppercase text-slate-400">
+                        <span>AJUSTES DO OBJETO (${item.sockets.length}/${item.maxSockets})</span>
+                        <span>FORMAS DISTINTAS</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${Array.from({ length: item.maxSockets }).map((_, idx) => {
+                            const gemId = item.sockets[idx];
+                            const gem = GEMS_DB.find(g => g.id === gemId);
+                            if (gem) {
+                                return `
+                                    <div class="flex items-center gap-1 px-2 py-1 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono-num">
+                                        <span style="color:${gem.color}">${gem.shapeSymbol}</span>
+                                        <span class="text-white font-semibold">${gem.desc}</span>
+                                    </div>
+                                `;
+                            }
+                            return `
+                                <div onclick="socketFirstGemIntoSelected()"
+                                     class="cursor-pointer flex items-center gap-1 px-2 py-1 rounded bg-slate-900/50 hover:bg-slate-800 border border-dashed border-slate-600 text-[10px] font-mono-num text-slate-400">
+                                    <span>○ Ajuste disponível</span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono-num text-slate-400">
+                        <span>⚖ PESO: <strong class="text-white">${item.weight} kg</strong> (${item.w}x${item.h})</span>
+                        <span>◈ VALOR: <strong class="text-amber-300">${item.gold.toLocaleString('pt-BR')} un. de material</strong></span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderComparativeTooltip() {
+            const activeId = STATE.hoveredItemId || STATE.selectedItemId;
+            const found = findItemById(activeId) || findItemById(INVENTORY_ITEMS[0]?.id) || { item: EQUIPPED_LOADOUT.primary, isEquipped: true };
+            const inspectedItem = found.item;
+            const equippedInSameSlot = EQUIPPED_LOADOUT[inspectedItem.slot];
+
+            const primaryCard = document.getElementById('tooltip-primary-card');
+            const equippedCard = document.getElementById('tooltip-equipped-card');
+            const gridContainer = document.getElementById('tooltip-comparison-grid');
+
+            primaryCard.innerHTML = buildSingleTooltipCardHtml(
+                inspectedItem,
+                found.isEquipped ? null : equippedInSameSlot,
+                found.isEquipped
+            );
+
+            if (STATE.compareMode && equippedInSameSlot && equippedInSameSlot.id !== inspectedItem.id) {
+                equippedCard.classList.remove('hidden');
+                gridContainer.classList.add('xl:grid-cols-2');
+                equippedCard.innerHTML = buildSingleTooltipCardHtml(equippedInSameSlot, null, true);
+            } else {
+                equippedCard.classList.add('hidden');
+                gridContainer.classList.remove('xl:grid-cols-2');
+            }
+        }
+
+        /*********************************************************************
+         * 12. USER ACTIONS: SELECT, EQUIP, DISMANTLE, SPAWN LOOT, FILTERS
+         *********************************************************************/
+        function selectItem(itemId) {
+            STATE.selectedItemId = itemId;
+            renderAll();
+        }
+
+        function hoverItem(itemId) {
+            STATE.hoveredItemId = itemId;
+            renderComparativeTooltip();
+        }
+
+        function equipItemById(itemId) {
+            const idx = INVENTORY_ITEMS.findIndex(i => i.id === itemId);
+            if (idx === -1) return;
+
+            const newItem = INVENTORY_ITEMS[idx];
+            const slotKey = newItem.slot;
+            const oldEquipped = EQUIPPED_LOADOUT[slotKey];
+
+            // Swap coordinates so old equipped item takes the slot in inventory
+            oldEquipped.x = newItem.x;
+            oldEquipped.y = newItem.y;
+
+            EQUIPPED_LOADOUT[slotKey] = newItem;
+            INVENTORY_ITEMS[idx] = oldEquipped;
+            STATE.selectedItemId = newItem.id;
+
+            autoPackTetrisGrid();
+            playArmorySound('equip');
+            renderAll();
+            showToast(`Equipado: ${newItem.name} no slot ${SLOT_LABELS[slotKey].name}!`);
+        }
+
+        function equipSelectedItem() {
+            const activeId = STATE.hoveredItemId || STATE.selectedItemId;
+            equipItemById(activeId);
+        }
+
+        function dismantleSelectedItem() {
+            const idx = INVENTORY_ITEMS.findIndex(i => i.id === STATE.selectedItemId);
+            if (idx === -1) {
+                showToast('Não é possível desmantelar um item atualmente equipado!');
+                return;
+            }
+            if (INVENTORY_ITEMS.length <= 2) {
+                showToast('Mantenha pelo menos 2 itens no inventário para comparação.');
+                return;
+            }
+            const removed = INVENTORY_ITEMS.splice(idx, 1)[0];
+            STATE.selectedItemId = INVENTORY_ITEMS[0].id;
+            playArmorySound('dismantle');
+            renderAll();
+            showToast(`Desmantelado: ${removed.name} (+${removed.gold} un. de material & Materiais)`);
+        }
+
+        function spawnRandomLootItem() {
+            const templates = [
+                { name: 'Aegis de Hélio // Escudo Solar', slot: 'secondary', category: 'weapon', subType: 'Grimório Solar', rarity: 'legendary', w: 2, h: 2, weight: 4.5, artKey: 'grimoire', label: 'UTILIDADE BASE', base: 1080 },
+                { name: 'Lâmina Vorpal de Ártemis', slot: 'primary', category: 'weapon', subType: 'Espada Épica', rarity: 'epic', w: 1, h: 3, weight: 4.8, artKey: 'greatsword', label: 'UTILIDADE BASE', base: 1190 },
+                { name: 'Anel do Vazio Abissal', slot: 'ring', category: 'jewelry', subType: 'Anel Excepcional', rarity: 'legendary', w: 1, h: 1, weight: 0.4, artKey: 'ring', label: 'VERSATILIDADE', base: 390 },
+                { name: 'Elmo de Valquíria Prime', slot: 'helm', category: 'armor', subType: 'Elmo Excepcional', rarity: 'legendary', w: 2, h: 2, weight: 4.0, artKey: 'helm', label: 'PROTEÇÃO BASE', base: 355 }
+            ];
+            const tpl = templates[Math.floor(Math.random() * templates.length)];
+            const newItem = {
+                id: 'inv_' + Date.now(),
+                name: tpl.name,
+                slot: tpl.slot,
+                category: tpl.category,
+                subType: tpl.subType,
+                rarity: tpl.rarity,
+                reqClass: 'Todas',
+                power: Math.floor(890 + Math.random() * 65),
+                primaryStatLabel: tpl.label,
+                basePrimaryStat: tpl.base + Math.floor(Math.random() * 90),
+                stats: {
+                    damagePct: Math.floor(80 + Math.random() * 35),
+                    speed: Math.floor(70 + Math.random() * 25),
+                    crit: Math.floor(20 + Math.random() * 15),
+                    stability: Math.floor(75 + Math.random() * 20),
+                    elemental: Math.floor(75 + Math.random() * 22)
+                },
+                affixes: ['+15% Dano Crítico', '+12% Velocidade de Habilidade', '+210 Vitalidade'],
+                passive: 'Bênção do Arconte: Acertos críticos concedem um escudo equivalente a 8% do dano causado.',
+                maxSockets: 2,
+                sockets: ['ruby_atk'],
+                weight: tpl.weight,
+                gold: 3200,
+                x: 0, y: 0, w: tpl.w, h: tpl.h,
+                artKey: tpl.artKey
+            };
+
+            // Find open space on grid
+            let placed = false;
+            for (let r = 0; r < GRID_ROWS && !placed; r++) {
+                for (let c = 0; c < GRID_COLS && !placed; c++) {
+                    if (canPlaceItemAt(newItem, c, r, newItem.w, newItem.h)) {
+                        newItem.x = c;
+                        newItem.y = r;
+                        placed = true;
+                    }
+                }
+            }
+
+            if (!placed) {
+                showToast('Grid 10x6 cheio! Equipe ou desmantele um item ou use Auto-Encaixar.');
+                return;
+            }
+
+            INVENTORY_ITEMS.push(newItem);
+            STATE.selectedItemId = newItem.id;
+            playArmorySound('loot');
+            renderAll();
+            showToast(`Novo Loot Dropado: ${newItem.name} (${RARITY_TIERS[newItem.rarity].name})`);
+        }
+
+        /*********************************************************************
+         * 13. TOP BAR CONTROLS (COLORBLINDNESS, PARADIGM, GLYPHS, OVERLAYS)
+         *********************************************************************/
+        function setColorblindMode(mode) {
+            STATE.cbMode = mode;
+            playArmorySound('click');
+            const viewport = document.getElementById('armory-viewport');
+            if (mode === 'none') {
+                viewport.style.filter = 'none';
+                showToast('Visão Padrão (Tricromata) ativada');
+            } else {
+                viewport.style.filter = `url(#cb-${mode})`;
+                const labels = {
+                    protanopia: 'Simulador: Protanopia (Sem Vermelho) — Observe os símbolos ● ◆ ❖ ✦',
+                    deuteranopia: 'Simulador: Deuteranopia (Sem Verde) — Observe as formas e hachuras',
+                    tritanopia: 'Simulador: Tritanopia (Sem Azul/Amarelo)',
+                    achromatopsia: 'Simulador: Acromatopsia (100% P&B) — Prova de Redundância Visual!'
+                };
+                showToast(labels[mode]);
+            }
+        }
+
+        function toggleCbSafePalette() {
+            STATE.cbSafeDeltas = !STATE.cbSafeDeltas;
+            document.body.classList.toggle('cb-safe-deltas', STATE.cbSafeDeltas);
+            const btn = document.getElementById('btn-cb-safe-palette');
+            if (STATE.cbSafeDeltas) {
+                btn.className = 'px-2 py-1 rounded text-[11px] font-bold border border-sky-400 bg-sky-500/20 text-sky-200 transition-all flex items-center gap-1';
+                showToast('Paleta Segura Ativada: Ganhos em Azul-Ciano ▲ e Perdas em Âmbar Hachurado ▼');
+            } else {
+                btn.className = 'px-2 py-1 rounded text-[11px] font-semibold border border-slate-700 bg-slate-900 text-slate-300 hover:text-white transition-all flex items-center gap-1';
+                showToast('Paleta Clássica (Verde/Vermelho) restaurada');
+            }
+            renderComparativeTooltip();
+        }
+
+        function setGridParadigm(mode) {
+            STATE.gridParadigm = mode;
+            playArmorySound('click');
+            document.getElementById('btn-mode-tetris').className = mode === 'tetris'
+                ? 'px-2.5 py-1 rounded text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/50 transition-all'
+                : 'px-2.5 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white transition-all';
+            document.getElementById('btn-mode-slots').className = mode === 'slots'
+                ? 'px-2.5 py-1 rounded text-xs font-semibold bg-amber-500/20 text-amber-200 border border-amber-400/50 transition-all'
+                : 'px-2.5 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white transition-all';
+            renderInventoryGrid();
+        }
+
+        function setCategoryFilter(cat) {
+            STATE.categoryFilter = cat;
+            playArmorySound('click');
+            ['all', 'weapon', 'armor', 'jewelry'].forEach(c => {
+                const btn = document.getElementById(`tab-cat-${c}`);
+                btn.className = c === cat
+                    ? 'cat-tab px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-200 border border-amber-400/50'
+                    : 'cat-tab px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white';
+            });
+            renderInventoryGrid();
+        }
+
+        function setClassFilter(cls) {
+            STATE.classFilter = cls;
+            playArmorySound('click');
+            renderInventoryGrid();
+        }
+
+        function sortInventory(criteria) {
+            playArmorySound('click');
+            INVENTORY_ITEMS.sort((a, b) => {
+                if (criteria === 'rarity') return RARITY_TIERS[b.rarity].rank - RARITY_TIERS[a.rarity].rank;
+                if (criteria === 'power') return getEffectiveItemStats(b).power - getEffectiveItemStats(a).power;
+                if (criteria === 'weight') return b.weight - a.weight;
+                return 0;
+            });
+            autoPackTetrisGrid();
+        }
+
+        function setPlatformGlyphs(plat) {
+            STATE.platform = plat;
+            ['ps', 'xbox', 'pc'].forEach(p => {
+                const btn = document.getElementById(`btn-glyph-${p}`);
+                btn.className = p === plat
+                    ? 'px-2 py-1 rounded text-xs font-bold bg-slate-800 text-amber-300 border border-amber-400/50'
+                    : 'px-2 py-1 rounded text-xs font-semibold text-slate-400 hover:text-white';
+            });
+
+            const g = GLYPHS[plat];
+            document.getElementById('glyph-equip').innerHTML = g.equip;
+            document.getElementById('glyph-socket').innerHTML = g.socket;
+            document.getElementById('glyph-dismantle').innerHTML = g.dismantle;
+            document.getElementById('glyph-compare-slot').innerHTML = g.compare;
+        }
+
+        function toggleComparisonMode() {
+            STATE.compareMode = !STATE.compareMode;
+            const btn = document.getElementById('btn-toggle-compare');
+            btn.innerHTML = `
+                <span id="glyph-compare-slot" class="inline-flex items-center">${GLYPHS[STATE.platform].compare}</span>
+                <span>Comparar Lado a Lado: ${STATE.compareMode ? 'ON' : 'OFF'}</span>
+            `;
+            renderComparativeTooltip();
+        }
+
+        function toggleUxAnatomyOverlay() {
+            const el = document.getElementById('ux-anatomy-overlay');
+            el.classList.toggle('hidden');
+        }
+
+        function togglePortfolioDrawer() {
+            const drawer = document.getElementById('portfolio-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        let toastTimeout = null;
+        function showToast(msg) {
+            const t = document.getElementById('armory-toast');
+            t.textContent = msg;
+            t.classList.remove('opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => t.classList.add('opacity-0'), 2400);
+        }
+
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            const k = e.key.toLowerCase();
+            if (k === 'r') rotateSelectedItem();
+            else if (k === 'e') equipSelectedItem();
+            else if (k === 'g') socketFirstGemIntoSelected();
+            else if (k === 'x') dismantleSelectedItem();
+            else if (e.key === 'Shift') toggleComparisonMode();
+        });
+
+        function renderAll() {
+            renderPaperdollAndStats();
+            renderInventoryGrid();
+            renderGemWorkbench();
+            renderComparativeTooltip();
+        }
+
+
+const musangaItems = [
+ ['Faixa de tecido','Tecido dobrado','cloth'],['Colete remendado','Vestuário de proteção','cloth'],['Peça de metal','Ferramenta improvisada','metal'],['Cordão simples','Ferramenta de apoio','rope'],['Faixas para as mãos','Proteção de tecido','cloth'],['Sandálias gastas','Calçado','sandals'],['Bolsa de pano','Pertence pessoal','bag'],['Laço de corda','Amarração','rope'],
+ ['Alavanca curta','Ferramenta de apoio','metal'],['Corda trançada','Ferramenta de percurso','rope'],['Faixas reforçadas','Proteção de tecido','cloth'],['Cunha de madeira','Ferramenta improvisada','wood'],['Lenço dobrado','Tecido de proteção','cloth'],['Sandálias reparadas','Calçado','sandals'],['Cordão com nó','Amarração','rope'],['Bolsa costurada','Pertence pessoal','bag'],['Manto de tecido','Vestuário','cloth']
+];
+const drawObject=(path,color)=>`<svg viewBox="0 0 100 100" class="w-full h-full" fill="none" stroke="${color}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+ITEM_SVGS.metal=c=>drawObject('<path d="M27 80 58 25 66 20 74 25 63 33 35 85Z" fill="#99836a"/><path d="m20 79 20 11M55 31l11 7"/>',c);
+ITEM_SVGS.cloth=c=>drawObject('<path d="m23 20 53 8 8 52-61-3Z" fill="#756651"/><path d="m23 20 14 16 39-8M37 36l-5 39M42 44l30 9M43 55l28 9"/>',c);
+ITEM_SVGS.rope=c=>drawObject('<ellipse cx="48" cy="44" rx="27" ry="22"/><ellipse cx="48" cy="44" rx="20" ry="15"/><ellipse cx="48" cy="44" rx="12" ry="8"/><path d="M65 60q18 12 7 28M29 60q-8 21-16 15"/>',c);
+ITEM_SVGS.wood=c=>drawObject('<path d="m20 77 23-51 40 40Z" fill="#6f5038"/><path d="m31 65 15-28 23 25M42 60l11-11"/>',c);
+ITEM_SVGS.bag=c=>drawObject('<path d="M31 30h38l10 44q-28 20-57 0Z" fill="#74644b"/><path d="m30 30 40 0M35 29 30 17l39 0-5 12M45 31l-8 19M53 31l11 15"/>',c);
+ITEM_SVGS.sandals=c=>drawObject('<path d="M36 18q15-4 11 23l-3 32q-12 14-25 2l4-40q2-12 13-17ZM69 27q15-4 11 23l-3 32q-12 14-25 2l4-40q2-12 13-17Z" fill="#685341"/><path d="m24 40 20 12m-22 2 21 11m14-16 20 12m-22 1 20 12"/>',c);
+[...Object.values(EQUIPPED_LOADOUT),...INVENTORY_ITEMS].forEach((item,i)=>{
+ const slots={helm:0,chest:1,primary:2,secondary:3,gauntlets:4,greaves:5,amulet:6,ring:7}; const d=musangaItems[i<8?slots[item.slot]:i];item.name=d[0];item.subType=d[1];item.artKey=d[2];item.reqClass='Todas';item.power=40+(i*7)%46;item.basePrimaryStat=28+(i*11)%55;item.stats={damagePct:40+(i*7)%45,speed:38+(i*13)%45,crit:12+(i*3)%24,stability:35+(i*5)%45,elemental:30+(i*9)%45};item.affixes=['Objeto ficcional para teste de interface','Atributos demonstrativos; não representam dados históricos'];item.passive=i===8?'Oferece apoio para deslocar um fecho. Uso proposto, sujeito à validação do roteiro.':null;item.weight=+(0.2+(i%6)*.3).toFixed(1);item.gold=1+i%4;item.primaryStatLabel=item.category==='armor'?'PROTEÇÃO BASE':'UTILIDADE BASE';
+});
+// Ícones pintados (gerados por IA, ver PROMPTS-IMAGENS.md). A cunha de madeira mantém o SVG esquemático.
+const PAINTED_ICONS={'Faixa de tecido':'tecido','Colete remendado':'colete','Peça de metal':'peca-metal','Cordão simples':'cordao-no','Faixas para as mãos':'tecido','Sandálias gastas':'sandalias','Bolsa de pano':'bolsa','Laço de corda':'cordao-no','Alavanca curta':'alavanca','Corda trançada':'corda','Faixas reforçadas':'tecido','Lenço dobrado':'tecido','Sandálias reparadas':'sandalias','Cordão com nó':'cordao-no','Bolsa costurada':'bolsa','Manto de tecido':'tecido'};
+new Set(Object.values(PAINTED_ICONS)).forEach(f=>{ITEM_SVGS['ic_'+f]=()=>`<img src="assets/icones/${f}.png" alt="" draggable="false" style="width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.55))">`});
+[...Object.values(EQUIPPED_LOADOUT),...INVENTORY_ITEMS].forEach(it=>{if(PAINTED_ICONS[it.name])it.artKey='ic_'+PAINTED_ICONS[it.name]});
+Object.entries({helm:'Cabeça',chest:'Tronco',primary:'Ferramenta',secondary:'Apoio',gauntlets:'Mãos',greaves:'Pés',amulet:'Bolsa',ring:'Amarração'}).forEach(([k,v])=>SLOT_LABELS[k].name=v);
+RARITY_TIERS.common.color='#a6b4ad';RARITY_TIERS.rare.color='#91b7b5';RARITY_TIERS.epic.color='#c6a17c';RARITY_TIERS.legendary.color='#e0bf84';
+Object.assign(GEMS_DB[0],{name:'Reforço de fibra',shortName:'Fibra ▲',desc:'+8% Eficácia'});
+Object.assign(GEMS_DB[1],{name:'Ajuste de empunhadura',shortName:'Apoio ◆',desc:'+5% Precisão'});
+Object.assign(GEMS_DB[2],{name:'Amarração leve',shortName:'Laço ⬢',desc:'+6% Agilidade'});
+STATE.maxWeight=20;STATE.platform='pc';STATE.cbSafeDeltas=true;document.body.classList.add('cb-safe-deltas');
+function moveSelected(dx,dy){const found=findItemById(STATE.selectedItemId);if(!found||found.isEquipped){showToast('Selecione um objeto na mochila.');return}const item=found.item;if(!canPlaceItemAt(item,item.x+dx,item.y+dy,item.w,item.h)){showToast('Movimento bloqueado: limite da mochila ou outro objeto.');return}item.x+=dx;item.y+=dy;renderAll();document.getElementById('grid-item-'+item.id)?.focus();showToast('Posição atualizada.');}
+window.addEventListener('keydown',e=>{if(e.altKey&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();const d={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];moveSelected(...d)}});
+// Test-object generation stays within Musanga's material vocabulary.
+spawnRandomLootItem=function(){const template=INVENTORY_ITEMS.find(i=>i.category==='weapon')||Object.values(EQUIPPED_LOADOUT).find(i=>i.category==='weapon');const item=JSON.parse(JSON.stringify(template));item.id='musanga_'+Date.now();item.name='Cunha de madeira';item.subType='Objeto de teste';item.artKey='wood';item.w=1;item.h=2;item.weight=.3;item.sockets=[];item.passive=null;for(let y=0;y<6;y++)for(let x=0;x<10;x++){if(canPlaceItemAt(item,x,y,item.w,item.h)){item.x=x;item.y=y;INVENTORY_ITEMS.push(item);STATE.selectedItemId=item.id;renderAll();showToast('Objeto de teste adicionado.');return}}showToast('Sem espaço livre. Organize a mochila antes de adicionar.');};
+
+const originalSelectItem=selectItem;
+selectItem=function(id){originalSelectItem(id);const found=findItemById(id);if(found)Array.from(document.querySelectorAll('[role="button"][aria-label]')).find(el=>el.getAttribute('aria-label')==='Inspecionar '+found.item.name)?.focus({preventScroll:true});};
+        window.onload = function () {
+            setPlatformGlyphs('pc');
+            renderAll();
+        };
+    </script>
+</body>
+</html>

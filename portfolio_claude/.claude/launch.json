@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "url": "http://127.0.0.1:8765",
+      "port": 8765
+    },
+    {
+      "name": "portfolio-local",
+      "port": 8780,
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "dev/server.mjs"
+      ]
+    }
+  ]
+}

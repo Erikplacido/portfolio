@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erik Plácido — Tabletop UI/UX & Graphic Designer · One-Sheet Pitch</title>
+  <meta name="description" content="One-Sheet de apresentação profissional para editoras e criadores de jogos de tabuleiro por Erik Plácido." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --accent: #D97706;
+      --accent-dark: #B45309;
+      --accent-subtle: #FEF3C7;
+      --ink: #0F172A;
+      --muted: #475569;
+      --line: #E2E8F0;
+      --bg: #F8FAFC;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #E2E8F0;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      padding: 30px 16px;
+    }
+
+    /* Screen Top Action Bar */
+    .screen-actions {
+      max-width: 840px;
+      margin: 0 auto 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      background: #FFFFFF;
+      color: var(--ink);
+      border: 1px solid #CBD5E1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      background: #F1F5F9;
+      transform: translateY(-1px);
+    }
+    .btn-action.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #FFFFFF;
+    }
+    .btn-action.primary:hover {
+      background: var(--accent-dark);
+    }
+
+    /* Standard A4 Sheet Page Container */
+    .sheet-page {
+      width: 100%;
+      max-width: 840px;
+      min-height: 1188px;
+      margin: 0 auto 24px;
+      background: #FFFFFF;
+      padding: 44px 48px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Header */
+    .sheet-header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 20px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .designer-name {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .designer-role {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .contact-block {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .contact-block a {
+      color: var(--ink);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .contact-block a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero Visual Showcase */
+    .sheet-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .hero-thumb {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0F172A;
+      aspect-ratio: 16/10;
+    }
+    .hero-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-thumb-caption {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Value Proposition / Pitch */
+    .pitch-strip {
+      background: #F8FAFC;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 12px 18px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+    .pitch-strip strong {
+      color: var(--ink);
+    }
+
+    /* 3-Column Core Capabilities */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .cap-box {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 14px;
+      background: #FFFFFF;
+    }
+    .cap-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cap-title i {
+      color: var(--accent);
+    }
+    .cap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .cap-list li::before {
+      content: '• ';
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Portfolio Highlights */
+    .section-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .mini-project {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-proj-img {
+      height: 110px;
+      background: #0F172A;
+      overflow: hidden;
+    }
+    .mini-proj-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mini-proj-body {
+      padding: 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mini-proj-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .mini-proj-scope {
+      font-size: 10.5px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .mini-proj-tags {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      background: var(--accent-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    /* Bottom Technical Standards & Factory Compliance */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+    .specs-box h4 {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .specs-box p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .tool-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 600;
+      background: #F1F5F9;
+      border: 1px solid var(--line);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--ink);
+    }
+
+    /* Print Formatting */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        padding: 0 !important;
+      }
+      .screen-actions {
+        display: none !important;
+      }
+      .sheet-page {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 20mm !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Top Navigation -->
+  <div class="screen-actions">
+    <a href="tabletop.html" class="btn-action">
+      <i class="fa-solid fa-arrow-left"></i> Voltar à Página Completa
+    </a>
+    <div style="display:flex; gap:10px;">
+      <a href="mailto:erik.placido@gmail.com" class="btn-action">
+        <i class="fa-solid fa-envelope"></i> Contato Direto
+      </a>
+      <button onclick="window.print()" class="btn-action primary">
+        <i class="fa-solid fa-file-pdf"></i> Salvar / Imprimir PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- A4 One-Sheet Document -->
+  <div class="sheet-page">
+    <div>
+      <!-- Header -->
+      <header class="sheet-header">
+        <div>
+          <h1 class="designer-name">Erik Plácido</h1>
+          <div class="designer-role">Tabletop UI/UX & Production Graphic Designer</div>
+        </div>
+        <div class="contact-block">
+          <div><i class="fa-solid fa-location-dot"></i> São Paulo, Brasil · Disponível Remoto Global</div>
+          <div><i class="fa-solid fa-envelope"></i> <a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></div>
+          <div><i class="fa-solid fa-phone"></i> +55 (11) 98576-8545</div>
+          <div><i class="fa-solid fa-globe"></i> <a href="https://erikplacido.github.io/portfolio/tabletop.html">erikplacido.github.io/portfolio/tabletop.html</a></div>
+        </div>
+      </header>
+
+      <!-- Pitch Strip -->
+      <div class="pitch-strip">
+        <strong>Foco em Arquitetura de Informação & Engenharia Gráfica:</strong> Transformo protótipos e mecânicas complexas em interfaces físicas elegantes, eliminando atrito de regras e entregando arquivos 100% homologados para fabricantes internacionais (Panda Game, LongPack, Cartamundi, Copag).
+      </div>
+
+      <!-- Hero Visuals (2 Renders) -->
+      <div class="sheet-hero">
+        <div>
+          <div class="hero-thumb">
+            <img src="forca-br/assets/r3d-mesa.jpg" alt="Projeto Força BR — Tabletop Mockup" />
+          </div>
+          <div class="hero-thumb-caption">Projeto Força BR · Tabuleiro 65×65 cm + Console do Jogador</div>
+        </div>
+        <div>
+          <div class="hero-thumb">
+            <img src="loony-races/assets/cover.jpg" alt="Loony Races — Box & Components" />
+          </div>
+          <div class="hero-thumb-caption">Loony Races · Embalagem 3D + Pistas Modulares + Manual PT/EN</div>
+        </div>
+      </div>
+
+      <!-- Core Capabilities Grid -->
+      <div class="cap-grid">
+        <div class="cap-box">
+          <div class="cap-title"><i class="fa-solid fa-id-card"></i> Cartas & Iconografia</div>
+          <ul class="cap-list">
+            <li>Anatomia de cartas para leque na mão</li>
+            <li>Sistemas de ícones universais</li>
+            <li>Separação nítida de regras e flavor text</li>
+            <li>Padrões Poker, Tarot, Mini e Square</li>
+          </ul>
+        </div>
+
+        <div class="cap-box">
+          <div class="cap-title"><i class="fa-solid fa-book-open"></i> Manuais de Regras</div>
+          <ul class="cap-list">
+            <li>Diagramação editorial no Adobe InDesign</li>
+            <li>Inventário visual de peças e setup</li>
+            <li>Exemplos ilustrados passo a passo</li>
+            <li>Grades colunadas e caixas de exceção</li>
+          </ul>
+        </div>
+
+        <div class="cap-box">
+          <div class="cap-title"><i class="fa-solid fa-boxes-packing"></i> Embalagem & Facas</div>
+          <ul class="cap-list">
+            <li>Pranchas de faca de corte (Punchboards)</li>
+            <li>Tolerância de corte e encaixe de peças</li>
+            <li>Embalagem completa (Tampa e fundo)</li>
+            <li>Spot UV, verniz e acabamento linho</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Featured Projects -->
+      <div class="section-label">Projetos em Destaque</div>
+      <div class="projects-grid">
+        <div class="mini-project">
+          <div class="mini-proj-img" style="background:#0B0F19; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-flask" style="font-size:36px; color:#C84B31;"></i>
+          </div>
+          <div class="mini-proj-body">
+            <div class="mini-proj-title">Terraforming Mars · Redesign</div>
+            <div class="mini-proj-scope">Engenharia de dashboard dual-layer que zera deslize de cubos, cartas em cascata (-65% mesa) e iconografia acessível.</div>
+            <span class="mini-proj-tags" style="background:#FEF2F2; color:#991B1B;">Tabletop UX · Benchmark</span>
+          </div>
+        </div>
+
+        <div class="mini-project">
+          <div class="mini-proj-img">
+            <img src="loony-races/assets/caixa-mockup.jpg" alt="Loony Races" />
+          </div>
+          <div class="mini-proj-body">
+            <div class="mini-proj-title">Loony Races</div>
+            <div class="mini-proj-scope">Jogo de corrida completo: pista modular em tiles, 10 pilotos de países distintos, manual de 18 páginas e cartas language-independent.</div>
+            <span class="mini-proj-tags">Board Game · 1–10 Jogadores</span>
+          </div>
+        </div>
+
+        <div class="mini-project">
+          <div class="mini-proj-img">
+            <img src="forca-br/assets/card.jpg" alt="Projeto Força BR" />
+          </div>
+          <div class="mini-proj-body">
+            <div class="mini-proj-title">Projeto Força BR</div>
+            <div class="mini-proj-scope">Tabuleiro tático de radar 65×65 cm, console do jogador com duplo contador de recursos, cartas de eventos e protótipos 3D.</div>
+            <span class="mini-proj-tags">Co-op Board Game</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Specs & Factory Standards Footer -->
+    <footer class="specs-grid">
+      <div class="specs-box">
+        <h4>Padrões de Pré-Impressão & Fabricação</h4>
+        <p>
+          Arquivos entregues em conformidade com as normas industriais da <strong>Panda Game Manufacturing, LongPack Games, Cartamundi e Copag</strong>: perfis CMYK Fogra39/GRACoL, sangrias de 3mm com travas de segurança, facas de corte vetoriais com tolerância de encaixe e PDFs/X-1a em alta definição.
+        </p>
+      </div>
+      <div class="specs-box" style="text-align: right;">
+        <h4>Ferramentas</h4>
+        <div class="tool-tags" style="justify-content: flex-end;">
+          <span class="tool-tag">InDesign</span>
+          <span class="tool-tag">Illustrator</span>
+          <span class="tool-tag">Photoshop</span>
+          <span class="tool-tag">Dimension 3D</span>
+          <span class="tool-tag">Figma</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

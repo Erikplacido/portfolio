@@ -1,0 +1,12 @@
+78098b89c88a74ebe8c20117b8754620
+::res://::1792686702
+::res://models/::1792684230
+enemy.obj::Mesh::485567707311827758::1792684230::1792686703::1::::<><><>0<>0<>2c89b69b26f8dd76e75d3e497b4e3af0<>res://.godot/imported/enemy.obj-1885a19e75f9cc008900e5a18b843d3d.mesh<*>res://.godot/imported/enemy.obj-1885a19e75f9cc008900e5a18b843d3d.mesh::
+star_marshal.obj::Mesh::3678992815976686962::1792679099::1792679101::1::::<><><>0<>0<>e83b6d3176e5cf415325c2601a182d94<>res://.godot/imported/star_marshal.obj-f7864e36aa199f5a882d4da9ad4c39f7.mesh<*>res://.godot/imported/star_marshal.obj-f7864e36aa199f5a882d4da9ad4c39f7.mesh::
+vespera_city.obj::Mesh::4943070390713248233::1792679099::1792679101::1::::<><><>0<>0<>d778151ad5cb32e2e9cfbbf42f2e3d98<>res://.godot/imported/vespera_city.obj-bec67f4d76b0cb3d08dd7b2b5f3c64dc.mesh<*>res://.godot/imported/vespera_city.obj-bec67f4d76b0cb3d08dd7b2b5f3c64dc.mesh::
+::res://scenes/::1792679099
+main.tscn::PackedScene::549185560570301421::1792679099::0::1::::<><><>0<>0<><>::res://scripts/star_marshal_hud.gd
+::res://scripts/::1792679101
+star_marshal_hud.gd::GDScript::7088837695986386981::1792685147::0::1::::<>Node3D<><>0<>0<><>::
+::res://shaders/::1792679101
+pulp_critical_vignette.gdshader::Shader::7069802299001763913::1792683611::0::1::::<><><>0<>0<><>::

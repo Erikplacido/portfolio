@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erik Plácido — Senior Product Designer & AX Lead | Diretor de Arte</title>
+  <meta name="description" content="Currículo de Erik Plácido — Senior Product Designer, UI/UX & AX Lead e Diretor de Arte com mais de 20 anos de repertório unindo produtos digitais complexos, IA generativa e design de alto impacto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="shared/frame.css" />
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --border-subtle: #F1F5F9;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-faint: #64748B;
+      --accent: #EA3C36;
+      --accent-hover: #D82F2A;
+      --accent-subtle: #FEF2F2;
+      --accent-border: #FEE2E2;
+      --blue: #2563EB;
+      --blue-subtle: #EFF6FF;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 24px;
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-faint);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+      transform: translateX(-2px);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .btn-pill:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      transform: translateY(-1px);
+    }
+
+    .btn-pill.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(234, 60, 54, 0.25);
+    }
+
+    .btn-pill.primary:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Executive Header */
+    .header {
+      margin-bottom: 40px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .profile-title {
+      max-width: 620px;
+    }
+
+    .name {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .headline {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .headline span.sub {
+      color: var(--text-faint);
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .location-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-faint);
+      flex-wrap: wrap;
+    }
+
+    .location-status span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      display: inline-block;
+    }
+
+    /* Contact Links */
+    .contacts-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .contact-item:hover {
+      background: #F8FAFC;
+      border-color: #CBD5E1;
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    .contact-item.highlight {
+      background: var(--accent-subtle);
+      border-color: var(--accent-border);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .contact-item.highlight:hover {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    /* Executive Summary Pitch */
+    .pitch-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 22px 26px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pitch-text {
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .pitch-text strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    /* Track Filter (Clean & Refined) */
+    .track-nav {
+      margin-bottom: 32px;
+    }
+
+    .track-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .track-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    .track-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .track-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-faint);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .track-pill:hover {
+      color: var(--text-main);
+      border-color: #CBD5E1;
+      background: #F8FAFC;
+    }
+
+    .track-pill.active {
+      background: var(--text-main);
+      border-color: var(--text-main);
+      color: #FFFFFF;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Hero Experiences (Top Tier - High Impact) */
+    .hero-experiences {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .hero-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #CBD5E1;
+      transform: translateY(-2px);
+    }
+
+    .hero-card.hidden {
+      display: none;
+    }
+
+    .card-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .role-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .company-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .period-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-faint);
+      background: #F1F5F9;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .outcomes-list {
+      list-style: none;
+      margin: 14px 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .outcomes-list li {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .outcomes-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .outcomes-list strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .card-footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .case-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      color: var(--blue);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .case-link-pill:hover {
+      background: var(--blue-subtle);
+      border-color: #BFDBFE;
+      color: #1D4ED8;
+    }
+
+    /* Executive Historical Timeline (Condensed & Scannable) */
+    .timeline-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .timeline-row {
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.15s;
+    }
+
+    .timeline-row:last-child {
+      border-bottom: none;
+    }
+
+    .timeline-row:hover {
+      background: #F8FAFC;
+    }
+
+    .timeline-row.hidden {
+      display: none;
+    }
+
+    .timeline-cell {
+      padding: 14px 10px;
+      vertical-align: top;
+    }
+
+    .timeline-cell.period {
+      width: 130px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-faint);
+      white-space: nowrap;
+    }
+
+    .timeline-cell.role {
+      width: 320px;
+    }
+
+    .timeline-cell-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .timeline-cell-company {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .timeline-cell.desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 720px) {
+      .timeline-table, .timeline-row, .timeline-cell {
+        display: block;
+        width: 100% !important;
+      }
+      .timeline-cell {
+        padding: 6px 0;
+      }
+      .timeline-row {
+        padding: 14px 0;
+      }
+    }
+
+    /* 2-Column Grid: Education & Arsenal */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 760px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .info-card-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .edu-item {
+      margin-bottom: 14px;
+    }
+
+    .edu-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .edu-degree {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .edu-meta {
+      font-size: 12px;
+      color: var(--text-faint);
+      margin-top: 2px;
+    }
+
+    .skills-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cluster-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+
+    .cluster-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-clean {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text-main);
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transform: translateY(80px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Print / PDF Stylesheet (Scannable 2-page Senior ATS Layout) */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        color: #0F172A !important;
+        font-size: 9.5pt;
+      }
+      .top-bar, .track-nav, .toast, .btn-pill {
+        display: none !important;
+      }
+      .container {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .pitch-box, .hero-card, .timeline-container, .info-card {
+        box-shadow: none !important;
+        border: 1px solid #CBD5E1 !important;
+        page-break-inside: avoid;
+        margin-bottom: 12px !important;
+        padding: 14px 16px !important;
+      }
+      .hero-card.hidden, .timeline-row.hidden {
+        display: block !important;
+      }
+      .timeline-table {
+        display: table !important;
+      }
+      .timeline-row {
+        display: table-row !important;
+      }
+      .timeline-cell {
+        display: table-cell !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Action Bar -->
+    <nav class="top-bar">
+      <a href="index.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> Voltar ao Portfólio
+      </a>
+      <div class="top-actions">
+        <div class="pf-lang-picker" role="group" aria-label="Language selection">
+          <button type="button" class="pf-lang-btn active" data-lang="pt" aria-pressed="true" title="Português">PT</button>
+          <button type="button" class="pf-lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
+          <button type="button" class="pf-lang-btn" data-lang="es" aria-pressed="false" title="Español">ES</button>
+          <button type="button" class="pf-lang-btn" data-lang="fr" aria-pressed="false" title="Français">FR</button>
+        </div>
+        <button onclick="copyShareLink()" class="btn-pill" title="Copiar link com filtro ativo">
+          <i class="fa-solid fa-share-nodes"></i> Compartilhar Link
+        </button>
+        <button onclick="window.print()" class="btn-pill primary" title="Salvar versão limpa em PDF">
+          <i class="fa-solid fa-file-pdf"></i> Salvar / Imprimir PDF
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sub-Nav: Segment-Specific Resume Versions -->
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 18px; margin-bottom:28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+      <span style="font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-faint); display:flex; align-items:center; gap:6px;">
+        <i class="fa-solid fa-paper-plane" style="color:var(--accent);"></i> Versões Segmentadas para Envio Direto:
+      </span>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <a href="curriculo_product_design.html" class="btn-pill" style="font-size:11.5px; padding:5px 12px; color:#2563EB;">
+          <i class="fa-solid fa-layer-group"></i> Product Design & AX
+        </a>
+        <a href="curriculo_games.html" class="btn-pill" style="font-size:11.5px; padding:5px 12px; color:#D97706;">
+          <i class="fa-solid fa-gamepad"></i> Games & Game UI
+        </a>
+        <a href="tabletop.html" class="btn-pill" style="font-size:11.5px; padding:5px 12px; color:#B45309; font-weight:800; background:#FEF3C7; border-color:#FDE68A;">
+          <i class="fa-solid fa-dice-d20"></i> Tabletop UI/UX
+        </a>
+        <a href="curriculo_direcao_de_arte.html" class="btn-pill" style="font-size:11.5px; padding:5px 12px; color:#7E22CE;">
+          <i class="fa-solid fa-palette"></i> Direção de Arte & TV
+        </a>
+        <a href="curriculo_editorial_embalagens.html" class="btn-pill" style="font-size:11.5px; padding:5px 12px; color:#B44A17;">
+          <i class="fa-solid fa-box-open"></i> Editorial & Embalagens
+        </a>
+      </div>
+    </div>
+
+    <!-- Executive Header Profile -->
+    <header class="header">
+      <div class="header-top">
+        <div class="profile-title">
+          <h1 class="name">Erik Plácido</h1>
+          <div class="headline">
+            Senior Product Designer & AX Lead
+            <span class="sub">• Diretor de Arte Generalista</span>
+          </div>
+          <div class="location-status">
+            <span><i class="fa-solid fa-location-dot"></i> São Paulo, SP · Brasil</span>
+            <span><i class="fa-solid fa-briefcase"></i> 20+ anos de experiência profissional</span>
+            <span><span class="status-dot"></span> Aberto a Posições Sênior / Lead & Projetos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Contact Pills -->
+      <div class="contacts-grid">
+        <a href="mailto:erik.placido@gmail.com" class="contact-item highlight" title="Enviar e-mail">
+          <i class="fa-solid fa-envelope"></i> erik.placido@gmail.com
+        </a>
+        <button onclick="copyEmail()" class="contact-item" style="cursor:pointer;" title="Copiar e-mail">
+          <i class="fa-regular fa-copy"></i> Copiar
+        </button>
+        <a href="https://wa.me/5511985768545" target="_blank" rel="noopener noreferrer" class="contact-item" title="WhatsApp Direto">
+          <i class="fa-brands fa-whatsapp" style="color:#10B981;"></i> +55 (11) 98576-8545
+        </a>
+        <a href="https://erikplacido.com.br" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <i class="fa-solid fa-globe"></i> erikplacido.com.br
+        </a>
+        <a href="https://linkedin.com/in/erikplacido" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <i class="fa-brands fa-linkedin" style="color:#0A66C2;"></i> LinkedIn
+        </a>
+        <a href="https://behance.net/erikplacido" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <i class="fa-brands fa-behance" style="color:#0057FF;"></i> Behance
+        </a>
+      </div>
+    </header>
+
+    <!-- Executive Strategic Pitch -->
+    <section class="pitch-box">
+      <p class="pitch-text">
+        Senior Product Designer com mais de <strong>20 anos de repertório visual e técnico</strong>. Combina o rigor e a densidade da <strong>Direção de Arte Generalista</strong> (cenografia para streaming/TV, editorial de precisão e embalagens industriais) com a ponta de lança do <strong>Product Design (UI/UX e AX — AI Experience)</strong>. Especialista em concepção e governança de <strong>Design Systems modulares (Tokens-First no Figma)</strong>, fluxos transacionais complexos (fintechs, checkout e faturamento via Stripe) e orquestração de interfaces adaptativas impulsionadas por <strong>Inteligência Artificial generativa em pipelines reais</strong>.
+      </p>
+    </section>
+
+    <!-- Track Filter Nav (Senior Minimalist) -->
+    <nav class="track-nav">
+      <div class="track-nav-header">
+        <span class="track-title">Filtrar por Foco de Atuação:</span>
+      </div>
+      <div class="track-pills" role="tablist">
+        <button class="track-pill active" data-track="all" role="tab">Visão Geral Completa</button>
+        <button class="track-pill" data-track="product" role="tab">Product Design, AX & Fintech</button>
+        <button class="track-pill" data-track="games" role="tab">Games & Game UI</button>
+        <button class="track-pill" data-track="brand" role="tab">Direção de Arte & Branding</button>
+        <button class="track-pill" data-track="editorial" role="tab">Editorial & Embalagens</button>
+      </div>
+    </nav>
+
+    <!-- 1. Hero Experiences (Recent High-Impact Leadership) -->
+    <h2 class="section-title">Experiências de Liderança & Alto Impacto Recente</h2>
+    
+    <div class="hero-experiences" id="hero-list">
+
+      <!-- Case 1: Studio Erik Placido / Munchausen -->
+      <article class="hero-card" data-tracks="all product brand">
+        <div class="card-meta-row">
+          <div>
+            <h3 class="role-title">UI/UX & AX Lead · Consultor de Produto Digital</h3>
+            <div class="company-name">Studio Erik Placido · Munchausen Criações Ltda</div>
+          </div>
+          <span class="period-badge">2018 – PRESENTE</span>
+        </div>
+        <ul class="outcomes-list">
+          <li><strong>Product Design & Mobile-First:</strong> Concepção de interfaces ponta a ponta e protótipos de alta fidelidade para web responsiva e mobile nativo (iOS HIG e Material Design 3).</li>
+          <li><strong>Arquitetura Transacional:</strong> Modelagem de fluxos críticos de alta conversão: onboarding simplificado, checkout transacional, faturamento e integrações via Stripe.</li>
+          <li><strong>Design Systems Tokens-First:</strong> Governança de sistemas modulares no Figma com variáveis, tokens escaláveis e documentação técnica para engenharia (Storybook).</li>
+          <li><strong>AI Experience (AX):</strong> Integração de fluxos assistidos por LLMs e automação com Google AI Studio e Cursor em pipelines ágeis de desenvolvimento.</li>
+        </ul>
+        <div class="card-footer-links">
+          <a href="blue-services/index.html" class="case-link-pill">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Case Blue Services (Product Design)
+          </a>
+          <a href="https://behance.net/erikplacido" target="_blank" rel="noopener noreferrer" class="case-link-pill">
+            <i class="fa-brands fa-behance"></i> Casos no Behance
+          </a>
+        </div>
+      </article>
+
+      <!-- Case 2: Blue Services Austrália -->
+      <article class="hero-card" data-tracks="all product brand">
+        <div class="card-meta-row">
+          <div>
+            <h3 class="role-title">Senior Product & UI/UX Designer</h3>
+            <div class="company-name">Blue Facility Services / Bhand Cleaning — Sydney & Melbourne, Austrália</div>
+          </div>
+          <span class="period-badge">2021 – 2025</span>
+        </div>
+        <ul class="outcomes-list">
+          <li><strong>Lançamento de Marketplace Internacional:</strong> Liderança do design de produto para plataforma de serviços operando em Sydney e Melbourne.</li>
+          <li><strong>Otimização de Conversão:</strong> Redesenho do fluxo de agendamento com cálculo dinâmico de preços em tempo real e checkout integrado via Stripe.</li>
+          <li><strong>Design System Multiplataforma:</strong> Criação do design system responsivo (Mobile, Tablet, Desktop) garantindo paridade visual entre marketing e produto logístico.</li>
+        </ul>
+        <div class="card-footer-links">
+          <a href="blue-services/index.html" class="case-link-pill">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Acessar Case Interativo Blue Services
+          </a>
+        </div>
+      </article>
+
+      <!-- Case 3: Cobra Kai (Netflix) -->
+      <article class="hero-card" data-tracks="all games brand">
+        <div class="card-meta-row">
+          <div>
+            <h3 class="role-title">Lead Game UI Artist & Pixel Art Animator</h3>
+            <div class="company-name">Netflix / Cobra Kai 3ª Temporada (Advergame Mobile)</div>
+          </div>
+          <span class="period-badge">2021</span>
+        </div>
+        <ul class="outcomes-list">
+          <li><strong>Game UI & HUD de Combate:</strong> Criação da interface completa (HUD, barras de vida, seleção de lutadores, tela de vitória e menus) para jogo mobile oficial de divulgação da série.</li>
+          <li><strong>Animação & Pixel Art:</strong> Direção de arte e animação quadro a quadro dos golpes clássicos dos personagens (LaRusso, Lawrence, Hawk) respeitando a estética clássica de arcades dos anos 80.</li>
+        </ul>
+        <div class="card-footer-links">
+          <a href="cobra-kai/index.html" class="case-link-pill">
+            <i class="fa-solid fa-gamepad"></i> Acessar Case Interativo Cobra Kai
+          </a>
+        </div>
+      </article>
+
+      <!-- Case 4: Itaiquara Alimentos -->
+      <article class="hero-card" data-tracks="all editorial brand">
+        <div class="card-meta-row">
+          <div>
+            <h3 class="role-title">Diretor de Arte & Designer de Embalagens Industriais</h3>
+            <div class="company-name">Itaiquara Alimentos S/A</div>
+          </div>
+          <span class="period-badge">2021 – 2026</span>
+        </div>
+        <ul class="outcomes-list">
+          <li><strong>Linhas Industriais de Embalagens:</strong> Desenvolvimento e fechamento técnico de linhas completas de embalagens para a indústria alimentícia nacional.</li>
+          <li><strong>Comunicação B2B & Ponto de Venda:</strong> Direção de arte para materiais comerciais de alto impacto, apresentações para grandes redes de varejo e campanhas institucionais.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <!-- 2. Historical & Multidisciplinary Timeline (Compact & Clean) -->
+    <h2 class="section-title">Trajetória Profissional Consolidada (2005 – 2026)</h2>
+
+    <div class="timeline-container">
+      <table class="timeline-table">
+        <tbody>
+          <!-- 1. Coração da Selva -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2026</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Diretor de Arte Audiovisual & Cena</div>
+              <div class="timeline-cell-company">Coração da Selva Produções</div>
+            </td>
+            <td class="timeline-cell desc">
+              Concepção gráfica de peças de cena e ambientação visual para produções cinematográficas e séries sob prazos de estúdio.
+            </td>
+          </tr>
+
+          <!-- 2. Dragori Games -->
+          <tr class="timeline-row" data-tracks="all games editorial">
+            <td class="timeline-cell period">2018 – PRESENTE</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Designer de Jogos & Iconografia Tática</div>
+              <div class="timeline-cell-company">Dragori Games & Coliseu Hobbies</div>
+            </td>
+            <td class="timeline-cell desc">
+              Design gráfico de manuais, iconografia modular e cartas táticas para jogos de alcance global (<em>Tanares RPG</em>, <em>Super Batalha</em>).
+            </td>
+          </tr>
+
+          <!-- 3. Boutique Filmes -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2019 – 2021</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Assistente de Arte & Produção de Objetos</div>
+              <div class="timeline-cell-company">Boutique Filmes</div>
+            </td>
+            <td class="timeline-cell desc">
+              Desenvolvimento de rótulos fictícios, documentos de época e adereços cenográficos para séries originais de streaming.
+            </td>
+          </tr>
+
+          <!-- 4. Endemol Shine -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2020</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Designer Gráfico de Mockups & Cenografia</div>
+              <div class="timeline-cell-company">Endemol Shine Group</div>
+            </td>
+            <td class="timeline-cell desc">
+              Desenvolvimento de mockups de alta fidelidade e elementos gráficos cenográficos para programas de auditório e TV.
+            </td>
+          </tr>
+
+          <!-- 5. Canal GNT -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2014 – 2020</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Diretor de Arte de Cenografia & Props</div>
+              <div class="timeline-cell-company">Moonshot Pictures / Canal GNT</div>
+            </td>
+            <td class="timeline-cell desc">
+              Direção de arte das temporadas 1 e 2 de <em>Que Seja Doce</em> e <em>Desafio da Beleza</em> (embalagens, rótulos e adereços de estúdio).
+            </td>
+          </tr>
+
+          <!-- 6. Global Pet -->
+          <tr class="timeline-row" data-tracks="all editorial brand">
+            <td class="timeline-cell period">2020 – 2021</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Diretor de Arte & Embalagens</div>
+              <div class="timeline-cell-company">Global Pet Distribuidora</div>
+            </td>
+            <td class="timeline-cell desc">
+              Identidade visual e embalagens para a linha de produtos Maxcote; peças digitais orientadas à conversão no e-commerce.
+            </td>
+          </tr>
+
+          <!-- 7. Dogs Can Fly -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2018 – 2020</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Designer de Key Visuals & Propostas</div>
+              <div class="timeline-cell-company">Dogs Can Fly Content Co.</div>
+            </td>
+            <td class="timeline-cell desc">
+              Tratamento de imagens e direção de arte para propostas comerciais de alto valor para aprovação de filmes publicitários.
+            </td>
+          </tr>
+
+          <!-- 8. Bentonisa -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2019 – 2021</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Consultor de Branding Corporativo</div>
+              <div class="timeline-cell-company">Bentonisa & Coqui Hobby</div>
+            </td>
+            <td class="timeline-cell desc">
+              Reestruturação visual de marca corporativa industrial, comunicação institucional e padronização visual.
+            </td>
+          </tr>
+
+          <!-- 9. WMF Martins Fontes -->
+          <tr class="timeline-row" data-tracks="all editorial brand">
+            <td class="timeline-cell period">2005 – 2018</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Produtor de Arte & Líder Editorial</div>
+              <div class="timeline-cell-company">Editora WMF Martins Fontes (CLT)</div>
+            </td>
+            <td class="timeline-cell desc">
+              Projetos gráficos de capas e miolos para centenas de obras clássicas; restauração da trilogia histórica de Mauricio de Sousa.
+            </td>
+          </tr>
+
+          <!-- 10. InfoQ / QCon -->
+          <tr class="timeline-row" data-tracks="all product brand">
+            <td class="timeline-cell period">2012 – 2014</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Diretor de Arte para Eventos Tech</div>
+              <div class="timeline-cell-company">InfoQ Internacional / QCon SP & RJ</div>
+            </td>
+            <td class="timeline-cell desc">
+              Sinalização, totens e comunicação visual para conferências internacionais de engenharia de software e liderança técnica.
+            </td>
+          </tr>
+
+          <!-- 11. Devir Livraria -->
+          <tr class="timeline-row" data-tracks="all games editorial">
+            <td class="timeline-cell period">2008 – 2012</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Designer Gráfico & Produtor de Arte</div>
+              <div class="timeline-cell-company">Editora Devir Livraria (CLT)</div>
+            </td>
+            <td class="timeline-cell desc">
+              Adaptação e diagramação de mangás, quadrinhos e manuais de RPGs internacionais para o mercado editorial brasileiro.
+            </td>
+          </tr>
+
+          <!-- 12. Microlins & Layout -->
+          <tr class="timeline-row" data-tracks="all brand">
+            <td class="timeline-cell period">2005 – 2010</td>
+            <td class="timeline-cell role">
+              <div class="timeline-cell-title">Instrutor Gráfico & Criação em Agência</div>
+              <div class="timeline-cell-company">Microlins & Layout Agência</div>
+            </td>
+            <td class="timeline-cell desc">
+              Formação de novos designers em softwares gráficos e criação de peças publicitárias para clientes de varejo.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. Education & Competencies Cluster -->
+    <div class="grid-2col">
+      <div class="info-card">
+        <h3 class="info-card-title">Formação Acadêmica & Certificações</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Google UX Design Professional Certificate</div>
+          <div class="edu-meta">Google / Coursera · 2023 – 2024 (Pesquisa, Usabilidade & Figma)</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Bacharelado em Design Gráfico</div>
+          <div class="edu-meta">Centro Universitário FMU / FIAM-FAAM · 2003 – 2006</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Especializações Técnicas Contínuas</div>
+          <div class="edu-meta">Tipografia & Ilustração (Belas Artes), InDesign Avançado (Impacta)</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3 class="info-card-title">Arsenal de Ferramentas & Domínios</h3>
+        <div class="skills-cluster">
+          <div>
+            <div class="cluster-label">Product & IA de Interface</div>
+            <div class="cluster-tags">
+              <span class="tag-clean">Figma Avançado</span>
+              <span class="tag-clean">Variables / Tokens</span>
+              <span class="tag-clean">Design Systems Modulares</span>
+              <span class="tag-clean">Workflows IA (Cursor, AI Studio)</span>
+            </div>
+          </div>
+          <div>
+            <div class="cluster-label">Mobile & Transacional</div>
+            <div class="cluster-tags">
+              <span class="tag-clean">iOS HIG</span>
+              <span class="tag-clean">Material Design 3</span>
+              <span class="tag-clean">Stripe Connect Flows</span>
+              <span class="tag-clean">Checkout & Faturamento</span>
+            </div>
+          </div>
+          <div>
+            <div class="cluster-label">Games & Direção de Arte</div>
+            <div class="cluster-tags">
+              <span class="tag-clean">Game UI / HUD</span>
+              <span class="tag-clean">Pixel Art & Sprites</span>
+              <span class="tag-clean">Adobe CC Suite</span>
+              <span class="tag-clean">Embalagens & Pré-Impressão</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <span id="toast-text">Copiado com sucesso!</span>
+  </div>
+
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    function copyEmail() {
+      navigator.clipboard.writeText('erik.placido@gmail.com').then(() => {
+        showToast('E-mail copiado: erik.placido@gmail.com');
+      }).catch(() => {
+        showToast('erik.placido@gmail.com');
+      });
+    }
+
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Link do currículo copiado!');
+      }).catch(() => {
+        showToast('Link copiado!');
+      });
+    }
+
+    function setTrack(trackId, updateUrl = true) {
+      const activeTrack = trackId || 'all';
+
+      // Update pills
+      document.querySelectorAll('.track-pill').forEach(pill => {
+        const isActive = pill.getAttribute('data-track') === activeTrack;
+        pill.classList.toggle('active', isActive);
+        pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      // Filter Hero Cards
+      document.querySelectorAll('.hero-card').forEach(card => {
+        const tracks = (card.getAttribute('data-tracks') || '').split(' ');
+        if (activeTrack === 'all' || tracks.includes(activeTrack)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Filter Timeline Rows
+      document.querySelectorAll('.timeline-row').forEach(row => {
+        const tracks = (row.getAttribute('data-tracks') || '').split(' ');
+        if (activeTrack === 'all' || tracks.includes(activeTrack)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+
+      // Sync URL
+      if (updateUrl) {
+        const url = new URL(window.location);
+        if (activeTrack === 'all') {
+          url.searchParams.delete('track');
+        } else {
+          url.searchParams.set('track', activeTrack);
+        }
+        window.history.replaceState({}, '', url);
+      }
+    }
+
+    document.querySelectorAll('.track-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        setTrack(pill.getAttribute('data-track'));
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const initial = params.get('track') || 'all';
+      setTrack(initial, false);
+    });
+  </script>
+  <script src="shared/i18n.js"></script>
+</body>
+</html>

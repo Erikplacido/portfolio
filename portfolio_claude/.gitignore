@@ -1,0 +1,9 @@
+.env
+.env.local
+.env.*.local
+.vercel
+.DS_Store
+
+# Pacote de trabalho do Illustrator (346 MB, fontes licenciadas) — não vai
+# pro repositório nem pro site; ver itaiquara-untaforma/README.md
+/Untaforma_600ml_15092022_Pasta/

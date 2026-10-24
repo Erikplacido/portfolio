@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Astrological Refraction Ring -->
+    <circle cx="64" cy="64" r="46" stroke-width="2" stroke-dasharray="3 5" opacity="0.45"/>
+
+    <!-- Multi-faceted Arcane Octahedron Crystal -->
+    <polygon points="64,14 108,54 64,114 20,54"
+             fill="#FFFFFF" fill-opacity="0.22" stroke-width="3.5"/>
+             
+    <line x1="20" y1="54" x2="108" y2="54" stroke-width="3"/>
+    <line x1="64" y1="14" x2="64" y2="114" stroke-width="2.5"/>
+
+    <!-- Internal Facet Crystal Planes -->
+    <polygon points="64,14 88,54 64,92 40,54"
+             fill="#FFFFFF" fill-opacity="0.3" stroke-width="2.2"/>
+
+    <!-- Refracted Celestial Vector Beams -->
+    <line x1="64" y1="14" x2="64" y2="6" stroke-width="3"/>
+    <line x1="108" y1="54" x2="118" y2="50" stroke-width="2.5"/>
+    <line x1="108" y1="54" x2="120" y2="60" stroke-width="2.5"/>
+    <line x1="20" y1="54" x2="10" y2="50" stroke-width="2.5"/>
+    <line x1="20" y1="54" x2="8" y2="60" stroke-width="2.5"/>
+    <line x1="64" y1="114" x2="64" y2="122" stroke-width="3"/>
+
+    <!-- Central Singular Nexus Gem -->
+    <circle cx="64" cy="54" r="4.5" fill="#FFFFFF" stroke="none"/>
+  </g>
+</svg>

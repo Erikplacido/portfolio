@@ -1,0 +1,77 @@
+CHRONOS WEAVE — validação concluída
+65/65 assets presentes; 53 PNG RGBA, 11 SVG brancos, 1 JPG RGB.
+Dimensões exatas conferidas contra inventário independente da especificação.
+PNG: canal alpha real e pixels transparentes presentes.
+Arte gerada: bordas externas transparentes.
+12 nós: centros preenchidos e sem ícone.
+Anéis de seleção e coroa: centro transparente.
+SVG: somente branco; viewBox 128x128; sem fontes, scripts ou bitmaps.
+Feixe: RGB branco; primeira e última colunas idênticas.
+6 margens 9-slice conferidas no manifesto.
+Prévia visual inspecionada em escala de uso, emblemas a 44px.
+
+PASS assets/inspector-art.jpg
+PASS assets/ui/aba-ativa.png
+PASS assets/ui/botao-segurar-preenchimento.png
+PASS assets/ui/botao-segurar.png
+PASS assets/ui/card-constelacao.png
+PASS assets/ui/divisor-ornamento.png
+PASS assets/ui/emblema-constelacao-1.png
+PASS assets/ui/emblema-constelacao-2.png
+PASS assets/ui/emblema-constelacao-3.png
+PASS assets/ui/feixe-energia.png
+PASS assets/ui/icone-cadeado.png
+PASS assets/ui/icone-coracao.svg
+PASS assets/ui/icone-escudo.svg
+PASS assets/ui/icone-estrela.svg
+PASS assets/ui/icone-faisca.svg
+PASS assets/ui/icone-keystone.svg
+PASS assets/ui/icone-lamina.svg
+PASS assets/ui/icone-mira.svg
+PASS assets/ui/icone-no-moldura.png
+PASS assets/ui/icone-prisma.svg
+PASS assets/ui/icone-raio.svg
+PASS assets/ui/icone-relogio.svg
+PASS assets/ui/icone-sol.svg
+PASS assets/ui/logo-emblema.png
+PASS assets/ui/lore-astrolabio.png
+PASS assets/ui/moeda-pontos.png
+PASS assets/ui/no-circulo-adquirido.png
+PASS assets/ui/no-circulo-bloqueado.png
+PASS assets/ui/no-circulo-disponivel.png
+PASS assets/ui/no-circulo-maestria.png
+PASS assets/ui/no-coroa-maestria.png
+PASS assets/ui/no-hexagono-adquirido.png
+PASS assets/ui/no-hexagono-bloqueado.png
+PASS assets/ui/no-hexagono-disponivel.png
+PASS assets/ui/no-hexagono-maestria.png
+PASS assets/ui/no-keystone-adquirido.png
+PASS assets/ui/no-keystone-bloqueado.png
+PASS assets/ui/no-keystone-disponivel.png
+PASS assets/ui/no-keystone-maestria.png
+PASS assets/ui/no-selecao.png
+PASS assets/ui/painel-moldura.png
+PASS assets/ui/pc-mouse-arrastar.png
+PASS assets/ui/pc-mouse-roda.png
+PASS assets/ui/pc-tecla-e.png
+PASS assets/ui/pc-tecla-esc.png
+PASS assets/ui/pc-tecla-q.png
+PASS assets/ui/pc-tecla-r.png
+PASS assets/ui/ps-analogico-l.png
+PASS assets/ui/ps-analogico-r.png
+PASS assets/ui/ps-circulo.png
+PASS assets/ui/ps-cruz.png
+PASS assets/ui/ps-l1.png
+PASS assets/ui/ps-quadrado.png
+PASS assets/ui/ps-r1.png
+PASS assets/ui/ps-triangulo.png
+PASS assets/ui/radar-moldura.png
+PASS assets/ui/selo-rank.png
+PASS assets/ui/xbox-a.png
+PASS assets/ui/xbox-analogico-l.png
+PASS assets/ui/xbox-analogico-r.png
+PASS assets/ui/xbox-b.png
+PASS assets/ui/xbox-lb.png
+PASS assets/ui/xbox-rb.png
+PASS assets/ui/xbox-x.png
+PASS assets/ui/xbox-y.png

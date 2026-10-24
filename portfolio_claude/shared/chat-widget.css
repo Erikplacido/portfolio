@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Chat do site — avatar flutuante no canto inferior direito, com balão de
+   saudação animado e um mini-chat que fica só na página (não abre pop-up
+   nem aba). A ponte com o Telegram do Erik é feita pelo backend em api/.
+   Injetado por shared/chat-widget.js em toda página que carrega
+   shared/frame.js.
+   ========================================================================== */
+.chat-widget{ position:fixed; right:18px; bottom:18px; z-index:200; font-family:var(--pf-sans,'Inter',system-ui,sans-serif) }
+
+.chat-avatar-btn{
+  position:relative; width:60px; height:60px; border-radius:50%; padding:0; border:0; cursor:pointer;
+  box-shadow:0 14px 32px -12px rgba(0,0,0,.45); overflow:visible; background:#111;
+}
+.chat-avatar-btn img{ width:100%; height:100%; border-radius:50%; object-fit:cover; display:block }
+.chat-avatar-btn .chat-dot{
+  position:absolute; right:1px; bottom:1px; width:16px; height:16px; border-radius:50%;
+  background:#25D366; border:2px solid #fff;
+}
+.chat-bubble-peek{
+  position:absolute; top:-6px; right:-4px; width:28px; height:28px; border-radius:50% 50% 4px 50%;
+  background:#fff; display:grid; place-items:center; font-size:15px; box-shadow:0 6px 16px -6px rgba(0,0,0,.4);
+  opacity:0; transform:scale(.4) translateY(6px); animation:chat-peek 6s ease-in-out infinite;
+}
+@keyframes chat-peek{
+  0%,8%{ opacity:0; transform:scale(.4) translateY(6px) }
+  16%,34%{ opacity:1; transform:scale(1) translateY(0) }
+  42%,100%{ opacity:0; transform:scale(.4) translateY(6px) }
+}
+.chat-unread{
+  position:absolute; top:-4px; left:-4px; min-width:20px; height:20px; padding:0 5px; border-radius:99px;
+  background:#E5484D; color:#fff; font-size:11px; font-weight:700; line-height:20px; text-align:center;
+  border:2px solid #fff; box-sizing:content-box;
+}
+.chat-unread[hidden]{ display:none }
+.chat-widget.open .chat-avatar-btn{ display:none }
+
+.chat-panel{
+  position:absolute; right:0; bottom:74px; width:min(320px,85vw); max-height:60vh; display:flex; flex-direction:column;
+  background:#101418; color:#fff; border-radius:18px; overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.1);
+  transform-origin:bottom right; animation:chat-open .32s var(--pf-ease,cubic-bezier(.23,1,.32,1)) both;
+}
+.chat-panel[hidden]{ display:none }
+@keyframes chat-open{ from{ opacity:0; transform:scale(.9) translateY(10px) } to{ opacity:1; transform:none } }
+
+.chat-panel-head{ display:flex; align-items:center; gap:10px; padding:14px 14px; background:#1b2128 }
+.chat-panel-head img{ width:36px; height:36px; border-radius:50%; object-fit:cover }
+.chat-panel-head div{ flex:1; line-height:1.25 }
+.chat-panel-head b{ display:block; font-size:14px }
+.chat-panel-head span{ display:block; font-size:11.5px; color:#7ED08A }
+.chat-close{ background:none; border:0; color:rgba(255,255,255,.6); font-size:20px; line-height:1; cursor:pointer; padding:4px }
+.chat-close:hover{ color:#fff }
+
+.chat-thread{ flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:8px; background:#0b0e12 }
+.chat-msg{ max-width:85%; padding:9px 12px; border-radius:14px; font-size:13.5px; line-height:1.4; white-space:pre-wrap; overflow-wrap:anywhere }
+.chat-msg.them{ align-self:flex-start; background:#1f2730; border-bottom-left-radius:4px }
+.chat-msg.me{ align-self:flex-end; background:#25D366; color:#06240f; border-bottom-right-radius:4px }
+.chat-msg.me.pending{ opacity:.6 }
+.chat-msg.me.failed{ opacity:.5; background:transparent; color:#fff; box-shadow:inset 0 0 0 1px rgba(229,72,77,.8) }
+.chat-msg.sys{ align-self:center; text-align:center; font-size:11.5px; color:rgba(255,255,255,.55) }
+
+.chat-input-row{ display:flex; gap:8px; padding:10px; background:#1b2128 }
+.chat-input-row .chat-hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0 }
+.chat-input-row input{
+  flex:1; min-width:0; background:#0b0e12; border:1px solid rgba(255,255,255,.14); border-radius:99px; color:#fff;
+  padding:10px 14px; font:inherit; font-size:13.5px;
+}
+.chat-input-row input::placeholder{ color:rgba(255,255,255,.4) }
+.chat-input-row button{
+  width:38px; height:38px; border-radius:50%; border:0; background:#25D366; color:#06240f; display:grid; place-items:center;
+  cursor:pointer; flex-shrink:0;
+}
+
+@media(max-width:480px){ .chat-widget{ right:12px; bottom:12px } .chat-avatar-btn{ width:52px; height:52px } }
+@media(prefers-reduced-motion:reduce){ .chat-bubble-peek{ animation:none; opacity:1; transform:none } .chat-panel{ animation:none } }

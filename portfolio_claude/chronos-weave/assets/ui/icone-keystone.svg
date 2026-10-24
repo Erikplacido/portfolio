@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Master Armillary Sphere Rings -->
+    <circle cx="64" cy="64" r="52" stroke-width="2" stroke-dasharray="4 6" opacity="0.4"/>
+    <circle cx="64" cy="64" r="42" stroke-width="3"/>
+    <circle cx="64" cy="64" r="30" stroke-width="2" opacity="0.6"/>
+
+    <!-- Apex Keystone Geometry: Nested Hexagram & Celestial Singularity -->
+    <!-- 8 Cardinal / Diagonal Pikes of Singularity -->
+    <line x1="64" y1="6" x2="64" y2="20" stroke-width="4"/>
+    <line x1="64" y1="108" x2="64" y2="122" stroke-width="4"/>
+    <line x1="6" y1="64" x2="20" y2="64" stroke-width="4"/>
+    <line x1="108" y1="64" x2="122" y2="64" stroke-width="4"/>
+
+    <line x1="22" y1="22" x2="32" y2="32" stroke-width="3"/>
+    <line x1="96" y1="96" x2="106" y2="106" stroke-width="3"/>
+    <line x1="22" y1="106" x2="32" y2="96" stroke-width="3"/>
+    <line x1="96" y1="32" x2="106" y2="22" stroke-width="3"/>
+
+    <!-- Sacred 8-Pointed Keystone Crown -->
+    <polygon points="64,16 75,38 98,38 86,58 102,78 78,82 64,104 50,82 26,78 42,58 30,38 53,38"
+             fill="#FFFFFF" fill-opacity="0.25" stroke-width="3.2"/>
+
+    <!-- Central Celestial Singularity Matrix -->
+    <polygon points="64,44 78,54 78,74 64,84 50,74 50,54"
+             fill="#FFFFFF" fill-opacity="0.4" stroke-width="2.5"/>
+
+    <circle cx="64" cy="64" r="7" fill="#FFFFFF" stroke="none"/>
+    <circle cx="64" cy="64" r="2.5" fill="#000000" stroke="none"/>
+  </g>
+</svg>

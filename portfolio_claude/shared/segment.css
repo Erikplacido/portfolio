@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Página de segmento (segmentos/*.html) — apresentação em tela cheia dos
+   cases de um assunto: hero + sequência de capas 100vw×100vh com parallax
+   e scroll-snap. Usa os tokens de shared/frame.css (--pf-*). Cada página
+   define --seg-color = PORTFOLIO_GROUPS[x].color.
+   ========================================================================== */
+:root{ --seg-color:#10161F }
+
+body.seg-body{ background:var(--pf-night); overflow-x:hidden }
+body.seg-body .pf-nav{ background:rgba(14,17,22,.72); border-bottom-color:rgba(255,255,255,.1) }
+body.seg-body .pf-nav .pf-id,
+body.seg-body .pf-nav .pf-cases a{ color:#fff }
+
+/* ---------- hero ---------- */
+/* 100dvh - a altura do .pf-nav (60px + borda de 1px), que fica em fluxo
+   normal antes do hero: sem isso o hero some 1 "tela a mais" que a nav
+   ocupa, e o botão de seta no fim do hero fica cortado embaixo. */
+.seg-hero{
+  min-height:calc(100dvh - 61px); display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:96px var(--pf-gut) 88px; position:relative; color:#fff;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--seg-color) 38%, transparent), transparent 70%),
+    var(--pf-night);
+}
+@media(max-width:480px){ .seg-hero{ padding:64px var(--pf-gut) 76px } }
+.seg-hero-icon{
+  width:72px; height:72px; border-radius:50%; display:grid; place-items:center; font-size:28px;
+  background:var(--seg-color); color:#fff; margin-bottom:28px; box-shadow:0 20px 50px -18px color-mix(in srgb, var(--seg-color) 70%, transparent);
+}
+@media(max-width:480px){ .seg-hero-icon{ width:56px; height:56px; font-size:22px; margin-bottom:18px } }
+.seg-hero .eyebrow{ color:rgba(255,255,255,.6) }
+.seg-hero .eyebrow b{ color:var(--seg-color) }
+.seg-hero h1{ color:#fff; max-width:16ch }
+.seg-hero .lede{ color:rgba(255,255,255,.72); max-width:56ch; margin:18px auto 0 }
+.seg-hero-kpi{
+  margin-top:28px; font:600 13px/1.5 var(--pf-sans); color:rgba(255,255,255,.82);
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;
+}
+@media(max-width:480px){ .seg-hero .lede{ margin-top:12px } .seg-hero-kpi{ margin-top:16px } }
+.seg-hero-kpi i{ color:var(--seg-color) }
+.seg-hero-actions{ margin-top:36px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center }
+@media(max-width:480px){ .seg-hero-actions{ margin-top:22px } }
+.seg-btn{
+  display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:99px;
+  font:600 14px/1 var(--pf-sans); text-decoration:none; transition:transform .3s var(--pf-ease),background .3s;
+}
+.seg-btn.primary{ background:var(--seg-color); color:#fff }
+.seg-btn.primary:hover{ transform:translateY(-2px) }
+.seg-btn.ghost{ background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.22) }
+.seg-btn.ghost:hover{ background:rgba(255,255,255,.16) }
+
+/* scroll cue: round mask, white arrow, dynamic bob + pulse */
+.seg-scroll-cue{
+  position:absolute; left:50%; bottom:34px; transform:translateX(-50%);
+  width:52px; height:52px; border-radius:50%; background:var(--seg-color); color:#fff;
+  display:grid; place-items:center; border:0; cursor:pointer; font-size:18px;
+  animation:seg-bob 1.8s ease-in-out infinite;
+}
+.seg-scroll-cue::before{
+  content:""; position:absolute; inset:-8px; border-radius:50%; border:1px solid color-mix(in srgb, var(--seg-color) 70%, transparent);
+  animation:seg-pulse 1.8s ease-out infinite;
+}
+.seg-scroll-cue i{ animation:seg-arrow 1.8s ease-in-out infinite }
+@keyframes seg-bob{ 0%,100%{ transform:translateX(-50%) translateY(0) } 50%{ transform:translateX(-50%) translateY(8px) } }
+@keyframes seg-arrow{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(3px) } }
+@keyframes seg-pulse{ 0%{ opacity:.9; transform:scale(1) } 100%{ opacity:0; transform:scale(1.5) } }
+
+/* ---------- sequência de capas ---------- */
+.seg-track{ scroll-snap-type:y mandatory }
+.seg-case{
+  position:relative; height:100dvh; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always;
+  display:flex; align-items:flex-end; isolation:isolate; text-decoration:none; cursor:pointer;
+}
+.seg-case-bg{
+  position:absolute; inset:-8% -8%; width:116%; height:116%; object-fit:cover;
+  opacity:0; transform:scale(1.1) translateY(0); transition:opacity 1s var(--pf-ease), transform 1.1s var(--pf-ease);
+  will-change:transform,opacity;
+}
+.seg-case.in-view .seg-case-bg{ opacity:1; transform:scale(1.02) translateY(var(--seg-py,0px)) }
+.seg-case-scrim{
+  position:absolute; inset:0; background:linear-gradient(0deg, rgba(5,7,12,.92) 0%, rgba(5,7,12,.5) 38%, rgba(5,7,12,.05) 70%);
+}
+.seg-case-content{
+  position:relative; z-index:1; width:100%; padding:0 var(--pf-gut) clamp(48px,9vw,96px);
+  max-width:var(--pf-max); margin:0 auto; color:#fff;
+  opacity:0; transform:translateY(28px); transition:opacity .9s var(--pf-ease) .1s, transform .9s var(--pf-ease) .1s;
+}
+.seg-case.in-view .seg-case-content{ opacity:1; transform:translateY(0) }
+.seg-case-index{ font:700 13px/1 var(--pf-sans); color:rgba(255,255,255,.55); letter-spacing:.08em; margin-bottom:14px }
+.seg-case-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px }
+.seg-case-tags span{ font:600 11px/1 var(--pf-sans); letter-spacing:.08em; text-transform:uppercase; padding:7px 11px; border-radius:99px; background:rgba(255,255,255,.14); color:#fff }
+.seg-case-content h2{ color:#fff; font-size:clamp(32px,6vw,68px); max-width:18ch; margin:0 0 14px }
+.seg-case-content p{ color:rgba(255,255,255,.78); max-width:56ch; font-size:clamp(15px,1.6vw,18px) }
+.seg-case-link{
+  display:inline-flex; align-items:center; gap:10px; margin-top:22px; font:600 15px/1 var(--pf-sans);
+  color:#fff; padding-bottom:3px; border-bottom:2px solid var(--seg-color);
+}
+.seg-case-link i{ transition:transform .3s var(--pf-ease) }
+.seg-case:hover .seg-case-link i,.seg-case:focus-visible .seg-case-link i{ transform:translateX(4px) }
+/* a imagem de fundo já tem um leve zoom-in ao entrar na tela (.in-view); no
+   hover, cresce mais um pouco — mesma linguagem do "efeito de movimento" ao
+   trocar de case, agora também como feedback de que o cartão é clicável. */
+.seg-case:hover .seg-case-bg,.seg-case:focus-visible .seg-case-bg{ transform:scale(1.07) translateY(var(--seg-py,0px)) }
+
+@media (max-width:720px){
+  .seg-case{ align-items:flex-end }
+  .seg-case-content{ padding-bottom:64px }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .seg-scroll-cue, .seg-scroll-cue::before, .seg-scroll-cue i{ animation:none }
+  .seg-case-bg, .seg-case-content{ transition:none; opacity:1; transform:none }
+  .seg-track{ scroll-snap-type:none }
+}

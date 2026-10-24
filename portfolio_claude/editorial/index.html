@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editorial · Capas e livros · Case</title>
+<meta name="description" content="Capas e projetos gráficos de Erik Placido para a WMF Martins Fontes (2012–2016) e Mauricio — O Início, que reuniu e restaurou os três primeiros livros de Mauricio de Sousa num só volume.">
+<meta property="og:title" content="Editorial — capas para a WMF Martins Fontes e Mauricio — O Início">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Everything below is the case's own language: a bookshelf, newsprint and the blue of Mauricio's cover. */
+:root{
+  --accent:#B44A17; --hl:#F6C945;
+  --tabua:#8A5A3A; --tabua-2:#B98A5E; --tinta:#3A2A1E; --tinta-2:#6B5745;
+  --gibi:#1B8BCF; --gibi-2:#0F6DA6; --gibi-3:#0B5482; --amarelo:#F9D54A; --jornal:#FFF8E9;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== cover: a table of covers that drifts slowly ===== */
+.ed-cover{background:#24201C}
+.ed-cover img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:drift 38s ease-in-out infinite alternate}
+
+/* context counters */
+.ed-count{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+@media(max-width:860px){.ed-count{grid-template-columns:1fr}}
+.ed-count b{display:block;font:400 clamp(46px,5.4vw,64px)/1 var(--pf-serif);color:var(--accent);font-variant-numeric:tabular-nums}
+.ed-count .pf-card p{font-size:15px;margin-top:8px}
+
+/* ===== 01 covers: a bookshelf ===== */
+.st-estante{background:linear-gradient(180deg,#F4EDE2,#E8DDCB)}
+.st-estante .pill{background:rgba(255,255,255,.8)}
+.st-estante .pill.y{background:var(--hl)}
+.es-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:clamp(20px,3vw,32px)}
+.es-filter button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:var(--tinta);transition:background .25s,color .25s}
+.es-filter button:hover{background:#fff}
+.es-filter button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.es-filter button span{font-weight:500;opacity:.65;margin-left:3px}
+.es{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,52px);align-items:start}
+@media(max-width:860px){.es{grid-template-columns:minmax(0,1fr)}}
+.es-big{--bh:clamp(300px,34vw,420px);height:var(--bh);display:flex;align-items:center;justify-content:center}
+.es-big img{max-width:100%;max-height:var(--bh);width:auto;height:auto;box-shadow:0 2px 3px rgba(40,24,10,.22),0 32px 40px -22px rgba(40,24,10,.7);transition:opacity .28s,transform .45s var(--snap)}
+.es-big img.out{opacity:0;transform:translateY(16px) rotate(-1.5deg)}
+.es-info{display:grid;gap:6px;margin-top:22px;min-height:11.5em}
+.es-info .k{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.es-info b{font:400 clamp(28px,3.2vw,38px)/1.05 var(--pf-serif);color:var(--pf-ink)}
+.es-info .au{font-size:14px;color:var(--tinta-2)}
+.es-info .d{font-size:15px;line-height:1.55;color:#4A3A2C;margin-top:4px;max-width:46ch}
+.es-shelf{--rh:clamp(132px,13vw,156px);display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));grid-auto-rows:var(--rh);column-gap:clamp(8px,1.4vw,14px);padding:0 clamp(10px,1.6vw,18px);border-radius:4px;
+  background:repeating-linear-gradient(to bottom,transparent 0 calc(var(--rh) - 16px),var(--tabua-2) calc(var(--rh) - 16px) calc(var(--rh) - 12px),var(--tabua) calc(var(--rh) - 12px) calc(var(--rh) - 2px),rgba(60,35,15,.25) calc(var(--rh) - 2px) var(--rh))}
+.es-shelf button{align-self:end;height:calc(var(--rh) - 34px);margin-bottom:16px;width:100%;display:flex;align-items:flex-end;justify-content:center;border:0;padding:0;background:none;transition:transform .4s var(--snap),opacity .3s,filter .3s}
+.es-shelf img{max-width:100%;max-height:100%;width:auto;height:auto;box-shadow:0 1px 2px rgba(40,24,10,.3),0 10px 14px -8px rgba(40,24,10,.65)}
+.es-shelf button:hover{transform:translateY(-5px)}
+.es-shelf button[aria-pressed="true"]{transform:translateY(-14px)}
+.es-shelf button.dim{opacity:.3;filter:grayscale(1)}
+.es-shelf button.dim:hover{opacity:.6}
+/* small screens: the shelf comes first and both fit on screen, so a tap shows the cover right below */
+@media(max-width:860px){.es>div:first-child{order:2}.es-info{min-height:0}}
+@media(max-width:560px){.es-shelf{--rh:118px;grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}.es-big{--bh:250px}}
+
+/* ===== 02 Mauricio: signature band in the blue of the cover, with print dots ===== */
+.mi-band{background:radial-gradient(rgba(255,255,255,.09) 1.3px,transparent 1.9px) 0 0/16px 16px,linear-gradient(160deg,#2399DA,var(--gibi-2) 58%,var(--gibi-3))}
+.mi-band .eyebrow{color:#CFE7F7}.mi-band .eyebrow b{color:var(--amarelo)}
+.mi-band h2,.mi-band .lede{color:#fff}
+.mi-band figcaption{color:#CFE7F7}.mi-band figcaption b{color:#fff}
+.st-gibi{background:var(--jornal)}
+.st-gibi .pill{background:rgba(15,109,166,.1);color:var(--gibi-3)}
+.st-gibi .pill.y{background:var(--amarelo);color:var(--pf-ink)}
+.mi{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,3.6vw,44px);align-items:center}
+@media(max-width:860px){.mi{grid-template-columns:minmax(0,1fr)}}
+.mi-view{position:relative;aspect-ratio:1;display:grid;place-items:center;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 2px 0 rgba(11,84,130,.08),0 30px 50px -30px rgba(11,84,130,.6)}
+.mi-view img{max-width:94%;max-height:94%;width:auto;height:auto;transition:opacity .32s,transform .5s var(--snap)}
+.mi-view img.full{max-width:none;max-height:none;width:100%;height:100%;object-fit:cover}
+.mi-view img.out{opacity:0;transform:scale(.96)}
+.mi-steps{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.mi-steps button{position:relative;width:100%;text-align:left;border:0;border-radius:14px;padding:14px 16px 14px 58px;background:transparent;overflow:hidden;transition:background .3s,box-shadow .3s}
+.mi-steps button:hover{background:rgba(255,255,255,.6)}
+.mi-steps button[aria-pressed="true"]{background:#fff;box-shadow:0 12px 26px -18px rgba(11,84,130,.7)}
+.mi-steps .n{position:absolute;left:16px;top:14px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--pf-sans);font-style:normal;background:rgba(15,109,166,.12);color:var(--gibi-2);transition:background .3s,color .3s}
+.mi-steps button[aria-pressed="true"] .n{background:var(--gibi);color:#fff}
+.mi-steps b{display:block;font:600 15px/1.3 var(--pf-sans);color:#12324A}
+.mi-steps span{display:block;font-size:14px;line-height:1.5;color:#3E5466;margin-top:4px}
+.mi-steps .bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--amarelo);transform:scaleX(0);transform-origin:0 50%}
+.mi.auto .mi-steps button[aria-pressed="true"] .bar{animation:fill 4.6s linear forwards}
+
+/* ===== 03 restoration: compare 60s print and 2015 page ===== */
+.st-mesa{background:linear-gradient(180deg,#F5F0E7,#EAE2D3)}
+.st-mesa .pill{background:rgba(255,255,255,.8)}
+.st-mesa .pill.y{background:var(--hl)}
+.rs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,36px);align-items:start}
+@media(max-width:860px){.rs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.rs{grid-template-columns:minmax(0,1fr)}}
+.rs-card{display:grid;gap:14px;justify-items:center;text-align:center}
+.rs-card .t{font:400 28px/1.05 var(--pf-serif);color:var(--pf-ink)}
+.rs-card .d{display:block;font-size:14px;line-height:1.5;color:#4A3A2C;max-width:32ch;margin-top:6px}
+.cmp{--x:50%;position:relative;width:100%;max-width:250px;aspect-ratio:var(--ar);border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 18px 30px -18px rgba(40,24,10,.75);cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cmp .dp{clip-path:inset(0 0 0 var(--x))}
+.cmp .ln{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.12);pointer-events:none}
+.cmp .ln::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310161F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 7l-5 5 5 5M15 7l5 5-5 5'/%3E%3C/svg%3E") center/18px no-repeat;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.cmp .tg{position:absolute;bottom:10px;font:600 10px/1 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:99px;background:rgba(255,255,255,.92);color:var(--pf-ink);pointer-events:none}
+.cmp .tg.a{left:8px}.cmp .tg.b{right:8px}
+.cmp input{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.cmp:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:4px}
+.rs-pol{width:100%;max-width:250px;border-radius:6px;box-shadow:0 18px 30px -18px rgba(40,24,10,.75)}
+
+/* ===== sheet: who did what, book by book ===== */
+.fi{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(0,1fr);gap:20px;margin-top:48px;align-items:start}
+@media(max-width:940px){.fi{grid-template-columns:minmax(0,1fr)}}
+.fi table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4}
+.fi th{text-align:left;font:600 11px/1 var(--pf-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--pf-ink-2);padding:0 12px 12px 0;border-bottom:1px solid var(--pf-line)}
+.fi td{padding:11px 12px 11px 0;border-bottom:1px dashed var(--pf-line);vertical-align:top;color:var(--pf-ink-2)}
+.fi td:first-child{color:var(--pf-ink);font-weight:600}
+.fi tbody tr:last-child td{border-bottom:0}
+.rc{display:inline-block;font:600 11px/1 var(--pf-sans);padding:5px 8px;border-radius:99px;white-space:nowrap;background:rgba(16,22,31,.06);color:var(--pf-ink)}
+.rc.t{background:#F7E3D7;color:#7A3410}.rc.d{background:#EFE7D4;color:#5A4520}.rc.i{background:#DCEAF4;color:#164A6E}.rc.o{background:#FFF1B8;color:#5C4700}
+.fi-note{font-size:13px;margin-top:14px}
+@media(max-width:640px){
+  .fi thead{display:none}
+  .fi tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-bottom:1px dashed var(--pf-line)}
+  .fi tbody tr:last-child{border-bottom:0}
+  .fi td{padding:0;border:0}
+  .fi td:nth-child(2){grid-row:2;font-size:13px}
+  .fi td:nth-child(3){grid-column:2;grid-row:1}
+  .fi td:nth-child(4){grid-column:2;grid-row:2;text-align:right;font-size:13px}
+}
+.bars{display:grid;gap:12px;margin:6px 0 18px}
+.bars div{display:grid;grid-template-columns:92px minmax(0,1fr) 20px;align-items:center;gap:10px;font-size:13px;color:var(--pf-ink)}
+.bars i{display:block;height:12px;border-radius:99px;background:var(--c);width:calc(var(--n) / 4 * 100%)}
+.bars b{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:500 12px/1 var(--pf-sans);padding:7px 10px;border-radius:99px;background:rgba(16,22,31,.06);color:var(--pf-ink)}
+.sys-n{font-size:13px;line-height:1.5;margin-top:12px}
+
+/* ===== Swiss Grid Inspector ===== */
+.st-grid-suico{background:linear-gradient(180deg,#F8F5EE,#ECE3D2);position:relative}
+.sw-grid-wrap{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1.2fr);gap:clamp(24px,4vw,52px);align-items:start;margin-top:28px}
+@media(max-width:860px){.sw-grid-wrap{grid-template-columns:1fr;justify-items:center}}
+.sw-stage{position:relative;width:min(100%,350px);aspect-ratio:3/4.5;border-radius:6px;overflow:hidden;box-shadow:0 3px 6px rgba(40,24,10,.18),0 30px 48px -20px rgba(40,24,10,.7);background:#fff}
+.sw-stage img{width:100%;height:100%;object-fit:cover;display:block}
+.sw-overlay{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s var(--pf-ease)}
+.sw-overlay.active{opacity:1}
+.sw-overlay-lines{position:absolute;inset:0;background-image:
+  linear-gradient(to right,rgba(0,195,255,.35) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(255,0,128,.28) 1px,transparent 1px);
+  background-size:calc(100% / 6) 100%, 100% 18px;
+}
+.sw-overlay-box{position:absolute;border:1.5px dashed rgba(0,195,255,.9);background:rgba(0,195,255,.08);font:600 10.5px/1 var(--pf-sans);color:#007a9e;padding:5px 8px;text-transform:uppercase;letter-spacing:.08em}
+.sw-overlay-box.title-box{top:10%;left:8%;right:8%;height:38%;border-color:#ff0080;color:#c00060;background:rgba(255,0,128,.08)}
+.sw-overlay-box.author-box{top:54%;left:8%;right:8%;height:14%}
+.sw-overlay-box.colophon-box{bottom:6%;left:8%;right:50%;height:10%}
+.sw-controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;justify-content:center}
+.sw-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;border:1px solid var(--pf-line);background:#fff;font:600 13px/1 var(--pf-sans);color:var(--pf-ink);cursor:pointer;transition:all .25s}
+.sw-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sw-btn[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sw-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.sw-cards{grid-template-columns:1fr}}
+.sw-card{background:#fff;border:1px solid var(--pf-line);border-radius:14px;padding:18px 20px;box-shadow:0 8px 20px -14px rgba(40,24,10,.3)}
+.sw-card b{display:block;font:600 15px/1.3 var(--pf-sans);color:var(--pf-ink);margin-bottom:6px}
+.sw-card p{font-size:14px;line-height:1.5;color:#4A3A2C;margin:0}
+.sw-card code{font:600 11.5px/1 var(--pf-mono);color:var(--accent);background:rgba(180,74,23,.08);padding:3px 6px;border-radius:4px}
+
+/* ===== Macro Inspection Stage ===== */
+.macro-stage{margin-top:36px;border-radius:14px;overflow:hidden;background:#181412;box-shadow:0 24px 48px -20px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08)}
+.macro-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:#241E1A;border-bottom:1px solid rgba(255,255,255,.08);color:#E6DFD5;font-size:13px}
+.macro-header b{color:#fff;font-size:14px}
+.macro-img-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#100E0D}
+.macro-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.macro-grid-specs{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 24px;background:#1C1714;color:#C9BFB5;font-size:14px;line-height:1.55}
+@media(max-width:700px){.macro-grid-specs{grid-template-columns:1fr}}
+.macro-grid-specs h4{margin:0 0 8px;font:600 15px/1.2 var(--pf-sans);color:#fff}
+.macro-grid-specs ul{margin:0;padding-left:18px}
+.macro-grid-specs li+li{margin-top:6px}
+.macro-grid-specs span.old{color:#E59866}
+.macro-grid-specs span.new{color:#76D7C4}
+
+/* ===== Miolo & Editorial Design Gallery ===== */
+.st-miolo{background:linear-gradient(180deg,#F5EFE6,#E7DCCA)}
+.miolo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;margin-top:32px}
+.miolo-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 12px 28px -16px rgba(40,24,10,.4);border:1px solid rgba(40,24,10,.08);display:flex;flex-direction:column}
+.miolo-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#24201C}
+.miolo-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--pf-ease)}
+.miolo-card:hover .miolo-card-media img{transform:scale(1.03)}
+.miolo-card-body{padding:18px 20px;display:flex;flex-direction:column;flex:1}
+.miolo-card-body b{font:400 22px/1.15 var(--pf-serif);color:var(--pf-ink);margin-bottom:6px}
+.miolo-card-body p{font-size:14px;line-height:1.5;color:#4A3A2C;margin:0 0 14px;flex:1}
+.miolo-badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.miolo-badge{font:600 11px/1 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:99px;background:rgba(40,24,10,.06);color:var(--pf-ink)}
+.miolo-badge.pdf{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA}
+.miolo-pdf-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;background:var(--accent);color:#fff;font:600 13px/1 var(--pf-sans);text-decoration:none;align-self:flex-start;transition:opacity .25s}
+.miolo-pdf-btn:hover{opacity:.9}
+
+.sw-cover-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;justify-content:center}
+.sw-cover-btn{border:0;padding:7px 12px;border-radius:99px;background:rgba(40,24,10,.08);font:600 12px/1 var(--pf-sans);color:var(--pf-ink);cursor:pointer;transition:all .2s}
+.sw-cover-btn:hover{background:rgba(40,24,10,.16)}
+.sw-cover-btn[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* ===== Kaputt Interactive Showcase ===== */
+.kp-stage{background:#181412;border-radius:18px;overflow:hidden;box-shadow:0 24px 50px -20px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08);margin-bottom:32px}
+.kp-top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#241E1A;border-bottom:1px solid rgba(255,255,255,.08);color:#E6DFD5;flex-wrap:wrap;gap:12px}
+.kp-top b{color:#fff;font-size:16px;display:flex;align-items:center;gap:10px}
+.kp-top .kp-tag{font:600 11px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:rgba(180,74,23,.3);color:#F6C945;border:1px solid rgba(246,201,69,.3)}
+.kp-viewer{position:relative;width:100%;aspect-ratio:16/9;background:#0F0D0C;display:grid;place-items:center;overflow:hidden}
+.kp-viewer img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transition:opacity .28s,transform .4s var(--pf-ease)}
+.kp-viewer img.out{opacity:0;transform:scale(.98)}
+.kp-nav{display:flex;gap:10px;padding:14px 20px;background:#1E1916;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.kp-thumb{flex:0 0 94px;height:62px;border-radius:6px;overflow:hidden;border:2px solid transparent;background:#100E0D;cursor:pointer;padding:0;transition:all .2s;opacity:.55}
+.kp-thumb:hover{opacity:.9}
+.kp-thumb[aria-pressed="true"]{border-color:var(--hl);opacity:1;transform:scale(1.04);box-shadow:0 4px 12px rgba(0,0,0,.6)}
+.kp-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.kp-meta{padding:18px 24px;background:#241E1A;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.kp-meta-info b{display:block;color:#fff;font:600 15px/1.3 var(--pf-sans);margin-bottom:4px}
+.kp-meta-info span{color:#B8ADA2;font-size:13.5px;line-height:1.4}
+.kp-actions{display:flex;gap:10px;align-items:center}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+@keyframes drift{from{transform:scale(1.06) translate(-1.6%,.6%)}to{transform:scale(1.06) translate(1.6%,-.6%)}}
+@keyframes fill{to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-case="editorial">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Editorial</span></a>
+    <ul class="pf-links">
+      <li><a href="#capas">Capas</a></li>
+      <li><a href="#grid-suico">Grid Suíço</a></li>
+      <li><a href="#restauracao">Mauricio · Restauração</a></li>
+      <li><a href="#miolo">Kaputt &amp; Miolos</a></li>
+      <li><a href="#ficha">Ficha</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 07</b> · Design editorial · Capas · Projeto gráfico</p>
+    <h1>Cada livro pede sua própria capa. <em>Um deles pedia para voltar a existir.</em></h1>
+    <p class="lede">Capas para a WMF Martins Fontes, de filosofia a quadrinho, entre 2012 e 2016. E Mauricio — O Início, que reuniu num só volume os três primeiros livros de Mauricio de Sousa, dos anos 60: da primeira mensagem à MSP à restauração das páginas, à diagramação e à capa.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Designer gráfico: capa e, em dois livros, miolo</dd></div>
+      <div><dt>Para</dt><dd>WMF Martins Fontes · 2012&#8288;–&#8288;2016<br>Mauricio de Sousa Produções · 2015</dd></div>
+      <div><dt>Entregas</dt><dd>11 capas, uma delas de caixa; capa e miolo de Kaputt e de Mauricio — O Início; restauração digital</dd></div>
+      <div><dt>Ferramentas</dt><dd>InDesign, Photoshop, Illustrator e mesa digitalizadora</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover ed-cover" data-loop>
+    <img src="assets/cover.jpg" alt="Capas de livro enfileiradas em diagonal sobre fundo escuro: Como Fazer uma Monografia, Tratado de História das Religiões, A Falsa Medida do Homem, Mauricio — O Início, a caixa de C.S. Lewis, O Novo Espírito do Capitalismo e outras">
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O trabalho</p>
+      <h2>Um catálogo que vai de gramática italiana a tratado de religiões.</h2>
+      <p class="lede">Os livros desta página tratam de pesquisa acadêmica, filosofia, teoria política, sociologia, arquitetura antiga, Shakespeare, a obra de C.S. Lewis e a Segunda Guerra contada em quadrinho. Cada um pedia uma capa diferente. E um deles, Mauricio — O Início, nem existia como projeto quando o trabalho começou.</p>
+    </div>
+    <div class="callout rv"><b>O papel:</b> designer gráfico responsável pela capa. Em Kaputt e em Mauricio — O Início, também pelo miolo. No livro de Mauricio, o trabalho começou antes do livro: foi Erik quem procurou a MSP.</div>
+    <div class="ed-count rv">
+      <div class="pf-card"><span class="tag">WMF Martins Fontes</span><b>11</b><p>capas entre 2012 e 2016, entre elas uma caixa com quatro livros de C.S. Lewis.</p></div>
+      <div class="pf-card"><span class="tag">Capa e miolo</span><b>2</b><p>projetos gráficos completos: o quadrinho Kaputt e Mauricio — O Início.</p></div>
+      <div class="pf-card"><span class="tag">Mauricio — O Início</span><b>3</b><p>livros dos anos 60 reunidos num volume e restaurados digitalmente, página por página.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 · covers -->
+<section id="capas" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Capas</p>
+      <h2>Uma ideia por capa: a letra, o traço ou a imagem.</h2>
+      <p class="lede">Algumas capas resolvem o livro só com tipografia: o título grande demais para caber, repetido, girado ou transformado em textura. Outras escolhem um desenho ou uma imagem que já traz o assunto: um crânio para um livro sobre medir pessoas, uma multidão para um livro sobre política.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-estante" id="es" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Tire um livro da estante</span></div>
+        <div class="es-filter" id="esFilter" role="group" aria-label="Filtrar capas pelo recurso">
+          <button type="button" aria-pressed="true" data-r="">Todas <span>11</span></button>
+          <button type="button" aria-pressed="false" data-r="Tipografia">Tipografia <span>4</span></button>
+          <button type="button" aria-pressed="false" data-r="Desenho">Desenho <span>3</span></button>
+          <button type="button" aria-pressed="false" data-r="Imagem">Imagem <span>4</span></button>
+        </div>
+        <div class="es">
+          <div>
+            <div class="es-big"><img id="esImg" src="assets/c-monog.webp" alt="Capa vermelha de Como Fazer uma Monografia, com o título em letras brancas enormes quebrado em MONO e GRAFIA"></div>
+            <div class="es-info" data-live>
+              <span class="k" id="esK">Tipografia · capa</span>
+              <b id="esN">Como Fazer uma Monografia</b>
+              <span class="au" id="esA">Délcio Vieira Salomon</span>
+              <span class="d" id="esD">Só o título, em caixa-alta branca sobre vermelho, de ponta a ponta da capa. A palavra não cabe e quebra em MONO&nbsp;/&nbsp;GRAFIA.</span>
+            </div>
+          </div>
+          <div class="es-shelf" id="esShelf" role="group" aria-label="Estante com as 11 capas"></div>
+        </div>
+      </div>
+      <figcaption><b>Onze capas para a WMF Martins Fontes, 2012–2016.</b> Capas reais, como foram publicadas pelo autor. Filtre pelo recurso principal de cada uma ou escolha um livro; as setas do teclado andam pela estante.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 01.1 · Swiss Grid Inspector -->
+<section id="grid-suico" class="pf-sec alt st-grid-suico">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>Grid & Rigor Suíço</b> · Design de Capas</p>
+      <h2>O grid invisível que dá peso e respiração à Martins Fontes.</h2>
+      <p class="lede">A tradição editorial da WMF Martins Fontes apoia-se no Estilo Tipográfico Internacional: grids modulares estritos, alinhamento óptico em linha de base (baseline grid) e uso deliberado do espaço negativo. O impacto visual nas livrarias nasce da tensão matemática entre a mancha de texto e o silêncio da capa.</p>
+    </div>
+
+    <figure class="rv">
+      <div class="pf-stage" style="background:#fff;border-radius:18px;padding:clamp(20px,3.5vw,40px);box-shadow:0 20px 40px -20px rgba(40,24,10,.25)">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Raio-X Tipográfico</span></div>
+        <div class="sw-grid-wrap">
+          <div>
+            <div class="sw-stage" id="swStage">
+              <img id="swCoverImg" src="assets/c-monog.webp" alt="Capa de Como Fazer uma Monografia com grid tipográfico suíço">
+              <div class="sw-overlay" id="swOverlay">
+                <div class="sw-overlay-lines" aria-hidden="true"></div>
+                <div class="sw-overlay-box title-box"><span>Zona Áurea · Título Modular (6 colunas)</span></div>
+                <div class="sw-overlay-box author-box"><span>Ancoragem · Autor (Baseline 14/28pt)</span></div>
+                <div class="sw-overlay-box colophon-box"><span>Colofão & Chancela WMF</span></div>
+              </div>
+            </div>
+            <div class="sw-cover-btns" id="swCoverBtns" role="group" aria-label="Escolher capa para o Raio-X">
+              <button type="button" class="sw-cover-btn" aria-pressed="true" data-src="assets/c-monog.webp" data-title="Como Fazer uma Monografia">Monografia (6 colunas)</button>
+              <button type="button" class="sw-cover-btn" aria-pressed="false" data-src="assets/c-novo.webp" data-title="O Novo Espírito do Capitalismo">Capitalismo (Assimétrico)</button>
+              <button type="button" class="sw-cover-btn" aria-pressed="false" data-src="assets/c-metod.webp" data-title="Metodologia Filosófica">Metodologia (Vertical)</button>
+            </div>
+            <div class="sw-controls">
+              <button type="button" class="sw-btn" id="swGridBtn" aria-pressed="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+                <span>Ativar Raio-X do Grid</span>
+              </button>
+            </div>
+          </div>
+          <div class="sw-cards">
+            <div class="sw-card">
+              <b>Grid Modular de 6 & 12 Colunas</b>
+              <p>O layout distribui pesos com proporção assimétrica (<code>1:1.618</code>). A quebra forçada das palavras (como <code>MONO / GRAFIA</code>) não é mero acaso: ela responde à largura exata de 3 e 4 módulos de coluna, tornando o título um bloco arquitetônico puro.</p>
+            </div>
+            <div class="sw-card">
+              <b>Baseline Grid & Ancoragem</b>
+              <p>Linha de base rígida em incrementos de <code>14pt</code> e <code>28pt</code>. Garante que os nomes dos autores, selos de coleção e textos de quarta capa e orelhas compartilhem o mesmo ritmo vertical na lombada e no miolo.</p>
+            </div>
+            <div class="sw-card">
+              <b>Espaço Negativo Ativo (&gt; 55%)</b>
+              <p>Ao contrário das capas que tentam preencher cada centímetro, o grid suíço reserva mais da metade da área total ao respiro visual. O vazio gera distinção imediata nas gôndolas e prateleiras de livrarias.</p>
+            </div>
+            <div class="sw-card">
+              <b>Tensão Tipográfica Suíça</b>
+              <p>Contraste cirúrgico entre famílias sem serifa da escola de Zurique/Basileia (<em>Akzidenz-Grotesk</em>, <em>Univers</em>, <em>Helvetica</em>) e fontes serifadas acadêmicas nobres (<em>Sabon</em> de Jan Tschichold, <em>Bembo</em> e <em>Garamond</em>).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Prancha de Raio-X do Grid Tipográfico Suíço.</b> Clique em "Ativar Raio-X do Grid" para visualizar a sobreposição das 6 colunas, o baseline grid de entrelinhas e a divisão áurea do espaço nas capas da WMF Martins Fontes.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 02 · restoration -->
+<section id="restauracao" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Mauricio — O Início · Restauração Histórica</p>
+      <h2>O livro como Mauricio queria que ele tivesse saído nos anos 60.</h2>
+      <p class="lede">A restauração corrigiu três tipos de erro que vieram da gráfica dos anos 60: a cor fora do traço, a cor errada e a estampa que mudava de uma página para outra. A régua era o livro que Mauricio gostaria de ter lançado na época.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-mesa">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Arraste para comparar</span></div>
+        <div class="rs">
+          <div class="rs-card">
+            <div class="cmp" style="--ar:429/942">
+              <img src="assets/r-registro-antes.webp" alt="Detalhe impresso nos anos 60: uma mão laranja sobre uma caixa verde, com a cor deslocada para fora do contorno" loading="lazy">
+              <img class="dp" src="assets/r-registro-depois.webp" alt="O mesmo detalhe restaurado: a cor da mão dentro do contorno e o fundo limpo" loading="lazy">
+              <i class="ln" aria-hidden="true"></i><span class="tg a" aria-hidden="true">Anos 60</span><span class="tg b" aria-hidden="true">2015</span>
+              <input type="range" min="0" max="100" value="50" aria-label="Comparar registro: anos 60 à esquerda, restaurado à direita">
+            </div>
+            <div><span class="t">Registro</span><span class="d">As chapas de cor não caíam em cima do traço: o laranja da mão saía do contorno e o amarelo invadia o fundo.</span></div>
+          </div>
+          <div class="rs-card">
+            <div class="cmp" style="--ar:438/1032">
+              <img src="assets/r-cor-antes.webp" alt="Detalhe impresso nos anos 60: um menino de chapéu e camisa em tom rosado" loading="lazy">
+              <img class="dp" src="assets/r-cor-depois.webp" alt="O mesmo detalhe restaurado: chapéu e camisa em amarelo" loading="lazy">
+              <i class="ln" aria-hidden="true"></i><span class="tg a" aria-hidden="true">Anos 60</span><span class="tg b" aria-hidden="true">2015</span>
+              <input type="range" min="0" max="100" value="50" aria-label="Comparar cor: anos 60 à esquerda, restaurado à direita">
+            </div>
+            <div><span class="t">Cor</span><span class="d">Na impressão antiga, chapéu e camisa do menino saíam rosados. Na página restaurada, ficam amarelos.</span></div>
+          </div>
+          <div class="rs-card">
+            <img class="rs-pol" src="assets/r-padrao.webp" alt="Três recortes lado a lado da mesma roupa de bolinhas: bolinhas coloridas sobre branco, bolinhas brancas sobre azul e bolinhas azuis sobre branco" loading="lazy">
+            <div><span class="t">Continuidade</span><span class="d">A mesma roupa de bolinhas mudava de cor de uma página para outra. A restauração deixou a estampa igual ao longo do livro.</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Detalhes da restauração.</b> Recortes reais da imagem publicada pelo autor, que mostra cada detalhe lado a lado: à esquerda a impressão dos anos 60, à direita a página restaurada. No comparador, as duas metades foram alinhadas para ficar uma sobre a outra.</figcaption>
+    </figure>
+    <div class="callout rv"><b>A falha também tinha charme.</b> “Sendo um apaixonado por impressões e gravuras, vejo um charme em cada falha de registro e outros detalhes das impressões antigas. Porém, o Mauricio gostaria de lançar esse material da melhor forma possível, assim como ele gostaria que fosse lançado nos anos 60.” Erik Placido, sobre corrigir em vez de preservar.</div>
+
+    <!-- Macro Close-up Inspection -->
+    <div class="macro-stage rv">
+      <div class="macro-header">
+        <b>Macro-inspeção: Oxidação & Desvio de Fotolito (1965) vs. Vetorização Limpa (2015)</b>
+        <span class="pill" style="background:rgba(255,255,255,.15);color:#fff">Zoom Óptico 400%</span>
+      </div>
+      <div class="macro-img-wrap">
+        <img src="assets/macro-restauracao.jpg" alt="Macro close-up da restauração: papel jornal oxidado com falha de registro de 1.5mm nos anos 60 à esquerda vs. traço preto limpo e cor pura de 2015 à direita" loading="lazy">
+      </div>
+      <div class="macro-grid-specs">
+        <div>
+          <h4><span class="old">●</span> A Impressão Original de 1965 (FTD)</h4>
+          <ul>
+            <li><b>Papel Jornal Ácido & Oxidação:</b> Fibras amareladas com perda de contraste mecânico ao longo de 50 anos de armazenamento dos exemplares raros.</li>
+            <li><b>Desvio de Registro de 1.8mm:</b> Chapas de meio-tom CMYK desalinhadas na impressora plana, com a cor vazando para fora do nanquim.</li>
+            <li><b>Retícula Grosseira & Ponto Estourado:</b> Ganho de ponto (dot gain) que empastava detalhes expressivos dos rostos dos personagens.</li>
+          </ul>
+        </div>
+        <div>
+          <h4><span class="new">●</span> A Restauração Digital de 2015 (MSP / WMF)</h4>
+          <ul>
+            <li><b>Vetorização & Sensibilidade de Bico de Pena:</b> Traço de contorno refeito digitalmente no Photoshop com mesa Wacom, preservando a caligrafia orgânica de Mauricio.</li>
+            <li><b>Separação Limpa de Canais CMYK:</b> Cores chapadas de alta pureza cromática, eliminando o ruído de retícula antiga.</li>
+            <li><b>Fidelidade ao Padrão Pretendido:</b> Correção de erros históricos de estampa e fotolitos invertidos de fábrica, alcançando o livro como ele deveria ter sido impresso.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Miolo & Graphic Novel: Kaputt e Mauricio -->
+<section id="miolo" class="pf-sec alt st-miolo">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Miolo &amp; Graphic Novel · Kaputt e Mauricio</p>
+      <h2>Diagramação editorial: o ritmo da página além da capa.</h2>
+      <p class="lede">Dois projetos de miolo completo com desafios opostos e complementares: a narrativa expressionista e crua da guerra em <em>Kaputt</em> e o resgate histórico de 212 páginas em capa dura comemorativa de <em>Mauricio — O Início</em>.</p>
+    </div>
+
+    <!-- Kaputt Interactive Showcase -->
+    <div class="kp-stage rv">
+      <div class="kp-top">
+        <b><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kaputt · Graphic Novel (WMF Martins Fontes)</b>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="kp-tag">Capa &amp; Miolo Completo</span>
+          <span class="pill" style="background:rgba(255,255,255,.12);color:#fff">Curzio Malaparte &amp; Eloar Guazzelli</span>
+        </div>
+      </div>
+      <div class="kp-viewer">
+        <img id="kpMainImg" src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" alt="Página dupla de Kaputt: cena dramática de guerra com traço denso a nanquim e mancha expressionista">
+      </div>
+      <div class="kp-nav" id="kpNav" role="group" aria-label="Selecione uma página do miolo de Kaputt">
+        <button type="button" class="kp-thumb" aria-pressed="true" data-src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" data-title="Cena Principal HD: 'Sim, sou judeu'" data-desc="Página dupla em alta definição: traço denso a nanquim de Guazzelli, mancha expressionista crua e ritmo de leitura cinematográfico." data-alt="Cena dramática de confronto com oficiais alemães e soldados em Kaputt">
+          <img src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" alt="Miniatura cena Sim sou judeu">
+        </button>
+        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/02_miolo_pagina_tanque_neve.jpg" data-title="Abertura de Sequência: Tanque na Neve" data-desc="Página inteira vertical de abertura: tensão dramática brutal no contraste extremo entre o branco do papel e os pretos puros de nanquim." data-alt="Página vertical com soldado soviético e tanque sob tempestade de neve">
+          <img src="assets/kaputt/02_miolo_pagina_tanque_neve.jpg" alt="Miniatura tanque na neve">
+        </button>
+        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/04_miolo_capitulo_sangue.jpg" data-title="Abertura de Capítulo: Sangue" data-desc="Página de título capitular: tipografia expressionista irregular integrada à estética visceral da obra de Malaparte." data-alt="Abertura do capítulo Sangue em Kaputt">
+          <img src="assets/kaputt/04_miolo_capitulo_sangue.jpg" alt="Miniatura capítulo Sangue">
+        </button>
+        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/06_miolo_dialogo_alemaes.jpg" data-title="Grid de Diálogos &amp; Chiaroscuro" data-desc="Diagramação de balões e recordatórios: distribuição de espaço que equilibra o texto literário denso com a respiração visual dos quadros." data-alt="Página de diálogos entre oficiais em Kaputt">
+          <img src="assets/kaputt/06_miolo_dialogo_alemaes.jpg" alt="Miniatura diálogos">
+        </button>
+        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/08_miolo_prefacio_guazzelli.jpg" data-title="Prefácio Ilustrado por Eloar Guazzelli" data-desc="Abertura editorial do livro: diagramação de prefácio com colunas acadêmicas em Sabon e vinheta ilustrada de abertura." data-alt="Prefácio de Kaputt com texto diagramado e ilustração">
+          <img src="assets/kaputt/08_miolo_prefacio_guazzelli.jpg" alt="Miniatura prefácio">
+        </button>
+        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/09_foto_livro_impresso.jpg" data-title="O Livro Impresso: Edição WMF Martins Fontes" data-desc="Fotografia real da edição publicada: papel offset de alta gramatura, lombada quadrada costurada e acabamento industrial de prestígio." data-alt="Fotografia do exemplar impresso de Kaputt">
+          <img src="assets/kaputt/09_foto_livro_impresso.jpg" alt="Miniatura livro impresso">
+        </button>
+      </div>
+      <div class="kp-meta">
+        <div class="kp-meta-info">
+          <b id="kpTitle">Cena Principal HD: "Sim, sou judeu"</b>
+          <span id="kpDesc">Página dupla em alta definição: traço denso a nanquim de Guazzelli, mancha expressionista crua e ritmo de leitura cinematográfico.</span>
+        </div>
+        <div class="kp-actions">
+          <a class="miolo-pdf-btn" href="assets/kaputt/kaputt_paginas_miolo_alta_resolucao.pdf" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Visualizar PDF do Miolo em Alta Definição (9 pág.) ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mauricio Album Card -->
+    <div class="miolo-grid rv">
+      <article class="miolo-card" style="grid-column: 1 / -1;">
+        <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(20px,3vw,36px);align-items:center;">
+          <div class="miolo-card-media" style="aspect-ratio:16/10;">
+            <img src="assets/mauricio-pagina-finalizada-miolo.png" alt="Página diagramada do livro Mauricio — O Início, com texto à esquerda e ilustração restaurada à direita" loading="lazy">
+          </div>
+          <div class="miolo-card-body" style="padding:clamp(16px,2.5vw,28px);">
+            <div class="miolo-badge-row">
+              <span class="miolo-badge">MSP · 80 Anos</span>
+              <span class="miolo-badge">212 Páginas</span>
+              <span class="miolo-badge">Capa Dura Álbum</span>
+              <span class="miolo-badge" style="background:#FEF3C7;color:#92400E">Edição Histórica de Luxo</span>
+            </div>
+            <b style="font-size:clamp(22px,2.8vw,30px)">Mauricio — O Início · Diagramação em Formato Álbum</b>
+            <p>Diagramação clássica de livro infantil de luxo em formato horizontal com 212 páginas: a página par recebe o texto narrativo com entrelinha generosa e tipografia legível para leitura compartilhada entre pais e filhos; a página ímpar é dedicada à ilustração restaurada em toda a sua amplitude, com recuo calculado de calha para compensar a curvatura natural da lombada de capa dura encadernada.</p>
+            <div style="display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:14px;border-top:1px solid rgba(40,24,10,.08);">
+              <img src="assets/mauricio-livro-finalizado-foto.jpg" alt="Foto do exemplar impresso de Mauricio — O Início" style="width:68px;height:68px;border-radius:10px;object-fit:cover;box-shadow:0 3px 8px rgba(0,0,0,.25)">
+              <div>
+                <b style="font-size:14px;display:block;margin-bottom:2px">Exemplar Físico Publicado</b>
+                <span style="font-size:13px;color:#6B5745;line-height:1.4">Volume único lançado na comemoração oficial dos 80 anos de Mauricio de Sousa, reunindo <em>A Caixa da Bondade</em>, <em>Piteco</em> e <em>O Astronauta no Planeta dos Homens Sorvete</em>.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- sheet -->
+<section id="ficha" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">Ficha</p>
+      <h2>Capa em todos. Miolo em dois.</h2>
+      <p class="lede">Livro por livro, o recurso que leva cada capa e o que foi entregue. Nos dois projetos de miolo, o trabalho cobre o livro inteiro.</p>
+    </div>
+    <div class="fi">
+      <div class="pf-card rv">
+        <table>
+          <thead><tr><th scope="col">Livro</th><th scope="col">Autor</th><th scope="col">Recurso</th><th scope="col">Entrega</th></tr></thead>
+          <tbody>
+            <tr><td>Como Fazer uma Monografia</td><td>Délcio Vieira Salomon</td><td><span class="rc t">Tipografia</span></td><td>Capa</td></tr>
+            <tr><td>O Novo Espírito do Capitalismo</td><td>Luc Boltanski e Ève Chiapello</td><td><span class="rc t">Tipografia</span></td><td>Capa</td></tr>
+            <tr><td>Metodologia filosófica</td><td>Dominique Folscheid e Jean-Jacques Wunenburger</td><td><span class="rc t">Tipografia</span></td><td>Capa</td></tr>
+            <tr><td>Verbos italianos</td><td>Paola Budini</td><td><span class="rc t">Tipografia</span></td><td>Capa</td></tr>
+            <tr><td>A Falsa Medida do Homem</td><td>Stephen Jay Gould</td><td><span class="rc d">Desenho</span></td><td>Capa</td></tr>
+            <tr><td>Arquitetura Grega e Romana</td><td>D. S. Robertson</td><td><span class="rc d">Desenho</span></td><td>Capa</td></tr>
+            <tr><td>Kaputt</td><td>Guazzelli, da obra de Curzio Malaparte</td><td><span class="rc d">Desenho</span></td><td>Capa e miolo</td></tr>
+            <tr><td>Mil Vezes Mais Justo</td><td>Kenji Yoshino</td><td><span class="rc i">Imagem</span></td><td>Capa</td></tr>
+            <tr><td>Tratado de História das Religiões</td><td>Mircea Eliade</td><td><span class="rc i">Imagem</span></td><td>Capa</td></tr>
+            <tr><td>Sobre o Político</td><td>Chantal Mouffe</td><td><span class="rc i">Imagem</span></td><td>Capa</td></tr>
+            <tr><td>Caixa com quatro livros</td><td>C.S. Lewis</td><td><span class="rc i">Imagem</span></td><td>Caixa</td></tr>
+            <tr><td>Mauricio — O Início</td><td>Mauricio de Sousa</td><td><span class="rc o">Original</span></td><td>Restauração, miolo e capa</td></tr>
+          </tbody>
+        </table>
+        <p class="fi-note">Os onze primeiros são da WMF Martins Fontes, entre 2012 e 2016. Mauricio — O Início foi feito com a Mauricio de Sousa Produções, em 2015.</p>
+      </div>
+      <div class="pf-card rv">
+        <span class="tag">Recursos das 11 capas</span>
+        <div class="bars">
+          <div><span>Tipografia</span><i style="--n:4;--c:#C8693A"></i><b>4</b></div>
+          <div><span>Desenho</span><i style="--n:3;--c:#A08458"></i><b>3</b></div>
+          <div><span>Imagem</span><i style="--n:4;--c:#3F7FAE"></i><b>4</b></div>
+        </div>
+        <span class="tag">Ferramentas</span>
+        <div class="chips"><span>InDesign</span><span>Photoshop</span><span>Illustrator</span><span>Mesa digitalizadora</span></div>
+        <p class="sys-n">Ferramentas listadas pelo autor na ficha de cada projeto. Em Mauricio — O Início: Photoshop, InDesign e mesa digitalizadora.</p>
+      </div>
+    </div>
+    <div class="callout rv" style="margin-top:24px"><b>Créditos.</b> Capas da WMF Martins Fontes: projeto de capa de Erik Placido; Kaputt tem adaptação e arte de Guazzelli, a partir da obra de Curzio Malaparte. Mauricio — O Início: histórias e personagens de Mauricio de Sousa, edição de Sidney Gusman (MSP); restauração digital, diagramação e capa de Erik Placido. Pinturas, fotos e ilustrações usadas nas capas pertencem a seus autores.</div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Capa, miolo ou um livro inteiro para resgatar: posso mostrar os arquivos e o processo ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Editorial · Capas e livros</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* reveal + pause loops off-screen (same pattern as the other cases) */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+    if(e.isIntersecting && el._onSeen){ el._onSeen(); el._onSeen = null }
+  })},{threshold:.15}) : null;
+  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(watch);
+  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
+    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+
+  /* ===== 01 bookshelf ===== */
+  var BOOKS = [
+    {f:'monog', r:'Tipografia', e:'capa', n:'Como Fazer uma Monografia', a:'Délcio Vieira Salomon',
+     d:'Só o título, em caixa-alta branca sobre vermelho, de ponta a ponta da capa. A palavra não cabe e quebra em MONO\u00a0/\u00a0GRAFIA.',
+     alt:'Capa vermelha de Como Fazer uma Monografia, com o título em letras brancas enormes quebrado em MONO e GRAFIA'},
+    {f:'novo', r:'Tipografia', e:'capa', n:'O Novo Espírito do Capitalismo', a:'Luc Boltanski e Ève Chiapello',
+     d:'Letras pretas e pesadas sobre branco, cortadas pela borda da capa. CAPITALISMO quebra em CAPI\u00a0/\u00a0TALISMO.',
+     alt:'Capa branca de O Novo Espírito do Capitalismo com o título em letras pretas pesadas, cortadas pela borda direita'},
+    {f:'metod', r:'Tipografia', e:'capa', n:'Metodologia filosófica', a:'Dominique Folscheid e Jean-Jacques Wunenburger',
+     d:'O título se repete em linhas verticais, giradas em sentidos opostos, num cinza quase do tom do fundo. Só o bloco do canto se lê de primeira.',
+     alt:'Capa cinza de Metodologia filosófica com o título repetido em linhas verticais giradas, em cinza claro'},
+    {f:'verbos', r:'Tipografia', e:'capa', n:'Verbos italianos', a:'Paola Budini',
+     d:'Frases em italiano sobre o verbo viram textura, verde sobre verde. O título aparece nas duas línguas, uma embaixo da outra.',
+     alt:'Capa verde de Verbos italianos com frases em italiano como textura e o título em português e em italiano'},
+    {f:'falsa', r:'Desenho', e:'capa', n:'A Falsa Medida do Homem', a:'Stephen Jay Gould',
+     d:'Um crânio desenhado a traço, atravessado por linhas finas, sobre fundo kraft. O livro de Gould trata das medidas de crânio e dos testes usados para hierarquizar pessoas.',
+     alt:'Capa kraft de A Falsa Medida do Homem com um crânio desenhado a traço'},
+    {f:'arq', r:'Desenho', e:'capa', n:'Arquitetura Grega e Romana', a:'D. S. Robertson',
+     d:'Colunas caneladas, em gravura preto e branco, emolduram uma etiqueta com o título, como uma fachada.',
+     alt:'Capa de Arquitetura Grega e Romana com colunas caneladas em preto e branco em volta de uma etiqueta com o título'},
+    {f:'kaputt', r:'Desenho', e:'capa e miolo', n:'Kaputt', a:'Guazzelli, da obra de Curzio Malaparte',
+     d:'Quadrinho a partir do romance de Malaparte sobre a Segunda Guerra. Fundo preto, uma suástica em chamas em vermelho e o título em letras irregulares. Aqui o trabalho foi capa e miolo.',
+     alt:'Capa preta de Kaputt com uma suástica vermelha em chamas no centro'},
+    {f:'mil', r:'Imagem', e:'capa', n:'Mil Vezes Mais Justo', a:'Kenji Yoshino',
+     d:'Duas faixas de pintura com figuras em trajes de época, em cima e embaixo, e o título numa faixa escura entre elas. O subtítulo fala das peças de Shakespeare.',
+     alt:'Capa de Mil Vezes Mais Justo com duas faixas de pinturas de figuras em trajes de época e o título numa faixa verde-escura'},
+    {f:'tratado', r:'Imagem', e:'capa', n:'Tratado de História das Religiões', a:'Mircea Eliade',
+     d:'Um vitral ocupa a metade de cima. Embaixo, um bloco preto com o título em letras condensadas.',
+     alt:'Capa de Tratado de História das Religiões com um vitral colorido em cima e um bloco preto com o título'},
+    {f:'politico', r:'Imagem', e:'capa', n:'Sobre o Político', a:'Chantal Mouffe',
+     d:'Uma multidão em preto e branco ocupa a base da capa. O título fica sozinho no branco de cima, dentro de uma moldura preta.',
+     alt:'Capa de Sobre o Político com moldura preta, título no alto e uma foto de multidão em preto e branco embaixo'},
+    {f:'lewis', r:'Imagem', e:'caixa', n:'C.S. Lewis · caixa', a:'Os quatro amores, A abolição do homem, Cartas de um diabo a seu aprendiz e Cristianismo puro e simples',
+     d:'Caixa para quatro livros: o nome do autor em letra cursiva, um retrato dele em laranja e os títulos da coleção, um embaixo do outro.',
+     alt:'Caixa laranja com C. S. Lewis em letra cursiva, um retrato do autor de chapéu e os títulos de quatro livros'}
+  ];
+  var es = $('#es');
+  if(es){
+    var eImg = $('#esImg'), shelf = $('#esShelf'), eCur = 0, eBusy = false, eFilter = '';
+    shelf.innerHTML = BOOKS.map(function(b,k){
+      return '<button type="button" aria-pressed="'+(k===0)+'" aria-label="'+b.n+', '+b.r.toLowerCase()+'"><img src="assets/c-'+b.f+'.webp" alt="" loading="lazy"></button>';
+    }).join('');
+    var eBtns = $$('button', shelf);
+    var on = function(i){ return !eFilter || BOOKS[i].r===eFilter };
+    function eShow(i, now){
+      if(i===eCur || eBusy) return;
+      var b = BOOKS[i]; eCur = i;
+      eBtns.forEach(function(x,k){ x.setAttribute('aria-pressed', k===i ? 'true' : 'false') });
+      var go = function(){
+        eImg.src = 'assets/c-'+b.f+'.webp'; eImg.alt = b.alt;
+        $('#esK').textContent = b.r+' · '+b.e; $('#esN').textContent = b.n; $('#esA').textContent = b.a; $('#esD').textContent = b.d;
+        eImg.classList.remove('out'); eBusy = false;
+      };
+      if(RM || now){ go(); return }
+      eBusy = true; eImg.classList.add('out');
+      setTimeout(function(){ var n = new Image(); n.onload = n.onerror = go; n.src = 'assets/c-'+b.f+'.webp' }, 220);
+    }
+    function eStep(dir){
+      for(var s=1; s<=BOOKS.length; s++){ var j = (eCur + dir*s + BOOKS.length*2) % BOOKS.length; if(on(j)) return j }
+      return eCur;
+    }
+    eBtns.forEach(function(b,k){ b.addEventListener('click',function(){ eShow(k) }) });
+    shelf.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowRight' && e.key!=='ArrowLeft') return;
+      e.preventDefault(); eBusy = false; eShow(eStep(e.key==='ArrowRight' ? 1 : -1)); eBtns[eCur].focus();
+    });
+    $$('#esFilter button').forEach(function(f){ f.addEventListener('click',function(){
+      eFilter = f.dataset.r;
+      $$('#esFilter button').forEach(function(x){ x.setAttribute('aria-pressed', x===f ? 'true' : 'false') });
+      eBtns.forEach(function(x,k){ x.classList.toggle('dim', !on(k)) });
+      if(!on(eCur)){ eBusy = false; eShow(eStep(1)) }
+    }) });
+    autoplay(es, 3200, function(){ eShow(eStep(1)) });
+  }
+
+  /* ===== Swiss Grid toggle & cover switcher ===== */
+  var swBtn = $('#swGridBtn'), swOverlay = $('#swOverlay'), swCoverImg = $('#swCoverImg');
+  if(swBtn && swOverlay){
+    swBtn.addEventListener('click', function(){
+      var on = swOverlay.classList.toggle('active');
+      swBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      swBtn.querySelector('span').textContent = on ? 'Ocultar Raio-X do Grid' : 'Ativar Raio-X do Grid';
+    });
+  }
+  $$('#swCoverBtns button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      $$('#swCoverBtns button').forEach(function(b){ b.setAttribute('aria-pressed', b===btn ? 'true' : 'false') });
+      if(swCoverImg){
+        swCoverImg.style.opacity = '0';
+        setTimeout(function(){
+          swCoverImg.src = btn.dataset.src;
+          swCoverImg.alt = 'Capa de ' + btn.dataset.title + ' com grid tipográfico suíço';
+          swCoverImg.style.opacity = '1';
+        }, 180);
+      }
+    });
+  });
+
+  /* ===== Kaputt interactive page viewer ===== */
+  var kpMainImg = $('#kpMainImg'), kpTitle = $('#kpTitle'), kpDesc = $('#kpDesc');
+  $$('#kpNav button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      $$('#kpNav button').forEach(function(b){ b.setAttribute('aria-pressed', b===btn ? 'true' : 'false') });
+      if(kpMainImg){
+        kpMainImg.classList.add('out');
+        setTimeout(function(){
+          kpMainImg.src = btn.dataset.src;
+          kpMainImg.alt = btn.dataset.alt || btn.dataset.title;
+          if(kpTitle) kpTitle.textContent = btn.dataset.title;
+          if(kpDesc) kpDesc.textContent = btn.dataset.desc;
+          kpMainImg.classList.remove('out');
+        }, 180);
+      }
+    });
+  });
+
+  /* ===== 03 compare sliders: drag, tap or use the arrow keys; one sweep shows that it moves ===== */
+  $$('.cmp').forEach(function(c){
+    var input = $('input', c), touched = false, raf = 0;
+    function set(v){ v = Math.max(0, Math.min(100, v)); c.style.setProperty('--x', v+'%'); input.value = Math.round(v) }
+    function fromEvent(e){ var r = c.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100 }
+    function take(){ touched = true; cancelAnimationFrame(raf) }
+    c.addEventListener('pointerdown',function(e){
+      take(); set(fromEvent(e)); c.setPointerCapture(e.pointerId);
+      var move = function(ev){ set(fromEvent(ev)) };
+      var up = function(){ c.removeEventListener('pointermove',move); c.removeEventListener('pointerup',up); c.removeEventListener('pointercancel',up) };
+      c.addEventListener('pointermove',move); c.addEventListener('pointerup',up); c.addEventListener('pointercancel',up);
+    });
+    c.addEventListener('click',function(){ input.focus({preventScroll:true}) });
+    input.addEventListener('input',function(){ take(); set(+input.value) });
+    if(RM || !io) return;
+    c._onSeen = function(){
+      if(touched) return;
+      var t0 = null, dur = 1800;
+      (function tick(t){
+        if(touched) return;
+        if(t0===null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur);
+        set(50 + Math.sin(p * Math.PI * 2) * -26 * (1 - p * .2));
+        if(p < 1) raf = requestAnimationFrame(tick); else set(50);
+      })(performance.now());
+    };
+    io.observe(c);
+  });
+})();
+</script>
+</body>
+</html>

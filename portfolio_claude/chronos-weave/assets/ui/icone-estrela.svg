@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <g fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Concentric Astrological Compass Rings -->
+    <circle cx="64" cy="64" r="42" stroke-width="2" stroke-dasharray="4 6" opacity="0.45"/>
+    <circle cx="64" cy="64" r="26" stroke-width="2.5" opacity="0.6"/>
+    <circle cx="64" cy="64" r="10" stroke-width="2" opacity="0.3"/>
+    
+    <!-- Diagonal Subtle Compass Beams -->
+    <line x1="26" y1="26" x2="102" y2="102" stroke-width="1.8" opacity="0.35"/>
+    <line x1="102" y1="26" x2="26" y2="102" stroke-width="1.8" opacity="0.35"/>
+    
+    <!-- Secondary Diagonal Diamond Starburst -->
+    <polygon points="64,30 71,57 98,64 71,71 64,98 57,71 30,64 57,57"
+             fill="#FFFFFF" fill-opacity="0.2" stroke-width="2.5"/>
+             
+    <!-- Primary Cardinal Sacred Starburst -->
+    <polygon points="64,12 73,55 116,64 73,73 64,116 55,73 12,64 55,55"
+             fill="#FFFFFF" fill-opacity="0.35" stroke-width="3.5"/>
+             
+    <!-- Inner Radiant Diamond Core -->
+    <polygon points="64,48 74,64 64,80 54,64" fill="#FFFFFF" stroke="none"/>
+    <circle cx="64" cy="64" r="3.5" fill="#000000" stroke="none"/>
+  </g>
+</svg>

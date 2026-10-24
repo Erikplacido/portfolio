@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projeto Força BR · Board game</title>
+<meta name="description" content="Design gráfico do Projeto Força BR, jogo de tabuleiro cooperativo da Pindorama Editora: cartas de heróis e vilões, tabuleiro do Brasil, painel, eventos, fichas e logos dos heróis.">
+<meta property="og:title" content="Projeto Força BR — design gráfico de um board game cooperativo">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Everything below is the game's own visual language: the monitoring-console stages,
+   the board band, cards, tokens and the resource counter. */
+:root{
+  --accent:#2453B3; --hl:#F5DD1F;
+  --navy:#0B1733; --hud:#163063; --cyan:#3FB6F0; --hero:#3E9B35; --vil:#B32A22; --reg:#2E56B0; --evt:#F0A642; --lime:#7FE07A;
+  --tech:'Orbitron','Inter',system-ui,sans-serif;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== shared stage looks ===== */
+.st-hud{color:#fff;background:
+  linear-gradient(rgba(120,170,255,.07) 1px,transparent 1px) 0 0/32px 32px,
+  linear-gradient(90deg,rgba(120,170,255,.07) 1px,transparent 1px) 0 0/32px 32px,
+  radial-gradient(120% 90% at 50% 0,#1C3A78,#0B1733 70%)}
+.st-hud .pill{background:rgba(255,255,255,.12);color:#fff}
+.st-hud .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-metal{color:#fff;background:
+  repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 5px),
+  linear-gradient(160deg,#4B525B,#262B31 60%,#1C2025)}
+.st-metal .pill{background:rgba(255,255,255,.12);color:#fff}
+.st-paper{background:linear-gradient(180deg,#EEF1F5,#E1E6EE)}
+.tech{font-family:var(--tech);letter-spacing:.06em;text-transform:uppercase}
+
+/* cards and flips */
+.flip-in{display:block;position:relative;aspect-ratio:var(--ar,3/4);transform-style:preserve-3d;transition:transform .7s var(--snap)}
+.flip-in img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5% / calc(5% * var(--arn,.75));-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 1px 0 rgba(255,255,255,.08),0 16px 26px -14px rgba(0,0,0,.7)}
+.flip-in .fr{transform:rotateY(180deg)}
+
+/* ===== 01 console: decks + player boards ===== */
+.kit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2.6vw,28px);align-items:end}
+@media(max-width:700px){.kit{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kit .flip{background:none;border:0;padding:0;perspective:1000px;text-align:center;color:#fff;transition:transform .4s var(--snap)}
+.kit .flip:hover{transform:translateY(-6px)}
+.kit .flip-in{width:calc(var(--w,1) * 100%);margin:0 auto}
+.kit .flip[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.kit .lb{display:block;margin-top:14px;font:600 12px/1.35 var(--pf-sans);color:#D9DEE6}
+.kit .lb b{display:block;font:700 12px/1.2 var(--tech);letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:3px}
+.kit .lb i{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--c);margin-right:6px;vertical-align:0;transform:rotate(45deg)}
+.kit-hint{margin-top:22px;font-size:13px;color:#AAB3BF;text-align:center}
+.boards{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:clamp(16px,3vw,32px);align-items:center}
+@media(max-width:700px){.boards{grid-template-columns:1fr}.boards .pb-v{max-width:300px;margin:0 auto}}
+.boards img{width:100%;height:auto;border-radius:10px;box-shadow:0 22px 40px -22px rgba(0,0,0,.8)}
+.boards .bl{display:block;margin-top:10px;font:600 12px/1.3 var(--pf-sans);color:#D9DEE6;text-align:center}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px;margin-top:24px}
+.sw{display:flex;gap:6px;margin:4px 0 12px}
+.sw i{flex:1;height:38px;border-radius:8px;background:var(--c);position:relative}
+.sw i::after{content:attr(data-n);position:absolute;left:8px;bottom:6px;font:600 10px/1 var(--pf-sans);letter-spacing:.06em;color:#fff;text-transform:uppercase}
+.ics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px 6px;margin:4px 0 10px}
+.ics span{display:grid;justify-items:center;gap:6px;font:500 11px/1.2 var(--pf-sans);color:var(--pf-ink-2);text-align:center}
+.ics i{width:34px;height:34px;background:var(--pf-ink);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.type-spec{font:700 clamp(22px,2.6vw,28px)/1.1 var(--tech);letter-spacing:.06em;color:var(--pf-ink);margin:6px 0 10px;text-transform:uppercase}
+
+/* ===== 02 heroes ===== */
+.st-heroes .pill{background:rgba(255,255,255,.12);color:#fff}
+.st-heroes .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-heroes{--hc:#3E9B35;background:
+  radial-gradient(70% 70% at 22% 40%,color-mix(in srgb,var(--hc) 45%,transparent),transparent 70%),
+  linear-gradient(rgba(120,170,255,.06) 1px,transparent 1px) 0 0/32px 32px,
+  linear-gradient(90deg,rgba(120,170,255,.06) 1px,transparent 1px) 0 0/32px 32px,
+  linear-gradient(160deg,#16233F,#0A1124);transition:background .6s var(--ease);color:#fff}
+.hq{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(22px,4vw,56px);align-items:center}
+@media(max-width:760px){.hq{grid-template-columns:1fr}.hq-card{max-width:260px;margin:0 auto;width:100%}}
+.hq-card{background:none;border:0;padding:0;perspective:1100px;width:100%}
+.hq-card .flip-in{--ar:560/760}
+.hq-card[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.hq-card.swap .flip-in{transform:rotateY(-16deg) translateX(-6%) scale(.95);opacity:.4;transition:transform .2s,opacity .2s}
+.hq-card.swap[aria-pressed="true"] .flip-in{transform:rotateY(164deg) translateX(6%) scale(.95)}
+.hq-info{display:grid;gap:10px;justify-items:start;min-width:0}
+.hq-logo{height:clamp(64px,9vw,96px);width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45));transition:transform .5s var(--snap),opacity .2s}
+.hq.swap .hq-logo{transform:translateY(8px) scale(.94);opacity:0}
+.hq-d{font:500 clamp(16px,1.8vw,19px)/1.45 var(--pf-sans);color:#fff;max-width:36ch}
+.hq-o{font-size:13px;color:#B9C4D6}
+.hq-o b{color:#fff;font-weight:600}
+.hq-pw{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.hq-pw span{font:600 11px/1 var(--pf-sans);padding:7px 10px;border-radius:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);color:#EAF0F8}
+.hq-pw span b{color:var(--hl);margin-right:5px;font-family:var(--tech)}
+.hq-flip{margin-top:6px;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font:600 13px var(--pf-sans)}
+.hq-flip:hover{background:rgba(255,255,255,.08)}
+.hq-pick{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;margin-top:clamp(24px,4vw,40px)}
+@media(max-width:760px){.hq-pick{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.hq-pick button{height:56px;padding:6px;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,.07);display:grid;place-items:center;transition:background .25s,border-color .25s,transform .3s var(--snap)}
+.hq-pick button:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.hq-pick button[aria-pressed="true"]{background:rgba(255,255,255,.16);border-color:var(--hl)}
+.hq-pick img{max-width:100%;max-height:40px;width:auto;height:auto}
+.vl{display:flex;gap:clamp(10px,2vw,18px);overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.vl .vc{flex:0 0 clamp(128px,18%,170px);scroll-snap-align:start}
+.vl img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:5% / 3.75%;box-shadow:0 14px 22px -12px rgba(0,0,0,.6)}
+.vl .vn{display:block;margin-top:8px;font:700 11px/1.2 var(--tech);letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.vl .vn span{display:block;font:500 11px/1.3 var(--pf-sans);letter-spacing:0;text-transform:none;color:#E6B7B2;margin-top:2px}
+.st-villains{color:#fff;background:radial-gradient(110% 90% at 20% 0,#7E1E19,#3A0D0B 70%)}
+.st-villains .pill{background:rgba(255,255,255,.14);color:#fff}
+
+/* ===== 03 board band ===== */
+.fb-band{background:var(--navy);color:#fff;overflow:hidden}
+.fb-band::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(rgba(120,170,255,.06) 1px,transparent 1px) 0 0/40px 40px,
+  linear-gradient(90deg,rgba(120,170,255,.06) 1px,transparent 1px) 0 0/40px 40px;pointer-events:none}
+.fb-band .wrap{position:relative}
+.fb-band .eyebrow{color:#9FB8E8}.fb-band .eyebrow b{color:var(--hl)}
+.fb-band h2,.fb-band .lede{color:#fff}
+.fb-band p{color:#C3CFE6}
+.fb-band figcaption{color:#AFC0E0}.fb-band figcaption b{color:#fff}
+.fb-band .pill{background:rgba(255,255,255,.12);color:#fff}
+.fb-band .pill.y{background:var(--hl);color:var(--pf-ink)}
+.bd-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:start}
+@media(max-width:900px){.bd-grid{grid-template-columns:1fr}}
+.bd{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.9);user-select:none;-webkit-tap-highlight-color:transparent}
+.bd>img{width:100%;height:100%;object-fit:cover}
+.bd .sweep{position:absolute;left:50%;top:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:conic-gradient(from 0deg,rgba(127,224,122,0) 0deg,rgba(127,224,122,0) 300deg,rgba(127,224,122,.20) 355deg,rgba(127,224,122,0) 360deg);animation:sweep 6s linear infinite;pointer-events:none;mix-blend-mode:screen}
+.slot{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);width:11.5%;height:15%;transform:translate(-50%,-50%);border:0;padding:0;background:transparent;border-radius:8px}
+.slot::before{content:"";position:absolute;inset:0;border-radius:8px;border:2px solid rgba(127,224,122,0);transition:border-color .3s,box-shadow .3s,background .3s}
+.slot:hover::before{border-color:rgba(127,224,122,.6)}
+.slot[aria-pressed="true"]::before{border-color:var(--lime);background:rgba(127,224,122,.12);box-shadow:0 0 0 4px rgba(127,224,122,.18),0 0 26px rgba(127,224,122,.55)}
+.slot .ping{position:absolute;left:50%;top:50%;width:60%;aspect-ratio:1;border-radius:50%;border:2px solid var(--lime);transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none}
+.slot[aria-pressed="true"] .ping{animation:ping 1.8s ease-out infinite}
+.bd-side{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:clamp(16px,2.4vw,24px);display:grid;gap:16px}
+.bd-cards{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:12px;align-items:end}
+.bd-cards .flip-in{transform:rotateY(180deg)}
+.bd-cards .on .flip-in{transform:rotateY(0deg)}
+.bd-cards .c1 .flip-in{--ar:44/67}
+.bd-cards .c2 .flip-in{--ar:520/731}
+.bd-cards span{display:block;perspective:900px}
+.bd-cards small{display:block;margin-top:8px;font:600 10px/1.2 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;color:#93A6CC;text-align:center}
+.bd-name{font:700 clamp(20px,2.4vw,26px)/1.1 var(--tech);letter-spacing:.06em;text-transform:uppercase}
+.bd-name i{font-style:normal;display:inline-grid;place-items:center;min-width:34px;height:30px;margin-right:10px;padding:0 6px;border-radius:7px;background:var(--hl);color:var(--pf-ink);font-size:15px;vertical-align:3px;clip-path:polygon(18% 0,82% 0,100% 50%,82% 100%,18% 100%,0 50%)}
+.bd-loc{font-size:14px;color:#C3CFE6;margin-top:-8px}
+.bd-fx{display:grid;gap:8px}
+.bd-fx div{font-size:14px;line-height:1.45;color:#E4EAF5}
+.bd-fx b{display:block;font:600 11px/1.2 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--hl);margin-bottom:2px}
+.bd-q{font-size:13px;font-style:italic;color:#9FB0D0;border-top:1px solid rgba(255,255,255,.1);padding-top:12px}
+.painel{border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.9)}
+.painel img{width:100%;height:auto}
+
+/* ===== 04 events + tokens ===== */
+.ev{display:grid;gap:clamp(28px,4vw,44px);justify-items:center}
+.decks{display:flex;gap:clamp(10px,2vw,18px);justify-content:center}
+.deck{background:none;border:0;padding:0;width:clamp(96px,13vw,138px);display:grid;gap:12px;justify-items:center;color:#fff}
+.deck .stk{display:block;width:100%;aspect-ratio:640/458;border-radius:6px;box-shadow:0 2px 0 #9BA3AD,0 4px 0 #5E6670,0 6px 0 #9BA3AD,0 8px 0 #5E6670,0 20px 20px -6px rgba(0,0,0,.6);transition:transform .35s var(--snap)}
+.deck .stk img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+.deck:hover .stk,.deck:focus-visible .stk{transform:translateY(-6px) rotate(-2deg)}
+.deck:active .stk{transform:translateY(2px)}
+.deck .dl{font:700 11px/1.2 var(--tech);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.deck .dl i{display:block;width:26px;height:4px;border-radius:2px;background:var(--c);margin:0 auto 7px}
+.deck .dl small{display:block;font:500 12px/1.3 var(--pf-sans);color:#C8CED8;letter-spacing:0;text-transform:none;margin-top:4px}
+.drawn{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(16px,3vw,32px);align-items:center;width:100%;max-width:760px}
+@media(max-width:520px){.drawn{grid-template-columns:1fr}}
+.dcard{perspective:1100px}
+.dcard .flip-in{--ar:640/458;--arn:1.4;transform:translateX(-24%) rotate(-6deg) rotateY(0deg);opacity:0;transition:transform .7s var(--snap),opacity .25s}
+.dcard.up .flip-in{transform:none;opacity:1}
+.dcard.up.face .flip-in{transform:rotateY(180deg)}
+.dinfo{display:grid;gap:8px;align-content:start}
+.dinfo .dk{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--k,#C8CED8)}
+.dinfo b{font:700 clamp(17px,2vw,22px)/1.15 var(--tech);letter-spacing:.04em;text-transform:uppercase}
+.dinfo .ef{font-size:15px;line-height:1.5;color:#E8ECF2}
+.dinfo .qt{font-size:13px;font-style:italic;color:#AAB3BF}
+.tks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:700px){.tks{grid-template-columns:repeat(2,minmax(0,1fr))}.tk.wide{grid-column:span 2}}
+@media(max-width:400px){.tks{grid-template-columns:1fr}.tk.wide{grid-column:auto}}
+.tk{background:rgba(255,255,255,.55);border:1px solid rgba(16,22,31,.06);border-radius:18px;padding:16px 12px 14px;display:grid;justify-items:center;gap:8px;text-align:center}
+.tk .ims{display:flex;justify-content:center;align-items:center;gap:4px;height:74px}
+.tk img{height:62px;width:auto;filter:drop-shadow(0 6px 5px rgba(16,22,31,.3));transition:transform .45s var(--snap)}
+.tk:hover img{transform:translateY(-4px) rotate(-6deg)}
+.tk:hover img:nth-child(2){transform:translateY(-4px) rotate(5deg)}
+.tk b{font:600 13px/1.2 var(--pf-sans);color:var(--pf-ink)}
+.tk span{font-size:12px;line-height:1.4;color:var(--pf-ink-2)}
+.ctr-wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(18px,4vw,48px);align-items:center;margin-top:clamp(24px,4vw,40px)}
+@media(max-width:760px){.ctr-wrap{grid-template-columns:1fr}}
+.ctr{position:relative;container-type:inline-size;border-radius:10px;overflow:hidden;box-shadow:0 24px 40px -24px rgba(16,22,31,.6)}
+.ctr>img{width:100%;height:auto}
+.ctr .win{position:absolute;top:30.7%;height:17.54%;width:9.93%;background:#1593D6;overflow:hidden;box-shadow:inset 0 3px 6px rgba(0,0,0,.45)}
+.ctr .win.l{left:36.3%}.ctr .win.r{left:53.7%}
+.ctr .od{display:block;transition:transform .45s var(--snap)}
+.ctr .od span{display:grid;place-items:center;height:8.28cqw;font:700 5.6cqw/1 var(--tech);color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.3)}
+.ctr .rv-l,.ctr .rv-r{position:absolute;top:40.35%;width:7.4%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#F4F6F8,#9AA2AB 45%,#4D545C 80%);box-shadow:0 2px 3px rgba(0,0,0,.5),inset 0 0 0 2px rgba(0,0,0,.25)}
+.ctr .rv-l{left:27.07%}.ctr .rv-r{left:72.93%}
+.ctr-ui{display:grid;gap:12px;justify-items:start}
+.ctr-t{font:600 11px/1 var(--pf-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--pf-ink-2)}
+.ctr-ui .val{font:700 clamp(40px,6vw,64px)/1 var(--tech);color:var(--pf-ink)}
+.ctr-ui .val small{font:500 14px var(--pf-sans);color:var(--pf-ink-2);margin-left:8px;letter-spacing:0}
+.ctr-btns{display:flex;gap:8px;flex-wrap:wrap}
+.ctr-btns button{min-width:56px;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--pf-line);background:var(--pf-paper);font:700 16px var(--tech);color:var(--pf-ink);transition:transform .25s var(--snap),background .2s}
+.ctr-btns button:hover{background:#fff;transform:translateY(-2px)}
+.ctr-btns button.main{background:var(--hl);border-color:transparent}
+
+/* ===== fluxo cognitivo do turno ===== */
+.turn-flow-sec{background:linear-gradient(180deg,rgba(11,23,51,.95),rgba(22,48,99,.95));border:1px solid rgba(63,182,240,.25);border-radius:24px;padding:clamp(20px,3.5vw,36px);box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+.flow-interactive-box{margin-top:28px;display:grid;gap:20px}
+.flow-nav-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:800px){.flow-nav-steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.flow-nav-steps{grid-template-columns:1fr}}
+.f-step{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;color:#fff;cursor:pointer;text-align:left;transition:all .25s var(--ease)}
+.f-step:hover{background:rgba(255,255,255,.1);border-color:rgba(63,182,240,.5);transform:translateY(-2px)}
+.f-step.active{background:rgba(63,182,240,.18);border-color:var(--hl);box-shadow:0 0 20px rgba(63,182,240,.3),inset 0 0 12px rgba(63,182,240,.15)}
+.f-num{font:700 20px/1 var(--tech);color:var(--hl);letter-spacing:.04em;flex:none}
+.f-meta b{display:block;font:700 13px/1.2 var(--tech);color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.f-meta small{display:block;font:500 12px/1.3 var(--pf-sans);color:#A8BDDF;margin-top:2px}
+.flow-stage-card{background:rgba(11,23,51,.85);border:1px solid rgba(255,255,255,.12);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center;padding:clamp(16px,2.5vw,24px)}
+@media(max-width:760px){.flow-stage-card{grid-template-columns:1fr}}
+.flow-tag{display:inline-block;grid-column:1/-1;justify-self:start;font:700 10px/1 var(--tech);letter-spacing:.12em;text-transform:uppercase;color:var(--hl);background:rgba(245,221,31,.15);border:1px solid rgba(245,221,31,.3);padding:6px 12px;border-radius:99px}
+.flow-img-wrap{position:relative;border-radius:12px;overflow:hidden;background:#050c1c;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 28px rgba(0,0,0,.6)}
+.flow-img-wrap img{width:100%;height:100%;object-fit:cover}
+.flow-radar-ping{position:absolute;left:42%;top:38%;width:44px;height:44px;border-radius:50%;border:2px solid var(--lime);transform:translate(-50%,-50%);animation:ping 1.6s ease-out infinite}
+.flow-card-desc b{display:block;font:700 17px/1.2 var(--tech);color:#fff;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.flow-card-desc p{font-size:14px;line-height:1.55;color:#C8D6EC;margin:0}
+
+/* ===== matriz modular de habilidades regionais ===== */
+.matrix-stage-box{background:linear-gradient(180deg,#15254A,#0C162E);border:1px solid rgba(63,182,240,.2);border-radius:24px;padding:clamp(20px,3.5vw,36px);margin-top:28px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.matrix-filter-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:24px}
+.matrix-lbl{font:700 11px/1 var(--tech);letter-spacing:.1em;text-transform:uppercase;color:#A8BDDF}
+.matrix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1100px){.matrix-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.matrix-grid{grid-template-columns:1fr}}
+.m-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px;color:#fff;transition:all .3s var(--ease)}
+.m-card:hover{background:rgba(255,255,255,.08);border-color:var(--hl);transform:translateY(-3px);box-shadow:0 16px 32px -12px rgba(0,0,0,.6)}
+.m-card.dimmed{opacity:.25;filter:grayscale(.8)}
+.m-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
+.m-head img{height:50px;width:auto;max-width:115px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+.m-hero-name{font:700 16px/1.1 var(--tech);letter-spacing:.04em;text-transform:uppercase;color:#fff;margin:0}
+.m-hero-sub{font-size:12px;color:#9FB0D0;display:block;margin-top:3px}
+.m-bioma-chip{display:inline-flex;align-items:center;gap:10px;padding:7px 12px;border-radius:8px;font:700 11px/1 var(--tech);letter-spacing:.06em;text-transform:uppercase;align-self:flex-start}
+.m-bioma-chip.floresta{background:rgba(62,155,53,.22);color:#7FE07A;border:1px solid rgba(62,155,53,.45)}
+.m-bioma-chip.campo{background:rgba(240,166,66,.22);color:#F5DD1F;border:1px solid rgba(240,166,66,.45)}
+.m-bioma-chip.cidade{background:rgba(180,195,215,.22);color:#E4EAF5;border:1px solid rgba(180,195,215,.45)}
+.m-bioma-chip.mar{background:rgba(63,182,240,.22);color:#3FB6F0;border:1px solid rgba(63,182,240,.45)}
+.m-bioma-chip img{width:28px !important;height:28px !important;filter:brightness(0) invert(1) !important;object-fit:contain;flex:none}
+.m-attrs{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+.m-attr-tag{display:flex;align-items:center;gap:10px;font:700 12px/1 var(--tech);letter-spacing:.04em;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.m-attr-tag img{width:30px !important;height:30px !important;filter:brightness(0) invert(1) !important;object-fit:contain;flex:none}
+.m-power{font-size:12.5px;line-height:1.45;color:#E4EAF5}
+.m-power b{display:block;font:700 11px/1.2 var(--tech);color:var(--hl);margin-bottom:4px;letter-spacing:.05em;text-transform:uppercase}
+.m-calc{font:700 11px/1.4 var(--tech);color:#3FB6F0;background:rgba(63,182,240,.12);padding:8px 12px;border-radius:8px;border:1px solid rgba(63,182,240,.25);margin-top:auto;letter-spacing:.02em}
+
+.credits{margin-top:28px;font-size:14px;color:var(--pf-ink-2);max-width:70ch}
+.credits b{color:var(--pf-ink);font-weight:600}
+
+@keyframes sweep{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes ping{0%{transform:translate(-50%,-50%) scale(.2);opacity:.9}100%{transform:translate(-50%,-50%) scale(2.4);opacity:0}}
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .flip-in,.dcard .flip-in,.kit .flip,.deck .stk,.tk img,.hq-logo,.ctr .od,.hq-pick button{transition:none!important}
+  .bd .sweep{display:none}
+  .slot[aria-pressed="true"] .ping{animation:none}
+}
+/* ===== Art Director Hero Cover for Força BR ===== */
+.fb-cover{position:relative;width:100%;height:clamp(480px,58vw,860px);background:radial-gradient(circle at 50% 40%,#15274d 0%,#080f21 100%);overflow:hidden;box-shadow:0 40px 90px -20px rgba(0,0,0,.9),inset 0 0 0 1px rgba(127,224,122,.18)}
+.fb-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 36%;filter:saturate(1.04) contrast(1.02);transition:transform 1.2s var(--ease)}
+.fb-cover:hover img{transform:scale(1.02)}
+.fb-cover::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 95% 85% at 50% 50%,transparent 35%,rgba(11,23,51,.55) 75%,rgba(11,23,51,.95) 100%),linear-gradient(180deg,rgba(11,23,51,.7) 0%,transparent 18%,transparent 80%,rgba(11,23,51,.95) 100%);z-index:1;pointer-events:none}
+.fb-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(127,224,122,.035) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(127,224,122,.035) 1px,transparent 1px) 0 0/48px 48px;pointer-events:none;z-index:2;mix-blend-mode:screen}
+
+.fb-hud-overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(16px,3.5vw,36px);pointer-events:none}
+.fb-hud-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fb-hud-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:rgba(11,23,51,.85);border:1px solid rgba(127,224,122,.45);box-shadow:0 8px 24px rgba(0,0,0,.6),0 0 16px rgba(127,224,122,.2);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font:700 11px/1 var(--tech);letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.fb-hud-pulse{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:fbPulse 1.6s infinite ease-in-out}
+@keyframes fbPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.55}}
+
+.fb-hud-nav{display:flex;gap:8px;flex-wrap:wrap;pointer-events:auto}
+.fb-hud-link{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:rgba(11,23,51,.82);border:1px solid rgba(255,255,255,.16);color:#E4EAF5;text-decoration:none;font:600 11.5px/1 var(--tech);letter-spacing:.05em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .25s var(--ease)}
+.fb-hud-link b{color:var(--hl);font-weight:800}
+.fb-hud-link:hover{background:rgba(36,83,179,.88);border-color:var(--hl);color:#fff;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.5),0 0 12px rgba(245,221,31,.3)}
+
+.fb-hud-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.fb-hud-spec-deck{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;max-width:680px;width:100%}
+.fb-hud-spec{background:rgba(11,23,51,.82);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.fb-hud-spec b{display:block;font:700 12px/1.2 var(--tech);letter-spacing:.06em;text-transform:uppercase;color:var(--hl);margin-bottom:3px}
+.fb-hud-spec span{display:block;font:500 11px/1.3 var(--pf-sans);color:#C3CFE6}
+
+.fb-hud-stamp{padding:10px 16px;border-radius:10px;background:rgba(11,23,51,.85);border:1px solid rgba(127,224,122,.35);font:700 10.5px/1.35 var(--tech);letter-spacing:.08em;text-transform:uppercase;color:#7FE07A;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);text-align:right}
+.fb-hud-stamp small{display:block;font-weight:500;color:#9FB8E8;letter-spacing:.04em;font-size:9.5px;margin-top:2px}
+
+.fb-hud-corner{position:absolute;width:24px;height:24px;border:2px solid rgba(127,224,122,.5);pointer-events:none;z-index:3}
+.fb-hud-corner.tl{top:clamp(12px,2.5vw,24px);left:clamp(12px,2.5vw,24px);border-right:0;border-bottom:0}
+.fb-hud-corner.tr{top:clamp(12px,2.5vw,24px);right:clamp(12px,2.5vw,24px);border-left:0;border-bottom:0}
+.fb-hud-corner.bl{bottom:clamp(12px,2.5vw,24px);left:clamp(12px,2.5vw,24px);border-right:0;border-top:0}
+.fb-hud-corner.br{bottom:clamp(12px,2.5vw,24px);right:clamp(12px,2.5vw,24px);border-left:0;border-top:0}
+
+@media(max-width:760px){
+  .fb-cover{height:clamp(460px,112vw,600px)}
+  .fb-cover img{object-position:46% center}
+  .fb-hud-top{flex-direction:column;align-items:flex-start;gap:8px}
+  .fb-hud-nav{display:none}
+  .fb-hud-bot{flex-direction:column;align-items:stretch;gap:8px}
+  .fb-hud-spec-deck{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:none}
+  .fb-hud-spec{padding:7px 10px}
+  .fb-hud-spec b{font-size:11px;margin-bottom:1px}
+  .fb-hud-spec span{font-size:10px;line-height:1.2}
+  .fb-hud-stamp{padding:7px 12px;font-size:9.5px;text-align:left}
+}
+@media(max-width:480px){
+  .fb-hud-badge{font-size:9.5px;padding:6px 12px}
+  .fb-hud-spec-deck{grid-template-columns:1fr 1fr}
+  .fb-hud-spec:nth-child(n+3){display:none}
+  .fb-hud-stamp small{font-size:8.5px}
+}
+</style>
+</head>
+<body data-case="forca-br">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Força BR</span></a>
+    <ul class="pf-links">
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#herois">Heróis</a></li>
+      <li><a href="#tabuleiro">Tabuleiro & Fluxo</a></li>
+      <li><a href="#matriz">Matriz Regional</a></li>
+      <li><a href="#fichas">Eventos e fichas</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 05</b> · Board game · Design gráfico</p>
+    <h1>Uma central de monitoramento do Brasil, <em>montada em papel.</em></h1>
+    <p class="lede">Projeto Força BR é um jogo de tabuleiro cooperativo em que heróis inspirados no folclore e na cultura brasileira defendem as regiões do país de vilões, desastres e crises. Fiz todo o design gráfico: cartas, tabuleiro, painel, fichas e os logos dos heróis.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Design gráfico, logos dos heróis e mapa</dd></div>
+      <div><dt>Projeto</dt><dd>Pindorama Editora · protótipo · 2020–2026</dd></div>
+      <div><dt>Entregas</dt><dd>Tabuleiro, painel, cartas e fichas</dd></div>
+      <div><dt>Ferramentas</dt><dd>Illustrator, Photoshop, InDesign <span class="pf-tools" aria-hidden="true"><i style="color:#FF9A00;border-color:#FF9A00;background:#330000">Ai</i><i style="color:#31A8FF;border-color:#31A8FF;background:#001E36">Ps</i><i style="color:#FF3366;border-color:#FF3366;background:#49021F">Id</i></span></dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover fb-cover">
+    <img src="assets/cover_hero.jpg" alt="Showcase fotográfico de alta fidelidade do jogo de tabuleiro Projeto Força BR: caixa oficial, tabuleiro com mapa de monitoramento do Brasil em radar verde neon, cartas dos heróis O.R.D.E.M., Ipupiara e Jaguaruna, painel do jogador em metal escovado e fichas acrílicas">
+    <div class="fb-hud-corner tl" aria-hidden="true"></div>
+    <div class="fb-hud-corner tr" aria-hidden="true"></div>
+    <div class="fb-hud-corner bl" aria-hidden="true"></div>
+    <div class="fb-hud-corner br" aria-hidden="true"></div>
+    <div class="fb-hud-overlay">
+      <div class="fb-hud-top">
+        <div class="fb-hud-badge">
+          <span class="fb-hud-pulse" aria-hidden="true"></span>
+          <span>Central de Monitoramento Brasil · Protótipo Ativo</span>
+        </div>
+        <nav class="fb-hud-nav" aria-label="Acesso rápido aos componentes">
+          <a class="fb-hud-link" href="#console"><b>01</b> Console</a>
+          <a class="fb-hud-link" href="#herois"><b>02</b> Heróis</a>
+          <a class="fb-hud-link" href="#tabuleiro"><b>03</b> Tabuleiro</a>
+          <a class="fb-hud-link" href="#fichas"><b>04</b> Fichas</a>
+        </nav>
+      </div>
+      <div class="fb-hud-bot">
+        <div class="fb-hud-spec-deck">
+          <div class="fb-hud-spec">
+            <b>Tabuleiro Radar</b>
+            <span>60×60 cm em 8 setores táticos</span>
+          </div>
+          <div class="fb-hud-spec">
+            <b>162 Cartas</b>
+            <span>Heróis, vilões, missões e eventos</span>
+          </div>
+          <div class="fb-hud-spec">
+            <b>Console Tático</b>
+            <span>Painel com moldura em metal escovado</span>
+          </div>
+          <div class="fb-hud-spec">
+            <b>8 Super-Heróis</b>
+            <span>Identidade visual e logos autorais</span>
+          </div>
+        </div>
+        <div class="fb-hud-stamp">
+          DIREÇÃO DE ARTE &amp; DESIGN GRÁFICO
+          <small>Pindorama Editora · Protótipo Impresso</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O problema</p>
+      <h2>Oito regiões, oito heróis e um país inteiro para vigiar na mesa.</h2>
+      <p class="lede">No jogo, os jogadores formam uma força-tarefa de super-heróis brasileiros. A cada rodada, regiões do mapa entram em alerta, missões aparecem, eventos mudam o país e chefes como Queimado e Dom Ferdinando avançam. Os heróis vêm do folclore e das culturas indígena e afro-brasileira: Curupi, Ipupiara, Jequitibá, Muzenza, Amanari.</p>
+    </div>
+    <p class="rv" style="margin-top:20px">São muitas peças de tipos diferentes: cartas de herói e de chefe, missões, eventos, regiões, fichas de vitalidade e recursos, um contador, além do tabuleiro e do painel. O desafio de design era fazer tudo isso ser lido rápido na mesa e parecer parte do mesmo mundo.</p>
+    <div class="callout rv"><b>Brief:</b> transformar as regras e as ilustrações do Projeto Força BR em um jogo de mesa completo (tabuleiro, painel, cartas e fichas) em arquivos prontos para imprimir o protótipo.</div>
+  </div>
+</section>
+
+<!-- 01 · console -->
+<section id="console" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Linguagem</p>
+      <h2>Toda peça parece equipamento da mesma central.</h2>
+      <p class="lede">O tabuleiro se chama “Brasil · monitoramento” e as cartas de região são “regiões monitoradas”. Levei essa ideia para todas as peças: moldura de metal escovado, telas azuis com grade, encaixes hexagonais e luzes verdes, como partes de um único console. A cor diz de quem é a peça.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-metal">
+        <div class="tag-row"><span class="pill y">Toque para virar</span><span class="pill">Real</span></div>
+        <div class="kit" id="kit">
+          <button class="flip" type="button" aria-pressed="false" aria-label="Carta de herói: verso Herói Aliado; toque para ver a frente de O.R.D.E.M.">
+            <span class="flip-in" style="--ar:3/4"><img src="assets/back-heroi.webp" alt="" loading="lazy"><img class="fr" src="assets/h-ordem-f.webp" alt="" loading="lazy"></span>
+            <span class="lb"><b><i style="--c:#3E9B35"></i>Heróis</b>verde, fundo de quadrinho</span>
+          </button>
+          <button class="flip" type="button" aria-pressed="false" aria-label="Carta de missão: verso azul; toque para ver a frente Asseclas, Boitatá">
+            <span class="flip-in" style="--ar:480/633"><img src="assets/back-missoes.webp" alt="" loading="lazy"><img class="fr" src="assets/m-asseclas.webp" alt="" loading="lazy"></span>
+            <span class="lb"><b><i style="--c:#2E56B0"></i>Missões</b>azul, o mapa em radar</span>
+          </button>
+          <button class="flip" type="button" aria-pressed="false" aria-label="Carta de região monitorada: verso; toque para ver a frente Norte, região 1">
+            <span class="flip-in" style="--ar:44/67;--w:.875"><img src="assets/rm-0.webp" alt="" loading="lazy"><img class="fr" src="assets/rm-1.webp" alt="" loading="lazy"></span>
+            <span class="lb"><b><i style="--c:#7FE07A"></i>Regiões</b>azul com a silhueta em verde</span>
+          </button>
+          <button class="flip" type="button" aria-pressed="false" aria-label="Carta de evento: verso laranja; toque para ver a frente Trabalho em Equipe">
+            <span class="flip-in" style="--ar:640/458;--arn:1.4"><img src="assets/ev-verde-0.webp" alt="" loading="lazy"><img class="fr" src="assets/ev-verde-1.webp" alt="" loading="lazy"></span>
+            <span class="lb"><b><i style="--c:#F0A642"></i>Eventos</b>laranja, uma explosão</span>
+          </button>
+        </div>
+        <p class="kit-hint">Os vilões usam a mesma moldura em vermelho (seção 02).</p>
+      </div>
+      <figcaption><b>Os versos dos montes.</b> Arquivos finais de impressão. Ao virar, a frente de cada tipo; a imagem da carta de evento aparece desfocada (veja a seção 04).</figcaption>
+    </figure>
+    <figure class="rv">
+      <div class="pf-stage st-hud">
+        <div class="tag-row"><span class="pill">Real</span></div>
+        <div class="boards">
+          <div><img src="assets/pb-heroi.webp" alt="Cartão do jogador: moldura de metal com trilha de +1 e −1 no alto, cinco encaixes de estrela à esquerda, encaixe de vitalidade e duas telas para a carta do herói" loading="lazy"><span class="bl">Cartão do jogador</span></div>
+          <div class="pb-v"><img src="assets/pb-vilao.webp" alt="Cartão do vilão: a mesma estrutura em versão vertical, com tela vermelha e amarela" loading="lazy"><span class="bl">Cartão do vilão</span></div>
+        </div>
+      </div>
+      <figcaption><b>Cartões do jogador e do vilão.</b> Arquivos finais (2021). A carta fica na tela; fichas de vitalidade, +1, −1 e estrelas encaixam nos espaços em volta.</figcaption>
+    </figure>
+    <div class="legend rv">
+      <div class="pf-card"><span class="tag">Cor por função</span>
+        <div class="sw"><i style="--c:#3E9B35" data-n="Herói"></i><i style="--c:#B32A22" data-n="Vilão"></i><i style="--c:#2E56B0" data-n="Região"></i><i style="--c:#F0A642" data-n="Evento"></i></div>
+        <p>Metal e grade são de todos; a cor separa os montes na mesa antes de qualquer texto.</p></div>
+      <div class="pf-card"><span class="tag">Ícones</span>
+        <div class="ics">
+          <span><i style="--m:url(assets/ic-forca.png)"></i>Força</span>
+          <span><i style="--m:url(assets/ic-habilidade.png)"></i>Habilidade</span>
+          <span><i style="--m:url(assets/ic-energia.png)"></i>Energia</span>
+          <span><i style="--m:url(assets/ic-inteligencia.png)"></i>Intelig.</span>
+          <span><i style="--m:url(assets/ic-vitalidade.png)"></i>Vitalidade</span>
+          <span><i style="--m:url(assets/ic-recursos.png)"></i>Recursos</span>
+          <span><i style="--m:url(assets/ic-cidade.png)"></i>Cidade</span>
+          <span><i style="--m:url(assets/ic-campo.png)"></i>Campo</span>
+          <span><i style="--m:url(assets/ic-floresta.png)"></i>Floresta</span>
+          <span><i style="--m:url(assets/ic-mar.png)"></i>Mar</span>
+        </div>
+        <p>Atributos em contorno, terrenos em disco cheio. Os mesmos ícones entram no meio das frases das cartas.</p></div>
+      <div class="pf-card"><span class="tag">Tipografia</span>
+        <p class="type-spec">Downlink</p>
+        <p>Nos arquivos, uma fonte técnica larga para títulos, números e regras. Nesta página, a Orbitron faz esse papel nos palcos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · heroes -->
+<section id="herois" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Heróis e vilões</p>
+      <h2>Oito heróis no mesmo esqueleto, cada um com um nome desenhado para ele.</h2>
+      <p class="lede">A frente da carta é ficha de jogo: quatro atributos em hexágonos à esquerda, vitalidade e recursos à direita, cinco poderes numa tela de terminal. O verso é ficha de personagem, com a ilustração inteira, a identidade secreta e o logo. Cada logo leva a textura do poder: bolhas para a criatura das águas, garras para a onça, casca de árvore para Jequitibá.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-heroes" id="hqStage">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Real</span></div>
+        <div class="hq" id="hq">
+          <button class="hq-card" id="hqCard" type="button" aria-pressed="false" aria-label="Virar a carta">
+            <span class="flip-in"><img id="hqF" src="assets/h-ordem-f.webp" alt="Frente da carta de O.R.D.E.M."><img class="fr" id="hqB" src="assets/h-ordem-b.webp" alt="Verso da carta de O.R.D.E.M."></span>
+          </button>
+          <div class="hq-info" data-live>
+            <img class="hq-logo" id="hqLogo" src="assets/logo-ordem.webp" alt="Logo O.R.D.E.M.">
+            <p class="hq-d" id="hqD">Otimizador Robótico de Durabilidade Energética Momentânea.</p>
+            <p class="hq-o" id="hqO"><b>Origem dos poderes:</b> humano alterado, radiação</p>
+            <div class="hq-pw" id="hqPw"></div>
+            <button class="hq-flip" id="hqFlip" type="button">↻ Ver o verso</button>
+          </div>
+        </div>
+        <div class="hq-pick" id="hqPick" role="group" aria-label="Escolha um herói"></div>
+      </div>
+      <figcaption><b>Cartas de herói, frente e verso.</b> Arquivos finais. Ilustrações dos personagens de George Wolf; logos, molduras, ícones e diagramação meus. Os textos são das cartas.</figcaption>
+    </figure>
+    <figure class="rv">
+      <div class="pf-stage st-villains">
+        <div class="tag-row"><span class="pill">Real</span><span class="pill">Em andamento</span></div>
+        <div class="vl" tabindex="0" aria-label="Cartas dos chefes, role para o lado">
+          <div class="vc"><img src="assets/v-queimado-f.webp" alt="Frente da carta de Queimado, com atributos e poderes em moldura vermelha" loading="lazy"><span class="vn">Queimado<span>frente</span></span></div>
+          <div class="vc"><img src="assets/v-queimado.webp" alt="Verso da carta de Queimado" loading="lazy"><span class="vn">Queimado<span>chefe</span></span></div>
+          <div class="vc"><img src="assets/v-aritana.webp" alt="Verso da carta de Aritana" loading="lazy"><span class="vn">Aritana<span>chefe</span></span></div>
+          <div class="vc"><img src="assets/v-bugio.webp" alt="Verso da carta de Bugio" loading="lazy"><span class="vn">Bugio<span>chefe</span></span></div>
+          <div class="vc"><img src="assets/v-kibungo.webp" alt="Verso da carta de Kibungo" loading="lazy"><span class="vn">Kibungo<span>chefe</span></span></div>
+          <div class="vc"><img src="assets/v-lucialobo.webp" alt="Verso da carta de Lúcia Lobo" loading="lazy"><span class="vn">Lúcia Lobo<span>chefe</span></span></div>
+          <div class="vc"><img src="assets/v-pedroso.webp" alt="Verso da carta de Pedroso" loading="lazy"><span class="vn">Pedroso<span>chefe</span></span></div>
+        </div>
+      </div>
+      <figcaption><b>Os chefes, no mesmo esqueleto em vermelho.</b> Arquivos de trabalho de 2021: os versos ainda repetem um texto de ficha provisório.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 03 · board (signature band) -->
+<section id="tabuleiro" class="pf-sec fb-band">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Tabuleiro</p>
+      <h2>O mapa do Brasil virou tela de radar.</h2>
+      <p class="lede">Fiz o mapa como uma imagem de satélite e dividi o país em cinco regiões e três zonas do Atlântico, cada uma com um encaixe numerado para a carta de região. A moldura verde, a ficha técnica do Brasil e o globo no canto completam a tela de monitoramento.</p>
+    </div>
+    <figure class="rv">
+      <div class="bd-grid" id="bdStage">
+        <div class="bd" id="bd">
+          <img src="assets/board.jpg" alt="Tabuleiro de 65 × 65 cm: mapa do Brasil em estilo satélite, dividido em regiões com encaixes numerados de 1 a 8, ficha técnica do Brasil e um globo no canto" width="1600" height="1600">
+          <i class="sweep" aria-hidden="true"></i>
+          <div id="bdSlots" role="group" aria-label="Regiões do tabuleiro"></div>
+        </div>
+        <div class="bd-side" data-live>
+          <div class="bd-cards" id="bdCards">
+            <div class="c1"><span><span class="flip-in"><img id="bdM" src="assets/rm-1.webp" alt="Carta de região monitorada Norte, 1"><img class="fr" src="assets/rm-0.webp" alt=""></span></span><small>Região monitorada</small></div>
+            <div class="c2"><span><span class="flip-in"><img id="bdF" src="assets/rf-1.webp" alt="Carta de região Ybirá Guaçu"><img class="fr" id="bdV" src="assets/rv-1.webp" alt=""></span></span><small>Carta de região</small></div>
+          </div>
+          <p class="bd-name" id="bdName"><i>1</i>Norte</p>
+          <p class="bd-loc" id="bdLoc">Ybirá Guaçu · Tocantins</p>
+          <div class="bd-fx" id="bdFx"></div>
+          <p class="bd-q" id="bdQ"></p>
+        </div>
+      </div>
+      <figcaption><b>Interativo.</b> Toque num encaixe. Tabuleiro final (65 × 65 cm, 2021) e cartas de região reais; o radar e o destaque são animação desta página. Os efeitos e citações vêm das cartas.</figcaption>
+    </figure>
+    <figure class="rv">
+      <div class="painel"><img src="assets/painel.jpg" alt="Painel de 65 × 25 cm em metal escovado: espaços para os montes de eventos e missões, cinco encaixes numerados e um triplo para 6, 7 e 8, a equipe de apoio Morubixaba, Apoena, Urutu e Baraquara, a Equipe Guaranis e o logo Força BR" loading="lazy" width="2000" height="769"></div>
+      <figcaption><b>Painel de 65 × 25 cm.</b> Arquivo final de impressão. Fica ao lado do mapa: montes de eventos e missões, um encaixe por região ativa e os retratos da equipe de apoio.</figcaption>
+    </figure>
+
+    <!-- Fluxo Cognitivo do Turno -->
+    <div class="turn-flow-sec rv" id="fluxo-turno" style="margin-top:clamp(40px,6vw,72px)">
+      <div class="pf-head">
+        <p class="eyebrow"><b>Engenharia de Decisão</b> · Como a partida roda</p>
+        <h2>Fluxo cognitivo: da leitura do radar à alocação na mesa.</h2>
+        <p class="lede">Um jogo cooperativo denso não pode travar em paralisia de análise. A disposição física das peças na mesa conduz o olhar do jogador em uma rota circular de quatro estações claras a cada turno.</p>
+      </div>
+
+      <!-- Pipeline Conectada do Turno (Visão Geral de Decisão) -->
+      <div class="flow-pipeline-bar" role="navigation" aria-label="Pipeline visual contínua do turno">
+        <div class="flow-pipe-node active" data-flow-step="1" title="Passo 1: Radar Territorial">
+          <span class="flow-pipe-num">01</span>
+          <div class="flow-pipe-title">
+            <span data-i18n="turn.step1_title">Radar Territorial</span>
+            <small data-i18n="turn.step1_sub">Leitura da Crise</small>
+          </div>
+        </div>
+        <span class="flow-pipe-arrow" aria-hidden="true">➔</span>
+        <div class="flow-pipe-node" data-flow-step="2" title="Passo 2: Ficha do Herói">
+          <span class="flow-pipe-num">02</span>
+          <div class="flow-pipe-title">
+            <span data-i18n="turn.step2_title">Ficha do Herói</span>
+            <small data-i18n="turn.step2_sub">Checagem de Recursos</small>
+          </div>
+        </div>
+        <span class="flow-pipe-arrow" aria-hidden="true">➔</span>
+        <div class="flow-pipe-node" data-flow-step="3" title="Passo 3: Carta & Bioma">
+          <span class="flow-pipe-num">03</span>
+          <div class="flow-pipe-title">
+            <span data-i18n="turn.step3_title">Carta & Bioma</span>
+            <small data-i18n="turn.step3_sub">Acionamento Tático</small>
+          </div>
+        </div>
+        <span class="flow-pipe-arrow" aria-hidden="true">➔</span>
+        <div class="flow-pipe-node" data-flow-step="4" title="Passo 4: Mesa & Resolução">
+          <span class="flow-pipe-num">04</span>
+          <div class="flow-pipe-title">
+            <span data-i18n="turn.step4_title">Mesa & Resolução</span>
+            <small data-i18n="turn.step4_sub">Gasto e Contenção</small>
+          </div>
+        </div>
+        <span class="flow-pipe-arrow" aria-hidden="true">↻</span>
+        <div class="flow-pipe-loop" title="Ciclo contínuo da rodada">
+          <span data-i18n="turn.loop">Ciclo Contínuo ↻</span>
+        </div>
+      </div>
+
+      <div class="flow-interactive-box" id="flowBox">
+        <div class="flow-nav-steps" role="tablist" aria-label="Passos do turno">
+          <button type="button" class="f-step active" data-step="1" aria-selected="true">
+            <span class="f-num">01</span>
+            <div class="f-meta">
+              <b>Radar Territorial</b>
+              <small>Leitura da Crise</small>
+            </div>
+          </button>
+          <button type="button" class="f-step" data-step="2" aria-selected="false">
+            <span class="f-num">02</span>
+            <div class="f-meta">
+              <b>Ficha do Herói</b>
+              <small>Checagem de Recursos</small>
+            </div>
+          </button>
+          <button type="button" class="f-step" data-step="3" aria-selected="false">
+            <span class="f-num">03</span>
+            <div class="f-meta">
+              <b>Carta & Bioma</b>
+              <small>Acionamento Tático</small>
+            </div>
+          </button>
+          <button type="button" class="f-step" data-step="4" aria-selected="false">
+            <span class="f-num">04</span>
+            <div class="f-meta">
+              <b>Mesa & Resolução</b>
+              <small>Gasto e Contenção</small>
+            </div>
+          </button>
+        </div>
+
+        <div class="flow-display">
+          <div class="flow-visual">
+            <div class="flow-pane active" id="fPane1">
+              <div class="flow-stage-card">
+                <span class="flow-tag">Fase 1 · Detecção</span>
+                <div class="flow-img-wrap"><img src="assets/board.jpg" alt="Radar do mapa do Brasil com alerta em Ybirá Guaçu"><div class="flow-radar-ping"></div></div>
+                <div class="flow-card-desc">
+                  <b>1. O Olho no Radar (Varredura de Ameaça)</b>
+                  <p>A rodada começa no tabuleiro central: um novo marcador de crise é revelado pela carta de evento (ex: Região 1 · Norte / Floresta). O jogador localiza a ameaça e identifica o bioma territorial ativo.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-pane" id="fPane2" style="display:none">
+              <div class="flow-stage-card">
+                <span class="flow-tag">Fase 2 · Avaliação</span>
+                <div class="flow-img-wrap"><img src="assets/pb-heroi.webp" alt="Cartão do jogador com trilha de vitalidade e recursos"></div>
+                <div class="flow-card-desc">
+                  <b>2. Consulta à Ficha do Herói (Inventário Mental)</b>
+                  <p>O jogador baixa o olhar para seu Cartão de Jogador individual: confere se seus atributos (Força, Habilidade, Energia, Inteligência) cobrem a exigência e verifica a reserva disponível de Vitalidade e Recursos.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-pane" id="fPane3" style="display:none">
+              <div class="flow-stage-card">
+                <span class="flow-tag">Fase 3 · Disparo</span>
+                <div class="flow-img-wrap"><img src="assets/h-curupi-f.webp" alt="Carta de Curupi com ícone de Floresta e atributos"></div>
+                <div class="flow-card-desc">
+                  <b>3. Acionamento da Carta de Ação (Sinergia de Bioma)</b>
+                  <p>O jogador joga a carta compatível. Se o herói possui sinergia com o bioma da crise (ex: Curupi na Floresta Amazônica), ele ganha bônus territorial (+1 ou +2), dispensando dados aleatórios.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-pane" id="fPane4" style="display:none">
+              <div class="flow-stage-card">
+                <span class="flow-tag">Fase 4 · Impacto Físico</span>
+                <div class="flow-img-wrap" style="display:flex;align-items:center;justify-content:center;gap:16px;background:#0d182b;padding:20px">
+                  <img src="assets/tk-recurso.webp" style="width:84px;height:auto" alt="Ficha de recurso ativo">
+                  <span style="font-size:32px;color:var(--hl);font-family:var(--tech)">➔</span>
+                  <img src="assets/tk-recurso-gasto.webp" style="width:84px;height:auto" alt="Ficha de recurso gasto">
+                </div>
+                <div class="flow-card-desc">
+                  <b>4. Movimento de Recursos & Contenção na Mesa</b>
+                  <p>Ação resolvida fisicamente: a ficha de recurso é virada para o lado gasto, a miniatura de papel avança no mapa e o marcador de crise da região é retirado do tabuleiro, devolvendo a estabilidade ao país.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · regional matrix -->
+<section id="matriz" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>04</b> · Matriz modular de habilidades</p>
+      <h2>Biomas, atributos e heróis: uma equação sem sorte cega.</h2>
+      <p class="lede">As habilidades não são poderes arbitrários. Cada ação no jogo decorre do cruzamento de três eixos: o <b>Bioma territorial</b> onde o combate ocorre, o <b>Atributo específico</b> exigido pelo desafio e a <b>Especialização cultural/regional</b> do herói.</p>
+    </div>
+
+    <div class="matrix-stage-box rv">
+      <div class="matrix-filter-bar">
+        <span class="matrix-lbl">Filtrar por Bioma Predileto:</span>
+        <div class="seg" role="group" aria-label="Filtro de Bioma" id="biomaFilters">
+          <button type="button" aria-pressed="true" data-b="todos">Todos os Biomas (8)</button>
+          <button type="button" aria-pressed="false" data-b="floresta">Floresta</button>
+          <button type="button" aria-pressed="false" data-b="campo">Campo</button>
+          <button type="button" aria-pressed="false" data-b="cidade">Cidade</button>
+          <button type="button" aria-pressed="false" data-b="mar">Mar / Costa</button>
+        </div>
+      </div>
+
+      <div class="matrix-grid" id="matrixGrid">
+        <!-- 1. Curupi -->
+        <article class="m-card" data-bioma="floresta">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Curupi</h3>
+              <span class="m-hero-sub">Mítico da Natureza</span>
+            </div>
+            <img src="assets/logo-curupi.webp" alt="Logo Curupi">
+          </div>
+          <span class="m-bioma-chip floresta"><img src="assets/ic-floresta.png" alt=""> Bioma Floresta</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-forca.png" alt=""> Força 4</span>
+            <span class="m-attr-tag"><img src="assets/ic-vitalidade.png" alt=""> Vitalidade 5</span>
+          </div>
+          <div class="m-power">
+            <b>Dependência de Terreno</b>
+            Bônus de +2 em combate e evasão em áreas florestais densas (Norte e Centro-Oeste).
+          </div>
+          <div class="m-calc">[Floresta] + [Força 4] + [1 Recurso] = Evasão Crítica</div>
+        </article>
+
+        <!-- 2. Ipupiara -->
+        <article class="m-card" data-bioma="mar">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Ipupiara</h3>
+              <span class="m-hero-sub">Guardião Anfíbio</span>
+            </div>
+            <img src="assets/logo-ipupiara.webp" alt="Logo Ipupiara">
+          </div>
+          <span class="m-bioma-chip mar"><img src="assets/ic-mar.png" alt=""> Bioma Mar / Costa</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-energia.png" alt=""> Energia 5</span>
+            <span class="m-attr-tag"><img src="assets/ic-habilidade.png" alt=""> Habilidade 4</span>
+          </div>
+          <div class="m-power">
+            <b>Alterar Região & Natação</b>
+            Converte bacias hidrográficas em vias expressas, ignorando bloqueios terrestres.
+          </div>
+          <div class="m-calc">[Mar / Bacia] + [Energia 5] = Deslocamento Costeiro</div>
+        </article>
+
+        <!-- 3. Jaguaruna -->
+        <article class="m-card" data-bioma="campo">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Jaguaruna</h3>
+              <span class="m-hero-sub">Iawarauna · Onça Negra</span>
+            </div>
+            <img src="assets/logo-jaguaruna.webp" alt="Logo Jaguaruna">
+          </div>
+          <span class="m-bioma-chip campo"><img src="assets/ic-campo.png" alt=""> Bioma Campo / Cerrado</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-habilidade.png" alt=""> Habilidade 5</span>
+            <span class="m-attr-tag"><img src="assets/ic-forca.png" alt=""> Força 4</span>
+          </div>
+          <div class="m-power">
+            <b>Terreno Predileto</b>
+            Investida de longo alcance nos descampados das savanas brasileiras com dano contínuo.
+          </div>
+          <div class="m-calc">[Campo] + [Habilidade 5] + [1 Recurso] = Dano sem Revide</div>
+        </article>
+
+        <!-- 4. Jequitibá -->
+        <article class="m-card" data-bioma="floresta">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Jequitibá</h3>
+              <span class="m-hero-sub">Titã Vegetal</span>
+            </div>
+            <img src="assets/logo-jequitiba.webp" alt="Logo Jequitibá">
+          </div>
+          <span class="m-bioma-chip floresta"><img src="assets/ic-floresta.png" alt=""> Bioma Floresta</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-vitalidade.png" alt=""> Vitalidade 6</span>
+            <span class="m-attr-tag"><img src="assets/ic-forca.png" alt=""> Força 5</span>
+          </div>
+          <div class="m-power">
+            <b>Resiliência & Enraizamento</b>
+            Absorve crises ecológicas em área, evitando que desastres transbordem para estados vizinhos.
+          </div>
+          <div class="m-calc">[Floresta] + [Vitalidade 6] = Blindagem Continental</div>
+        </article>
+
+        <!-- 5. O.R.D.E.M. -->
+        <article class="m-card" data-bioma="cidade">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">O.R.D.E.M.</h3>
+              <span class="m-hero-sub">Robótica Militar</span>
+            </div>
+            <img src="assets/logo-ordem.webp" alt="Logo O.R.D.E.M.">
+          </div>
+          <span class="m-bioma-chip cidade"><img src="assets/ic-cidade.png" alt=""> Bioma Cidade / Metrópole</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-inteligencia.png" alt=""> Inteligência 5</span>
+            <span class="m-attr-tag"><img src="assets/ic-energia.png" alt=""> Energia 4</span>
+          </div>
+          <div class="m-power">
+            <b>Drenar Energia & Voar</b>
+            Intervém em polos industriais e capitais, neutralizando panes cibernéticas em segundos.
+          </div>
+          <div class="m-calc">[Cidade] + [Inteligência 5] + [1 Energia] = Escudo Urbano</div>
+        </article>
+
+        <!-- 6. Muzenza -->
+        <article class="m-card" data-bioma="cidade">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Muzenza</h3>
+              <span class="m-hero-sub">Guerreiro de Ogum</span>
+            </div>
+            <img src="assets/logo-muzenza.webp" alt="Logo Muzenza">
+          </div>
+          <span class="m-bioma-chip cidade"><img src="assets/ic-cidade.png" alt=""> Bioma Cidade / Litoral</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-forca.png" alt=""> Força 4</span>
+            <span class="m-attr-tag"><img src="assets/ic-energia.png" alt=""> Energia 4</span>
+          </div>
+          <div class="m-power">
+            <b>Motivação Territorial</b>
+            Eleva a iniciativa de todos os heróis aliados presentes na mesma zona metropolitana.
+          </div>
+          <div class="m-calc">[Cidade] + [Força 4] + [1 Recurso] = +2 Iniciativa Coletiva</div>
+        </article>
+
+        <!-- 7. Amanari -->
+        <article class="m-card" data-bioma="campo">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">Amanari</h3>
+              <span class="m-hero-sub">Pajé das Tempestades</span>
+            </div>
+            <img src="assets/logo-amanari.webp" alt="Logo Amanari">
+          </div>
+          <span class="m-bioma-chip campo"><img src="assets/ic-campo.png" alt=""> Bioma Campo / Céu</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-energia.png" alt=""> Energia 5</span>
+            <span class="m-attr-tag"><img src="assets/ic-inteligencia.png" alt=""> Inteligência 4</span>
+          </div>
+          <div class="m-power">
+            <b>Barreira Natural & Chuva</b>
+            Invoca chuvas torrenciais para conter queimadas de Cerrado e restaurar recursos vitais.
+          </div>
+          <div class="m-calc">[Campo] + [Energia 5] = Dissipação de Queimadas</div>
+        </article>
+
+        <!-- 8. W.R.A.I.T.H. -->
+        <article class="m-card" data-bioma="cidade">
+          <div class="m-head">
+            <div>
+              <h3 class="m-hero-name">W.R.A.I.T.H.</h3>
+              <span class="m-hero-sub">Agente Tático Global</span>
+            </div>
+            <img src="assets/logo-wraith.webp" alt="Logo W.R.A.I.T.H.">
+          </div>
+          <span class="m-bioma-chip cidade"><img src="assets/ic-cidade.png" alt=""> Bioma Cidade / Rede</span>
+          <div class="m-attrs">
+            <span class="m-attr-tag"><img src="assets/ic-inteligencia.png" alt=""> Inteligência 5</span>
+            <span class="m-attr-tag"><img src="assets/ic-habilidade.png" alt=""> Habilidade 4</span>
+          </div>
+          <div class="m-power">
+            <b>Infiltração & Sabotagem</b>
+            Localiza e desmantela planos de vilões nos centros financeiros antes do alarme soar.
+          </div>
+          <div class="m-calc">[Cidade] + [Inteligência 5] + [1 Recurso] = Sabotagem Furtiva</div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · events + tokens -->
+<section id="fichas" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>05</b> · Eventos e fichas</p>
+      <h2>Cor e forma dizem o que a peça faz antes do texto.</h2>
+      <p class="lede">Os 28 eventos têm o mesmo verso, mas três molduras: cinza quando o país muda (enchente, greve, congestionamento), verde quando ajuda e vermelha quando atrapalha. As fichas seguem a mesma lógica com formas: triângulo para cima soma, para baixo subtrai, o coração é vitalidade e o cifrão é recurso.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-metal" id="evStage">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Real</span></div>
+        <div class="ev">
+          <div class="decks">
+            <button class="deck" type="button" data-d="branca" style="--c:#C9CED6"><span class="stk"><img src="assets/ev-branca-0.webp" alt=""></span><span class="dl"><i></i>Cinza<small>o país muda · 10</small></span></button>
+            <button class="deck" type="button" data-d="verde" style="--c:#4FB548"><span class="stk"><img src="assets/ev-verde-0.webp" alt=""></span><span class="dl"><i></i>Verde<small>a favor · 9</small></span></button>
+            <button class="deck" type="button" data-d="vermelha" style="--c:#E0453B"><span class="stk"><img src="assets/ev-vermelha-0.webp" alt=""></span><span class="dl"><i></i>Vermelho<small>contra · 9</small></span></button>
+          </div>
+          <div class="drawn">
+            <div class="dcard" id="dCard"><span class="flip-in"><img id="dBack" src="assets/ev-verde-0.webp" alt=""><img class="fr" id="dFace" src="assets/ev-verde-1.webp" alt="Carta de evento Trabalho em Equipe"></span></div>
+            <div class="dinfo" data-live>
+              <span class="dk" id="dDeck" style="--k:#7FE07A">Evento verde · a favor</span>
+              <b id="dName">Trabalho em Equipe</b>
+              <span class="ef" id="dEff">Heróis na mesma Região podem usar os Poderes do outro como se fossem seus.</span>
+              <span class="qt" id="dQ">“Juntos somos fortes!”</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Interativo.</b> Compre de qualquer monte. Cartas finais de impressão; as imagens dentro delas são de terceiros e aparecem desfocadas aqui. O tratamento em retícula, que aproxima fotos e quadrinhos, continua visível nas cores.</figcaption>
+    </figure>
+    <figure class="rv">
+      <div class="pf-stage st-paper">
+        <div class="tag-row"><span class="pill">Real</span></div>
+        <div class="tks">
+          <div class="tk"><div class="ims"><img src="assets/tk-vit-9.webp" alt="" loading="lazy"><img src="assets/tk-vit-3.webp" alt="" loading="lazy"></div><b>Vitalidade</b><span>quadrado com coração, de 1 a 9</span></div>
+          <div class="tk"><div class="ims"><img src="assets/tk-mais1.webp" alt="" loading="lazy"><img src="assets/tk-menos1.webp" alt="" loading="lazy"></div><b>+1 e −1</b><span>triângulo para cima e para baixo</span></div>
+          <div class="tk"><div class="ims"><img src="assets/tk-recurso.webp" alt="" loading="lazy"><img src="assets/tk-recurso-gasto.webp" alt="" loading="lazy"></div><b>Recurso</b><span>cifrão; cinza quando gasto</span></div>
+          <div class="tk"><div class="ims"><img src="assets/tk-estrela-verde.webp" alt="" loading="lazy"><img src="assets/tk-estrela-vermelha.webp" alt="" loading="lazy"></div><b>Estrelas</b><span>verde e vermelha</span></div>
+          <div class="tk"><div class="ims"><img src="assets/tk-iniciativa.webp" alt="" loading="lazy"></div><b>Iniciativa</b><span>a estrela da marca</span></div>
+          <div class="tk wide"><div class="ims"><img src="assets/tk-cidade.webp" alt="" loading="lazy" style="height:44px"><img src="assets/tk-campo.webp" alt="" loading="lazy" style="height:44px"><img src="assets/tk-floresta.webp" alt="" loading="lazy" style="height:44px"><img src="assets/tk-mar.webp" alt="" loading="lazy" style="height:44px"></div><b>Terrenos</b><span>cidade, campo, floresta e mar</span></div>
+        </div>
+        <div class="ctr-wrap" id="ctrStage">
+          <div class="ctr" aria-hidden="true">
+            <img src="assets/counter.webp" alt="" loading="lazy" width="1000" height="472">
+            <i class="rv-l"></i><i class="rv-r"></i>
+            <span class="win l"><span class="od" id="odL"></span></span>
+            <span class="win r"><span class="od" id="odR"></span></span>
+          </div>
+          <div class="ctr-ui">
+            <span class="ctr-t">Contador de recursos</span>
+            <div class="val" aria-live="polite"><span id="ctrVal">12</span><small>recursos</small></div>
+            <div class="ctr-btns">
+              <button type="button" id="ctrMinus" aria-label="Gastar 1 recurso">−1</button>
+              <button type="button" class="main" id="ctrPlus" aria-label="Ganhar 1 recurso">+1</button>
+              <button type="button" id="ctrPlus5" aria-label="Ganhar 5 recursos">+5</button>
+            </div>
+            <p style="font-size:14px">Placa de metal com duas janelas: dezena à esquerda, unidade à direita.</p>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Fichas e contador.</b> Fichas exportadas dos arquivos de impressão. O contador é uma <b>recriação em código</b>: na peça, dois discos numerados giram atrás das janelas da placa.</figcaption>
+    </figure>
+    <div class="callout rv" style="margin-top:40px"><b>Créditos.</b> Projeto Força BR, da Pindorama Editora; criação e game design de Chris Pereira. Ilustrações dos personagens de George Wolf. Design gráfico das peças, logos dos heróis e mapa: Erik Placido.</div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Jogo, marca ou interface: se tem muita peça para caber num sistema só, me chama.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Projeto Força BR · Pindorama Editora</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var sleep = function(ms){return new Promise(function(r){setTimeout(r,RM?0:ms)})};
+
+  /* reveal + pause loops off-screen + run-once hooks (same pattern as the other cases) */
+  var once = new WeakMap();
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+    var fn = once.get(el); if(fn && e.isIntersecting){once.delete(el);fn()}
+  })},{threshold:.15}) : null;
+  function watch(el,fn){ if(fn) once.set(el,fn); if(io) io.observe(el); else { el.classList.add('in'); if(fn) fn() } }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(function(el){watch(el)});
+  $$('#hqStage,#bdStage,#evStage').forEach(function(el){ el.dataset.loop=''; if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true}) });
+    (function loop(){ t = setTimeout(async function(){ if(!on) return; if(visible(root) && !document.hidden) await step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+  function arrows(box, btns, cols){
+    box.addEventListener('keydown',function(e){
+      var i = btns.indexOf(document.activeElement); if(i<0) return;
+      var d = {ArrowRight:1,ArrowLeft:-1,ArrowDown:cols,ArrowUp:-cols}[e.key]; if(!d) return;
+      e.preventDefault(); btns[(i+d+btns.length)%btns.length].focus();
+    });
+  }
+
+  /* ===== 01 deck backs ===== */
+  $$('#kit .flip').forEach(function(b){ b.addEventListener('click',function(){ b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true'?'false':'true') }) });
+
+  /* ===== 02 heroes (texts from the cards) ===== */
+  var HEROES = [
+    {id:'ordem',     n:'O.R.D.E.M.', k:'#C9D23A', d:'Otimizador Robótico de Durabilidade Energética Momentânea.', o:'humano alterado, radiação', p:['Voar','Absorção','Potencializar','Drenar Energia','Explosão Energética']},
+    {id:'ipupiara',  n:'Ipupiara',   k:'#3FA9DE', d:'Criatura anfíbia que devora homens.', o:'desconhecida', p:['Dependência de Terreno','Natação','Alterar Região','Selvageria','Terreno de Poder']},
+    {id:'amanari',   n:'Amanari',    k:'#D2232A', d:'Água da chuva.', o:'humano mágico (pajé indígena), maracá', p:['Escudo Místico','Cura','Sorte','Barreira Natural','Profetizar']},
+    {id:'jaguaruna', n:'Jaguaruna',  k:'#8A8F99', d:'Iawarauna, a onça negra.', o:'artefato mágico indígena', p:['Terreno Predileto','Certeiro','Furtividade','Dano Prolongado','Forma Bestial']},
+    {id:'muzenza',   n:'Muzenza',    k:'#3446B8', d:'Muzenza de Ogum: guerreiro de Ogum, espírito guerreiro.', o:'espíritos africanos', p:['Motivação Territorial','Lutador Obstinado','Resistência Mística','Força Mística','Auxílio Místico']},
+    {id:'jequitiba', n:'Jequitibá',  k:'#9A6331', d:'Árvore de tronco de grandes dimensões, em comprimento e em perímetro.', o:'humano alterado, vegetal', p:['Dependência de Terreno','Resiliência','Alterar Região','Vitalidade Regional','Dano em Área']},
+    {id:'curupi',    n:'Curupi',     k:'#E8811E', d:'Criatura fantástica mitológica da natureza.', o:'mágicos da natureza', p:['Dependência de Terreno','Fuga','Caçador','Autopreservação','Teletransporte']},
+    {id:'wraith',    n:'W.R.A.I.T.H.', k:'#B7BEC8', d:'World Representative Agent against Immediate Threat…', o:'psíquicos', p:['Empoderar','Fuga','Furtividade','Cura','Sorte']}
+  ];
+  (function(){
+    var stage = $('#hqStage'), hq = $('#hq'), card = $('#hqCard'), pick = $('#hqPick'), cur = 0, busy = false;
+    HEROES.forEach(function(h,i){
+      var b = document.createElement('button'); b.type='button'; b.dataset.i=i;
+      b.setAttribute('aria-pressed', i===0?'true':'false'); b.setAttribute('aria-label', h.n);
+      b.innerHTML = '<img src="assets/logo-'+h.id+'.webp" alt="" loading="lazy">';
+      pick.appendChild(b);
+    });
+    var btns = $$('button',pick);
+    function preload(h){ ['f','b'].forEach(function(s){ var im = new Image(); im.src = 'assets/h-'+h.id+'-'+s+'.webp' }) }
+    function fill(h){
+      $('#hqF').src = 'assets/h-'+h.id+'-f.webp'; $('#hqF').alt = 'Frente da carta de '+h.n+', com atributos e cinco poderes';
+      $('#hqB').src = 'assets/h-'+h.id+'-b.webp'; $('#hqB').alt = 'Verso da carta de '+h.n+', com a ilustração inteira, a ficha e o logo';
+      $('#hqLogo').src = 'assets/logo-'+h.id+'.webp'; $('#hqLogo').alt = 'Logo '+h.n;
+      $('#hqD').textContent = h.d;
+      $('#hqO').innerHTML = '<b>Origem dos poderes:</b> '+h.o;
+      $('#hqPw').innerHTML = h.p.map(function(p,k){ return '<span><b>'+(k+1)+'</b>'+p+'</span>' }).join('');
+      stage.style.setProperty('--hc', h.k);
+    }
+    async function show(i){
+      if(busy && !RM) return; busy = true; cur = i; var h = HEROES[i];
+      btns.forEach(function(b,k){ b.setAttribute('aria-pressed', k===i?'true':'false') });
+      preload(HEROES[(i+1)%HEROES.length]);
+      card.classList.add('swap'); hq.classList.add('swap'); await sleep(200);
+      fill(h);
+      card.classList.remove('swap'); hq.classList.remove('swap'); await sleep(350); busy = false;
+    }
+    function flip(){ var on = card.getAttribute('aria-pressed')!=='true'; card.setAttribute('aria-pressed', on?'true':'false'); $('#hqFlip').textContent = on?'↻ Ver a frente':'↻ Ver o verso' }
+    card.addEventListener('click',flip); $('#hqFlip').addEventListener('click',flip);
+    pick.addEventListener('click',function(e){ var b = e.target.closest('button'); if(!b) return; busy = false; show(+b.dataset.i) });
+    arrows(pick, btns, matchMedia('(max-width:760px)').matches?4:8);
+    fill(HEROES[0]); preload(HEROES[1]);
+    autoplay(stage, 3200, function(){ return show((cur+1)%HEROES.length) });
+  })();
+
+  /* ===== 03 board: slot positions in % of the board image; texts from the region cards ===== */
+  var ATL = {f:6, n:'Atlântico', loc:'Base Pindorama · litoral sudeste', fx:[['QG Projeto Força BR','+1 em todos os testes nesta Região.'],['Base ameaçada','Em combate aqui, a equipe de apoio (Morubixaba, Apoena, Baraquara, Urutu e Guaranis) só pode ser usada nesta Região.']], q:'Base móvel de operações do Projeto Força BR disfarçada de cargueiro no Oceano Atlântico.'};
+  var REGIONS = [
+    {s:1, x:26.8, y:21.3, f:1, n:'Norte', loc:'Ybirá Guaçu · Tocantins', fx:[['Altura',''],['Espreitador','O chefe Aritana entra nesta Região.']], q:'Nestas vastas matas da região norte do estado existem árvores enormes.'},
+    {s:2, x:66.8, y:26.2, f:2, n:'Nordeste', loc:'Fernando de Noronha · Pernambuco', fx:[['Ilhas','Entrar ou sair da Região só através de formas especiais de Movimentação.']], q:'Arquipélago de 21 ilhas de origem vulcânica no Oceano Atlântico.'},
+    {s:3, x:31.8, y:48.5, f:3, n:'Centro-Oeste', loc:'Fazenda de Campo Grande · Goiás', fx:[['Churrasco','A cada Missão bem-sucedida nesta Região, o Herói recupera 1 de vitalidade.']], q:'Grande extensão de área para criação de gado de corte. Quatro cabeças por habitante.'},
+    {s:4, x:54.2, y:66.5, f:4, n:'Sudeste', loc:'Palácio Imperial · Petrópolis, RJ', fx:[['O Falso Monarca','Recursos gastos na Região custam 1 ponto adicional.']], q:'Vamos ter que pegar Dom Ferdinando em seu Palácio. Será muito difícil, mas é tudo ou nada. Pelo Brasil!'},
+    {s:5, x:38.2, y:82.2, f:5, n:'Sul', loc:'Fortaleza de São João da Ponta Grossa · Florianópolis, SC', fx:[['Guarnições Fortificadas','Combate contra Asseclas e Chefes: −1 nos testes.']], q:'Principal fortaleza da triangulação defensiva que protegia a região sul.'},
+    Object.assign({s:6, x:88.4, y:13.6}, ATL),
+    Object.assign({s:7, x:87.2, y:61.5}, ATL),
+    Object.assign({s:8, x:76.6, y:84.8}, ATL)
+  ];
+  (function(){
+    var stage = $('#bdStage'), box = $('#bdSlots'), cards = $$('#bdCards > div'), cur = 0, busy = false;
+    REGIONS.forEach(function(r,i){
+      var b = document.createElement('button'); b.type='button'; b.className='slot'; b.dataset.i=i;
+      b.style.setProperty('--x',r.x); b.style.setProperty('--y',r.y);
+      b.setAttribute('aria-pressed', i===0?'true':'false'); b.setAttribute('aria-label','Região '+r.s+', '+r.n);
+      b.innerHTML = '<i class="ping" aria-hidden="true"></i>';
+      box.appendChild(b);
+    });
+    var btns = $$('.slot',box);
+    function fill(r){
+      $('#bdM').src = 'assets/rm-'+r.s+'.webp'; $('#bdM').alt = 'Carta de região monitorada '+r.n+', '+r.s;
+      $('#bdF').src = 'assets/rf-'+r.f+'.webp'; $('#bdF').alt = 'Carta de região: '+r.loc;
+      $('#bdV').src = 'assets/rv-'+r.f+'.webp';
+      $('#bdName').innerHTML = '<i>'+r.s+'</i>'+r.n;
+      $('#bdLoc').textContent = r.loc;
+      $('#bdFx').innerHTML = r.fx.map(function(f){ return '<div><b>'+f[0]+'</b>'+f[1]+'</div>' }).join('');
+      $('#bdQ').textContent = '“'+r.q+'”';
+    }
+    async function show(i){
+      if(busy && !RM) return; busy = true; cur = i; var r = REGIONS[i];
+      btns.forEach(function(b,k){ b.setAttribute('aria-pressed', k===i?'true':'false') });
+      cards.forEach(function(c){ c.classList.remove('on') }); await sleep(420);
+      fill(r);
+      cards[0].classList.add('on'); await sleep(160); cards[1].classList.add('on'); await sleep(500); busy = false;
+    }
+    box.addEventListener('click',function(e){ var b = e.target.closest('.slot'); if(!b) return; busy = false; show(+b.dataset.i) });
+    arrows(box, btns, 1);
+    fill(REGIONS[0]); cards.forEach(function(c){ c.classList.add('on') });
+    REGIONS.forEach(function(r){ ['rm-'+r.s,'rf-'+r.f,'rv-'+r.f].forEach(function(n){ var im = new Image(); im.src = 'assets/'+n+'.webp' }) });
+    var order = [1,2,3,4,5,6,7,0];
+    autoplay(stage, 3000, function(){ return show(order[cur]) });
+  })();
+
+  /* ===== 04 event decks (names, effects and quotes from the cards; effects only where the text has no icons) ===== */
+  var DECKS = {
+    branca:{label:'Evento cinza · o país muda', k:'#C9CED6', cards:[
+      ['Campeonato Brasileiro de Futebol','','Uma paixão nacional.'],
+      ['Greve Geral','','Eterna batalha por direitos trabalhistas.'],
+      ['Desmatamentos','','Salvem as florestas.'],
+      ['Poluição do Ar','','Efeito estufa, chuva ácida e o que mais?'],
+      ['Enchentes','','Nossa… está tudo alagado!'],
+      ['Tempestade Tropical','Harpia 01 e o poder Voar não podem ser usados para Movimentação.','Impossível decolar no meio dessa tempestade.'],
+      ['Baixo Nível dos Rios','','Precisa voltar a chover logo.'],
+      ['Congestionamentos','Movimentação normal para Regiões adjacentes não pode ser feita.','Em horário de pico fica tudo engarrafado.'],
+      ['Perigo Iminente','Uma Região adicional é ativada e não conta na ativação de novas Regiões na rodada seguinte.','Daremos um jeito, como sempre.'],
+      ['Imprensa em Primeira Mão','','Interrompemos a programação…']]},
+    verde:{label:'Evento verde · a favor', k:'#7FE07A', cards:[
+      ['Trabalho em Equipe','Heróis na mesma Região podem usar os Poderes do outro como se fossem seus.','Juntos somos fortes!'],
+      ['Fé Multicultural','','Um verdadeiro caldeirão cultural.'],
+      ['Superávit Econômico','Para cada Herói em jogo, +2 no Contador de Recursos.','Economizar sempre.'],
+      ['Apoio Nacional','Todo custo em recursos é dividido pela metade (mínimo 1).','Vem para a rua!'],
+      ['Sorte dos Heróis','','A sorte está sempre do lado dos bons.'],
+      ['Paramédicos','Cada Herói em jogo recupera 1d6 de vitalidade.','192, alguém chame um médico!'],
+      ['Apoio da Nobreza','Todos os Heróis recebem +1 em todos os Testes.','Inspirador é lutar por uma causa nobre.'],
+      ['Esforço Extra','','Hora extra, pessoal.'],
+      ['Investigações da ABIN','As cartas de Missão da rodada seguinte podem ser posicionadas de qualquer maneira.','Meu número deve ter sido grampeado.']]},
+    vermelha:{label:'Evento vermelho · contra', k:'#FF8A80', cards:[
+      ['Carnaval','','Todo mundo caindo na folia.'],
+      ['Manifestação contra o Projeto','','O pessoal tá quebrando tudo!'],
+      ['Pandemia','','Previna-se antes que seja tarde.'],
+      ['Super Vilões Unidos','','Não contávamos com essa.'],
+      ['Temperatura Elevada','','Mas que calor é esse?'],
+      ['Crise Econômica','Todos os custos em recursos aumentam em +1.','Mercado inflacionado.'],
+      ['Reforços de Dom Ferdinando','Asseclas Guardas Imperiais voltam da pilha de descarte para as Regiões ativas.','Vem chumbo grosso aí!'],
+      ['Vilões ao Ataque','Imediatamente Asseclas e Vilões, nessa ordem, tornam-se Atacantes.','Caímos em uma armadilha, RECUAR!'],
+      ['Corrupção','−2 no Contador de Recursos para cada Herói em jogo.','A corrupção já alcançou todos os níveis.']]}
+  };
+  (function(){
+    var stage = $('#evStage'), dc = $('#dCard'), last = null, busy = false, keys = Object.keys(DECKS);
+    var loaded = false;
+    function preloadAll(){ if(loaded) return; loaded = true; keys.forEach(function(d){ DECKS[d].cards.forEach(function(c,i){ var im = new Image(); im.src = 'assets/ev-'+d+'-'+(i+1)+'.webp' }) }) }
+    async function draw(d){
+      if(busy) return; busy = true; preloadAll();
+      var deck = DECKS[d], i; do{ i = Math.floor(Math.random()*deck.cards.length) }while(d+i===last && deck.cards.length>1); last = d+i;
+      var c = deck.cards[i];
+      dc.classList.remove('up','face'); await sleep(260);
+      $('#dBack').src = 'assets/ev-'+d+'-0.webp';
+      $('#dFace').src = 'assets/ev-'+d+'-'+(i+1)+'.webp'; $('#dFace').alt = 'Carta de evento '+c[0];
+      $('#dDeck').textContent = deck.label; $('#dDeck').style.setProperty('--k',deck.k);
+      $('#dName').textContent = c[0];
+      $('#dEff').textContent = c[1]; $('#dEff').hidden = !c[1];
+      $('#dQ').textContent = '“'+c[2]+'”';
+      void dc.offsetWidth; dc.classList.add('up'); await sleep(320); dc.classList.add('face'); await sleep(600); busy = false;
+    }
+    $$('.deck',stage).forEach(function(b){ b.addEventListener('click',function(){ busy = false; draw(b.dataset.d) }) });
+    dc.classList.add('up','face');
+    watch(stage, preloadAll);
+    autoplay(stage, 3400, function(){ return draw(keys[Math.floor(Math.random()*keys.length)]) });
+  })();
+
+  /* ===== 04 resource counter (odometer recreation) ===== */
+  (function(){
+    var v = 12, L = $('#odL'), R = $('#odR');
+    var col = Array.apply(null,{length:10}).map(function(_,k){ return '<span>'+k+'</span>' }).join('');
+    L.innerHTML = col; R.innerHTML = col;
+    function set(n){
+      v = Math.max(0,Math.min(99,n));
+      L.style.transform = 'translateY('+(-Math.floor(v/10)*10)+'%)';
+      R.style.transform = 'translateY('+(-(v%10)*10)+'%)';
+      $('#ctrVal').textContent = v;
+      $('#ctrMinus').disabled = v===0; $('#ctrPlus').disabled = $('#ctrPlus5').disabled = v===99;
+    }
+    $('#ctrMinus').addEventListener('click',function(){ set(v-1) });
+    $('#ctrPlus').addEventListener('click',function(){ set(v+1) });
+    $('#ctrPlus5').addEventListener('click',function(){ set(v+5) });
+    set(v);
+  })();
+
+  /* ===== cognitive turn flow interactive switcher ===== */
+  (function(){
+    var stepBtns = $$('#flowBox .f-step');
+    var pipeNodes = $$('.flow-pipeline-bar .flow-pipe-node');
+    var panes = [$('#fPane1'), $('#fPane2'), $('#fPane3'), $('#fPane4')];
+    if(!stepBtns.length && !pipeNodes.length) return;
+
+    function setStep(s) {
+      stepBtns.forEach(function(x){
+        var match = parseInt(x.dataset.step, 10) === s;
+        x.classList.toggle('active', match);
+        x.setAttribute('aria-selected', match ? 'true' : 'false');
+      });
+      pipeNodes.forEach(function(x){
+        var match = parseInt(x.dataset.flowStep, 10) === s;
+        x.classList.toggle('active', match);
+      });
+      panes.forEach(function(p, idx){
+        if(p) p.style.display = (idx + 1 === s) ? 'block' : 'none';
+      });
+    }
+
+    stepBtns.forEach(function(b){
+      b.addEventListener('click', function(){
+        setStep(parseInt(b.dataset.step, 10));
+      });
+    });
+
+    pipeNodes.forEach(function(n){
+      n.addEventListener('click', function(){
+        setStep(parseInt(n.dataset.flowStep, 10));
+      });
+    });
+  })();
+
+  /* ===== regional modular matrix biome filter ===== */
+  (function(){
+    var fBtns = $$('#biomaFilters button');
+    var cards = $$('#matrixGrid .m-card');
+    if(!fBtns.length || !cards.length) return;
+
+    fBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        fBtns.forEach(function(x){ x.setAttribute('aria-pressed', 'false') });
+        btn.setAttribute('aria-pressed', 'true');
+        var b = btn.dataset.b;
+        cards.forEach(function(c){
+          if(b === 'todos' || c.dataset.bioma === b){
+            c.classList.remove('dimmed');
+          } else {
+            c.classList.add('dimmed');
+          }
+        });
+      });
+    });
+  })();
+})();
+</script>
+</body>
+</html>

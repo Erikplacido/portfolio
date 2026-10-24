@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cobra Kai · Jogo Mobile</title>
+<meta name="description" content="Conceito de arte e UI para um jogo mobile de luta que promove a 3ª temporada de Cobra Kai, liberando acesso antecipado a quem atinge a pontuação máxima.">
+<meta property="og:title" content="Cobra Kai · 3ª Temporada — conceito de jogo mobile">
+<meta property="og:image" content="assets/keyart.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Bebas+Neue&family=Permanent+Marker&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Everything below is the game's own visual language. */
+:root{
+  --accent:#E3120B; --hl:#FFD400;
+  --red:#E3120B; --red-2:#9E0703; --yel:#FFD400; --org:#FF8A00; --lime:#E4F02B; --black:#0B0B0B;
+  --ink:var(--pf-ink); --ink-2:var(--pf-ink-2);
+  --brush:'Permanent Marker',cursive; --pixel:'Press Start 2P',monospace; --cond:'Bebas Neue',Impact,sans-serif; --sans:var(--pf-sans);
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.7,.64,1);
+}
+.px{image-rendering:pixelated}
+
+/* ===== case cover: key art ===== */
+.ck-cover{background:#2b1406}
+.ck-cover img.art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;animation:kenburns 26s ease-in-out infinite alternate}
+.ck-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(255,150,0,.5) 82%,rgba(255,196,0,.95) 100%),radial-gradient(120% 90% at 50% 40%,transparent 50%,rgba(0,0,0,.45));z-index:1}
+.ck-cover .flare{position:absolute;left:50%;top:58%;width:42%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.75),rgba(255,180,60,.15) 45%,transparent 70%);transform:translate(-50%,-50%);mix-blend-mode:screen;z-index:2;animation:breathe 6s ease-in-out infinite}
+.ck-cover .ttl{position:absolute;left:0;right:0;bottom:clamp(18px,4vw,44px);z-index:3;text-align:center}
+.ck-cover .ttl small{display:block;font:400 clamp(8px,1.1vw,11px)/1 var(--pixel);color:#2b0d00;margin-top:12px}
+
+/* logo pixel art */
+.logo{display:inline-block;max-width:100%;height:auto;image-rendering:pixelated;vertical-align:middle}
+.logo.big{width:min(90%,clamp(280px,46vw,620px));filter:drop-shadow(0 6px 14px rgba(0,0,0,.6))}
+
+/* ===== stages: the case colour lives here ===== */
+.st-red{background:radial-gradient(120% 120% at 50% 0,#FF3B2F,#E3120B 45%,#9E0703)}
+.st-yel{background:radial-gradient(120% 70% at 50% 0,#FFF07A,#FFD400 35%,#FFAE00 70%,#FF8A00)}
+.st-dark{background:radial-gradient(90% 120% at 50% 0,#4a0f09,#140606 55%,#0B0B0B)}
+.st-red .pill,.st-dark .pill{background:rgba(255,255,255,.16);color:#fff}
+.st-red .pill.y,.st-dark .pill.y{background:var(--yel);color:var(--pf-ink)}
+.tear{position:absolute;left:0;bottom:0;width:100%;height:clamp(36px,6vw,80px);z-index:-1}
+.edge{display:block;width:100%;height:clamp(40px,7vw,90px);margin-bottom:-1px}
+.edge.flip{transform:scale(-1,-1);margin:-1px 0 0}
+.ck-band{background:var(--red);color:#fff}
+.ck-band .eyebrow{color:#FFD0CC}.ck-band .eyebrow b{color:var(--yel)}
+.ck-band h2,.ck-band .lede{color:#fff}
+.ck-band figcaption{color:#FFD0CC}.ck-band figcaption b{color:#fff}
+
+/* ===== 01 start section: red & yellow signature band ===== */
+.ck-start-sec{position:relative;scroll-margin-top:60px}
+.ck-start-red{background:var(--red);color:#fff;padding:clamp(40px,5.5vw,72px) 0 0}
+.ck-start-red .wrap{max-width:860px;margin:0 auto;padding:0 var(--pf-gut)}
+.ck-start-red .eyebrow{color:rgba(255,255,255,.85)}
+.ck-start-red .eyebrow b{color:var(--yel)}
+.ck-start-red h2{color:#fff;margin:12px 0 16px}
+.ck-start-red .lede{color:rgba(255,255,255,.95);max-width:58ch}
+.ck-start-stage{margin-top:28px}
+.ck-start-stage .tag-row{margin-bottom:14px}
+.ck-start-red .pill{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.ck-start-red .pill.y{background:var(--yel);color:var(--pf-ink);border:none}
+.ck-start-stage .lphone{margin-bottom:clamp(-44px,-5.2vw,-32px);position:relative;z-index:2}
+.ck-start-edge{position:relative;z-index:1;background:var(--red);display:block;width:100%;height:clamp(40px,6.5vw,84px);margin-bottom:-1px}
+.ck-start-yel{background:var(--yel);color:var(--pf-ink);padding:clamp(16px,2.4vw,28px) 0 clamp(90px,15vw,200px)}
+.ck-start-yel .wrap{max-width:860px;margin:0 auto;padding:0 var(--pf-gut)}
+.ck-start-yel figcaption{color:#2B0D00;margin-top:0;font-size:14px;max-width:70ch;line-height:1.5}
+.ck-start-yel figcaption b{color:#000;font-weight:700}
+
+/* ===== flow ===== */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.flow{grid-template-columns:1fr}}
+.flow a{display:block;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.flow .n{display:block;font:400 10px/1 var(--pixel);color:var(--accent);margin-bottom:18px}
+.flow h3{font-size:26px}
+.flow p{font-size:15px}
+.flow a::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--yel);transform:scaleX(0);transform-origin:0}
+.flow.in a::after{animation:fill 6s linear infinite;animation-delay:calc(var(--i)*1.5s)}
+
+/* ===== landscape phone ===== */
+.lphone{width:min(100%,860px);margin:0 auto;aspect-ratio:2.17;border-radius:7% / 15%;padding:1.5%;background:linear-gradient(160deg,#5a5a5a,#141414 30%,#050505 70%,#3c3c3c);box-shadow:0 40px 60px -30px rgba(0,0,0,.65),0 2px 0 rgba(255,255,255,.25) inset,0 0 0 2px #000;position:relative}
+.lphone::before{content:"";position:absolute;right:20%;top:-1.1%;width:9%;height:1.6%;border-radius:4px 4px 0 0;background:#2a2a2a}
+.lscr{container-type:size;width:100%;height:100%;border-radius:5.6% / 12.5%;overflow:hidden;position:relative;background:#000;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.lscr .notch{position:absolute;left:0;top:50%;width:4.5cqh;height:30cqh;transform:translateY(-50%);background:#050505;border-radius:0 3cqh 3cqh 0;z-index:30}
+
+/* ===== 01 start screen ===== */
+.start{position:absolute;inset:0;background:linear-gradient(180deg,#FF6A00 0%,#FF9800 45%,#FFC400 80%,#FFE04D 100%)}
+.sun{position:absolute;left:50%;top:6cqh;width:118cqh;height:118cqh;transform:translateX(-50%);border-radius:50%;
+  background:linear-gradient(180deg,#FFE070 0%,#FF7A00 45%,#FF3D00 100%);
+  -webkit-mask:repeating-linear-gradient(180deg,#000 0 5.2cqh,transparent 5.2cqh 7.4cqh);mask:repeating-linear-gradient(180deg,#000 0 5.2cqh,transparent 5.2cqh 7.4cqh);
+  -webkit-mask-size:100% 7.4cqh;mask-size:100% 7.4cqh;animation:stripes 2.4s linear infinite}
+.start .logo{position:absolute;left:50%;top:12cqh;transform:translateX(-50%);height:26cqh;width:auto;max-width:60cqw;z-index:3;animation:logoIn 1s var(--snap) both;filter:drop-shadow(0 1.2cqh 2.4cqh rgba(0,0,0,.45))}
+.start .sil{position:absolute;left:50%;bottom:10cqh;height:52cqh;transform:translateX(-50%);z-index:2;animation:bob 2.6s ease-in-out infinite}
+.start .tap{position:absolute;left:0;right:0;bottom:4.4cqh;text-align:center;font:400 3.6cqh/1 var(--pixel);color:#8B1A00;z-index:3;animation:blink 1.1s steps(1) infinite;letter-spacing:.06em}
+.start .flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:20;pointer-events:none}
+.start.go .flash{animation:flash .6s ease-out}
+.start.go .tap{animation:none;color:#fff;text-shadow:0 0 2cqh #B40D00}
+
+/* ===== 02 select ===== */
+.sel-wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center}
+@media(max-width:860px){.sel-wrap{grid-template-columns:1fr}}
+.stage{position:relative;width:100%;aspect-ratio:938/1160;max-width:620px;margin:0 auto}
+.stage>img{position:absolute;inset:0;width:100%;height:100%;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 11%,#000 88%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 11%,#000 88%,transparent 100%)}
+.grid{position:absolute;left:18.6%;top:24.4%;width:65%;height:51.6%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1.2%;padding:2.2%;background:#2a2a2a;border:4px solid #4b4b4b;box-shadow:inset 0 0 0 3px #c9a13a,0 18px 30px -10px rgba(0,0,0,.5);border-radius:6px}
+.cell{position:relative;overflow:hidden;background:#000;outline:0}
+.cell img{width:100%;height:100%;object-fit:cover;transition:transform .35s var(--snap),filter .3s}
+.cell:hover img,.cell.p1 img{transform:scale(1.08)}
+.cell.locked img{filter:brightness(1.25) saturate(1.2)}
+.cur{position:absolute;inset:-2px;pointer-events:none;border:4px solid var(--c);box-shadow:inset 0 0 0 2px #fff,0 0 14px var(--c);opacity:0;transition:opacity .15s;z-index:2}
+.cur b{position:absolute;top:2px;font:400 9px/1 var(--pixel);color:#fff;background:var(--c);padding:3px 4px}
+.cur.c1{--c:var(--red)} .cur.c1 b{left:2px}
+.cur.c2{--c:#1E7BFF} .cur.c2 b{right:2px}
+.cell.p1 .c1,.cell.p2 .c2{opacity:1;animation:blink .5s steps(1) infinite}
+.cell.locked .cur{animation:none}
+.cell.both .c2{inset:6px}
+.panel{background:#111;color:#fff;border-radius:18px;padding:22px;box-shadow:0 30px 50px -30px rgba(0,0,0,.6);border:3px solid #2b2b2b;position:relative;overflow:hidden}
+.panel .who{display:flex;gap:16px;align-items:center}
+.panel .who img{width:96px;height:96px;border:3px solid var(--yel);flex:none}
+.panel .nm{font:400 13px/1.5 var(--pixel);color:var(--yel)}
+.panel .st{font-size:13px;color:#bbb;margin-top:4px}
+.bars{margin-top:18px;display:grid;gap:10px}
+.bars label{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:10px;font:400 8px/1 var(--pixel);color:#ddd}
+.bars i{display:block;height:10px;background:#333;position:relative;overflow:hidden}
+.bars i::after{content:"";position:absolute;inset:0;width:var(--v,50%);background:repeating-linear-gradient(90deg,var(--yel) 0 8px,var(--org) 8px 10px);transition:width .6s var(--ease)}
+.panel .hint{margin-top:18px;font-size:12px;color:#888}
+.panel .lock{position:absolute;right:16px;top:16px;font:400 8px/1 var(--pixel);padding:6px 8px;background:var(--red);transform:scale(0);transition:transform .35s var(--snap)}
+.panel.done .lock{transform:none}
+.vs{position:absolute;inset:0;z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;pointer-events:none;opacity:0;transition:opacity .2s}
+.vs.on{opacity:1}
+.vs::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.72)}
+.vs img{position:relative;width:100%;max-width:220px;aspect-ratio:1;object-fit:cover;border:5px solid #fff;justify-self:center}
+.vs .l{transform:translateX(-120%) rotate(-8deg);transition:transform .5s var(--snap);border-color:var(--red)}
+.vs .r{transform:translateX(120%) rotate(8deg);transition:transform .5s .1s var(--snap);border-color:#1E7BFF}
+.vs.on .l{transform:rotate(-4deg)}.vs.on .r{transform:rotate(4deg)}
+.vs b{position:relative;font:400 clamp(48px,9vw,90px)/1 var(--brush);color:var(--yel);-webkit-text-stroke:3px #8B0A00;transform:scale(0) rotate(-20deg);transition:transform .45s .3s var(--snap)}
+.vs.on b{transform:scale(1) rotate(-8deg)}
+
+/* ===== 03 fight ===== */
+.fight{position:absolute;inset:0;overflow:hidden;background:#1b0d06 url(assets/dojo-bg.webp) center bottom/cover no-repeat}
+/* escurece o topo e a base do dojo para o HUD e os controles lerem sobre a parede clara */
+.fight::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 26cqh),linear-gradient(0deg,rgba(0,0,0,.45) 0,rgba(0,0,0,0) 24cqh)}
+.fight .shadow{position:absolute;z-index:2;bottom:16.6cqh;width:26cqh;height:4cqh;border-radius:50%;background:rgba(0,0,0,.4);filter:blur(2px)}
+.fighter{position:absolute;bottom:16cqh;height:58cqh;display:flex;align-items:flex-end;z-index:4;transition:transform .18s var(--ease)}
+.fighter img{height:100%;width:auto;image-rendering:pixelated}
+/* sprites: Daniel olha para a esquerda e Johnny para a direita no arquivo; ambos espelhados para se encararem.
+   P1 ancorado pela esquerda e P2 pela direita, para que quadros mais largos (chute, soco, queda) cresçam na direção do golpe */
+.f1{left:calc(50% - 36cqh)}
+.f2{right:calc(50% - 27cqh)}
+.fighter img{transform:scaleX(-1)}
+.f1.kick{transform:translateX(7cqh)}
+.f1.punch{transform:translateX(4cqh)}
+.f2.hit{animation:hit .32s var(--ease)}
+.f1.hit{animation:hitL .32s var(--ease)}
+/* derrotado: nome próprio, porque .ko é o painel de K.O. (position:absolute;inset:0) e jogava o sprite para o topo */
+.f2.down{transition:transform .45s var(--ease);transform:translate(8cqh,5cqh)}
+.spark{position:absolute;z-index:6;width:14cqh;height:14cqh;pointer-events:none;opacity:0;background:radial-gradient(circle,#fff 0 18%,#FFE04D 22%,#FF7A00 40%,transparent 62%);clip-path:polygon(50% 0,60% 35%,100% 20%,68% 52%,100% 80%,58% 66%,50% 100%,42% 66%,0 80%,32% 52%,0 20%,40% 35%)}
+.spark.on{animation:spark .3s ease-out}
+.hud{position:absolute;left:6cqh;right:6cqh;top:3.5cqh;display:grid;grid-template-columns:1fr auto 1fr;gap:2cqh;align-items:start;z-index:8}
+.side{display:grid;grid-template-columns:auto 1fr;gap:1.2cqh;align-items:end}
+.side.r{grid-template-columns:1fr auto}
+.side.r .pp{order:2}
+.pp{width:13cqh;height:13cqh;border:.8cqh solid #9a9a9a;border-radius:1.4cqh 1.4cqh 0 0;background:#000;overflow:hidden}
+.pp img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.plate{justify-self:start;font:400 2.5cqh/1 var(--pixel);color:#111;background:linear-gradient(#FFE84D,#FFC400);padding:1.1cqh 2cqh;border:.5cqh solid #7a7a7a;border-bottom:0;transform:skew(-14deg)}
+.side.r .plate{justify-self:end}
+.hp{height:5.4cqh;border:.7cqh solid #8a8a8a;background:#3a0a00;transform:skew(-14deg);position:relative;overflow:hidden;margin-top:-.2cqh}
+.hp i{position:absolute;top:0;bottom:0;left:0;width:var(--hp,100%);background:repeating-linear-gradient(90deg,transparent 0 1.6cqh,rgba(0,0,0,.25) 1.6cqh 1.9cqh),linear-gradient(90deg,#E3120B,#FF7A00 30%,#FFD400);transition:width .35s var(--ease)}
+.hp em{position:absolute;top:0;bottom:0;left:0;width:var(--lag,100%);background:#fff;opacity:.7;transition:width .9s .25s var(--ease)}
+.side.r .hp i,.side.r .hp em{left:auto;right:0}
+.side.r .hp i{background:repeating-linear-gradient(90deg,transparent 0 1.6cqh,rgba(0,0,0,.25) 1.6cqh 1.9cqh),linear-gradient(270deg,#E3120B,#FF7A00 30%,#FFD400)}
+.mid{text-align:center;display:grid;justify-items:center;gap:.6cqh}
+.badge{width:15cqh;height:auto;aspect-ratio:291/259;display:block;image-rendering:pixelated;position:relative}
+.timer{font:400 3.2cqh/1 var(--pixel);color:#fff;text-shadow:.4cqh .4cqh 0 #8B0A00}
+.score{position:absolute;right:7cqh;top:25cqh;z-index:8;font:400 2.4cqh/1.5 var(--pixel);color:#fff;text-align:right;text-shadow:.35cqh .35cqh 0 #000}
+.combo{position:absolute;left:30%;top:28cqh;z-index:9;font:400 6cqh/1 var(--brush);color:var(--yel);-webkit-text-stroke:.3cqh #8B0A00;opacity:0;transform:scale(.6) rotate(-10deg)}
+.combo.on{animation:combo .7s var(--snap)}
+/* direcional: base translúcida, cruz de plástico escuro, setas que acendem quando o P1 avança */
+.pad{position:absolute;left:9cqh;bottom:7cqh;width:27cqh;height:27cqh;z-index:9}
+.pad svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 1cqh 1.2cqh rgba(0,0,0,.45))}
+.pad .ar{fill:rgba(255,255,255,.55);transition:fill .12s}
+.pad.fwd .ar.r{fill:var(--yel)}
+.pad .cross{transition:transform .12s;transform-origin:50px 50px}
+.pad.fwd .cross{transform:perspective(200px) rotateY(10deg)}
+/* botões de fliperama: aro preto, tampa com brilho, curso de 1cqh ao apertar; letra da tecla no canto */
+.btns{position:absolute;right:9cqh;bottom:7cqh;z-index:9;width:36cqh;height:30cqh}
+.btns button{position:absolute;display:grid;place-items:center;padding:0;border:0;border-radius:50%;cursor:pointer;
+  font:400 2.1cqh/1 var(--pixel);letter-spacing:.04em;color:#fff;text-shadow:0 .3cqh 0 rgba(0,0,0,.45);
+  background:radial-gradient(circle at 50% 28%,rgba(255,255,255,.75) 0 12%,rgba(255,255,255,0) 34%),radial-gradient(circle at 50% 40%,var(--c1) 0 45%,var(--c2) 72%,var(--c3) 100%);
+  box-shadow:inset 0 -1.1cqh 0 var(--c3),inset 0 .5cqh 0 rgba(255,255,255,.35),0 0 0 .8cqh #151515,0 0 0 1.25cqh rgba(255,255,255,.28),0 1.4cqh 0 .8cqh #000,0 2.4cqh 2cqh .8cqh rgba(0,0,0,.4);
+  transition:transform .07s,box-shadow .07s}
+.btns button:active,.btns button.press{transform:translateY(1cqh);box-shadow:inset 0 -.3cqh 0 var(--c3),inset 0 .8cqh 1.4cqh rgba(0,0,0,.35),0 0 0 .8cqh #151515,0 0 0 1.25cqh rgba(255,255,255,.28),0 .4cqh 0 .8cqh #000,0 1cqh 1.2cqh .8cqh rgba(0,0,0,.4)}
+.btns button:focus-visible{outline:.6cqh solid #fff;outline-offset:1.8cqh}
+.btns button::after{content:attr(data-key);position:absolute;right:-1.6cqh;top:-1.6cqh;font:400 1.7cqh/1 var(--pixel);color:#fff;background:rgba(0,0,0,.55);border:.3cqh solid rgba(255,255,255,.45);border-radius:.6cqh;padding:.5cqh .7cqh .4cqh;text-shadow:none}
+.btns .p{--c1:#FFE45C;--c2:#FFC400;--c3:#A86E00;color:#3a1a00;text-shadow:0 .3cqh 0 rgba(255,255,255,.4);left:0;top:0;width:14cqh;height:14cqh}
+.btns .k{--c1:#FF6A55;--c2:var(--red);--c3:#7A0400;right:0;bottom:4cqh;width:17cqh;height:17cqh;font-size:2.3cqh}
+.ko{position:absolute;inset:0;z-index:12;display:grid;place-items:center;pointer-events:none}
+.ko .badge{width:44cqh;height:auto;aspect-ratio:291/259;transform:scale(0) rotate(-12deg);transition:transform .45s var(--snap);filter:drop-shadow(0 1cqh 2cqh rgba(0,0,0,.6))}
+.ko.on .badge{transform:scale(1) rotate(-4deg)}
+.ko .msg{position:absolute;bottom:13cqh;font:400 3cqh/1.4 var(--pixel);color:#fff;text-align:center;text-shadow:.4cqh .4cqh 0 #8B0A00;opacity:0;transition:opacity .3s .5s}
+.ko.on .msg{opacity:1;animation:blink 1s 1.2s steps(1) infinite}
+.ko::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,0),rgba(0,0,0,.55));opacity:0;transition:opacity .3s}
+.ko.on::before{opacity:1}
+.shake{animation:shake .35s linear}
+
+/* sprite sheets */
+.sprites{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+@media(max-width:760px){.sprites{grid-template-columns:1fr}}
+.sheet{color:var(--pf-ink)}
+.sheet .tag{display:flex;justify-content:space-between}
+.frames{display:flex;gap:6px;align-items:flex-end;background:repeating-conic-gradient(#f1f1f1 0 25%,#fff 0 50%) 0 0/16px 16px;border-radius:10px;padding:10px;overflow-x:auto}
+.frames figure{margin:0;flex:none;text-align:center}
+.frames img{height:110px;width:auto;image-rendering:pixelated;transition:transform .3s var(--snap)}
+.frames figure.on img{transform:translateY(-6px)}
+.frames figcaption{font:400 7px/1 var(--pixel);color:#999;margin-top:6px}
+.frames figure.on figcaption{color:var(--red)}
+.preview{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:12px}
+.preview .live{height:150px;width:120px;display:flex;align-items:flex-end;justify-content:center;background:radial-gradient(60% 12% at 50% 96%,rgba(0,0,0,.18),transparent);flex:none}
+.preview .live img{height:140px;width:auto;image-rendering:pixelated}
+.preview p{font-size:14px}
+.fps{display:flex;gap:6px;margin-top:10px}
+.fps button{font:400 8px/1 var(--pixel);padding:7px 8px;border:2px solid var(--pf-line);border-radius:6px;background:none}
+.fps button[aria-pressed="true"]{border-color:var(--red);color:var(--red)}
+
+.reward{position:absolute;inset:0;background:radial-gradient(70% 90% at 50% 45%,#2a1d06,#0a0a0a 55%,#000);display:grid;place-items:center;text-align:center;overflow:hidden}
+.reward .emb{position:absolute;left:50%;top:50%;width:86cqh;height:86cqh;transform:translate(-50%,-50%);opacity:.36;pointer-events:none;object-fit:contain;filter:drop-shadow(0 0 3cqh rgba(255,212,0,.2))}
+.reward .content{position:relative;z-index:2;display:grid;justify-items:center;gap:1.4cqh}
+.reward .pre{font:600 3.8cqh/1 var(--sans);color:#ddd;letter-spacing:.04em}
+.reward .t{display:block;height:18cqh;width:auto;max-width:82cqw;object-fit:contain;filter:drop-shadow(0 0 2.5cqh rgba(255,234,0,.45)) drop-shadow(0 1cqh 2cqh rgba(0,0,0,.6))}
+.reward .s{font:400 8cqh/1 var(--cond);color:#F2D04A;letter-spacing:.04em}
+.reward .n{font:400 14cqh/1 var(--cond);color:#E50914;letter-spacing:.02em;margin-top:.6cqh;text-shadow:0 .6cqh 1cqh rgba(229,9,20,.35)}
+.reward .play{display:flex;gap:1.6cqh;align-items:center;margin-top:1.6cqh;font:600 3.4cqh/1 var(--sans);color:#fff;background:#E50914;padding:2cqh 3.2cqh;border-radius:1cqh}
+.reward .play i{width:0;height:0;border-left:2.2cqh solid #fff;border-top:1.4cqh solid transparent;border-bottom:1.4cqh solid transparent}
+.gate{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:#000;transition:opacity .6s var(--ease),visibility .6s}
+.gate .sc{font:400 3cqh/1.6 var(--pixel);color:#fff;text-align:center}
+.gate .sc b{display:block;font-size:8cqh;color:var(--yel);margin:1cqh 0;text-shadow:.5cqh .5cqh 0 #8B0A00}
+.gate .bar{width:60cqh;height:2.4cqh;border:.4cqh solid #fff;margin:3cqh auto 0;padding:.4cqh}
+.gate .bar i{display:block;height:100%;width:var(--w,0%);background:var(--yel);transition:width .2s linear}
+.unlocked .gate{opacity:0;visibility:hidden}
+.unlocked .content>*{animation:rise .8s var(--ease) both}
+.unlocked .content>*:nth-child(2){animation-delay:.12s}.unlocked .content>*:nth-child(3){animation-delay:.24s}.unlocked .content>*:nth-child(4){animation-delay:.36s}.unlocked .content>*:nth-child(5){animation-delay:.5s}
+.unlocked .t{animation:glitch .9s .1s steps(2) both!important}
+.unlocked .play{animation:rise .8s .5s var(--ease) both,pulse 1.8s 1.4s infinite!important}
+.replay{display:block;margin:20px auto 0;font:400 9px/1 var(--pixel);color:#fff;border:2px solid rgba(255,255,255,.5);background:none;padding:10px 14px;border-radius:8px}
+
+/* ===== gameplay video clips showcase ===== */
+.ck-clips{margin-top:40px;background:#140806;border:3px solid #3d140e;border-radius:var(--pf-radius);padding:clamp(18px,3.2vw,30px);box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.ck-clips-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
+.ck-clips-ttl b{display:block;font:400 13px/1.4 var(--pixel);color:var(--yel);margin-bottom:4px}
+.ck-clips-ttl span{font-size:13px;color:#aaa}
+.ck-clips-tabs{display:inline-flex;padding:4px;border-radius:99px;background:rgba(255,255,255,.08);gap:4px}
+.ck-clips-tabs button{border:0;background:none;padding:8px 16px;border-radius:99px;font:400 9px/1 var(--pixel);color:#ccc;cursor:pointer;transition:all .15s}
+.ck-clips-tabs button[aria-selected="true"]{background:var(--yel);color:#111;box-shadow:0 2px 8px rgba(255,212,0,.4)}
+.ck-player-box{position:relative;width:100%;aspect-ratio:16/9;max-width:860px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 20px 40px rgba(0,0,0,.8);border:2px solid #4a150e}
+.ck-player-box video{width:100%;height:100%;object-fit:cover;display:block}
+.ck-crt-overlay{position:absolute;inset:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px);box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
+.ck-player-bar{position:absolute;left:14px;right:14px;bottom:12px;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15)}
+.ck-player-btn{background:none;border:0;color:#fff;font:400 9px/1 var(--pixel);cursor:pointer;display:flex;align-items:center;gap:6px}
+.ck-player-btn:hover{color:var(--yel)}
+.ck-badge-fps{font:400 8px/1 var(--pixel);color:var(--yel);background:rgba(255,212,0,.15);border:1px solid rgba(255,212,0,.3);padding:4px 6px;border-radius:4px}
+.ck-clip-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+@media(max-width:760px){.ck-clip-meta{grid-template-columns:1fr}}
+.ck-clip-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px;color:#eee}
+.ck-clip-card b{display:block;font:400 9px/1.4 var(--pixel);color:var(--yel);margin-bottom:6px}
+.ck-clip-card p{font-size:13px;line-height:1.45;color:#bbb;margin:0}
+
+/* ===== 04 ergonomia mobile & arquitetura de hud ===== */
+.ergo-stage-box{position:relative;background:linear-gradient(180deg,#1c120c,#0c0604);border:2px solid #3d140e;border-radius:var(--pf-radius);padding:clamp(20px,4vw,36px);overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);margin-top:24px}
+.ergo-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.ergo-tabs{display:inline-flex;padding:4px;border-radius:99px;background:rgba(255,255,255,.08);gap:4px}
+.ergo-tabs button{border:0;background:none;padding:8px 14px;border-radius:99px;font:400 9px/1 var(--pixel);color:#ccc;cursor:pointer;transition:all .15s}
+.ergo-tabs button[aria-selected="true"]{background:var(--yel);color:#111;box-shadow:0 2px 8px rgba(255,212,0,.4)}
+.ergo-phone{position:relative;width:min(100%,820px);margin:0 auto;aspect-ratio:20/9;background:#181818;border-radius:36px;padding:12px;box-shadow:0 0 0 3px #333,0 24px 60px rgba(0,0,0,.8);overflow:hidden}
+.ergo-screen{position:relative;width:100%;height:100%;background:#1b0d06 url(assets/dojo-bg.webp) center bottom/cover;border-radius:26px;overflow:hidden}
+.ergo-screen::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1}
+.ergo-overlay{position:absolute;inset:0;z-index:5;pointer-events:none;transition:opacity .3s ease}
+.ergo-arc{position:absolute;border-radius:50%;pointer-events:none;transition:all .3s ease}
+.ergo-arc.left{left:-30px;bottom:-30px;width:250px;height:250px;background:radial-gradient(circle,rgba(34,197,94,.4) 0 45%,rgba(34,197,94,.12) 65%,transparent 70%);border:2px dashed #22c55e}
+.ergo-arc.right{right:-30px;bottom:-30px;width:270px;height:270px;background:radial-gradient(circle,rgba(34,197,94,.4) 0 45%,rgba(34,197,94,.12) 65%,transparent 70%);border:2px dashed #22c55e}
+.ergo-arc.stretch-l{left:-50px;bottom:-50px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,212,0,.15) 60%,transparent 72%);border:1px dotted rgba(255,212,0,.5)}
+.ergo-arc.stretch-r{right:-50px;bottom:-50px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,212,0,.15) 60%,transparent 72%);border:1px dotted rgba(255,212,0,.5)}
+.ergo-deadzone{position:absolute;left:26%;right:26%;top:0;bottom:0;background:repeating-linear-gradient(45deg,rgba(239,68,68,.08) 0 10px,transparent 10px 20px);border-left:1px dashed rgba(239,68,68,.4);border-right:1px dashed rgba(239,68,68,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.ergo-deadzone span{font:400 8px/1.4 var(--pixel);color:#fff;background:rgba(239,68,68,.9);padding:5px 9px;border-radius:4px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.ergo-notch-guide{position:absolute;top:0;bottom:0;width:44px;background:rgba(255,212,0,.15);border-right:1px solid #ffd400;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font:400 7px/1 var(--pixel);color:#ffd400;letter-spacing:.1em;padding:4px}
+.ergo-notch-guide.r{left:auto;right:0;border-right:none;border-left:1px solid #ffd400}
+.ergo-hud-wire{position:absolute;left:48px;right:48px;top:14px;display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border:1px dashed rgba(255,255,255,.5);border-radius:6px;background:rgba(0,0,0,.6);z-index:6}
+.ergo-hud-wire span{font:400 8px/1 var(--pixel);color:var(--yel)}
+.ergo-pin{position:absolute;z-index:10;display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);padding:5px 9px;border-radius:6px;font:400 8px/1 var(--pixel);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.6)}
+.ergo-pin.green{border:1px solid #22c55e;color:#22c55e}
+.ergo-pin.yellow{border:1px solid #ffd400;color:#ffd400}
+.ergo-pin.dpad{left:36px;bottom:32px}
+.ergo-pin.btns{right:36px;bottom:32px}
+.ergo-screen .f-ghost{position:absolute;bottom:40px;height:140px;image-rendering:pixelated;opacity:.55;transform:scaleX(-1)}
+.ergo-screen .f-ghost.g1{left:30%}
+.ergo-screen .f-ghost.g2{right:30%}
+
+/* ===== visual system ===== */
+.sys{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+@media(max-width:860px){.sys{grid-template-columns:1fr}}
+.sw{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sw div{height:64px;border-radius:10px;padding:8px;font:400 7px/1.3 var(--pixel);color:#fff;display:flex;align-items:flex-end;transition:transform .3s var(--snap)}
+.sw div:hover{transform:translateY(-4px) rotate(-2deg)}
+.type-s{display:grid;gap:12px}
+.type-s div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px dashed var(--pf-line);padding-bottom:10px}
+.type-s small{font-size:12px;color:var(--pf-ink-2)}
+.comp{display:grid;gap:16px;justify-items:center}
+.comp .mini-hp{width:100%;height:16px;border:3px solid #8a8a8a;background:#3a0a00;transform:skew(-14deg);position:relative;overflow:hidden}
+.comp .mini-hp i{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 8px,rgba(0,0,0,.25) 8px 10px),linear-gradient(90deg,#E3120B,#FF7A00 30%,#FFD400);animation:drain 4s ease-in-out infinite}
+.comp .mini-badge{width:84px;height:auto;aspect-ratio:291/259}
+.comp .mini-cur{width:64px;height:64px;position:relative;background:url(assets/p-miguel.png) center/cover;image-rendering:pixelated}
+.comp .mini-cur .cur{opacity:1;animation:blink .5s steps(1) infinite}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12) translateY(-2%)}}
+@keyframes breathe{50%{opacity:.6;transform:translate(-50%,-50%) scale(1.1)}}
+@keyframes stripes{to{-webkit-mask-position:0 7.4cqh;mask-position:0 7.4cqh}}
+@keyframes logoIn{from{opacity:0;transform:translateX(-50%) scale(1.8)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes shine{0%,55%{background-position:150% 0}100%{background-position:-60% 0}}
+@keyframes bob{50%{transform:translateX(-50%) translateY(-1.2cqh)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+@keyframes hit{0%,100%{transform:none;filter:none}30%{transform:translateX(3cqh);filter:brightness(2.2) sepia(1) hue-rotate(-40deg) saturate(6)}60%{transform:translateX(1.4cqh)}}
+@keyframes hitL{0%,100%{transform:none;filter:none}30%{transform:translateX(-3cqh);filter:brightness(2.2) sepia(1) hue-rotate(-40deg) saturate(6)}}
+@keyframes spark{0%{opacity:1;transform:scale(.4) rotate(0)}100%{opacity:0;transform:scale(1.5) rotate(40deg)}}
+@keyframes combo{0%{opacity:0;transform:scale(.4) rotate(-10deg)}30%{opacity:1;transform:scale(1.15) rotate(-6deg)}100%{opacity:0;transform:scale(1) translateY(-4cqh) rotate(-6deg)}}
+@keyframes shake{20%{transform:translate(-1%,1%)}40%{transform:translate(1%,-1%)}60%{transform:translate(-1%,0)}80%{transform:translate(1%,1%)}}
+@keyframes rise{from{opacity:0;transform:translateY(4cqh)}to{opacity:1;transform:none}}
+@keyframes glitch{0%{opacity:0;transform:translateX(-3cqh);filter:drop-shadow(1cqh 0 #E50914) drop-shadow(-1cqh 0 #00e5ff)}50%{opacity:1;transform:translateX(2cqh);filter:drop-shadow(-1cqh 0 #E50914) drop-shadow(1cqh 0 #00e5ff)}100%{opacity:1;transform:none;filter:drop-shadow(0 0 2.5cqh rgba(255,234,0,.45)) drop-shadow(0 1cqh 2cqh rgba(0,0,0,.6))}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(229,9,20,.6)}50%{box-shadow:0 0 0 2cqh rgba(229,9,20,0)}}
+@keyframes fill{0%{transform:scaleX(0)}25%,100%{transform:scaleX(1);opacity:0}}
+@keyframes drain{0%,100%{width:100%}60%{width:22%}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .start .logo{opacity:1}
+  .unlocked .t,.unlocked .play{animation:none!important}
+}
+</style>
+</head>
+<body data-case="cobra-kai">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="tear" d="M0 100 L0 76.8 L11 82.4 L22 79.6 L33 72.5 L44 75.7 L56 79.4 L67 74.4 L78 73.3 L89 80.7 L100 72.2 L111 69.1 L122 67.5 L133 69.9 L144 70.8 L156 65.4 L167 66.2 L178 66.5 L189 63.8 L200 65.8 L211 64.2 L222 65.5 L233 60.6 L244 58.7 L256 62.4 L267 64.5 L278 61.0 L289 61.0 L300 59.0 L311 57.4 L322 58.5 L333 55.2 L344 51.5 L356 54.9 L367 55.3 L378 51.5 L389 48.2 L400 50.7 L411 54.9 L422 48.5 L433 45.6 L444 48.1 L456 49.3 L467 44.7 L478 44.5 L489 48.0 L500 41.7 L511 41.4 L522 43.1 L533 38.3 L544 40.1 L556 43.4 L567 39.6 L578 45.5 L589 39.9 L600 39.3 L611 40.3 L622 35.5 L633 32.6 L644 33.7 L656 30.6 L667 29.3 L678 35.7 L689 30.1 L700 27.8 L711 33.1 L722 31.2 L733 27.0 L744 29.7 L756 23.3 L767 30.2 L778 21.8 L789 27.7 L800 25.0 L811 21.9 L822 24.0 L833 23.3 L844 18.6 L856 23.2 L867 21.2 L878 20.0 L889 17.7 L900 16.6 L911 14.4 L922 18.5 L933 17.6 L944 17.0 L956 11.1 L967 10.1 L978 12.4 L989 13.1 L1000 11.1 L1000 100Z"/>
+    <symbol id="fist" viewBox="0 0 24 20"><path d="M4 6h3V3h3v3h1V2h3v4h1V3h3v4h1v-2h2v8l-3 4H8l-4-3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 6v4M11 6v4M15 6v4M19 7v3" stroke="#111" stroke-width="1.4"/></symbol>
+  </defs>
+</svg>
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Cobra Kai</span></a>
+    <ul class="pf-links">
+      <li><a href="#fluxo">Fluxo</a></li>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#escolha">Seleção</a></li>
+      <li><a href="#luta">Luta</a></li>
+      <li><a href="#ergonomia">Ergonomia & HUD</a></li>
+      <li><a href="#recompensa">Recompensa</a></li>
+      <li><a href="#sistema">Sistema</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto><a href="../blue-services/index.html" style="--c:#11284B">Blue Services</a><a href="../cobra-kai/index.html" aria-current="page" style="--c:#E3120B">Cobra Kai</a></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 02</b> · Conceito · Game UI · Pixel art</p>
+    <h1>Para ver a estreia antes de todo mundo, <em>vença a luta.</em></h1>
+    <p class="lede">Conceito de arte e UI para um jogo mobile de luta que promove a 3ª temporada de Cobra Kai no Brasil. Quem atinge a pontuação máxima ganha acesso antecipado ao primeiro episódio.</p>
+    <dl class="pf-meta">
+      <div><dt>Projeto</dt><dd>Cobra Kai · 3ª Temporada</dd></div>
+      <div><dt>Tipo</dt><dd>Advergame mobile (conceito)</dd></div>
+      <div><dt>Entregas</dt><dd>Key art, pixel art, sprites, HUD e telas</dd></div>
+      <div><dt>Ferramentas</dt><dd>Illustrator, Photoshop <span class="pf-tools" aria-hidden="true"><i style="color:#FF9A00;border-color:#FF9A00;background:#330000">Ai</i><i style="color:#31A8FF;border-color:#31A8FF;background:#001E36">Ps</i></span></dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover ck-cover" role="img" aria-label="Key art: Daniel LaRusso e Johnny Lawrence frente a frente, com os alunos dos dois dojôs e duas silhuetas lutando ao pôr do sol">
+    <img class="art" src="assets/keyart.jpg" alt="">
+    <i class="flare" aria-hidden="true"></i>
+    <div class="ttl" aria-hidden="true"><img class="logo big" src="assets/logo.png" alt="Cobra Kai"><small>Strike first · Strike hard · No mercy</small></div>
+  </div>
+</header>
+
+<section id="fluxo" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">Como funciona</p>
+      <h2>Quatro telas, uma recompensa.</h2>
+      <p class="lede">O jogador escolhe um lutador da série, enfrenta o rival numa luta curta no estilo arcade dos anos 90 e, ao atingir a pontuação máxima, libera o pré-lançamento da temporada.</p>
+    </div>
+    <div class="flow rv">
+      <a class="pf-card" href="#inicio" style="--i:0"><span class="n">01</span><h3>Toque para iniciar</h3><p>Tela de abertura com o pôr do sol do dojô.</p></a>
+      <a class="pf-card" href="#escolha" style="--i:1"><span class="n">02</span><h3>Escolha o lutador</h3><p>Oito personagens em pixel art e um aleatório.</p></a>
+      <a class="pf-card" href="#luta" style="--i:2"><span class="n">03</span><h3>Use todo seu karatê</h3><p>Luta com HUD de arcade e combos.</p></a>
+      <a class="pf-card" href="#recompensa" style="--i:3"><span class="n">04</span><h3>Pré-lançamento</h3><p>A pontuação máxima libera o episódio.</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- 01 · start -->
+<section id="inicio" class="ck-start-sec">
+  <div class="ck-start-red">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>01</b> · Tela inicial</p>
+        <h2>Toque na tela para iniciar.</h2>
+        <p class="lede">O sol listrado do pôster vira a assinatura do jogo: listras que descem em loop, o logo clássico em pixel art e as silhuetas da cena final do key art.</p>
+      </div>
+      <div class="ck-start-stage rv">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Toque na tela do celular</span></div>
+        <div class="lphone">
+          <div class="lscr" id="startScr" role="button" tabindex="0" aria-label="Tela inicial do jogo. Toque para ir à seleção de lutador">
+            <div class="start" id="start">
+              <i class="glow"></i><i class="sun"></i>
+              <img class="logo" src="assets/logo.png" alt="Cobra Kai">
+              <img class="sil px" src="assets/silhouettes.png" alt="">
+              <span class="tap" id="tapTxt">TOQUE NA TELA PARA INICIAR</span>
+              <i class="flash"></i>
+            </div>
+            <i class="notch"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="ck-start-edge" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true"><use href="#tear" fill="#FFD400"/></svg>
+  <div class="ck-start-yel">
+    <div class="wrap">
+      <figcaption class="rv"><b>Tela de abertura.</b> Faixa vermelha com borda rasgada e sol listrado, as mesmas formas da prancha original.</figcaption>
+    </div>
+  </div>
+</section>
+<svg class="edge flip" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" style="background:var(--pf-paper)"><use href="#tear" fill="#FFD400"/></svg>
+
+<!-- 02 · select -->
+<section id="escolha" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Seleção</p>
+      <h2>Escolha o lutador.</h2>
+      <p class="lede">Retratos em pixel art com fundos de cor sólida, moldura dourada e as cobras do emblema enrolando a grade. O slot central é o aleatório, marcado com o punho do dojô.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-yel">
+        <div class="tag-row"><span class="pill">Interativo</span><span class="pill">Mouse, setas ou toque</span></div>
+        <div class="sel-wrap">
+          <div class="stage" id="stage">
+            <img class="px" src="assets/select-bg.png" alt="Cenário amarelo com duas cobras vermelhas em pixel art e o título Escolha o lutador">
+            <div class="grid" id="grid" role="listbox" aria-label="Lutadores"></div>
+            <div class="vs" id="vs" aria-hidden="true"><img class="l px" src="assets/p-larusso.png" alt=""><b>VS</b><img class="r px" src="assets/p-lawrence.png" alt=""></div>
+          </div>
+          <div class="panel" id="panel" aria-live="polite">
+            <span class="lock">P1 OK!</span>
+            <div class="who"><img class="px" id="pImg" src="assets/p-larusso.png" alt=""><div><div class="nm" id="pName">D. LARUSSO</div><div class="st" id="pDojo">Miyagi-Do</div></div></div>
+            <div class="bars">
+              <label>FORÇA<i id="bF" style="--v:60%"></i></label>
+              <label>VELOCIDADE<i id="bV" style="--v:70%"></i></label>
+              <label>TÉCNICA<i id="bT" style="--v:90%"></i></label>
+            </div>
+            <p class="hint">Passe o mouse ou use as setas para navegar; clique ou Enter para escolher.</p>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Seleção de personagem.</b> Escolher abre a tela VS; o slot do punho sorteia um lutador. Os atributos são proposta de game design.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 03 · fight (signature band) -->
+<svg class="edge" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" style="background:var(--pf-paper)"><use href="#tear" fill="#E3120B"/></svg>
+<section id="luta" class="pf-sec ck-band" style="padding-top:clamp(24px,4vw,48px)">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Luta</p>
+      <h2>Use todo seu karatê.</h2>
+      <p class="lede">HUD de arcade: retratos com moldura, placas de nome inclinadas, barras de vida segmentadas e o selo K.O. com o punho no centro. Os controles na tela foram pensados para o polegar.</p>
+    </div>
+    <figure class="rv">
+      <div class="lphone">
+        <div class="lscr" id="fightScr" aria-label="Demonstração da luta. Use os botões Chute e Soco, ou as teclas K e J">
+          <div class="fight" id="fight">
+            <i class="shadow" style="left:calc(50% - 30cqh)"></i><i class="shadow" style="left:calc(50% + 2cqh)"></i>
+            <div class="fighter f1" id="f1"><img src="assets/novos/daniel1.png" alt="LaRusso"></div>
+            <div class="fighter f2" id="f2"><img src="assets/novos/parado1.png" alt="Lawrence"></div>
+            <i class="spark" id="spark"></i>
+            <div class="hud">
+              <div class="side l"><div class="pp"><img src="assets/p-larusso.png" alt=""></div><div><div class="plate">D. LARUSSO</div><div class="hp" id="hp1"><em></em><i></i></div></div></div>
+              <div class="mid"><img class="badge" src="assets/badge.png" alt="K.O."><div class="timer" id="timer">99</div></div>
+              <div class="side r"><div class="pp"><img src="assets/p-lawrence.png" alt=""></div><div><div class="plate">J. LAWRENCE</div><div class="hp" id="hp2"><em></em><i></i></div></div></div>
+            </div>
+            <div class="score">PONTOS<br><span id="score">000000</span></div>
+            <div class="combo" id="combo">x2 COMBO!</div>
+            <div class="pad" id="pad" aria-hidden="true"><svg viewBox="0 0 100 100">
+              <defs><linearGradient id="padG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4a4a"/><stop offset="1" stop-color="#121212"/></linearGradient></defs>
+              <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,.42)" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+              <g class="cross">
+                <path d="M38 12h24a4 4 0 0 1 4 4v18h18a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H66v18a4 4 0 0 1-4 4H38a4 4 0 0 1-4-4V66H16a4 4 0 0 1-4-4V38a4 4 0 0 1 4-4h18V16a4 4 0 0 1 4-4z" fill="url(#padG)" stroke="#000" stroke-width="2.5"/>
+                <path d="M39 14.5h22M14.5 39v22" stroke="rgba(255,255,255,.28)" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="8" fill="#0d0d0d" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+                <path class="ar u" d="M50 19l-6 8h12z"/><path class="ar d" d="M50 81l-6-8h12z"/>
+                <path class="ar l" d="M19 50l8-6v12z"/><path class="ar r" d="M81 50l-8-6v12z"/>
+              </g>
+            </svg></div>
+            <div class="btns"><button type="button" class="p" id="bP" data-key="J" aria-label="Soco (tecla J)">SOCO</button><button type="button" class="k" id="bK" data-key="K" aria-label="Chute (tecla K)">CHUTE</button></div>
+            <div class="ko" id="ko"><img class="badge" src="assets/badge.png" alt="K.O."><div class="msg">PONTUAÇÃO MÁXIMA!<br>PRÉ-ESTREIA LIBERADA</div></div>
+          </div>
+          <i class="notch"></i>
+        </div>
+      </div>
+      <figcaption><b>Interativo.</b> Toque em CHUTE ou SOCO (ou use as teclas K e J). A demonstração joga sozinha até você assumir.</figcaption>
+    </figure>
+
+    <div class="sprites">
+      <div class="pf-card sheet rv">
+        <span class="tag"><span>Sprite · Miyagi-Do</span><span>3 frames</span></span>
+        <div class="frames"><figure><img src="assets/novos/daniel_chute1.png" alt="Frame 1: antecipação"><figcaption>01 GUARDA</figcaption></figure><figure><img src="assets/novos/daniel_chute2.png" alt="Frame 2: chute alto"><figcaption>02 CHUTE</figcaption></figure><figure><img src="assets/novos/daniel_chute3.png" alt="Frame 3: recuo"><figcaption>03 RECUO</figcaption></figure></div>
+        <div class="preview"><div class="live"><img id="liveW" src="assets/novos/daniel_chute1.png" alt="Animação do sprite em loop"></div><div><p>Golpe do grou em 3 quadros: antecipação, impacto do chute alto e retorno à base.</p><div class="fps" data-for="liveW"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
+      </div>
+      <div class="pf-card sheet rv">
+        <span class="tag"><span>Sprite · Cobra Kai</span><span>5 frames</span></span>
+        <div class="frames"><figure><img src="assets/novos/soco1.png" alt="Frame 1"><figcaption>01 BASE</figcaption></figure><figure><img src="assets/novos/soco2.png" alt="Frame 2"><figcaption>02 PREP</figcaption></figure><figure><img src="assets/novos/soco3.png" alt="Frame 3"><figcaption>03 IMPACTO</figcaption></figure><figure><img src="assets/novos/soco4.png" alt="Frame 4"><figcaption>04 RECUO</figcaption></figure><figure><img src="assets/novos/soco5.png" alt="Frame 5"><figcaption>05 RETORNO</figcaption></figure></div>
+        <div class="preview"><div class="live"><img id="liveB" src="assets/novos/soco1.png" alt="Animação do sprite em loop"></div><div><p>Soco do Cobra Kai em 5 quadros: postura de ataque, avanço com jab, impacto esticado e recuperação rápida.</p><div class="fps" data-for="liveB"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- gameplay video clips showcase -->
+    <div class="ck-clips rv" id="gameplayClips">
+      <div class="ck-clips-head">
+        <div class="ck-clips-ttl">
+          <b>Clipes de Gameplay em Ação · 60 FPS</b>
+          <span>Animação fluida de combate e transição cinematográfica de estreia</span>
+        </div>
+        <div class="ck-clips-tabs" role="tablist" id="clipTabs" aria-label="Seletor de Clipes de Gameplay">
+          <button type="button" role="tab" aria-selected="true" id="tabClip1" data-clip="combate">01 · Golpe do Grou & K.O.</button>
+          <button type="button" role="tab" aria-selected="false" id="tabClip2" data-clip="unlock">02 · Unlock da Estreia</button>
+        </div>
+      </div>
+
+      <div class="ck-player-box">
+        <video id="gameplayVid" autoplay loop muted playsinline poster="assets/dojo-bg.webp">
+          <source src="assets/clip-combate.mp4" type="video/mp4">
+          <source src="assets/clip-combate.webm" type="video/webm">
+        </video>
+        <div class="ck-crt-overlay"></div>
+        <div class="ck-player-bar">
+          <button type="button" class="ck-player-btn" id="btnPlayPause" aria-label="Pausar ou reproduzir vídeo">
+            <span id="playIcon">❚❚</span> <span id="playTxt">PAUSAR</span>
+          </button>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="ck-badge-fps">ARCADE 60 FPS</span>
+            <span id="clipTime" style="font:400 9px/1 var(--pixel);color:#fff;text-shadow:1px 1px 0 #000">00:04.2 / LOOP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ck-clip-meta" id="clipMetaCombate">
+        <div class="ck-clip-card">
+          <b>Hit-Freeze (4 Frames)</b>
+          <p>Micro-pausa calculada no instante do impacto do chute alto para conferir sensação de peso e impacto ósseo clássico dos arcades dos anos 90.</p>
+        </div>
+        <div class="ck-clip-card">
+          <b>Câmera Dinâmica (Screen Shake)</b>
+          <p>Tremor de tela nos eixos X/Y durante o golpe crítico, amplificando o drama do K.O. e disparando o badge monumental com partículas.</p>
+        </div>
+        <div class="ck-clip-card">
+          <b>Multiplicador x5 Combo</b>
+          <p>Encadeamento de jabs com o Golpe do Grou acumula bônus exponencial de pontos, culminando na pontuação máxima de 999.999.</p>
+        </div>
+      </div>
+
+      <div class="ck-clip-meta" id="clipMetaUnlock" style="display:none">
+        <div class="ck-clip-card">
+          <b>Glitch CRT & Scanlines</b>
+          <p>Efeito analógico de tubo dos anos 80 simulando a transição de um fliperama de shopping para a transmissão da plataforma de streaming.</p>
+        </div>
+        <div class="ck-clip-card">
+          <b>Contagem Turbo de Pontos</b>
+          <p>A barra amarela carrega enquanto o contador sobe acelerado até o limite 999.999, gerando sensação imediata de recompensa merecida.</p>
+        </div>
+        <div class="ck-clip-card">
+          <b>Call-to-Action Pulsante</b>
+          <p>O botão "Assistir episódio" pulsa em ritmo cardíaco (1.8s) com brilho carmesim, convidando o usuário ao toque imediato para abrir a Netflix.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<svg class="edge flip" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" style="background:var(--pf-bg)"><use href="#tear" fill="#E3120B"/></svg>
+
+<!-- 04 · ergonomia & hud -->
+<section id="ergonomia" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>04</b> · Ergonomia mobile & Arquitetura de HUD</p>
+      <h2>Pegada de duas mãos: alcance de polegar sem cobrir a ação.</h2>
+      <p class="lede">Em jogos mobile de luta em modo paisagem, a ergonomia determina se o jogador tem reflexos rápidos ou cansaço muscular. O layout separa zonas de toque confortável e mantém o centro da tela totalmente desobstruído para a visualização dos golpes.</p>
+    </div>
+
+    <figure class="rv">
+      <div class="ergo-stage-box">
+        <div class="ergo-controls">
+          <div class="tag-row"><span class="pill y">Diagrama de Usabilidade</span><span class="pill w">Landscape Two-Hand Grip</span></div>
+          <div class="ergo-tabs" role="tablist" id="ergoTabs" aria-label="Camadas do diagrama ergonômico">
+            <button type="button" role="tab" aria-selected="true" data-layer="reach">Zonas de Polegares</button>
+            <button type="button" role="tab" aria-selected="false" data-layer="safe">Safe Area & Notch</button>
+            <button type="button" role="tab" aria-selected="false" data-layer="hud">Arquitetura de HUD</button>
+          </div>
+        </div>
+
+        <div class="ergo-phone">
+          <div class="ergo-screen">
+            <!-- ghosts of fighters in playfield -->
+            <img class="f-ghost g1" src="assets/novos/daniel_chute2.png" alt="">
+            <img class="f-ghost g2" src="assets/novos/soco3.png" alt="">
+
+            <!-- HUD wireframe -->
+            <div class="ergo-hud-wire" id="ergoHudWire">
+              <span>◄ 1P · D. LARUSSO [HP: 100%]</span>
+              <span style="color:#fff">TIMER 99</span>
+              <span>[HP: 100%] J. LAWRENCE · 2P ►</span>
+            </div>
+
+            <!-- Layer 1: Thumb Reach Zones -->
+            <div class="ergo-overlay" id="ergoLayerReach">
+              <div class="ergo-arc stretch-l" title="Alcance Estendido (Polegar Esquerdo)"></div>
+              <div class="ergo-arc stretch-r" title="Alcance Estendido (Polegar Direito)"></div>
+              <div class="ergo-arc left" title="Raio de Toque Confortável (D-Pad)"></div>
+              <div class="ergo-arc right" title="Raio de Toque Confortável (Soco e Chute)"></div>
+              <div class="ergo-deadzone">
+                <span>VIEWPORT SEGURO (72% DA LARGURA)</span>
+                <span style="background:rgba(0,0,0,.75);font-size:7px;color:#eee">Zero obstrução visual pelos polegares</span>
+              </div>
+              <div class="ergo-pin green dpad">● D-PAD (RAIO 52mm)</div>
+              <div class="ergo-pin green btns">● SOCO + CHUTE (RAIO 58mm)</div>
+            </div>
+
+            <!-- Layer 2: Safe Area & Notch -->
+            <div class="ergo-overlay" id="ergoLayerSafe" style="display:none">
+              <div class="ergo-notch-guide">NOTCH / DYNAMIC ISLAND · 44px INSET</div>
+              <div class="ergo-notch-guide r">SAFE AREA INSET · 44px</div>
+              <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:400 9px/1.5 var(--pixel);color:var(--yel);text-align:center;background:rgba(0,0,0,.85);padding:12px 18px;border-radius:8px;border:1px solid rgba(255,212,0,.4)">
+                MARGENS LATERAIS ANCORADAS EM env(safe-area-inset)<br>
+                <small style="color:#aaa;font-size:8px">Previne acionamentos acidentais pela palma e cortes de hardware</small>
+              </div>
+            </div>
+
+            <!-- Layer 3: HUD Architecture -->
+            <div class="ergo-overlay" id="ergoLayerHud" style="display:none">
+              <div style="position:absolute;left:52px;top:50px;font:400 8px/1.4 var(--pixel);color:#fff;background:rgba(0,0,0,.85);padding:8px 12px;border-radius:6px;border-left:3px solid var(--yel)">
+                ANATOMIA DA BARRA DE VIDA:<br>
+                <span style="color:#aaa">• Inclinada a -14° (dinamismo arcade)<br>• Segmentação dupla (HP real + Lag branco)<br>• Container Queries (cqh) p/ escalonamento fluido</span>
+              </div>
+              <div style="position:absolute;right:52px;top:50px;font:400 8px/1.4 var(--pixel);color:#fff;background:rgba(0,0,0,.85);padding:8px 12px;border-radius:6px;border-right:3px solid var(--yel);text-align:right">
+                BOTÕES VIRTUAIS TÁTEIS:<br>
+                <span style="color:#aaa">• Diâmetro de 52 dp (Fitts's Law)<br>• Curso visual de 1cqh ao toque<br>• Feedback sonoro de 15ms via Web Audio</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Mapeamento biomecânico da pegada horizontal.</b> Os arcos verdes indicam a rotação natural da articulação carpometacarpal do polegar, posicionando os comandos de ataque exatamente onde a musculatura exerce menor esforço.</figcaption>
+    </figure>
+
+    <div class="grid-3 rv" style="margin-top:28px">
+      <article class="pf-card">
+        <span class="tag">Biomecânica</span>
+        <h3>Ângulo Neutro de 35°</h3>
+        <p>A inclinação dos botões virtuais respeita a anatomia da eminência tenar, permitindo partidas intensas sem sintomas de LER ou fadiga muscular no polegar.</p>
+      </article>
+      <article class="pf-card">
+        <span class="tag">Precisão tátil</span>
+        <h3>Touch Targets de 52 dp</h3>
+        <p>A área de clique invisível excede o botão gráfico em 20%, garantindo que mesmo toques descentralizados durante combos rápidos sejam registrados sem falha.</p>
+      </article>
+      <article class="pf-card">
+        <span class="tag">Multi-tela</span>
+        <h3>Safe Areas & Notch Insets</h3>
+        <p>Todos os elementos da HUD e os botões virtuais usam <code>env(safe-area-inset)</code> e Container Queries (<code>cqh/cqw</code>), adaptando-se perfeitamente de 16:9 a 20:9.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<svg class="edge" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" style="background:var(--pf-paper)"><use href="#tear" fill="#E3120B"/></svg>
+
+<!-- 05 · reward -->
+<section id="recompensa" class="pf-sec" style="padding-top:clamp(40px,6vw,80px)">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>05</b> · Recompensa</p>
+      <h2>A pontuação máxima libera a estreia.</h2>
+      <p class="lede">A transição sai do pixel art para a linguagem da plataforma: fundo preto, emblema em dourado, título em pincel e a marca do streaming. É o momento em que o jogo vira trailer.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dark">
+        <div class="tag-row"><span class="pill y">Sequência</span><span class="pill">Pontuação → carregamento → estreia</span></div>
+        <div class="lphone">
+          <div class="lscr" id="rewardScr" style="cursor:default">
+            <div class="reward" id="reward">
+              <img class="emb" src="assets/cobra.png" alt="" aria-hidden="true">
+              <div class="content">
+                <span class="pre">ASSISTA AGORA O PRÉ-LANÇAMENTO</span>
+                <img class="t" src="assets/logo2.png" alt="Cobra Kai">
+                <span class="s">SEASON 3</span>
+                <span class="n">NETFLIX</span>
+                <span class="play"><i></i>Assistir episódio</span>
+              </div>
+              <div class="gate"><div class="sc">PONTUAÇÃO<b id="gScore">000000</b>LIBERANDO ACESSO…<div class="bar"><i id="gBar"></i></div></div></div>
+            </div>
+            <i class="notch"></i>
+          </div>
+        </div>
+        <button type="button" class="replay" id="rReplay">↺ VER DE NOVO</button>
+      </div>
+      <figcaption><b>Desbloqueio.</b> A pontuação sobe até 999.999, a barra carrega e a tela do pré-lançamento é revelada.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- visual system -->
+<section id="sistema" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">Sistema visual</p>
+      <h2>Arcade dos anos 90, cores do dojô.</h2>
+      <p class="lede">Três famílias tipográficas com papéis claros e uma paleta tirada direto do emblema e do pôr do sol do pôster.</p>
+    </div>
+    <div class="sys">
+      <div class="pf-card rv"><span class="tag">Paleta</span><div class="sw">
+        <div style="background:#E3120B">RED<br>#E3120B</div><div style="background:#FFD400;color:#111">YELLOW<br>#FFD400</div><div style="background:#FF8A00">ORANGE<br>#FF8A00</div>
+        <div style="background:#0B0B0B">BLACK<br>#0B0B0B</div><div style="background:#C9962A">GOLD<br>#C9962A</div><div style="background:#E4F02B;color:#111">LIME<br>#E4F02B</div></div></div>
+      <div class="pf-card rv"><span class="tag">Tipografia</span><div class="type-s">
+        <div><span style="font:400 30px/1 var(--brush);transform:skew(-8deg);display:inline-block">Cobra Kai</span><small>Pincel · títulos</small></div>
+        <div><span style="font:400 13px/1 var(--pixel)">K.O. 99</span><small>Pixel · HUD</small></div>
+        <div><span style="font:400 30px/1 var(--cond)">SEASON 3</span><small>Condensada · broadcast</small></div></div></div>
+      <div class="pf-card rv"><span class="tag">Componentes</span><div class="comp">
+        <img class="badge mini-badge" src="assets/badge.png" alt="Selo K.O.">
+        <div class="mini-hp"><i></i></div>
+        <div class="mini-cur"><span class="cur c1"><b>1P</b></span></div></div></div>
+    </div>
+    <div class="callout rv"><b>Projeto conceitual, não oficial.</b> Feito para portfólio, sem vínculo com a Netflix ou com os produtores da série. Cobra Kai, Netflix e os personagens pertencem aos seus respectivos donos.</div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../blue-services/index.html"><img src="../blue-services/assets/home_cleaning_banner-1024x683.webp" alt="" loading="lazy"><div><b>Blue Services</b><span>Reserva com preço ao vivo, rastreio em tempo real e operações para um marketplace de limpeza.</span></div><i class="arr" aria-hidden="true">→</i></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso apresentar o processo, os arquivos originais e as decisões de arte ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Cobra Kai · conceito de jogo mobile</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var sleep = function(ms){return new Promise(function(r){setTimeout(r,ms)})};
+
+  /* reveal + pause loops off-screen + run-once hooks */
+  var once = new WeakMap();
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+    var fn = once.get(el); if(fn && e.isIntersecting){once.delete(el);fn()}
+  })},{threshold:.2}) : null;
+  function watch(el,fn){ if(fn) once.set(el,fn); if(io) io.observe(el); else { el.classList.add('in'); if(fn) fn() } }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(function(el){watch(el)});
+  $$('.lscr,.ck-cover,.stage').forEach(function(el){ el.dataset.loop=''; watch(el) });
+
+  /* ===== 01 start screen ===== */
+  (function(){
+    var scr = $('#startScr'), st = $('#start'), txt = $('#tapTxt');
+    function go(){
+      st.classList.remove('go'); void st.offsetWidth; st.classList.add('go'); txt.textContent = 'PREPARE-SE!';
+      setTimeout(function(){ $('#escolha').scrollIntoView({behavior:RM?'auto':'smooth'}); },650);
+      setTimeout(function(){ st.classList.remove('go'); txt.textContent = 'TOQUE NA TELA PARA INICIAR' },1800);
+    }
+    scr.addEventListener('click',go);
+    scr.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();go()} });
+  })();
+
+  /* ===== 02 select ===== */
+  var FIGHTERS = [
+    {id:'larusso', n:'D. LARUSSO', d:'Miyagi-Do', s:[60,70,95]},
+    {id:'lawrence',n:'J. LAWRENCE',d:'Eagle Fang', s:[85,70,75]},
+    {id:'miguel',  n:'MIGUEL',     d:'Eagle Fang', s:[75,85,70]},
+    {id:'kreese',  n:'J. KREESE',  d:'Cobra Kai',  s:[90,55,80]},
+    {id:'robby',   n:'ROBBY',      d:'Cobra Kai',  s:[70,80,75]},
+    {id:'tory',    n:'TORY',       d:'Cobra Kai',  s:[75,85,65]},
+    {id:'sam',     n:'SAM',        d:'Miyagi-Do',  s:[60,80,85]},
+    {id:'random',  n:'ALEATÓRIO',  d:'Qualquer dojô', s:[50,50,50]},
+    {id:'hawk',    n:'HAWK',       d:'Cobra Kai',  s:[85,80,60]}
+  ];
+  (function(){
+    var grid = $('#grid'), panel = $('#panel'), vs = $('#vs'), stage = $('#stage');
+    FIGHTERS.forEach(function(f,i){
+      var c = document.createElement('div'); c.className='cell'; c.tabIndex = i===0?0:-1; c.setAttribute('role','option'); c.dataset.i=i;
+      c.setAttribute('aria-label',f.n+(f.id==='random'?'':' · '+f.d));
+      c.innerHTML = '<img class="px" src="assets/p-'+f.id+'.png" alt=""><span class="cur c1"><b>1P</b></span><span class="cur c2"><b>2P</b></span>';
+      grid.appendChild(c);
+    });
+    var cells = $$('.cell',grid), p1 = 0, p2 = 1, busy = false, user = false;
+    function show(i){
+      var f = FIGHTERS[i];
+      $('#pImg').src = 'assets/p-'+f.id+'.png'; $('#pName').textContent = f.n; $('#pDojo').textContent = f.d;
+      ['bF','bV','bT'].forEach(function(id,k){ $('#'+id).style.setProperty('--v',f.s[k]+'%') });
+    }
+    function paint(){
+      cells.forEach(function(c,k){ c.classList.toggle('p1',k===p1); c.classList.toggle('p2',k===p2); c.classList.toggle('both',k===p1&&k===p2); c.setAttribute('aria-selected',k===p1?'true':'false') });
+      show(p1);
+    }
+    function move(i){ if(busy) return; p1 = i; paint() }
+    async function pick(i,opp){
+      if(busy) return; busy = true;
+      if(FIGHTERS[i].id==='random' && !RM){ for(var r=0;r<12;r++){ p1 = [0,1,2,3,4,5,6,8][Math.floor(Math.random()*8)]; paint(); await sleep(70+r*12) } i = p1 }
+      p1 = i; if(opp===undefined){ do{ opp = Math.floor(Math.random()*9) }while(opp===i||opp===7) }
+      p2 = opp; paint();
+      cells[p1].classList.add('locked'); panel.classList.add('done');
+      await sleep(RM?0:700);
+      $('img.l',vs).src = 'assets/p-'+FIGHTERS[p1].id+'.png'; $('img.r',vs).src = 'assets/p-'+FIGHTERS[p2].id+'.png';
+      vs.classList.add('on'); await sleep(2000); vs.classList.remove('on');
+      cells.forEach(function(c){c.classList.remove('locked')}); panel.classList.remove('done');
+      busy = false;
+    }
+    function takeOver(){ user = true }
+    cells.forEach(function(c,i){
+      c.addEventListener('pointerenter',function(e){ if(e.pointerType==='mouse'){ takeOver(); move(i) } });
+      c.addEventListener('click',function(){ takeOver(); pick(i) });
+      c.addEventListener('focus',function(){ move(i) });
+    });
+    grid.addEventListener('keydown',function(e){
+      var d = {ArrowRight:1,ArrowLeft:-1,ArrowDown:3,ArrowUp:-3}[e.key];
+      if(d){ e.preventDefault(); takeOver(); var n=(p1+d+9)%9; cells[p1].tabIndex=-1; cells[n].tabIndex=0; cells[n].focus() }
+      else if(e.key==='Enter'||e.key===' '){ e.preventDefault(); takeOver(); pick(p1) }
+    });
+    paint();
+    if(RM) return;
+    /* attract mode: P1 wanders, then locks in; P2 picks the rival */
+    var path = [0,3,4,1,2,5,8,7,4,1], k = 0;
+    setInterval(function(){
+      if(user || busy || !visible(stage)) return;
+      k++;
+      if(k % 11 === 10){ pick(0,1); return }
+      move(path[k % path.length]); p2 = [1,2,5,4,3,6][k % 6]; paint();
+    },650);
+  })();
+
+  /* ===== generic sprite player ===== */
+  var SETS = {
+    w: ['novos/daniel_chute1', 'novos/daniel_chute2', 'novos/daniel_chute2', 'novos/daniel_chute3'],
+    b: ['novos/soco1', 'novos/soco2', 'novos/soco3', 'novos/soco4', 'novos/soco5']
+  };
+  function player(img,set,fps){
+    var i = 0, t = null, frames = SETS[set], host = img.closest('.sheet');
+    var figs = host ? $$('.frames figure',host) : [];
+    function tick(){
+      i = (i+1)%frames.length;
+      img.src = 'assets/'+frames[i]+'.png';
+      var real = set==='w' ? (i<=1 ? i : (i===2 ? 1 : 2)) : i;
+      figs.forEach(function(f,k){ f.classList.toggle('on', k===real) });
+    }
+    function setFps(f){ clearInterval(t); if(!RM) t = setInterval(tick,1000/f) }
+    setFps(fps); return {fps:setFps};
+  }
+  var pw = player($('#liveW'),'w',8), pb = player($('#liveB'),'b',8);
+  $$('.fps').forEach(function(g){
+    var pl = g.dataset.for==='liveW'?pw:pb;
+    $$('button',g).forEach(function(b){ b.addEventListener('click',function(){ $$('button',g).forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')}); pl.fps(+b.dataset.f) }) });
+  });
+
+  /* arcade sfx via web audio api */
+  var aCtx = null;
+  function sfx(t){
+    if(RM) return;
+    try{
+      if(!aCtx){ var AC = window.AudioContext || window.webkitAudioContext; if(AC) aCtx = new AC(); }
+      if(!aCtx) return;
+      if(aCtx.state === 'suspended') aCtx.resume();
+      var now = aCtx.currentTime;
+      var o = aCtx.createOscillator(), g = aCtx.createGain();
+      if(t === 'punch'){
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(180, now);
+        o.frequency.exponentialRampToValueAtTime(45, now + 0.1);
+        g.gain.setValueAtTime(0.25, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.1);
+      } else if(t === 'kick'){
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(260, now);
+        o.frequency.exponentialRampToValueAtTime(50, now + 0.16);
+        g.gain.setValueAtTime(0.3, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.16);
+      } else if(t === 'ko'){
+        o.type = 'square';
+        o.frequency.setValueAtTime(110, now);
+        o.frequency.exponentialRampToValueAtTime(28, now + 0.55);
+        g.gain.setValueAtTime(0.4, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.55);
+      } else if(t === 'combo'){
+        o.type = 'sine';
+        o.frequency.setValueAtTime(520, now);
+        o.frequency.exponentialRampToValueAtTime(680, now + 0.12);
+        g.gain.setValueAtTime(0.2, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.12);
+      }
+    }catch(err){}
+  }
+
+  /* ===== 03 fight ===== */
+  (function(){
+    var scr = $('#fightScr'), fight = $('#fight'), f1 = $('#f1'), f2 = $('#f2'), i1 = $('img',f1), i2 = $('img',f2);
+    var hp1 = $('#hp1'), hp2 = $('#hp2'), spark = $('#spark'), combo = $('#combo'), ko = $('#ko'), sc = $('#score'), tm = $('#timer'), pad = $('#pad');
+    var S, user = false, attacking = false, rivalAttacking = false, lastHit = 0, chain = 0;
+
+    var D_IDLE = ['daniel1','daniel2','daniel3','daniel4','daniel3','daniel2'];
+    var J_IDLE = ['parado1','parado2','parado3','parado4','parado3','parado2'];
+
+    function setHp(el,v){ el.style.setProperty('--hp',v+'%'); setTimeout(function(){el.style.setProperty('--lag',v+'%')},20) }
+    function reset(){
+      S = {h1:100,h2:100,score:0,t:99,over:false};
+      setHp(hp1,100); setHp(hp2,100); sc.textContent='000000'; tm.textContent='99';
+      f2.classList.remove('down'); f2.style.transform='';
+      f1.classList.remove('kick'); f1.classList.remove('punch'); f1.classList.remove('hit');
+      ko.classList.remove('on');
+      i1.src='assets/novos/daniel1.png'; i2.src='assets/novos/parado1.png';
+      attacking = false; rivalAttacking = false;
+    }
+
+    var idleB = 0, idleW = 0;
+    if(!RM) setInterval(function(){
+      if(!visible(scr) || S.over) return;
+      if(!rivalAttacking){
+        idleB = (idleB + 1) % J_IDLE.length;
+        i2.src = 'assets/novos/' + J_IDLE[idleB] + '.png';
+      }
+      if(!attacking && !f1.classList.contains('hit')){
+        idleW = (idleW + 1) % D_IDLE.length;
+        i1.src = 'assets/novos/' + D_IDLE[idleW] + '.png';
+      }
+    }, 130);
+
+    if(!RM) setInterval(function(){
+      if(!visible(scr) || S.over) return;
+      S.t = Math.max(0, S.t - 1);
+      tm.textContent = String(S.t).padStart(2,'0');
+    }, 1000);
+
+    async function attack(kind){
+      if(S.over || attacking) return;
+      attacking = true;
+      var isKick = kind === 'k';
+      var dmg = isKick ? 14 : 8;
+      $(isKick ? '#bK' : '#bP').classList.add('press');
+      pad.classList.add('fwd');
+
+      if(isKick){
+        i1.src = 'assets/novos/daniel_chute1.png';
+        await sleep(70);
+        i1.src = 'assets/novos/daniel_chute2.png';
+        f1.classList.add('kick');
+        sfx('kick');
+      } else {
+        i1.src = 'assets/novos/danieldefesa.png';
+        f1.classList.add('punch');
+        sfx('punch');
+      }
+
+      await sleep(75);
+      var r = f2.getBoundingClientRect(), R = fight.getBoundingClientRect();
+      spark.style.left = ((r.left - R.left)/R.width*100 + 2) + '%';
+      spark.style.top = (isKick ? 20 : 34) + '%';
+      spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
+      f2.classList.remove('hit'); void f2.offsetWidth; f2.classList.add('hit');
+
+      var now = performance.now();
+      chain = (now - lastHit < 950) ? chain + 1 : 1;
+      lastHit = now;
+      if(chain >= 2){
+        sfx('combo');
+        combo.textContent = 'x' + chain + ' COMBO!';
+        combo.classList.remove('on'); void combo.offsetWidth; combo.classList.add('on');
+      }
+      S.h2 = Math.max(0, S.h2 - dmg);
+      setHp(hp2, S.h2);
+      S.score += dmg * 1000 * Math.max(1, chain);
+      sc.textContent = String(Math.min(999999, S.score)).padStart(6,'0');
+
+      if(isKick){
+        await sleep(150);
+        i1.src = 'assets/novos/daniel_chute3.png';
+        await sleep(90);
+      } else {
+        await sleep(130);
+      }
+
+      f1.classList.remove('kick');
+      f1.classList.remove('punch');
+      i1.src = 'assets/novos/daniel1.png';
+      $('#bK').classList.remove('press');
+      $('#bP').classList.remove('press');
+      pad.classList.remove('fwd');
+      attacking = false;
+
+      if(S.h2 <= 0) finish();
+    }
+
+    async function finish(){
+      S.over = true;
+      S.score = 999999;
+      sc.textContent = '999999';
+      sfx('ko');
+      fight.classList.remove('shake'); void fight.offsetWidth; fight.classList.add('shake');
+      f2.classList.remove('hit'); f2.style.transition=''; f2.style.transform='';
+      f2.classList.add('down');
+
+      // 3-frame knockout fall
+      i2.src = 'assets/novos/caindo1.png';
+      await sleep(160);
+      i2.src = 'assets/novos/caindo2.png';
+      await sleep(160);
+      i2.src = 'assets/novos/caindo3.png';
+
+      await sleep(350);
+      ko.classList.add('on');
+      await sleep(3800);
+      reset();
+    }
+
+    /* Johnny rival counter-attack: steps forward, throws punch, Daniel defends */
+    async function rivalAttack(){
+      if(!visible(scr) || S.over || attacking || rivalAttacking) return;
+      rivalAttacking = true;
+
+      // 1. Johnny walks forward
+      f2.style.transition = 'transform .2s ease-out';
+      f2.style.transform = 'translateX(-3cqh)';
+      i2.src = 'assets/novos/anda2.png';
+      await sleep(100);
+      i2.src = 'assets/novos/anda4.png';
+      await sleep(100);
+
+      // 2. Johnny strikes with punch
+      if(S.over){ rivalAttacking = false; return }
+      i2.src = 'assets/novos/soco1.png';
+      await sleep(70);
+      if(S.over){ rivalAttacking = false; return }
+      i2.src = 'assets/novos/soco3.png';
+      sfx('punch');
+
+      // Spark on Daniel
+      var r = f1.getBoundingClientRect(), R = fight.getBoundingClientRect();
+      spark.style.left = ((r.right - R.left)/R.width*100 - 8) + '%';
+      spark.style.top = '32%';
+      spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
+
+      // Daniel blocks / reacts
+      i1.src = 'assets/novos/danieldefesa.png';
+      f1.classList.remove('hit'); void f1.offsetWidth; f1.classList.add('hit');
+      S.h1 = Math.max(16, S.h1 - 7);
+      setHp(hp1, S.h1);
+
+      await sleep(140);
+      if(S.over){ rivalAttacking = false; return }
+      i2.src = 'assets/novos/soco5.png';
+      await sleep(110);
+      if(S.over){ rivalAttacking = false; return }
+
+      // 3. Return to stance
+      f2.style.transform = '';
+      i2.src = 'assets/novos/parado1.png';
+      i1.src = 'assets/novos/daniel1.png';
+      await sleep(200);
+      rivalAttacking = false;
+    }
+
+    if(!RM) setInterval(rivalAttack, 2800);
+
+    function takeOver(){ user = true }
+    $('#bK').addEventListener('click',function(e){ e.stopPropagation(); takeOver(); attack('k') });
+    $('#bP').addEventListener('click',function(e){ e.stopPropagation(); takeOver(); attack('p') });
+    scr.addEventListener('click',function(){ takeOver(); attack('k') });
+    document.addEventListener('keydown',function(e){
+      if(!visible(scr)) return;
+      if(e.key==='k'||e.key==='K'){ takeOver(); attack('k') }
+      else if(e.key==='j'||e.key==='J'){ takeOver(); attack('p') }
+    });
+
+    reset();
+    if(RM){ setHp(hp2,0); i2.src='assets/novos/caindo3.png'; ko.classList.add('on'); return }
+
+    var pattern = ['k','p','p','k','k','p','k'], n = 0;
+    setInterval(function(){ if(user||!visible(scr)||S.over) return; attack(pattern[n++%pattern.length]) }, 680);
+  })();
+
+  /* ===== 04 reward ===== */
+  (function(){
+    var rw = $('#reward'), gs = $('#gScore'), bar = $('#gBar'), scr = $('#rewardScr');
+    async function run(){
+      rw.classList.remove('unlocked'); gs.textContent='000000'; bar.style.setProperty('--w','0%');
+      if(RM){ gs.textContent='999999'; rw.classList.add('unlocked'); return }
+      await sleep(300);
+      var t0 = performance.now();
+      await new Promise(function(done){ (function f(t){ var k=Math.min(1,(t-t0)/1400); gs.textContent=String(Math.round(999999*(1-Math.pow(1-k,3)))).padStart(6,'0'); bar.style.setProperty('--w',(k*100)+'%'); if(k<1) requestAnimationFrame(f); else done() })(t0) });
+      await sleep(500); rw.classList.add('unlocked');
+    }
+    watch(scr,run);
+    $('#rReplay').addEventListener('click',run);
+  })();
+
+  /* ===== gameplay video clips controller ===== */
+  (function(){
+    var vid = $('#gameplayVid');
+    var btn = $('#btnPlayPause'), icon = $('#playIcon'), txt = $('#playTxt'), timeDisp = $('#clipTime');
+    var tabs = $$('#clipTabs button');
+    var metaCombate = $('#clipMetaCombate'), metaUnlock = $('#clipMetaUnlock');
+    if(!vid || !btn) return;
+
+    var isPlaying = true;
+    btn.addEventListener('click', function(){
+      if(vid.paused){
+        vid.play();
+        isPlaying = true;
+        icon.textContent = '❚❚';
+        txt.textContent = 'PAUSAR';
+      } else {
+        vid.pause();
+        isPlaying = false;
+        icon.textContent = '▶';
+        txt.textContent = 'REPRODUZIR';
+      }
+    });
+
+    tabs.forEach(function(tb){
+      tb.addEventListener('click', function(){
+        tabs.forEach(function(x){ x.setAttribute('aria-selected', 'false') });
+        tb.setAttribute('aria-selected', 'true');
+        var clip = tb.dataset.clip;
+        if(clip === 'combate'){
+          vid.src = 'assets/clip-combate.mp4';
+          if(metaCombate) metaCombate.style.display = 'grid';
+          if(metaUnlock) metaUnlock.style.display = 'none';
+        } else {
+          vid.src = 'assets/clip-unlock.mp4';
+          if(metaCombate) metaCombate.style.display = 'none';
+          if(metaUnlock) metaUnlock.style.display = 'grid';
+        }
+        vid.load();
+        vid.play().catch(function(){});
+        isPlaying = true;
+        icon.textContent = '❚❚';
+        txt.textContent = 'PAUSAR';
+      });
+    });
+
+    vid.addEventListener('timeupdate', function(){
+      if(!vid.duration) return;
+      var cur = vid.currentTime.toFixed(1);
+      var dur = vid.duration.toFixed(1);
+      timeDisp.textContent = '00:0' + cur + ' / 00:0' + dur;
+    });
+  })();
+
+  /* ===== 04 ergonomics & HUD layer switcher ===== */
+  (function(){
+    var tabs = $$('#ergoTabs button');
+    var layerReach = $('#ergoLayerReach'), layerSafe = $('#ergoLayerSafe'), layerHud = $('#ergoLayerHud');
+    if(!tabs.length) return;
+
+    tabs.forEach(function(b){
+      b.addEventListener('click', function(){
+        tabs.forEach(function(x){ x.setAttribute('aria-selected', 'false') });
+        b.setAttribute('aria-selected', 'true');
+        var lay = b.dataset.layer;
+        if(layerReach) layerReach.style.display = lay === 'reach' ? 'block' : 'none';
+        if(layerSafe) layerSafe.style.display = lay === 'safe' ? 'block' : 'none';
+        if(layerHud) layerHud.style.display = lay === 'hud' ? 'block' : 'none';
+      });
+    });
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erik Plácido — Diretor de Arte Generalista (Audiovisual, TV & Branding)</title>
+  <meta name="description" content="Currículo focado em Direção de Arte Generalista, Cenografia para TV/Streaming, Publicidade e Branding Corporativo de Erik Plácido." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="shared/frame.css" />
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --border-subtle: #F1F5F9;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-faint: #64748B;
+      --accent: #7E22CE;
+      --accent-hover: #6B21A8;
+      --accent-subtle: #FAF5FF;
+      --accent-border: #F3E8FF;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 20px; margin-bottom: 32px; border-bottom: 1px solid var(--border);
+      flex-wrap: wrap; gap: 14px;
+    }
+    .badge-focus {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-subtle); color: var(--accent);
+      border: 1px solid var(--accent-border); font-size: 11px;
+      font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .btn-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; border-radius: 999px; background: var(--surface);
+      border: 1px solid var(--border); color: var(--text-main); font-size: 12.5px;
+      font-weight: 700; text-decoration: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-pill:hover { background: #F1F5F9; border-color: #CBD5E1; transform: translateY(-1px); }
+    .btn-pill.primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+    .btn-pill.primary:hover { background: var(--accent-hover); }
+    
+    .header { margin-bottom: 36px; }
+    .name { font-size: 36px; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; margin-bottom: 4px; }
+    .headline { font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .meta-row { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--text-faint); flex-wrap: wrap; }
+    .meta-row span { display: inline-flex; align-items: center; gap: 6px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #10B981; }
+
+    .contacts-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+    .contact-item {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      border-radius: 999px; background: var(--surface); border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 12.5px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-item:hover { background: #F8FAFC; border-color: #CBD5E1; color: var(--text-main); transform: translateY(-1px); }
+    .contact-item.highlight { background: var(--accent-subtle); border-color: var(--accent-border); color: var(--accent); font-weight: 700; }
+
+    .pitch-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent); border-radius: var(--radius-md);
+      padding: 22px 26px; margin-bottom: 36px; box-shadow: var(--shadow-sm);
+    }
+    .pitch-text { font-size: 14.5px; line-height: 1.7; color: var(--text-muted); }
+    .pitch-text strong { color: var(--text-main); font-weight: 700; }
+
+    .section-title {
+      font-size: 14px; font-weight: 800; color: var(--text-main);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .card-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
+    .exp-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px 26px; box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .exp-card:hover { border-color: #CBD5E1; box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+    .role-name { font-size: 17px; font-weight: 800; color: var(--text-main); }
+    .company-name { font-size: 14px; font-weight: 700; color: var(--accent); margin-top: 2px; }
+    .period-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600;
+      color: var(--text-faint); background: #F1F5F9; padding: 3px 8px; border-radius: 6px;
+    }
+    .bullet-list { list-style: none; margin: 12px 0 14px; display: flex; flex-direction: column; gap: 8px; }
+    .bullet-list li { font-size: 13.5px; line-height: 1.6; color: var(--text-muted); position: relative; padding-left: 18px; }
+    .bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .bullet-list strong { color: var(--text-main); font-weight: 700; }
+
+    .card-footer { display: flex; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; }
+    .case-btn {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700;
+      padding: 4px 12px; border-radius: 6px; background: var(--accent-subtle);
+      border: 1px solid var(--accent-border); color: var(--accent); text-decoration: none;
+      transition: all 0.2s;
+    }
+    .case-btn:hover { background: var(--accent); color: #FFFFFF; }
+
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+    @media (max-width: 720px) { .grid-2col { grid-template-columns: 1fr; } }
+    .info-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm);
+    }
+    .info-title {
+      font-size: 13px; font-weight: 800; color: var(--text-main);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);
+    }
+    .edu-item { margin-bottom: 12px; }
+    .edu-title { font-size: 13.5px; font-weight: 700; color: var(--text-main); }
+    .edu-desc { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+
+    .tag-cluster { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .tag { font-size: 11.5px; font-weight: 600; color: var(--text-muted); background: #F8FAFC; border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px; }
+
+    @media print {
+      body { background: #FFFFFF !important; font-size: 9.5pt; }
+      .top-bar, .btn-pill, .badge-focus { display: none !important; }
+      .container { padding: 0 !important; max-width: 100% !important; }
+      .pitch-box, .exp-card, .info-box { box-shadow: none !important; border: 1px solid #CBD5E1 !important; page-break-inside: avoid; margin-bottom: 12px !important; padding: 12px !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-bar">
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <a href="curriculo.html" class="btn-pill"><i class="fa-solid fa-arrow-left"></i> Visão Geral</a>
+        <span class="badge-focus"><i class="fa-solid fa-palette"></i> Foco: Direção de Arte & Audiovisual</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="pf-lang-picker" role="group" aria-label="Language selection">
+          <button type="button" class="pf-lang-btn active" data-lang="pt" aria-pressed="true" title="Português">PT</button>
+          <button type="button" class="pf-lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
+          <button type="button" class="pf-lang-btn" data-lang="es" aria-pressed="false" title="Español">ES</button>
+          <button type="button" class="pf-lang-btn" data-lang="fr" aria-pressed="false" title="Français">FR</button>
+        </div>
+        <button onclick="window.print()" class="btn-pill primary"><i class="fa-solid fa-file-pdf"></i> Salvar PDF</button>
+      </div>
+    </nav>
+
+    <header class="header">
+      <h1 class="name">Erik Plácido</h1>
+      <div class="headline">Diretor de Arte Generalista (Cenografia, TV, Cinema & Branding)</div>
+      <div class="meta-row">
+        <span><i class="fa-solid fa-location-dot"></i> São Paulo, SP · Brasil</span>
+        <span><i class="fa-solid fa-clapperboard"></i> Cenografia · Adereços de Cena · Key Visuals</span>
+        <span><span class="status-dot"></span> Aberto a Direção de Arte em TV, Cinema & Agências</span>
+      </div>
+      <div class="contacts-grid">
+        <a href="mailto:erik.placido@gmail.com" class="contact-item highlight"><i class="fa-solid fa-envelope"></i> erik.placido@gmail.com</a>
+        <a href="https://wa.me/5511985768545" target="_blank" rel="noopener noreferrer" class="contact-item"><i class="fa-brands fa-whatsapp" style="color:#10B981;"></i> +55 (11) 98576-8545</a>
+        <a href="https://erikplacido.com.br" target="_blank" rel="noopener noreferrer" class="contact-item"><i class="fa-solid fa-globe"></i> erikplacido.com.br</a>
+        <a href="https://linkedin.com/in/erikplacido" target="_blank" rel="noopener noreferrer" class="contact-item"><i class="fa-brands fa-linkedin" style="color:#0A66C2;"></i> LinkedIn</a>
+        <a href="https://behance.net/erikplacido" target="_blank" rel="noopener noreferrer" class="contact-item"><i class="fa-brands fa-behance" style="color:#0057FF;"></i> Behance</a>
+      </div>
+    </header>
+
+    <section class="pitch-box">
+      <p class="pitch-text">
+        Diretor de Arte Generalista com mais de <strong>20 anos de trajetória visual</strong>. Especialista em concepção de <strong>adereços gráficos de cena (props), rótulos fictícios de alta fidelidade e cenografia para longas-metragens, séries de streaming e programas de TV</strong> em emissoras de destaque (Canal GNT, Boutique Filmes, Endemol Shine e Coração da Selva). Ampla bagagem em <strong>key visuals publicitários</strong> para aprovação de campanhas e estruturação de <strong>sistemas visuais de marcas</strong> omnicanais.
+      </p>
+    </section>
+
+    <h2 class="section-title">Experiência em Audiovisual, Cenografia & Direção de Arte</h2>
+    <div class="card-list">
+
+      <article class="exp-card">
+        <div class="card-header">
+          <div>
+            <h3 class="role-name">Diretor de Arte Audiovisual & Produção de Cena</h3>
+            <div class="company-name">Coração da Selva Produções</div>
+          </div>
+          <span class="period-badge">2026</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Direção de Arte para Filmes:</strong> Concepção de materiais gráficos cenográficos de altíssimo realismo (cartazes, documentos, embalagens e placas) para ambientação de cena em longas e séries.</li>
+          <li><strong>Prazos Industriais:</strong> Fechamento e prototipagem física rápida atendendo aos cronogramas dinâmicos de set de filmagem e demandas diretas de direção geral.</li>
+        </ul>
+        <div class="card-footer">
+          <a href="saudosa-maloca/index.html" class="case-btn"><i class="fa-solid fa-clapperboard"></i> Case Saudosa Maloca (Cinema & Peças de Época)</a>
+        </div>
+      </article>
+
+      <article class="exp-card">
+        <div class="card-header">
+          <div>
+            <h3 class="role-name">Diretor de Arte de Cenografia & Props</h3>
+            <div class="company-name">Moonshot Pictures / Canal GNT</div>
+          </div>
+          <span class="period-badge">2014 – 2020</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Programas em TV por Assinatura:</strong> Direção de arte das temporadas 1 e 2 de <em>Que Seja Doce</em> e <em>Desafio da Beleza</em> no canal GNT (Globosat).</li>
+          <li><strong>Rótulos & Embalagens de Cena:</strong> Concepção e produção física de dezenas de mockups e adereços funcionais de estúdio filmados em close-up em rede nacional.</li>
+        </ul>
+        <div class="card-footer">
+          <a href="publicidade/index.html" class="case-btn"><i class="fa-solid fa-tv"></i> Ver Casos de TV e Publicidade</a>
+        </div>
+      </article>
+
+      <article class="exp-card">
+        <div class="card-header">
+          <div>
+            <h3 class="role-name">Assistente de Arte & Produção de Objetos para Streaming</h3>
+            <div class="company-name">Boutique Filmes e Produções</div>
+          </div>
+          <span class="period-badge">2019 – 2021</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Séries Originais para Streaming:</strong> Desenvolvimento de documentos de época, cartazes, crachás e elementos cênicos com rigor histórico para produções de ficção.</li>
+        </ul>
+      </article>
+
+      <article class="exp-card">
+        <div class="card-header">
+          <div>
+            <h3 class="role-name">Designer Gráfico de Key Visuals Publicitários</h3>
+            <div class="company-name">Dogs Can Fly Content Co. / Pink Flamingo Films</div>
+          </div>
+          <span class="period-badge">2018 – 2020</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Propostas Comerciais de Grande Porte:</strong> Direção visual, tratamento de imagem e composição de key visuals para aprovação comercial de filmes publicitários de grandes marcas.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="grid-2col">
+      <div class="info-box">
+        <h3 class="info-title">Formação Acadêmica</h3>
+        <div class="edu-item">
+          <div class="edu-title">Bacharelado em Design Gráfico</div>
+          <div class="edu-desc">Centro Universitário FMU / FIAM-FAAM · 2003 – 2006</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-title">Especializações Técnicas</div>
+          <div class="edu-desc">Tipografia e Ilustração (Belas Artes), Fundamentos de Cenografia & Composição</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3 class="info-title">Arsenal de Direção de Arte</h3>
+        <div class="tag-cluster">
+          <span class="tag">Direção de Arte para TV & Streaming</span>
+          <span class="tag">Design Gráfico de Cena (Props)</span>
+          <span class="tag">Rótulos e Documentos de Época</span>
+          <span class="tag">Key Visuals Publicitários</span>
+          <span class="tag">Photoshop & Illustrator Avançado</span>
+          <span class="tag">Tratamento de Imagem Hiper-realista</span>
+          <span class="tag">Produção de Mockups Físicos</span>
+          <span class="tag">Identidade Visual de Programas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="shared/i18n.js"></script>
+</body>
+</html>

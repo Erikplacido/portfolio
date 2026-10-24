@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Itaiquara · Untaforma · Case</title>
+<meta name="description" content="Rótulo da lata aerossol do Untaforma 600 ml, desmoldante em spray da Itaiquara: criação completa, da composição à arte-final para impressão em metal.">
+<meta property="og:image" content="assets/card.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+:root{ --accent:#012169; --hl:#F0DF0A;
+  /* label palette (Pantone references, approximated on screen) */
+  --ut-yellow:#F2B92B; --ut-navy:#1C1D4A; --ut-p124:#EAAA00; --ut-p280:#012169; --ut-p362:#509E2F; --ut-p032:#EF3340; }
+
+.st-ut{background:linear-gradient(160deg,#FFF3D1,#FFFBF0)}
+.st-ut-navy{background:radial-gradient(110% 90% at 30% 0%,#2B2E7A,var(--ut-navy) 65%)}
+
+/* ---------- the can: a cylinder of 48 faces wrapped with the real label ---------- */
+.ut-can{--n:48;--fw:calc(var(--d) * 3.14159 / var(--n));--h:calc(var(--d) * 3.8);position:relative;width:calc(var(--d) * 1.8);height:calc(var(--h) + var(--d) * .75);perspective:calc(var(--d) * 14);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;margin:0 auto}
+.ut-can.drag{cursor:grabbing}
+.ut-scene{position:absolute;left:50%;top:calc(var(--d) * .5);width:var(--d);height:var(--h);margin-left:calc(var(--d) / -2);transform-style:preserve-3d;transform:rotateX(-9deg)}
+.ut-cyl{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--ry,0deg))}
+.ut-cyl i{position:absolute;top:0;left:50%;height:100%;width:calc(var(--fw) + .8px);margin-left:calc(var(--fw) / -2);
+  background-image:url(assets/lata-textura.webp);background-repeat:no-repeat;background-size:calc(var(--fw) * var(--n)) 100%;
+  background-position:calc(var(--k) * var(--fw) * -1) 0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transform:rotateY(calc(var(--k) * 360deg / var(--n))) translateZ(calc(var(--d) / 2 - .5px))}
+.ut-top{position:absolute;left:0;top:calc(var(--d) / -2);width:var(--d);height:var(--d);border-radius:50%;transform:rotateX(90deg);
+  background:radial-gradient(circle at 50% 50%,#F4F5F7 0 14%,#9EA3AD 15% 18%,#E6E8EC 19% 62%,#A7ACB5 63% 70%,#D9DCE1 71% 100%)}
+.ut-valve{position:absolute;left:50%;top:calc(var(--d) * .2);width:calc(var(--d) * .2);height:calc(var(--d) * .3);margin-left:calc(var(--d) * -.1);border-radius:6px 6px 3px 3px;background:linear-gradient(90deg,#8A8F98,#E9EBEE 40%,#9AA0A8)}
+.ut-shade{position:absolute;left:50%;top:calc(var(--d) * .5);width:var(--d);height:var(--h);margin-left:calc(var(--d) / -2);pointer-events:none;border-radius:50% / calc(var(--d) * .08);
+  background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,.08) 18%,rgba(255,255,255,.22) 32%,rgba(255,255,255,0) 50%,rgba(0,0,0,.12) 75%,rgba(0,0,0,.5))}
+.ut-floor{position:absolute;left:50%;bottom:calc(var(--d) * .02);width:calc(var(--d) * 1.5);height:calc(var(--d) * .22);margin-left:calc(var(--d) * -.75);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.45),transparent);pointer-events:none}
+
+/* cover */
+.ut-cover{background:radial-gradient(70% 90% at 50% 40%,#2C2F86 0%,var(--ut-navy) 60%,#11122E 100%);display:grid;place-items:center;overflow:hidden}
+.ut-cover::before{content:"";position:absolute;left:50%;top:0;width:min(26vw,300px);height:100%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(242,185,43,.0),rgba(242,185,43,.16) 40%,rgba(242,185,43,0))}
+.ut-cover .ut-can{--d:clamp(92px,9.6vw,150px)}
+.ut-hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:12.5px;color:#C7CAE8;letter-spacing:.04em;white-space:nowrap}
+
+.ut-note{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:8px 14px;border-radius:99px;background:rgba(1,33,105,.07);color:var(--pf-ink);font-size:14px}
+.ut-note::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ut-yellow)}
+
+.ut-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.ut-stats div{background:var(--pf-paper);border:1px solid var(--pf-line);border-radius:20px;padding:22px 24px}
+.ut-stats b{display:block;font:400 clamp(36px,4.6vw,52px)/1 var(--pf-serif);color:var(--accent)}
+.ut-stats span{display:block;margin-top:8px;font-size:14px;color:var(--pf-ink-2);line-height:1.4}
+@media(max-width:820px){.ut-stats{grid-template-columns:repeat(2,1fr)}}
+
+/* 01 · the visible third */
+.ut-turn{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media(max-width:820px){.ut-turn{grid-template-columns:1fr}}
+.ut-turn .ut-can{--d:clamp(84px,9vw,120px)}
+.ut-flat{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 24px 50px -30px rgba(80,50,0,.6)}
+.ut-flat img{display:block;width:100%;height:auto}
+.ut-dim{position:absolute;inset:0;background:rgba(246,247,249,.78);transition:none}
+.ut-ctrl{margin-top:18px;display:grid;gap:12px}
+.ut-ctrl input[type=range]{width:100%;accent-color:var(--accent)}
+.ut-views{display:flex;flex-wrap:wrap;gap:8px}
+.ut-views button{border:1px solid var(--pf-line);background:#fff;border-radius:99px;padding:8px 14px;font-size:14px;font-weight:500;color:var(--pf-ink)}
+.ut-views button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.ut-read{font-size:14px;color:var(--pf-ink-2);min-height:1.5em}
+
+/* 02 · the T */
+.ut-t{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media(max-width:820px){.ut-t{grid-template-columns:1fr}}
+.ut-t img{width:100%;height:auto;border-radius:6px;box-shadow:0 24px 50px -30px rgba(0,0,0,.5)}
+.ut-t ol{margin:0;padding-left:20px;color:var(--pf-ink-2);line-height:1.6}
+.ut-t li+li{margin-top:12px}
+.ut-t li b{color:var(--pf-ink)}
+
+/* signature band: the front, in the label's navy */
+.ut-band{background:var(--ut-navy);color:#fff}
+.ut-band .eyebrow{color:#A9ADD6}
+.ut-band .eyebrow b{color:var(--ut-yellow)}
+.ut-band h2{color:#fff}
+.ut-band .lede{color:#D6D8F0}
+.ut-band figcaption{color:#A9ADD6}
+.ut-band figcaption b{color:#fff}
+.ut-front{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:center}
+@media(max-width:760px){.ut-front{grid-template-columns:1fr;justify-items:center}}
+.ut-front img{width:100%;height:auto;border-radius:6px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.ut-front ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.ut-front li{padding-left:18px;border-left:3px solid var(--ut-yellow);color:#D6D8F0;line-height:1.5}
+.ut-front li b{display:block;color:#fff}
+
+.ut-yield{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:center}
+@media(max-width:760px){.ut-yield{grid-template-columns:1fr;justify-items:center}}
+.ut-yield img{width:100%;height:auto;border-radius:8px;box-shadow:0 24px 50px -30px rgba(0,0,0,.6)}
+
+/* 05 · annotated flat label */
+.ut-anno{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,4vw,40px);align-items:start}
+@media(max-width:900px){.ut-anno{grid-template-columns:1fr}}
+.ut-map{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 24px 50px -30px rgba(80,50,0,.6)}
+.ut-map img{display:block;width:100%;height:auto}
+.ut-zone{position:absolute;border:2px solid transparent;border-radius:4px;transition:border-color .25s,background .25s;pointer-events:none}
+.ut-zone.on{border-color:#fff;background:rgba(255,255,255,.14);box-shadow:0 0 0 9999px rgba(10,12,40,.45)}
+.ut-pin{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:2px solid #fff;background:var(--accent);color:#fff;font:700 13px/1 var(--pf-sans);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35);z-index:2}
+.ut-pin[aria-pressed="true"]{background:var(--ut-yellow);color:var(--pf-ink)}
+.ut-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ut-list button{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;width:100%;text-align:left;border:1px solid var(--pf-line);background:#fff;border-radius:14px;padding:12px 14px;font:inherit;color:inherit}
+.ut-list button i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 13px/1 var(--pf-sans)}
+.ut-list button b{display:block;font-size:15px;color:var(--pf-ink)}
+.ut-list button span{display:block;font-size:14px;line-height:1.45;color:var(--pf-ink-2);margin-top:2px}
+.ut-list button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.ut-list button[aria-pressed="true"] i{background:var(--ut-yellow);color:var(--pf-ink)}
+
+/* 06 · production */
+.ut-spec{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media(max-width:860px){.ut-spec{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ut-spec{grid-template-columns:1fr}}
+.ut-spec div{background:#fff;border:1px solid var(--pf-line);border-radius:18px;padding:18px 20px;font-size:14.5px;line-height:1.5;color:var(--pf-ink-2)}
+.ut-spec b{display:block;font:400 26px/1.1 var(--pf-serif);color:var(--pf-ink);margin-bottom:6px}
+.ut-inks{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.ut-inks span{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:99px;background:#fff;border:1px solid var(--pf-line);font-size:13.5px;color:var(--pf-ink)}
+.ut-inks i{width:22px;height:22px;border-radius:50%}
+.ut-sheet{border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(16,22,31,.5);background:#fff}
+.ut-sheet img{display:block;width:100%;height:auto}
+.ut-store{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:28px}
+.ut-store a{font-weight:600;color:var(--accent)}
+.ut-store code{font:600 14px ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--pf-line);border-radius:8px;padding:6px 10px}
+
+/* retail shelf showcase */
+.st-gondola{background:linear-gradient(160deg,#F5EFEB,#EDE3D6)}
+.ut-gondola-wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,44px);align-items:center;margin-top:28px}
+@media(max-width:860px){.ut-gondola-wrap{grid-template-columns:1fr}}
+.ut-gondola-photo{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 50px -24px rgba(40,24,10,.6);border:1px solid rgba(0,0,0,.08);background:#1A1C24}
+.ut-gondola-photo img{width:100%;height:auto;display:block}
+.ut-gondola-tag{position:absolute;left:14px;top:14px;font:700 11px/1 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:rgba(16,22,31,.85);color:#fff;backdrop-filter:blur(6px)}
+.ut-gondola-cards{display:grid;gap:14px}
+.ut-gondola-card{background:#fff;border:1px solid var(--pf-line);border-radius:14px;padding:16px 18px;box-shadow:0 6px 16px -10px rgba(40,24,10,.2)}
+.ut-gondola-card b{display:block;font:600 15px/1.3 var(--pf-sans);color:var(--pf-ink);margin-bottom:4px}
+.ut-gondola-card p{font-size:14px;line-height:1.5;color:var(--pf-ink-2);margin:0}
+
+/* technical die-cut prancha */
+.ut-tech-box{margin-top:28px;background:#fff;border:1px solid var(--pf-line);border-radius:18px;overflow:hidden;box-shadow:0 20px 40px -24px rgba(16,22,31,.3)}
+.ut-tech-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:#012169;color:#fff;flex-wrap:wrap;gap:12px}
+.ut-tech-head b{font:600 16px/1.2 var(--pf-sans)}
+.ut-tech-pdf-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;background:var(--ut-yellow);color:var(--pf-ink);font:700 13px/1 var(--pf-sans);text-decoration:none;transition:transform .2s,box-shadow .2s}
+.ut-tech-pdf-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(242,185,43,.4)}
+.ut-tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;padding:22px}
+.ut-tech-item{border-left:3px solid var(--accent);padding-left:14px}
+.ut-tech-item b{display:block;font-size:14px;color:var(--pf-ink);margin-bottom:3px}
+.ut-tech-item p{font-size:13.5px;line-height:1.45;color:var(--pf-ink-2);margin:0}
+.ut-tech-item code{font:600 12px var(--pf-mono);color:var(--accent);background:rgba(1,33,105,.08);padding:2px 5px;border-radius:4px}
+
+@media(prefers-reduced-motion:reduce){.ut-zone{transition:none}}
+</style>
+</head>
+<body data-case="itaiquara-untaforma">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Untaforma</span></a>
+    <ul class="pf-links">
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#gondola">Gôndola Real</a></li>
+      <li><a href="#volta">Volta 360°</a></li>
+      <li><a href="#frente">Frente</a></li>
+      <li><a href="#informacao">Informação</a></li>
+      <li><a href="#arte-final">Faca Gráfica</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 13</b> · Embalagem · Direção de arte · Arte-final</p>
+    <h1>Um rótulo que dá a volta na lata, <em>com a frente resolvida num terço dela.</em></h1>
+    <p class="lede">Rótulo da lata aerossol do Untaforma 600 ml, o desmoldante em spray da Itaiquara. Fiz a criação completa: a composição em Photoshop, o layout, a organização dos textos obrigatórios e a arte-final no gabarito do fabricante da lata. O produto está à venda.</p>
+    <span class="ut-note">Embalagem real, produzida. Arte-final de setembro de 2022.</span>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Criação completa: composição, layout, textos e arte-final</dd></div>
+      <div><dt>Tipo</dt><dd>Embalagem real · produto novo · Itaiquara · 2022</dd></div>
+      <div><dt>Entregas</dt><dd>Rótulo de lata aerossol 65 × 243 mm, pronto para impressão em metal</dd></div>
+      <div><dt>Ferramentas</dt><dd>Illustrator · Photoshop</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover ut-cover">
+    <div class="ut-can" id="can-hero" role="img" aria-label="Lata do Untaforma em 3D, girando devagar: a frente amarela com o logo Itaiquara, o nome na vertical e o selo de 600 ml, e os painéis azuis dos lados">
+      <div class="ut-valve" aria-hidden="true"></div>
+      <div class="ut-scene" aria-hidden="true"><div class="ut-cyl"><span class="ut-top"></span></div></div>
+      <div class="ut-shade" aria-hidden="true"></div>
+      <div class="ut-floor" aria-hidden="true"></div>
+    </div>
+    <span class="ut-hint" aria-hidden="true">Arraste para girar · recriação 3D a partir da arte-final</span>
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O problema</p>
+      <h2>Um produto novo precisa se explicar na gôndola.</h2>
+      <p class="lede">O Untaforma era um produto novo da Itaiquara: um desmoldante em spray para untar formas e assadeiras. A lata tem 65 mm de diâmetro e, de qualquer ângulo, mostra só um terço do rótulo. É nesse terço que a pessoa precisa reconhecer a marca, entender o produto e ver o tamanho.</p>
+    </div>
+    <div class="callout rv"><b>Desafio:</b> lançar o desmoldante com a cara da Itaiquara e deixar claro, de frente, o que ele é e para que serve, sem perder nenhum texto obrigatório na volta da lata.</div>
+    <div class="ut-stats rv">
+      <div><b>65 × 243</b><span>milímetros de lata aerossol, diâmetro por altura</span></div>
+      <div><b>207 mm</b><span>de largura de corte do rótulo, que contorna a lata inteira</span></div>
+      <div><b>600 ml</b><span>de produto, ou 470 g, no selo da frente</span></div>
+      <div><b>4</b><span>cores especiais Pantone, além do CMYK</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 · Gôndola Real -->
+<section id="gondola" class="pf-sec st-gondola">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · O Teste da Gôndola Real</p>
+      <h2>Na prateleira do supermercado, o contraste vence a poluição visual.</h2>
+      <p class="lede">Um design de embalagem só se prova no ponto de venda real (PDV), disputando a atenção visual lado a lado com caixas de misturas para bolo e fermentos químicos. A foto real abaixo demonstra a eficácia imediata do "T amarelo" e da tipografia vertical.</p>
+    </div>
+
+    <figure class="rv">
+      <div class="ut-gondola-wrap">
+        <div class="ut-gondola-photo">
+          <img src="assets/prateleira-gondola.jpg" alt="Foto real das latas de Untaforma expostas na gôndola do supermercado, ao lado de misturas de bolo Dr. Oetker e potes de Fermento Itaiquara" loading="lazy">
+          <span class="ut-gondola-tag">Foto real no PDV · Varejo</span>
+        </div>
+        <div class="ut-gondola-cards">
+          <div class="ut-gondola-card">
+            <b>1. Destaque Cromático Imediato</b>
+            <p>O amarelo quente (Pantone 124 C) corta a poluição de embalagens vizinhas e atrai o olho do consumidor a mais de 3 metros de distância no corredor de panificação.</p>
+          </div>
+          <div class="ut-gondola-card">
+            <b>2. Legibilidade do Cilindro Girado</b>
+            <p>Latas aerossol sofrem rotação aleatória na reposição de estoque. Como a faixa superior "FÁCIL APLICAÇÃO E NÃO GRUDA" dá a volta em 360°, a promessa da categoria nunca fica escondida.</p>
+          </div>
+          <div class="ut-gondola-card">
+            <b>3. Hierarquia Vertical em 1/3 Visível</b>
+            <p>O nome "UNTAFORMA" na vertical aproveita os 243 mm de altura da lata, permitindo corpos tipográficos 3× maiores do que a diagramação horizontal tradicional.</p>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>O produto real em gôndola comercial.</b> Observe a convivência harmoniosa com a caixa vermelha do concorrente e com o pote azul marinho de fermento em pó da própria Itaiquara, reforçando a linha da marca.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="volta" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Um terço por vez</p>
+      <h2>O rótulo dá a volta; a pessoa vê um terço.</h2>
+      <p class="lede">A coluna amarela da frente tem cerca de 65 mm, a largura que se lê de uma vez, e concentra o que identifica o produto. Os dois painéis azuis ficam para quem pega a lata e gira na mão: segurança, uso e nutrição de um lado, benefícios, contatos e selos do outro.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-ut">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Recriação 3D + arte-final real</span></div>
+        <div class="ut-turn">
+          <div class="ut-can" id="can-turn" aria-hidden="true">
+            <div class="ut-valve"></div>
+            <div class="ut-scene"><div class="ut-cyl"><span class="ut-top"></span></div></div>
+            <div class="ut-shade"></div>
+            <div class="ut-floor"></div>
+          </div>
+          <div>
+            <div class="ut-flat" aria-hidden="true"><img src="assets/planificacao.webp" width="1600" height="1787" alt="" loading="lazy"><div class="ut-dim" id="turn-dim"></div></div>
+            <div class="ut-ctrl">
+              <label class="ut-read" for="turn-range" id="turn-read">Frente: logo, nome, volume e foto.</label>
+              <input type="range" id="turn-range" min="0" max="359" step="1" value="138" aria-describedby="turn-read">
+              <div class="ut-views" role="group" aria-label="Lados da lata">
+                <button type="button" data-a="40" aria-pressed="false">Uso e nutrição</button>
+                <button type="button" data-a="138" aria-pressed="true">Frente</button>
+                <button type="button" data-a="277" aria-pressed="false">Benefícios e contatos</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Gire a lata pelo controle ou pelos botões:</b> a área clara na planificação é o terço que fica de frente. A lata é uma recriação em 3D feita com a arte-final real; o topo é simplificado.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="estrutura" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Estrutura</p>
+      <h2>Um T amarelo organiza a lata inteira.</h2>
+      <p class="lede">A base da composição, montada no Photoshop, é um T: uma faixa amarela que contorna o topo e uma coluna que desce pela frente. O resto é o azul da marca, com ondas suaves para não ficar chapado.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-ut">
+        <div class="tag-row"><span class="pill">Arquivo real</span></div>
+        <div class="ut-t">
+          <img src="assets/base-photoshop.webp" width="1000" height="1425" alt="Base da composição em Photoshop: a faixa amarela no topo, a coluna amarela descendo pela frente em forma de T, ondas sobre o fundo azul e, embaixo da coluna, a foto de pão de forma e bolo com as formas" loading="lazy">
+          <ol>
+            <li><b>A faixa do topo dá a volta.</b> "FÁCIL APLICAÇÃO E NÃO GRUDA" corre por toda a largura, então a promessa aparece de qualquer ângulo.</li>
+            <li><b>A coluna vira a frente.</b> A largura dela é a de um terço da lata, a parte que se vê de uma vez.</li>
+            <li><b>O azul guarda a informação.</b> Os dois painéis escuros recebem os textos em branco, com contraste alto para leitura miúda.</li>
+            <li><b>A foto fecha a frente.</b> Pão de forma e bolo, com as formas ao lado, mostram para que serve o spray antes de qualquer texto.</li>
+          </ol>
+        </div>
+      </div>
+      <figcaption><b>Base em Photoshop do arquivo de produção</b> (<code>desmoldante7.psd</code>, vinculado à arte-final). Textos, logo e ícones entram por cima, no Illustrator.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="frente" class="pf-sec ut-band">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>04</b> · Frente</p>
+      <h2>O nome sobe na vertical para caber grande.</h2>
+      <p class="lede">Numa coluna de 65 mm de largura, um nome de nove letras na horizontal ficaria pequeno. Na vertical, ele usa a altura da lata e vira a maior coisa da frente.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-ut-navy">
+        <div class="tag-row"><span class="pill w">Arte-final real</span></div>
+        <div class="ut-front">
+          <img src="assets/frente.webp" width="792" height="2806" alt="Recorte da frente do rótulo: o selo oval Itaiquara Desde 1911 no topo, UNTAFORMA em azul na vertical com desmoldante spray aerosol ao lado, o selo redondo contém 600 ml 470 g e, embaixo, a foto de pão e bolo com as formas" loading="lazy">
+          <ul>
+            <li><b>Marca no topo</b>O selo oval da Itaiquara, "Desde 1911", logo abaixo da faixa amarela.</li>
+            <li><b>Nome na vertical</b>"UNTA" e "FORMA" em azul, com o peso alternado para separar as duas palavras do nome. Ao lado, "desmoldante spray aerosol" diz o que é.</li>
+            <li><b>Volume num selo</b>Um círculo amarelo com borda branca: "contém 600 ml / 470 g".</li>
+            <li><b>Uso pela imagem</b>A foto mostra pão e bolo saindo inteiros das formas, com o aviso de "imagens ilustrativas" e o selo de transgênico obrigatório.</li>
+          </ul>
+        </div>
+      </div>
+      <figcaption><b>Recorte da arte-final.</b> A frente inteira cabe na coluna amarela do T.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="rendimento" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>05</b> · Rendimento</p>
+      <h2>600 ml viram uma conta que quem faz bolo entende.</h2>
+      <p class="lede">Logo depois da frente, o primeiro bloco do painel azul traduz o volume em uso: "unta até 100 formas de 30 × 40 cm", com dois ícones de linha, o spray e a forma, no amarelo da marca.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-ut-navy">
+        <div class="tag-row"><span class="pill w">Arte-final real</span></div>
+        <div class="ut-yield">
+          <img src="assets/rendimento.webp" width="540" height="828" alt="Recorte do painel azul: ícones de linha amarelos de um spray e de uma forma de bolo, e o texto unta até 100 formas de 30x40 cm" loading="lazy">
+          <p style="color:#D6D8F0">O número aparece grande e em branco sobre o azul. Os ícones são de traço simples, para continuar legíveis em 65 mm de lata e na impressão em metal. O bloco fica colado à frente, à direita: é a primeira coisa que aparece quando a lata gira para esse lado.</p>
+        </div>
+      </div>
+      <figcaption><b>Recorte da arte-final.</b> O rendimento é a afirmação do produto impressa no rótulo.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="informacao" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>06</b> · Informação</p>
+      <h2>Texto obrigatório, em ordem de uso.</h2>
+      <p class="lede">Aerossol inflamável, alimento com tabela nutricional, alergênicos, transgênicos, código de barras, lote e validade: a lata carrega muita informação obrigatória. Cada grupo tem o seu lugar na volta da lata.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-ut">
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Arte-final real</span></div>
+        <div class="ut-anno">
+          <div class="ut-map" id="map"><img src="assets/planificacao.webp" width="1600" height="1787" alt="Planificação completa do rótulo do Untaforma: faixa amarela no topo, painel azul de segurança e nutrição à esquerda, frente amarela no centro e painel azul de benefícios, contatos e selos à direita" loading="lazy"></div>
+          <ul class="ut-list" id="zones"></ul>
+        </div>
+      </div>
+      <figcaption><b>Planificação comentada.</b> Toque em um número ou na lista para destacar a área na arte-final.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="arte-final" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>07</b> · Faca Gráfica &amp; Produção Técnica</p>
+      <h2>A prancha aberta: tolerâncias milimétricas para impressão em metal.</h2>
+      <p class="lede">A arte foi fechada estritamente dentro do gabarito oficial do fabricante da lata e do fotolito, contemplando as reservas bilaterais de solda, as zonas de deformação por recravação e a janela óptica isolada para o código de barras EAN-13.</p>
+    </div>
+
+    <div class="ut-spec rv">
+      <div><b>65 × 243 mm</b>Diâmetro por altura do tubo metálico aerossol.</div>
+      <div><b>207 × 243 mm</b>Área de corte da chapa aberta (202 mm de esmalte útil).</div>
+      <div><b>2,5 mm</b>Reserva bilateral de solda sem verniz para eletrofusão.</div>
+      <div><b>11 mm e 8 mm</b>Margens de segurança mecânica sem texto (cabeça e pé).</div>
+      <div><b>CMYK + 4 Pantone</b>124 C, 280 C, 362 C e Red 032 C como cores especiais.</div>
+      <div><b>GS1 EAN-13</b>Código de barras com contraste óptico &gt; 80% e barras no sentido do giro.</div>
+    </div>
+
+    <div class="ut-inks rv" aria-label="Cores especiais (aproximação em tela)">
+      <span><i style="background:var(--ut-p124)"></i>Pantone 124 C (Amarelo Untaforma)</span>
+      <span><i style="background:var(--ut-p280)"></i>Pantone 280 C (Azul Institucional)</span>
+      <span><i style="background:var(--ut-p362)"></i>Pantone 362 C (Verde)</span>
+      <span><i style="background:var(--ut-p032)"></i>Pantone Red 032 C (Alerta Inflamável)</span>
+    </div>
+
+    <!-- Technical die-cut sheet interactive box -->
+    <div class="ut-tech-box rv">
+      <div class="ut-tech-head">
+        <div>
+          <b>Prancha Técnica Oficial · Untaforma 600 ml (15/09/2022)</b>
+          <span style="display:block;font-size:12.5px;color:#CBD5E1;margin-top:2px">Gabarito com cotas, faca de corte, linhas de dobra e fotolito industrial</span>
+        </div>
+        <a class="ut-tech-pdf-btn" href="assets/faca-grafica-tecnica-untaforma.pdf" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Baixar Prancha Técnica Vetorial (PDF 2.2 MB) ↗
+        </a>
+      </div>
+      <div class="ut-sheet">
+        <img src="assets/arte-final.webp" width="1600" height="2054" alt="Arte-final completa no gabarito: o rótulo planificado com as cotas Aerossol 65 por 243 mm, Corte 207 mm e Esmalte 202 mm, a régua de cores no topo, as reservas de solda de 2,5 mm nas laterais, as áreas de recravação e o carimbo do fabricante da lata e do fotolito" loading="lazy">
+      </div>
+      <div class="ut-tech-grid">
+        <div class="ut-tech-item">
+          <b>Reserva de Solda (Costura Mecânica)</b>
+          <p>Faixas de <code>2,5 mm</code> nas extremidades esquerda e direita sem aplicação de tinta, esmalte ou verniz, permitindo a fusão elétrica contínua do tubo de folha de flandres.</p>
+        </div>
+        <div class="ut-tech-item">
+          <b>Zonas de Recravação (Beading & Crimping)</b>
+          <p>Folga de <code>11 mm</code> na cabeça e <code>8 mm</code> no pé preservam textos e selos de deformação física durante a prensagem mecânica do fundo e do bocal da válvula.</p>
+        </div>
+        <div class="ut-tech-item">
+          <b>Janela Óptica do Código de Barras (EAN-13)</b>
+          <p>Módulo branco puro de <code>37,29 × 25,93 mm</code> com barras a 100% Preto, posicionadas para garantir leitura instantânea em caixas automáticos e scanners biópticos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ut-store rv">
+      <span>No mercado: o Untaforma 600 ml está à venda em distribuidoras, com o mesmo código de barras da arte.</span>
+      <code>7896545506199</code>
+      <a href="https://www.ccndistribuidora.com.br/unta-forma-spray-600ml-itaiquara8727949/p" target="_blank" rel="noopener">Ver o produto numa loja ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso mostrar os arquivos abertos e como cada texto obrigatório encontrou o seu lugar na lata.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Itaiquara · Untaforma 600 ml</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var $ = function(s,r){ return (r||document).querySelector(s) };
+  var $$ = function(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)) };
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FRONT = 138;  /* degrees along the label (0–360) where the yellow front column is centred */
+
+  var els = $$('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in') }) }
+  else {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } }) },{threshold:.15});
+    els.forEach(function(e){ io.observe(e) });
+  }
+
+  /* the can: 48 faces, each showing its slice of the real label */
+  function can(el){
+    var cyl = $('.ut-cyl', el), n = 48, html = '';
+    for(var k=0;k<n;k++) html += '<i style="--k:'+k+'"></i>';
+    cyl.insertAdjacentHTML('beforeend', html);
+    var api = { a: FRONT, set: function(a){ api.a = ((a % 360) + 360) % 360; cyl.style.setProperty('--ry', (-api.a) + 'deg'); if(api.onchange) api.onchange(api.a) } };
+    /* drag to turn */
+    var x0 = null, a0 = 0;
+    el.addEventListener('pointerdown', function(e){ x0 = e.clientX; a0 = api.a; el.classList.add('drag'); el.setPointerCapture(e.pointerId); if(api.ondrag) api.ondrag() });
+    el.addEventListener('pointermove', function(e){ if(x0===null) return; api.set(a0 - (e.clientX - x0) * .6) });
+    var end = function(){ x0 = null; el.classList.remove('drag') };
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+    api.set(FRONT);
+    return api;
+  }
+
+  /* hero: turns slowly until the first touch; pauses off screen */
+  (function(){
+    var el = $('#can-hero'); if(!el) return;
+    var c = can(el), auto = !RM, visible = true, last = 0;
+    c.ondrag = function(){ auto = false; var h = $('.ut-hint'); if(h) h.textContent = 'Arraste para girar' };
+    if('IntersectionObserver' in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting }).observe(el);
+    function tick(t){
+      if(auto && visible && !document.hidden){ if(last) c.set(c.a + (t - last) * .012) }
+      last = t; if(auto) requestAnimationFrame(tick);
+    }
+    if(auto){ c.set(FRONT - 40); requestAnimationFrame(tick) }
+  })();
+
+  /* 01 · angle ↔ visible third of the flat label */
+  (function(){
+    var el = $('#can-turn'); if(!el) return;
+    var c = can(el), range = $('#turn-range'), dim = $('#turn-dim'), read = $('#turn-read'), btns = $$('.ut-views button');
+    function side(a){ var f = a / 360; return f < .225 || f > .97 ? 'Uso e nutrição: segurança, modo de usar, tabela e ingredientes.' : f <= .54 ? 'Frente: logo, nome, volume e foto.' : 'Benefícios e contatos: rendimento, descrição, SAC, redes e selos.' }
+    function paint(a){
+      var c0 = a / 360 - 1/6, c1 = a / 360 + 1/6, p = function(v){ return (v*100).toFixed(2) + '%' }, g;
+      if(c0 < 0) g = 'linear-gradient(90deg,transparent 0 '+p(c1)+',#000 '+p(c1)+' '+p(c0+1)+',transparent '+p(c0+1)+')';
+      else if(c1 > 1) g = 'linear-gradient(90deg,transparent 0 '+p(c1-1)+',#000 '+p(c1-1)+' '+p(c0)+',transparent '+p(c0)+')';
+      else g = 'linear-gradient(90deg,#000 0 '+p(c0)+',transparent '+p(c0)+' '+p(c1)+',#000 '+p(c1)+')';
+      dim.style.webkitMaskImage = g; dim.style.maskImage = g;
+      read.textContent = side(a);
+      range.value = Math.round(a);
+      range.setAttribute('aria-valuetext', Math.round(a) + ' graus. ' + side(a));
+      btns.forEach(function(b){ b.setAttribute('aria-pressed', Math.abs(((+b.dataset.a - a + 540) % 360) - 180) < 20) });
+    }
+    c.onchange = paint;
+    range.addEventListener('input', function(){ c.set(+range.value) });
+    btns.forEach(function(b){ b.addEventListener('click', function(){ c.set(+b.dataset.a) }) });
+    paint(c.a);
+  })();
+
+  /* 05 · annotated flat label (zones in fractions of the label) */
+  (function(){
+    var map = $('#map'), list = $('#zones'); if(!map || !list) return;
+    var Z = [
+      ['Faixa-título', 'A promessa principal, "Fácil aplicação e não gruda", em azul sobre o amarelo, contornando a lata.', 0, 0, 1, .08],
+      ['Frente', 'Logo, nome na vertical, selo de 600 ml, foto de uso, "imagens ilustrativas" e o selo de transgênico.', .225, .08, .54, 1],
+      ['Segurança e modo de usar', 'O aviso de produto inflamável abre o painel, com ícone, seguido do modo de usar.', 0, .08, .225, .31],
+      ['Nutrição e ingredientes', 'Tabela nutricional por porção de 13 ml, ingredientes, alergênicos, registro e conservação.', 0, .31, .225, .75],
+      ['Código de barras e lote', 'O EAN-13 numa caixa branca, com o espaço para validade e lote impressos no frasco.', 0, .76, .225, .99],
+      ['Rendimento e descrição', '"Unta até 100 formas de 30 × 40 cm", alergênicos e o que o spray faz.', .545, .16, 1, .47],
+      ['Contatos e redes', 'SAC, site e as três redes da marca, cada uma com ícone amarelo.', .545, .47, 1, .66],
+      ['Selos e fabricante', 'CFC free, vegano, sem conservantes, sem glúten, reciclagem, e quem produz e distribui.', .545, .66, 1, 1]
+    ];
+    var pct = function(v){ return (v*100).toFixed(2) + '%' };
+    Z.forEach(function(z,k){
+      var zone = document.createElement('span'); zone.className = 'ut-zone';
+      zone.style.cssText = 'left:'+pct(z[2])+';top:'+pct(z[3])+';width:'+pct(z[4]-z[2])+';height:'+pct(z[5]-z[3]);
+      map.appendChild(zone);
+      var pin = document.createElement('button'); pin.type = 'button'; pin.className = 'ut-pin'; pin.textContent = k+1;
+      pin.setAttribute('aria-label', (k+1)+'. '+z[0]); pin.setAttribute('aria-pressed','false');
+      pin.style.left = pct((z[2]+z[4])/2); pin.style.top = pct(k===0 ? .04 : z[3] + .045);
+      map.appendChild(pin);
+      list.insertAdjacentHTML('beforeend','<li><button type="button" aria-pressed="false"><i>'+(k+1)+'</i><span><b>'+z[0]+'</b><span>'+z[1]+'</span></span></button></li>');
+    });
+    var zones = $$('.ut-zone', map), pins = $$('.ut-pin', map), items = $$('button', list);
+    function pick(k){
+      var on = !zones[k].classList.contains('on');
+      zones.forEach(function(z,j){ z.classList.toggle('on', on && j===k) });
+      pins.forEach(function(p,j){ p.setAttribute('aria-pressed', on && j===k) });
+      items.forEach(function(b,j){ b.setAttribute('aria-pressed', on && j===k) });
+    }
+    pins.forEach(function(p,k){ p.addEventListener('click', function(){ pick(k) }) });
+    items.forEach(function(b,k){ b.addEventListener('click', function(){ pick(k) }) });
+  })();
+})();
+</script>
+</body>
+</html>

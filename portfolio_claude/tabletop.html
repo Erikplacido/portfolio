@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erik Plácido — Tabletop UI/UX & Board Game Design</title>
+  <meta name="description" content="Portfólio especializado em Design Gráfico de Jogos de Tabuleiro, Card Games, Diagramação de Manuais e Arquitetura de Informação por Erik Plácido." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="shared/frame.css" />
+  <style>
+    :root {
+      --accent: #D97706;
+      --accent-dark: #92400E;
+      --accent-subtle: #FEF3C7;
+      --accent-border: #FDE68A;
+      --table-green: #064E3B;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-faint: #64748B;
+      --border-ui: #E2E8F0;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    body {
+      background: #F8FAFC;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Top Global Header */
+    .tabletop-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-ui);
+      padding: 14px 0;
+    }
+    .tabletop-nav .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-brand span {
+      color: var(--accent);
+    }
+    .badge-tt {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-subtle);
+      color: var(--accent-dark);
+      border: 1px solid var(--accent-border);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border-ui);
+      background: #FFFFFF;
+      color: var(--text-main);
+    }
+    .btn-nav:hover {
+      background: #F1F5F9;
+      transform: translateY(-1px);
+    }
+    .btn-nav.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #FFFFFF;
+    }
+    .btn-nav.primary:hover {
+      background: var(--accent-dark);
+    }
+
+    /* Hero Section */
+    .tt-hero {
+      padding: clamp(60px, 8vw, 100px) 0 40px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .hero-title {
+      font-size: clamp(38px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      max-width: 980px;
+      margin: 0 auto 20px;
+    }
+    .hero-title em {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 21px);
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 36px;
+      line-height: 1.5;
+    }
+    .hero-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .hero-pill-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-ui);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .hero-pill-item i {
+      color: var(--accent);
+    }
+
+    /* Hero Visual Showcase */
+    .hero-showcase {
+      position: relative;
+      background: #0E1726;
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 4vw, 48px);
+      box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 80px;
+      overflow: hidden;
+    }
+    .hero-showcase-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero-showcase-grid { grid-template-columns: 1fr; }
+    }
+    .showcase-img-wrap {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    }
+    .showcase-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .showcase-img-wrap:hover img {
+      transform: scale(1.03);
+    }
+    .showcase-text {
+      color: #FFFFFF;
+      text-align: left;
+    }
+    .showcase-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #FBBF24;
+      margin-bottom: 8px;
+    }
+    .showcase-text h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .showcase-text p {
+      color: #94A3B8;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .showcase-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #64748B;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    /* The 6 Pillars Section */
+    .pillars-sec {
+      padding: 60px 0 100px;
+    }
+    .sec-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 56px;
+    }
+    .sec-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .sec-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .sec-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    @media (max-width: 960px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+    .pillar-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-ui);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .pillar-card:hover {
+      border-color: #CBD5E1;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+    }
+    .pillar-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--accent-subtle);
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .pillar-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .pillar-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+    .pillar-bullets {
+      list-style: none;
+      padding-top: 14px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .pillar-bullets li {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pillar-bullets li i {
+      color: #10B981;
+      font-size: 11px;
+    }
+
+    /* Interactive Card Anatomy Section */
+    .anatomy-sec {
+      background: #FFFFFF;
+      border: 1px solid var(--border-ui);
+      border-radius: var(--radius-lg);
+      padding: clamp(32px, 5vw, 64px);
+      margin-bottom: 80px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    }
+    .anatomy-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .anatomy-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* Interactive Card Simulator */
+    .card-simulator {
+      position: relative;
+      background: #1E293B;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    }
+    .physical-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 63/88; /* Standard Poker Size */
+      background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+      border-radius: 12px;
+      border: 6px solid #4338CA;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+      color: #FFFFFF;
+      user-select: none;
+    }
+    .hotspot {
+      position: absolute;
+      border: 2px dashed rgba(251, 191, 36, 0.8);
+      background: rgba(251, 191, 36, 0.12);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hotspot:hover, .hotspot.active {
+      background: rgba(251, 191, 36, 0.35);
+      border-color: #F59E0B;
+      transform: scale(1.02);
+    }
+    .hotspot-tag {
+      font-size: 9px;
+      font-weight: 800;
+      background: #F59E0B;
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Hotspot positions */
+    .hs-cost { top: 12px; left: 12px; width: 38px; height: 38px; border-radius: 50%; }
+    .hs-title { top: 12px; left: 56px; right: 12px; height: 38px; }
+    .hs-art { top: 58px; left: 12px; right: 12px; height: 160px; }
+    .hs-rules { bottom: 38px; left: 12px; right: 12px; height: 110px; }
+    .hs-footer { bottom: 10px; left: 12px; right: 12px; height: 22px; }
+
+    /* Anatomy Explanation Panel */
+    .anatomy-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .anatomy-step {
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-ui);
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .anatomy-step:hover, .anatomy-step.active {
+      background: #FFFFFF;
+      border-color: var(--accent);
+      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
+      transform: translateX(4px);
+    }
+    .step-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .step-head span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: var(--accent-subtle);
+      color: var(--accent-dark);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Projects Spotlight */
+    .projects-sec {
+      padding: 20px 0 100px;
+    }
+    .project-card-full {
+      background: #FFFFFF;
+      border: 1px solid var(--border-ui);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      transition: all 0.3s ease;
+    }
+    @media (max-width: 900px) {
+      .project-card-full { grid-template-columns: 1fr; }
+    }
+    .project-card-full:hover {
+      border-color: #CBD5E1;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+      transform: translateY(-2px);
+    }
+    .proj-media {
+      position: relative;
+      background: #0F172A;
+      overflow: hidden;
+      min-height: 360px;
+    }
+    .proj-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .project-card-full:hover .proj-media img {
+      transform: scale(1.03);
+    }
+    .proj-info {
+      padding: clamp(28px, 4vw, 44px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .proj-badge {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .proj-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .proj-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .proj-tag-item {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #F1F5F9;
+      color: var(--text-muted);
+    }
+    .proj-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Publisher Checklist Box */
+    .checklist-box {
+      background: #0E1726;
+      border-radius: var(--radius-lg);
+      padding: clamp(36px, 6vw, 64px);
+      color: #FFFFFF;
+      margin-bottom: 80px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+    @media (max-width: 900px) {
+      .checklist-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .checklist-grid { grid-template-columns: 1fr; }
+    }
+    .chk-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .chk-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FBBF24;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chk-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .chk-list li {
+      font-size: 13px;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chk-list li::before {
+      content: '✓';
+      color: #10B981;
+      font-weight: bold;
+    }
+
+    /* Call to Action Footer */
+    .tt-footer-cta {
+      text-align: center;
+      padding: 60px 0 100px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-ui);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="tabletop-nav">
+    <div class="wrap">
+      <div class="nav-left">
+        <a href="index.html" class="nav-brand">
+          <i class="fa-solid fa-dice-d20"></i> Erik Plácido <span>· Tabletop</span>
+        </a>
+        <span class="badge-tt">UI/UX & Production Graphic Design</span>
+      </div>
+      <div class="nav-actions">
+        <div class="pf-lang-picker" role="group" aria-label="Language selection">
+          <button type="button" class="pf-lang-btn active" data-lang="pt" aria-pressed="true" title="Português">PT</button>
+          <button type="button" class="pf-lang-btn" data-lang="en" aria-pressed="false" title="English">EN</button>
+          <button type="button" class="pf-lang-btn" data-lang="es" aria-pressed="false" title="Español">ES</button>
+          <button type="button" class="pf-lang-btn" data-lang="fr" aria-pressed="false" title="Français">FR</button>
+        </div>
+        <a href="tabletop_onesheet.html" target="_blank" class="btn-nav">
+          <i class="fa-solid fa-file-lines"></i> One-Sheet Pitch (PDF)
+        </a>
+        <a href="curriculo_games.html" class="btn-nav">
+          <i class="fa-solid fa-gamepad"></i> Currículo Games
+        </a>
+        <a href="mailto:erik.placido@gmail.com" class="btn-nav primary">
+          <i class="fa-solid fa-envelope"></i> Contratar Freela
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="tt-hero">
+      <div class="wrap">
+        <span class="hero-eyebrow">Tabletop Game User Experience & Print Production</span>
+        <h1 class="hero-title">Transformando regras complexas em <em>interfaces físicas intuitivas</em> e prontas para a gráfica.</h1>
+        <p class="hero-sub">
+          Design gráfico, iconografia escalável, anatomia de cartas e diagramação de manuais para jogos de tabuleiro, card games e campanhas de financiamento coletivo (Kickstarter & Gamefound).
+        </p>
+
+        <div class="hero-pills">
+          <span class="hero-pill-item"><i class="fa-solid fa-layer-group"></i> Card Anatomy & Templates</span>
+          <span class="hero-pill-item"><i class="fa-solid fa-book-open"></i> Rulebook Architecture (InDesign)</span>
+          <span class="hero-pill-item"><i class="fa-solid fa-shapes"></i> Scalable Iconography Systems</span>
+          <span class="hero-pill-item"><i class="fa-solid fa-box"></i> Punchboards & Die-Cut Alignment</span>
+          <span class="hero-pill-item"><i class="fa-solid fa-print"></i> Pre-Press & CMYK Profiles</span>
+        </div>
+
+        <!-- Hero Tabletop Showcase (Real Assets) -->
+        <div class="hero-showcase">
+          <div class="hero-showcase-grid">
+            <div class="showcase-img-wrap">
+              <img src="forca-br/assets/r3d-mesa.jpg" alt="Projeto Força BR — Tabletop Setup 3D Mockup" />
+            </div>
+            <div class="showcase-text">
+              <span class="showcase-tag">Case Study Destaque</span>
+              <h3>Projeto Força BR & Loony Races</h3>
+              <p>
+                Sistemas completos desenvolvidos do zero: tabuleiro tático modular, fichas cartonadas de corte especial, painéis de jogador com duplos contadores e manuais de regras bilíngues.
+              </p>
+              <div class="showcase-stats">
+                <div>
+                  <div class="stat-num">100+</div>
+                  <div class="stat-label">Cartas Diagramadas</div>
+                </div>
+                <div>
+                  <div class="stat-num">65×65</div>
+                  <div class="stat-label">cm Tabuleiro Tático</div>
+                </div>
+                <div>
+                  <div class="stat-num">100%</div>
+                  <div class="stat-label">Print-Ready CMYK</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 6 Pillars of Tabletop Design -->
+    <section class="pillars-sec">
+      <div class="wrap">
+        <div class="sec-header">
+          <span class="sec-eyebrow">A Metodologia de Excelência</span>
+          <h2 class="sec-title">Os 6 Pilares de um Design Gráfico Eficiente de Jogos</h2>
+          <p class="sec-desc">
+            Como os grandes mestres da indústria (Ian O'Toole, Brigette Indelicato, Kwanchai Moriya) estruturam componentes para diminuir o tempo de aprendizado e garantir que o produto seja viável para produção em massa.
+          </p>
+        </div>
+
+        <div class="pillars-grid">
+          <!-- Pillar 1 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-chess-board"></i></div>
+            <div class="pillar-num">PILAR 01</div>
+            <h3 class="pillar-title">Table Presence & Shelf Appeal</h3>
+            <p class="pillar-text">
+              A embalagem precisa vender o jogo na prateleira de varejo, e os componentes precisam criar uma experiência visual impactante na mesa a 50 cm de distância.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Tampa, lateral e contracapa informativas</li>
+              <li><i class="fa-solid fa-check"></i> Contraste sob luz quente residencial</li>
+              <li><i class="fa-solid fa-check"></i> Composição 3D para campanhas de financiamento</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-id-card"></i></div>
+            <div class="pillar-num">PILAR 02</div>
+            <h3 class="pillar-title">Card Anatomy & Cognitive Load</h3>
+            <p class="pillar-text">
+              Organização zonal de cartas para permitir leitura imediata em leque na mão, eliminando ambiguidades e acelerando a tomada de decisão do jogador.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Custo/gatilho no topo esquerdo (visível em leque)</li>
+              <li><i class="fa-solid fa-check"></i> Hierarquia tipográfica com peso e entrelinha ótimos</li>
+              <li><i class="fa-solid fa-check"></i> Separação nítida entre regra ativa e flavor text</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-shapes"></i></div>
+            <div class="pillar-num">PILAR 03</div>
+            <h3 class="pillar-title">Scalable Iconography System</h3>
+            <p class="pillar-text">
+              Sistemas de ícones que substituem parágrafos de texto. Devem manter legibilidade extrema mesmo reduzidos a 6 mm em marcadores de papelão.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Silhuetas distintas para daltônicos</li>
+              <li><i class="fa-solid fa-check"></i> Cores com significado consistente (Design System)</li>
+              <li><i class="fa-solid fa-check"></i> Redução de dependência de idioma (Language Independent)</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="pillar-num">PILAR 04</div>
+            <h3 class="pillar-title">Player Mats & Dashboards</h3>
+            <p class="pillar-text">
+              Painéis ergonômicos que organizam o fluxo do jogo. Incluem trilhas de recursos, slots de melhorias e resumo de fases impresso diretamente no tabuleiro.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Preparação para tabuleiros duplos (dual-layer slots)</li>
+              <li><i class="fa-solid fa-check"></i> Resumo de rodada embutido (elimina consulta)</li>
+              <li><i class="fa-solid fa-check"></i> Trilhas lineares sem cruzamento confuso</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 5 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-book-open"></i></div>
+            <div class="pillar-num">PILAR 05</div>
+            <h3 class="pillar-title">Rulebook Architecture</h3>
+            <p class="pillar-text">
+              Diagramação editorial de manuais de regras no Adobe InDesign. Estruturação em grades colunadas, caixas de destaque de exceções e exemplos ilustrados passo a passo.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Inventário visual de componentes na página 2</li>
+              <li><i class="fa-solid fa-check"></i> Diagramas visuais de rodada e setup de mesa</li>
+              <li><i class="fa-solid fa-check"></i> Índice remissivo e sumário de consulta rápida</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 6 -->
+          <div class="pillar-card">
+            <div class="pillar-icon-box"><i class="fa-solid fa-print"></i></div>
+            <div class="pillar-num">PILAR 06</div>
+            <h3 class="pillar-title">Pre-Press & Manufacturing</h3>
+            <p class="pillar-text">
+              Engenharia gráfica e arquivos de produção nos padrões de gráficas internacionais (Panda Game, LongPack, Cartamundi). Zero surpresas na tiragem física.
+            </p>
+            <ul class="pillar-bullets">
+              <li><i class="fa-solid fa-check"></i> Pranchas de faca de corte (punchboards / die-lines)</li>
+              <li><i class="fa-solid fa-check"></i> Sangrias de 3 mm e zonas de segurança respeitadas</li>
+              <li><i class="fa-solid fa-check"></i> Máscaras de verniz localizado (Spot UV) e acabamento linho</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Interactive Card Anatomy Breakdown -->
+        <div class="anatomy-sec">
+          <div class="sec-header" style="margin-bottom: 36px;">
+            <span class="sec-eyebrow">Raio-X de Interface</span>
+            <h2 class="sec-title">Anatomia de uma Carta: Arquitetura de Informação</h2>
+            <p class="sec-desc">Clique nas regiões da carta ou nas etapas ao lado para entender a lógica por trás de cada decisão gráfica.</p>
+          </div>
+
+          <div class="anatomy-grid">
+            <!-- Simulated Card with Hotspots -->
+            <div class="card-simulator">
+              <div class="physical-card">
+                <!-- Hotspots -->
+                <div class="hotspot hs-cost active" onclick="selectStep(0)"><span class="hotspot-tag">01</span></div>
+                <div class="hotspot hs-title" onclick="selectStep(1)"><span class="hotspot-tag">02</span></div>
+                <div class="hotspot hs-art" onclick="selectStep(2)"><span class="hotspot-tag">03</span></div>
+                <div class="hotspot hs-rules" onclick="selectStep(3)"><span class="hotspot-tag">04</span></div>
+                <div class="hotspot hs-footer" onclick="selectStep(4)"><span class="hotspot-tag">05</span></div>
+
+                <!-- Internal Card Content -->
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="width:34px; height:34px; border-radius:50%; background:#F59E0B; color:#000; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;">3</div>
+                  <div style="font-size:14px; font-weight:800; letter-spacing:0.04em;">ORB DO RELÂMPAGO</div>
+                </div>
+
+                <div style="height:140px; background:rgba(0,0,0,0.3); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; color:#A5B4FC; text-transform:uppercase; letter-spacing:0.1em; border:1px solid rgba(255,255,255,0.1);">
+                  <i class="fa-solid fa-bolt" style="font-size:32px; color:#FBBF24;"></i>
+                </div>
+
+                <div style="background:rgba(15, 23, 42, 0.7); border-radius:8px; padding:10px; font-size:11px; line-height:1.4; border:1px solid rgba(255,255,255,0.15);">
+                  <strong style="color:#FBBF24;">Ação Rápida:</strong> Cause 4 de dano de raio ao alvo e atordoe-o por 1 turno se o custo tiver sido pago com mana pura.<br />
+                  <em style="color:#94A3B8; font-size:10px; display:block; margin-top:4px;">“As tempestades do norte não negociam rendições.”</em>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; font-size:9px; color:#94A3B8; font-family:'JetBrains Mono',monospace;">
+                  <span>MAGIA · RARA</span>
+                  <span>#042/150 · ERIK PLÁCIDO</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Steps Explanation Panel -->
+            <div class="anatomy-panel">
+              <div class="anatomy-step active" id="step-0" onclick="selectStep(0)">
+                <div class="step-head"><span>ZONA 01</span> Custo & Gatilho (Top-Left)</div>
+                <div class="step-desc">
+                  Posicionado estrategicamente no canto superior esquerdo. Quando o jogador segura 7 cartas em leque na mão, o custo e o tipo de recurso permanecem 100% visíveis sem precisar abrir o leque inteiro.
+                </div>
+              </div>
+
+              <div class="anatomy-step" id="step-1" onclick="selectStep(1)">
+                <div class="step-head"><span>ZONA 02</span> Título & Categoria de Classe</div>
+                <div class="step-desc">
+                  Tipografia de alta legibilidade tratada em caixa alta com kerning reforçado. Garante identificação imediata tanto para o dono da carta quanto para o oponente do outro lado da mesa.
+                </div>
+              </div>
+
+              <div class="anatomy-step" id="step-2" onclick="selectStep(2)">
+                <div class="step-head"><span>ZONA 03</span> Moldura de Arte & Sangria de Impressão</div>
+                <div class="step-desc">
+                  A moldura gráfica integra a ilustração ao tema do jogo e define a linha de segurança contra variações de corte de guilhotina (corte desbalanceado de 1 mm nunca decepa o texto).
+                </div>
+              </div>
+
+              <div class="anatomy-step" id="step-3" onclick="selectStep(3)">
+                <div class="step-head"><span>ZONA 04</span> Caixa de Regras & Hierarquia de Texto</div>
+                <div class="step-desc">
+                  Contraste calculado (fundo escuro com texto branco ou vice-versa). Uso de palavras-chave em negrito (*Keywords*) e ícones inline que reduzem a fadiga de leitura.
+                </div>
+              </div>
+
+              <div class="anatomy-step" id="step-4" onclick="selectStep(4)">
+                <div class="step-head"><span>ZONA 05</span> Rodapé Técnico & Identificador de Coleção</div>
+                <div class="step-desc">
+                  Ícone de raridade, número da carta na coleção (essencial para montagem de baralho e catalogação no BGG) e créditos de autoria.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Cases Portfolio Spotlight -->
+        <div class="projects-sec">
+          <div class="sec-header">
+            <span class="sec-eyebrow">Cases Reais no Portfólio</span>
+            <h2 class="sec-title">Projetos Desenvolvidos e Prontos para Análise</h2>
+            <p class="sec-desc">Clique nos cases para abrir as páginas completas e interativas de cada jogo.</p>
+          </div>
+
+          <!-- Project Benchmark: Terraforming Mars Re-Engineered -->
+          <div class="project-card-full" style="border: 2px solid #C84B31;">
+            <div class="proj-media">
+              <img src="terraforming-mars/assets/cover.jpg" alt="Terraforming Mars: Re-Engineered Tabletop UX & Component Redesign" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div class="proj-info">
+              <span class="proj-badge" style="color:#C84B31;">Benchmark Case · Tabletop UX & Redesign</span>
+              <h3 class="proj-title">Terraforming Mars: Re-Engineered</h3>
+              <p class="proj-desc">
+                Estudo aprofundado de ergonomia e arquitetura de componentes para o #5 do ranking mundial do BGG: dashboard dual-layer que zera o escorregamento de cubos, cartas com sistema de cascata (splay) que reduzem 65% da área de mesa e iconografia relacional.
+              </p>
+              <div class="proj-tags">
+                <span class="proj-tag-item">Dual-Layer Mat</span>
+                <span class="proj-tag-item">Card Splaying (-65% mesa)</span>
+                <span class="proj-tag-item">Iconografia Acessível</span>
+                <span class="proj-tag-item">Pre-Press Panda</span>
+              </div>
+              <div class="proj-actions">
+                <a href="terraforming-mars/index.html" class="btn-nav primary" style="background:#C84B31; border-color:#C84B31;">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Explorar Case Interativo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 1: Loony Races -->
+          <div class="project-card-full">
+            <div class="proj-media">
+              <img src="loony-races/assets/cover.jpg" alt="Loony Races Board Game" />
+            </div>
+            <div class="proj-info">
+              <span class="proj-badge">Board Game Completo · 1–10 Jogadores</span>
+              <h3 class="proj-title">Loony Races</h3>
+              <p class="proj-desc">
+                Identidade visual completa, manual bilíngue PT/EN folheável, pranchas modulares de pista em tiles (Asfalto, Lama e Gelo), 10 pilotos de países distintos, cartas de ação sem texto (Language Independent) e arte da embalagem 3D.
+              </p>
+              <div class="proj-tags">
+                <span class="proj-tag-item">Tiles Modulares</span>
+                <span class="proj-tag-item">Manual PT/EN</span>
+                <span class="proj-tag-item">10 Pilotos</span>
+                <span class="proj-tag-item">Caixa 26×26 cm</span>
+              </div>
+              <div class="proj-actions">
+                <a href="loony-races/index.html" class="btn-nav primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Explorar Case Completo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Projeto Força BR -->
+          <div class="project-card-full">
+            <div class="proj-media">
+              <img src="forca-br/assets/cover.jpg" alt="Projeto Força BR Board Game" />
+            </div>
+            <div class="proj-info">
+              <span class="proj-badge">Board Game Cooperativo · Protótipo 3D</span>
+              <h3 class="proj-title">Projeto Força BR</h3>
+              <p class="proj-desc">
+                Design de tabuleiro de radar tático 65×65 cm, console do jogador com duplo contador giratório de recursos, 4 baralhos de eventos e missões regionais, logos de super-heróis e folha de miniaturas de papel dobráveis.
+              </p>
+              <div class="proj-tags">
+                <span class="proj-tag-item">Tabuleiro 65×65</span>
+                <span class="proj-tag-item">Console Tático</span>
+                <span class="proj-tag-item">Marcadores de Recursos</span>
+                <span class="proj-tag-item">Renders Dimension</span>
+              </div>
+              <div class="proj-actions">
+                <a href="forca-br/index.html" class="btn-nav primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Explorar Case Completo
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Cobra Kai Game UI -->
+          <div class="project-card-full">
+            <div class="proj-media">
+              <img src="cobra-kai/assets/keyart.jpg" alt="Cobra Kai Game UI" />
+            </div>
+            <div class="proj-info">
+              <span class="proj-badge">Digital Companion / Arcade UI</span>
+              <h3 class="proj-title">Cobra Kai · Game UI & Design System</h3>
+              <p class="proj-desc">
+                Interface de jogo e companion app: grade de seleção de lutadores, HUD de combate com barras de vida escaláveis, selos de K.O., sprites animados em pixel art e sistema visual de alta energia.
+              </p>
+              <div class="proj-tags">
+                <span class="proj-tag-item">Game UI / HUD</span>
+                <span class="proj-tag-item">Fighter Selection</span>
+                <span class="proj-tag-item">Pixel Art</span>
+                <span class="proj-tag-item">Interactive Stage</span>
+              </div>
+              <div class="proj-actions">
+                <a href="cobra-kai/index.html" class="btn-nav primary">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Explorar Case Completo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Publisher & Kickstarter Checklist Box -->
+        <div class="checklist-box">
+          <div style="text-align:center; max-width:680px; margin:0 auto;">
+            <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#FBBF24;">O que entrego para sua produção</span>
+            <h2 style="font-size:clamp(26px, 3.5vw, 36px); font-weight:800; margin:8px 0 14px; color:#FFFFFF;">Checklist Completo de Entregáveis para Editoras</h2>
+            <p style="color:#94A3B8; font-size:15px;">Ao contratar o design gráfico completo do seu jogo, você recebe arquivos fechados e homologados prontos para envio à fábrica.</p>
+          </div>
+
+          <div class="checklist-grid">
+            <div class="chk-item">
+              <div class="chk-title"><i class="fa-solid fa-id-card"></i> Cartas & Baralhos</div>
+              <ul class="chk-list">
+                <li>Templates mestre (Frente/Verso)</li>
+                <li>Sangria 3mm e margem de corte</li>
+                <li>Padrões Poker, Tarot e Mini</li>
+                <li>Arquivos em lote CMYK 300 DPI</li>
+              </ul>
+            </div>
+
+            <div class="chk-item">
+              <div class="chk-title"><i class="fa-solid fa-book"></i> Manual de Regras</div>
+              <ul class="chk-list">
+                <li>Grid editorial no InDesign</li>
+                <li>Inventário visual de peças</li>
+                <li>Exemplos ilustrados passo a passo</li>
+                <li>PDF otimizado para gráfica + web</li>
+              </ul>
+            </div>
+
+            <div class="chk-item">
+              <div class="chk-title"><i class="fa-solid fa-puzzle-piece"></i> Punchboards</div>
+              <ul class="chk-list">
+                <li>Facas de corte (Die-lines)</li>
+                <li>Fichas de recursos e moedas</li>
+                <li>Tabuleiros de jogador encaixáveis</li>
+                <li>Tolerância milimétrica de faca</li>
+              </ul>
+            </div>
+
+            <div class="chk-item">
+              <div class="chk-title"><i class="fa-solid fa-box-open"></i> Embalagem & Caixa</div>
+              <ul class="chk-list">
+                <li>Planta da tampa e fundo (Wrap)</li>
+                <li>Código de barras e selos (CE/Inmetro)</li>
+                <li>Ícones de tempo/jogadores/idade</li>
+                <li>Máscaras de Verniz Localizado</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="tt-footer-cta">
+      <div class="wrap">
+        <h2 style="font-size:clamp(28px, 4vw, 42px); font-weight:800; margin-bottom:12px; color:var(--text-main);">
+          Pronto para elevar o nível visual e ergonômico do seu jogo?
+        </h2>
+        <p style="color:var(--text-muted); font-size:16px; max-width:600px; margin:0 auto 30px;">
+          Estou disponível para freelas de jogos completos, protótipos para financiamento coletivo ou polimento de manuais e cartas.
+        </p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <a href="mailto:erik.placido@gmail.com" class="btn-nav primary" style="padding:12px 28px; font-size:15px;">
+            <i class="fa-solid fa-paper-plane"></i> Solicitar Orçamento / Briefing
+          </a>
+          <a href="tabletop_onesheet.html" target="_blank" class="btn-nav" style="padding:12px 28px; font-size:15px;">
+            <i class="fa-solid fa-file-pdf"></i> Baixar One-Sheet Pitch (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="shared/i18n.js"></script>
+  <script>
+    function selectStep(index) {
+      document.querySelectorAll('.anatomy-step').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.hotspot').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+      });
+    }
+  </script>
+</body>
+</html>

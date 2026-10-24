@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- MODELO DE CASE — veja ../README.md, seção "Criar um novo case".
+     Substitua tudo que estiver entre ⟨ ⟩ e apague estes comentários no final. -->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>⟨Nome do projeto⟩ · Case</title>
+<meta name="description" content="⟨Uma frase sobre o projeto⟩">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter + Instrument Serif são da moldura. Fontes próprias do projeto entram depois, no mesmo link. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+/* 1. As duas cores do case. --accent = cor assinatura (igual a "color" em shared/cases.js). --hl = destaque. */
+:root{ --accent:#11284B; --hl:#F0DF0A; }
+
+/* 2. A linguagem visual do projeto mora aqui: fundos de palco, mockups, fontes de exibição.
+      Use dentro de .pf-stage ou de UMA faixa assinatura de largura total. Não redefina h1/h2/p/.eyebrow. */
+.st-case{background:linear-gradient(160deg,#CFE6FF,#F7FAFF)}
+.mock{aspect-ratio:16/9;border-radius:16px;background:#fff;box-shadow:0 30px 60px -30px rgba(16,22,31,.4);display:grid;place-items:center;color:var(--pf-ink-2)}
+</style>
+</head>
+<body data-case="⟨slug-da-pasta⟩">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ ⟨Nome curto⟩</span></a>
+    <ul class="pf-links"><!-- 3 a 6 links, um por seção com id -->
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#decisao-1">⟨Decisão 1⟩</a></li>
+      <li><a href="#resultado">Resultado</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div><!-- preenchido por shared/cases.js -->
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case ⟨0X⟩</b> · ⟨Disciplina⟩ · ⟨Disciplina⟩</p>
+    <h1>⟨Frase que resume o problema,⟩ <em>⟨ideia-chave em destaque.⟩</em></h1>
+    <p class="lede">⟨Contexto em 2–3 linhas: o que é, para quem, o que você fez.⟩</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>⟨…⟩</dd></div>
+      <div><dt>Tipo</dt><dd>⟨…⟩</dd></div>
+      <div><dt>Entregas</dt><dd>⟨…⟩</dd></div>
+      <div><dt>Ferramentas</dt><dd>⟨…⟩</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover" style="background:var(--accent)">
+    <img src="assets/cover.jpg" alt="⟨descrição da capa⟩">
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O problema</p>
+      <h2>⟨Título do contexto.⟩</h2>
+      <p class="lede">⟨O que estava em jogo e para quem.⟩</p>
+    </div>
+    <div class="callout rv"><b>Brief:</b> ⟨o objetivo em uma frase.⟩</div>
+  </div>
+</section>
+
+<section id="decisao-1" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · ⟨Nome da decisão⟩</p>
+      <h2>⟨Título da decisão.⟩</h2>
+      <p class="lede">⟨O que você decidiu e por quê.⟩</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-case">
+        <div class="tag-row"><span class="pill y">⟨Interativo / Proposta / Real⟩</span></div>
+        <div class="mock">⟨mockup, imagem ou protótipo⟩</div>
+      </div>
+      <figcaption><b>⟨Legenda curta.⟩</b> ⟨O que a imagem mostra e se é real ou recriação.⟩</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="resultado" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">Resultado</p>
+      <h2>⟨O que mudou.⟩</h2>
+      <p class="lede">⟨Números reais, se houver. Se não houver, diga o que aprendeu.⟩</p>
+    </div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a><!-- preenchido por shared/cases.js -->
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>⟨Uma linha de convite.⟩</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>⟨Nome do projeto⟩</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+/* Revela elementos .rv ao rolar. Comportamentos próprios do case entram abaixo. */
+(function(){
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } }) },{threshold:.15});
+  els.forEach(function(e){ io.observe(e) });
+})();
+</script>
+</body>
+</html>

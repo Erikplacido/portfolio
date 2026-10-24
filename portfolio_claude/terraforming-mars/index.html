@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terraforming Mars: Re-Engineered · Tabletop UX & Component Redesign</title>
+<meta name="description" content="Estudo de caso de Redesign de UX/UI e Arquitetura de Informação para o clássico Terraforming Mars: dashboard de camada dupla, sistema de cartas com splay e iconografia acessível.">
+<meta property="og:title" content="Terraforming Mars: Re-Engineered — Tabletop UX & Component Redesign">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../shared/cases.js"></script>
+<script>
+/* Se este case estiver marcado draft:true em shared/cases.js, manda o
+   visitante pra home antes da página desenhar -- a menos que seja edicao
+   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL || [];
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
+  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
+  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
+  if (c && c.draft && !local && !preview) {
+    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
+    location.replace(root + 'index.html?em-breve=' + c.slug);
+  }
+})();
+</script>
+<style>
+:root{
+  --accent:#C84B31;
+  --accent-glow:#E05A3E;
+  --accent-subtle:#FDF2F0;
+  --hl:#F59E0B;
+  --mars-rust:#C84B31;
+  --space-dark:#0B0F19;
+  --space-surface:#161E2E;
+  --border-space:rgba(255,255,255,0.12);
+  --mc-gold:#F59E0B;
+  --steel-gray:#94A3B8;
+  --titanium-purple:#A855F7;
+  --plant-green:#10B981;
+  --energy-violet:#6366F1;
+  --heat-orange:#EF4444;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+/* Cover banner */
+.pf-hero > .pf-cover.tm-cover{height:clamp(320px,42vw,640px);background:#161E2E}
+.pf-cover.tm-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+/* Metrics counter grid */
+.tm-count{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:850px){.tm-count{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.tm-count{grid-template-columns:1fr}}
+
+/* UX Audit Section */
+.audit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:32px}
+@media(max-width:800px){.audit-grid{grid-template-columns:1fr}}
+.audit-card{background:var(--pf-surface,#fff);border:1px solid var(--pf-line,#E2E8F0);border-radius:18px;padding:28px;box-shadow:0 2px 10px rgba(15,23,42,0.03)}
+.audit-flaw{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#DC2626;margin-bottom:10px}
+.audit-title{font-size:19px;font-weight:800;color:var(--pf-ink);margin-bottom:10px}
+.audit-desc{font-size:14.5px;color:var(--pf-ink-2);line-height:1.6;margin-bottom:16px}
+.audit-fix{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:12px 16px;font-size:13px;color:#166534;line-height:1.5}
+.audit-fix strong{color:#14532D;display:block;margin-bottom:2px}
+
+/* Wipe comparison slider */
+.wipe{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;background:#0B0F19;border:2px solid var(--border-space);box-shadow:0 24px 60px rgba(0,0,0,0.4)}
+.wipe img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wipe .wipe-top{clip-path:inset(0 calc(100% - var(--w,50%)) 0 0)}
+.wipe .wipe-line{position:absolute;top:0;bottom:0;left:var(--w,50%);width:3px;background:#fff;box-shadow:0 0 16px rgba(0,0,0,.7);pointer-events:none;z-index:5}
+.wipe .wipe-handle{position:absolute;top:50%;left:var(--w,50%);transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:#fff;border:3px solid var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:15px;pointer-events:none;z-index:6}
+.wipe-badge{position:absolute;top:18px;z-index:8;font:700 11px/1 var(--font-mono);text-transform:uppercase;letter-spacing:.08em;padding:7px 12px;border-radius:6px;pointer-events:none}
+.wipe-badge.left{left:18px;background:rgba(200,75,49,.92);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2)}
+.wipe-badge.right{right:18px;background:rgba(15,23,42,.88);color:#CBD5E1;border:1px solid rgba(255,255,255,.2);box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.wipe input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;z-index:10}
+
+/* Dual Layer Mat Stage */
+.stage-mat{background:#0B0F19;border-radius:24px;padding:clamp(24px,4vw,48px);border:1px solid var(--border-space);color:#fff;margin:28px 0;box-shadow:0 24px 60px rgba(0,0,0,0.35)}
+.mat-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+.mat-title{font-size:22px;font-weight:800;color:#fff}
+.mat-legend{font-size:12px;color:#94A3B8;display:flex;align-items:center;gap:12px}
+.mat-board{background:#161E2E;border:3px solid #334155;border-radius:16px;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;box-shadow:inset 0 4px 16px rgba(0,0,0,0.5)}
+@media(max-width:850px){.mat-board{grid-template-columns:1fr}}
+
+.res-slot{background:#0F172A;border:2px solid #1E293B;border-radius:12px;padding:14px;position:relative;transition:all .2s ease}
+.res-slot:hover{border-color:var(--hl)}
+.res-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.res-name{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+.res-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+
+/* Track grid recessed */
+.track-recessed{background:#080C14;border-radius:8px;padding:8px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;border:1px solid rgba(255,255,255,0.06);box-shadow:inset 0 2px 8px rgba(0,0,0,0.6)}
+.cube-slot{aspect-ratio:1;border-radius:4px;background:#1E293B;display:flex;align-items:center;justify-content:center;font-size:11px;font-family:var(--font-mono);font-weight:700;color:#64748B;cursor:pointer;transition:all .15s}
+.cube-slot:hover{background:#334155;color:#fff}
+.cube-slot.has-cube{background:var(--accent);color:#fff;box-shadow:0 0 10px rgba(200,75,49,0.8);border:1px solid #FF8A70}
+
+/* Interactive Card Splay Simulator */
+.splay-stage{background:var(--pf-surface,#FFFFFF);border:1px solid var(--pf-line,#E2E8F0);border-radius:24px;padding:clamp(24px,4vw,48px);margin:28px 0;box-shadow:0 4px 24px rgba(15,23,42,0.04)}
+.splay-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+@media(max-width:850px){.splay-grid{grid-template-columns:1fr}}
+
+.splay-deck{position:relative;min-height:360px;display:flex;align-items:center}
+.tm-card{position:absolute;width:240px;height:336px;border-radius:12px;background:#FFFFFF;border:2px solid #CBD5E1;box-shadow:0 12px 32px rgba(15,23,42,0.14);transition:all .4s cubic-bezier(.23,1,.32,1);cursor:pointer;padding:12px;display:flex;flex-direction:column;justify-content:space-between}
+.tm-card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 20px 40px rgba(15,23,42,0.22);z-index:10}
+
+.tm-card.green{border-top:8px solid #10B981}
+.tm-card.blue{border-top:8px solid #3B82F6}
+.tm-card.red{border-top:8px solid #EF4444}
+
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.card-cost{width:32px;height:32px;border-radius:50%;background:#F59E0B;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;font-family:var(--font-mono)}
+.card-tags{display:flex;gap:4px}
+.card-tag-icon{width:22px;height:22px;border-radius:4px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;font-size:11px;color:#475569}
+
+.card-art-box{height:110px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:11px;text-transform:uppercase;letter-spacing:0.08em}
+.card-body-text{font-size:11px;line-height:1.4;color:#334155;background:#F8FAFC;padding:8px;border-radius:6px;border:1px solid #E2E8F0}
+.card-foot{display:flex;justify-content:space-between;font-size:9.5px;color:#94A3B8;font-family:var(--font-mono)}
+
+.c-1{left:0;z-index:1}
+.c-2{left:55px;z-index:2}
+.c-3{left:110px;z-index:3}
+.c-4{left:165px;z-index:4}
+
+/* Iconography Grid */
+.icon-matrix{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:32px 0}
+@media(max-width:700px){.icon-matrix{grid-template-columns:repeat(3,1fr)}}
+.icon-item{background:var(--pf-surface,#fff);border:1px solid var(--pf-line,#E2E8F0);border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.02)}
+.icon-disc{width:46px;height:46px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.icon-name{font-size:12.5px;font-weight:700;color:var(--pf-ink)}
+.icon-sub{font-size:10.5px;color:var(--pf-ink-2)}
+</style>
+</head>
+<body data-case="terraforming-mars">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Terraforming Mars</span></a>
+    <ul class="pf-links">
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#diagnostico">Diagnóstico</a></li>
+      <li><a href="#antes-depois">Antes &amp; Depois</a></li>
+      <li><a href="#dual-layer">Dual-Layer</a></li>
+      <li><a href="#card-splay">Splay</a></li>
+      <li><a href="#iconografia">Iconografia</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 06</b> · Tabletop UX · Component Redesign</p>
+    <h1>Terraforming Mars: <em>Re-Engineered.</em></h1>
+    <p class="lede">Um estudo profundo de Arquitetura de Informação, Ergonomia de Mesa e Design de Componentes para um dos jogos de tabuleiro mais aclamados do mundo.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>UX/UI Design, Ergonomia e Design de Componentes</dd></div>
+      <div><dt>Projeto</dt><dd>Redesign conceitual independente · 2024</dd></div>
+      <div><dt>Entregas</dt><dd>Console dual-layer, arquitetura de cartas (splay) e iconografia</dd></div>
+      <div><dt>Ferramentas</dt><dd>Figma, Illustrator, Photoshop, Blender <span class="pf-tools" aria-hidden="true"><i style="color:#F24E1E;border-color:#F24E1E;background:#2C150E">Fg</i><i style="color:#FF9A00;border-color:#FF9A00;background:#330000">Ai</i><i style="color:#31A8FF;border-color:#31A8FF;background:#001E36">Ps</i><i style="color:#EA7600;border-color:#EA7600;background:#2E1700">Bl</i></span></dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover tm-cover">
+    <img src="assets/cover.jpg" alt="Render 3D de luxo dos novos componentes de Terraforming Mars: Re-Engineered sobre mesa de carvalho escuro, com console dual-layer, cubos metálicos usinados e leque de cartas de projeto com acabamento em linho">
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O Problema</p>
+      <h2>Por que um dos maiores jogos de tabuleiro do mundo precisava de um redesign?</h2>
+      <p class="lede">Com mais de 100 mil avaliações e no top 5 global do BoardGameGeek, Terraforming Mars é uma obra-prima de game design criada por Jacob Fryxelius. No entanto, sua produção original de 2016 sofre com componentes de papel fino que causam fricção física constante na mesa.</p>
+    </div>
+    <div class="callout rv"><b>Objetivo de UX:</b> eliminar completamente a perda de estado de jogo causada por esbarrões no tabuleiro, otimizar em 65% a área de mesa ocupada pelas cartas e unificar a iconografia relacional.</div>
+    <div class="tm-count rv" style="margin-top:40px">
+      <div class="pf-card"><span class="tag">Ranking BGG</span><b>#5</b><p>no ranking mundial de jogos de tabuleiro estratégicos.</p></div>
+      <div class="pf-card"><span class="tag">Fricção Física</span><b>0%</b><p>cubos travados em cavidades cortadas a laser milimétricas.</p></div>
+      <div class="pf-card"><span class="tag">Área de Mesa</span><b>-65%</b><p>redução de espaço por jogador com o sistema de card splay.</p></div>
+      <div class="pf-card"><span class="tag">Engenharia</span><b style="font-size:clamp(22px,2.8vw,32px)">Dual-Layer 3mm</b><p>specs industriais homologadas para produção gráfica.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01: The Diagnosis -->
+<section id="diagnostico" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Diagnóstico</p>
+      <h2>Os 4 pontos críticos de usabilidade no design original</h2>
+      <p class="lede">Uma análise aprofundada dos atritos ergonômicos e cognitivos que afetam os jogadores durante partidas de 2 a 3 horas.</p>
+    </div>
+
+    <div class="audit-grid rv">
+      <div class="audit-card">
+        <div class="audit-flaw"><i class="fa-solid fa-triangle-exclamation"></i> Ponto Crítico 01</div>
+        <h3 class="audit-title">O Famoso "Tabuleiro Escorregadio"</h3>
+        <p class="audit-desc">
+          Os tabuleiros individuais são folhas lisas de papel cartão fino. Qualquer esbarrão de cotovelo na mesa desloca dezenas de cubos minúsculos de produção e recursos, arruinando partidas de 3 horas.
+        </p>
+        <div class="audit-fix">
+          <strong>Solução de UX:</strong>
+          Engenharia de painel em camada dupla (<em>dual-layer mat</em>) de 3mm com cavidades cortadas a laser que travam cubos de 8mm no lugar com tolerância mecânica.
+        </div>
+      </div>
+
+      <div class="audit-card">
+        <div class="audit-flaw"><i class="fa-solid fa-triangle-exclamation"></i> Ponto Crítico 02</div>
+        <h3 class="audit-title">Saturação e Colapso de Espaço na Mesa</h3>
+        <p class="audit-desc">
+          Por volta da 8ª geração, cada jogador construiu um motor de 25 a 40 cartas. As cartas precisam ficar abertas para exibir suas tags, ocupando mais de 1,20m de espaço por jogador.
+        </p>
+        <div class="audit-fix">
+          <strong>Solução de UX:</strong>
+          Arquitetura de cartas com borda esquerda padronizada (<em>Splay Margin</em> de 18mm). Quando encaixadas em cascata, tags e custos continuam visíveis ocupando 65% menos espaço.
+        </div>
+      </div>
+
+      <div class="audit-card">
+        <div class="audit-flaw"><i class="fa-solid fa-triangle-exclamation"></i> Ponto Crítico 03</div>
+        <h3 class="audit-title">Inconsistência Visual &amp; Colagem de Stock Photos</h3>
+        <p class="audit-desc">
+          O jogo original mistura renderizações 3D da NASA, fotos amadoras de banco de imagens, desenhos cartunescos e ícones de baixa resolução na mesma caixa.
+        </p>
+        <div class="audit-fix">
+          <strong>Solução de UX:</strong>
+          Unificação sob uma identidade retrofuturista industrial limpa, inspirada na estética aeroespacial da ESA e design system suíço.
+        </div>
+      </div>
+
+      <div class="audit-card">
+        <div class="audit-flaw"><i class="fa-solid fa-triangle-exclamation"></i> Ponto Crítico 04</div>
+        <h3 class="audit-title">Carga Cognitiva Excessiva no Texto de Regras</h3>
+        <p class="audit-desc">
+          Cartas repetem frases inteiras como <em>"Aumente sua produção de MegaCréditos em 1 passo"</em> em vez de utilizar sintaxe iconográfica relacional universal.
+        </p>
+        <div class="audit-fix">
+          <strong>Solução de UX:</strong>
+          Sistema visual de iconografia modular com contêineres coloridos que indicam se o efeito é imediato, passivo ou de fim de jogo.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02: Antes e Depois -->
+<section id="antes-depois" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Antes &amp; Depois</p>
+      <h2>Do papel fino ao console rígido industrial</h2>
+      <p class="lede">Arraste a linha divisória para comparar o tabuleiro individual original de 2016 com o novo painel dual-layer proposto.</p>
+    </div>
+
+    <figure class="rv">
+      <div class="wipe" id="tmWipe">
+        <img src="assets/tabuleiro-original.jpg" alt="Fotografia do tabuleiro original de 2016: folha de papel fino com cubos de produção deslocados e desordenados após esbarrão">
+        <img class="wipe-top" src="assets/tabuleiro-duallayer.jpg" alt="Render fotográfico do novo console dual-layer: placa rígida de 3mm cortada a laser com cubos metálicos travados em cavidades">
+        <span class="wipe-line" aria-hidden="true"></span>
+        <div class="wipe-handle" aria-hidden="true"><i class="fa-solid fa-arrows-left-right"></i></div>
+        <span class="wipe-badge left">NOVO · DUAL-LAYER 3MM</span>
+        <span class="wipe-badge right">ORIGINAL · PAPEL FINO 2016</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois">
+      </div>
+      <figcaption style="margin-top:14px; font-size:13.5px; color:var(--pf-ink-2); text-align:center;">
+        <b>Comparativo fotográfico interativo.</b> Arraste a linha para confrontar a folha de papel cartão fina original (onde qualquer esbarrão de cotovelo deslocava os cubos) com o novo console rígido usinado a laser, onde cubos metálicos de 8mm travam com firmeza absoluta.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 03: Dual-Layer Mat Stage -->
+<section id="dual-layer" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Engenharia de Componente</p>
+      <h2>O Dashboard de Camada Dupla (Dual-Layer)</h2>
+      <p class="lede">Design mecânico e gráfico de um console de jogador rígido de 280 × 190 mm. Clique nos números abaixo para simular o encaixe usinado dos cubos de produção.</p>
+    </div>
+
+    <div class="stage-mat rv">
+      <div class="mat-header">
+        <div>
+          <div style="font-size:12px; font-weight:800; text-transform:uppercase; color:var(--hl); letter-spacing:0.1em;">Simulador Interativo</div>
+          <h3 class="mat-title">Corporation Control Console · Dual-Layer Spec</h3>
+        </div>
+        <div class="mat-legend">
+          <span><i class="fa-solid fa-circle" style="color:var(--accent);"></i> Clique em um número para posicionar o cubo</span>
+        </div>
+      </div>
+
+      <div class="mat-board">
+        <!-- MegaCredits -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-coins" style="color:var(--mc-gold);"></i> MegaCréditos (M€)</span>
+            <span class="res-icon" style="background:#FEF3C7; color:#92400E;">M€</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Trilha de Produção (-5 a +20):</div>
+          <div class="track-recessed" id="track-mc">
+            <div class="cube-slot" onclick="setSlot(this)">-5</div>
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot" onclick="setSlot(this)">+1</div>
+            <div class="cube-slot" onclick="setSlot(this)">+2</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+5</div>
+            <div class="cube-slot" onclick="setSlot(this)">+10</div>
+          </div>
+        </div>
+
+        <!-- Steel -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-cubes-stacked" style="color:var(--steel-gray);"></i> Aço (Steel)</span>
+            <span class="res-icon" style="background:#F1F5F9; color:#475569;">Fe</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Produção de Aço (+0 a +10):</div>
+          <div class="track-recessed" id="track-steel">
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot" onclick="setSlot(this)">+1</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+2</div>
+            <div class="cube-slot" onclick="setSlot(this)">+3</div>
+            <div class="cube-slot" onclick="setSlot(this)">+4</div>
+            <div class="cube-slot" onclick="setSlot(this)">+5</div>
+          </div>
+        </div>
+
+        <!-- Titanium -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-rocket" style="color:var(--titanium-purple);"></i> Titânio (Space)</span>
+            <span class="res-icon" style="background:#FAF5FF; color:#7E22CE;">Ti</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Produção de Titânio (+0 a +8):</div>
+          <div class="track-recessed" id="track-ti">
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+1</div>
+            <div class="cube-slot" onclick="setSlot(this)">+2</div>
+            <div class="cube-slot" onclick="setSlot(this)">+3</div>
+            <div class="cube-slot" onclick="setSlot(this)">+4</div>
+            <div class="cube-slot" onclick="setSlot(this)">+5</div>
+          </div>
+        </div>
+
+        <!-- Plants -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-leaf" style="color:var(--plant-green);"></i> Plantas (Oxygen)</span>
+            <span class="res-icon" style="background:#ECFDF5; color:#065F46;">O₂</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Produção de Plantas (+0 a +10):</div>
+          <div class="track-recessed" id="track-plants">
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot" onclick="setSlot(this)">+1</div>
+            <div class="cube-slot" onclick="setSlot(this)">+2</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+4</div>
+            <div class="cube-slot" onclick="setSlot(this)">+6</div>
+            <div class="cube-slot" onclick="setSlot(this)">+8</div>
+          </div>
+        </div>
+
+        <!-- Energy -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-bolt" style="color:var(--energy-violet);"></i> Energia (Power)</span>
+            <span class="res-icon" style="background:#EEF2FF; color:#3730A3;">⚡</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Produção de Energia (+0 a +10):</div>
+          <div class="track-recessed" id="track-energy">
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot" onclick="setSlot(this)">+1</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+3</div>
+            <div class="cube-slot" onclick="setSlot(this)">+5</div>
+            <div class="cube-slot" onclick="setSlot(this)">+7</div>
+            <div class="cube-slot" onclick="setSlot(this)">+9</div>
+          </div>
+        </div>
+
+        <!-- Heat -->
+        <div class="res-slot">
+          <div class="res-top">
+            <span class="res-name"><i class="fa-solid fa-fire-flame-curved" style="color:var(--heat-orange);"></i> Calor (Temp)</span>
+            <span class="res-icon" style="background:#FEF2F2; color:#991B1B;">°C</span>
+          </div>
+          <div style="font-size:11px; color:#94A3B8; margin-bottom:8px;">Produção de Calor (+0 a +12):</div>
+          <div class="track-recessed" id="track-heat">
+            <div class="cube-slot" onclick="setSlot(this)">0</div>
+            <div class="cube-slot" onclick="setSlot(this)">+2</div>
+            <div class="cube-slot" onclick="setSlot(this)">+4</div>
+            <div class="cube-slot has-cube" onclick="setSlot(this)">+6</div>
+            <div class="cube-slot" onclick="setSlot(this)">+8</div>
+            <div class="cube-slot" onclick="setSlot(this)">+10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04: The Splaying Card Engine -->
+<section id="card-splay" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>04</b> · Economia de Mesa</p>
+      <h2>O Sistema de Cartas em Cascata (<em>Card Splay</em>)</h2>
+      <p class="lede">Passe o mouse ou toque nas cartas para testar como o alinhamento de borda padronizado permite empilhar 30+ cartas em uma fração do espaço físico original.</p>
+    </div>
+
+    <div class="splay-stage rv">
+      <div class="splay-grid">
+        <div class="splay-deck">
+          <!-- Card 1 -->
+          <div class="tm-card green c-1">
+            <div class="card-top">
+              <div class="card-cost">18</div>
+              <div class="card-tags">
+                <span class="card-tag-icon"><i class="fa-solid fa-leaf" style="color:#10B981;"></i></span>
+                <span class="card-tag-icon"><i class="fa-solid fa-seedling" style="color:#059669;"></i></span>
+              </div>
+            </div>
+            <div style="font-size:13px; font-weight:800; margin:6px 0;">ESTUFAS DE ALGAS</div>
+            <div class="card-art-box"><i class="fa-solid fa-microscope" style="font-size:28px;"></i></div>
+            <div class="card-body-text">
+              Aumente a produção de Plantas em +2 passos e ganhe 1 ponto de vitória imediato.
+            </div>
+            <div class="card-foot">
+              <span>AUTOMATED</span>
+              <span>#014/208</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="tm-card blue c-2">
+            <div class="card-top">
+              <div class="card-cost">23</div>
+              <div class="card-tags">
+                <span class="card-tag-icon"><i class="fa-solid fa-rocket" style="color:#A855F7;"></i></span>
+                <span class="card-tag-icon"><i class="fa-solid fa-satellite" style="color:#3B82F6;"></i></span>
+              </div>
+            </div>
+            <div style="font-size:13px; font-weight:800; margin:6px 0;">ESPELHO ORBITAL</div>
+            <div class="card-art-box"><i class="fa-solid fa-satellite-dish" style="font-size:28px;"></i></div>
+            <div class="card-body-text">
+              <strong>Ação:</strong> Gaste 7 M€ para aumentar o nível de calor global em 1 passo.
+            </div>
+            <div class="card-foot">
+              <span>ACTIVE</span>
+              <span>#078/208</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="tm-card red c-3">
+            <div class="card-top">
+              <div class="card-cost">14</div>
+              <div class="card-tags">
+                <span class="card-tag-icon"><i class="fa-solid fa-meteor" style="color:#EF4444;"></i></span>
+              </div>
+            </div>
+            <div style="font-size:13px; font-weight:800; margin:6px 0;">IMPACTO DE ASTEROIDE</div>
+            <div class="card-art-box"><i class="fa-solid fa-fire" style="font-size:28px;"></i></div>
+            <div class="card-body-text">
+              Aumente a temperatura global em +2°C e remova até 3 plantas de qualquer jogador.
+            </div>
+            <div class="card-foot">
+              <span>EVENT</span>
+              <span>#112/208</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="tm-card green c-4">
+            <div class="card-top">
+              <div class="card-cost">9</div>
+              <div class="card-tags">
+                <span class="card-tag-icon"><i class="fa-solid fa-building" style="color:#64748B;"></i></span>
+              </div>
+            </div>
+            <div style="font-size:13px; font-weight:800; margin:6px 0;">MINERAÇÃO DE TITÂNIO</div>
+            <div class="card-art-box"><i class="fa-solid fa-gem" style="font-size:28px;"></i></div>
+            <div class="card-body-text">
+              Aumente sua produção de Titânio em +1 passo. Requer que você tenha 1 tag de Espaço.
+            </div>
+            <div class="card-foot">
+              <span>AUTOMATED</span>
+              <span>#155/208</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span class="eyebrow" style="color:var(--accent);">Ergonomia em Pilha</span>
+          <h3 style="font-size:22px; font-weight:800; margin:8px 0 14px;">Visibilidade Perfeita de Tags e Custo</h3>
+          <p style="color:var(--pf-ink-2); font-size:14.5px; line-height:1.6; margin-bottom:16px;">
+            No design original, o jogador precisava desdobrar as cartas verticalmente ou horizontalmente de forma desordenada.
+          </p>
+          <p style="color:var(--pf-ink-2); font-size:14.5px; line-height:1.6;">
+            Ao concentrar o <strong>Custo de Ativação</strong> e as <strong>Tags de Categoria</strong> estritamente alinhados à esquerda em uma faixa de 40mm, o jogador pode empilhar dezenas de cartas revelando somente as bordas, garantindo que a pontuação de fim de jogo possa ser contabilizada em menos de 30 segundos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Splay Photography -->
+    <figure class="rv" style="margin-top:36px">
+      <div style="border-radius:20px; overflow:hidden; border:1px solid #CBD5E1; box-shadow:0 24px 60px -15px rgba(15,23,42,0.18);">
+        <img src="assets/cartas-splay.jpg" alt="Render fotográfico de estúdio das novas cartas de Terraforming Mars Re-Engineered em cascata com margem de splay de 18mm" style="width:100%; height:auto; display:block;">
+      </div>
+      <figcaption style="margin-top:14px; font-size:13.5px; color:var(--pf-ink-2); text-align:center;">
+        <b>Fotografia macro de estúdio (Linen Finish 310gsm).</b> Demonstração do sistema de splay: com uma margem de apenas 18mm exposta, custos em MegaCrédito e tags de categoria permanecem 100% visíveis, permitindo que um motor de 30+ cartas ocupe apenas 40 cm na mesa.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 05: Iconografia -->
+<section id="iconografia" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>05</b> · Sistema de Design</p>
+      <h2>A Linguagem de Iconografia Relacional</h2>
+      <p class="lede">Substituindo blocos densos de texto por ícones de alto contraste com silhuetas universais reconhecíveis a 1 metro de distância.</p>
+    </div>
+
+    <div class="icon-matrix rv">
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#FEF3C7; color:#B45309;"><i class="fa-solid fa-coins"></i></div>
+        <div class="icon-name">MegaCrédito</div>
+        <div class="icon-sub">Moeda Global</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#F1F5F9; color:#475569;"><i class="fa-solid fa-cube"></i></div>
+        <div class="icon-name">Aço (Steel)</div>
+        <div class="icon-sub">Valor de Construção</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#FAF5FF; color:#7E22CE;"><i class="fa-solid fa-rocket"></i></div>
+        <div class="icon-name">Titânio</div>
+        <div class="icon-sub">Valor Espacial</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#ECFDF5; color:#047857;"><i class="fa-solid fa-leaf"></i></div>
+        <div class="icon-name">Planta</div>
+        <div class="icon-sub">Conversão em O₂</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#EEF2FF; color:#4338CA;"><i class="fa-solid fa-bolt"></i></div>
+        <div class="icon-name">Energia</div>
+        <div class="icon-sub">Vira Calor na Rodada</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon-disc" style="background:#FEF2F2; color:#B91C1C;"><i class="fa-solid fa-fire"></i></div>
+        <div class="icon-name">Calor</div>
+        <div class="icon-sub">Aumenta Temperatura</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso demonstrar os protótipos mecânicos, matrizes de corte a laser e as especificações de componentes ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Terraforming Mars: Re-Engineered</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* Reveal observer */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('in');
+    });
+  },{threshold:.12}) : null;
+  $$('.rv').forEach(function(el){ if(io) io.observe(el); else el.classList.add('in'); });
+
+  /* Wipe comparison slider */
+  var w = $('#tmWipe');
+  if(w){
+    var r = w.querySelector('input');
+    if(r){
+      r.addEventListener('input', function(){
+        w.style.setProperty('--w', r.value + '%');
+      });
+    }
+  }
+
+  /* Interactive mat slot switcher */
+  window.setSlot = function(el) {
+    var parent = el.closest('.track-recessed');
+    if(!parent) return;
+    parent.querySelectorAll('.cube-slot').forEach(function(slot){ slot.classList.remove('has-cube') });
+    el.classList.add('has-cube');
+  };
+})();
+</script>
+</body>
+</html>

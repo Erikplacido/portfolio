@@ -1,0 +1,1000 @@
+{
+  "project": "Chronos Weave",
+  "assetCount": 65,
+  "scale": 2,
+  "palette": {
+    "background": "#070B15",
+    "gold": "#C9A04A",
+    "highlight": "#FDE9B0",
+    "cyan": "#38E1FF",
+    "amber": "#F2B544",
+    "teal": "#2EE6B8",
+    "locked": "#4B5B75"
+  },
+  "assets": [
+    {
+      "file": "assets/inspector-art.jpg",
+      "width": 1200,
+      "height": 400,
+      "method": "imagegen-built-in",
+      "sha256": "150fdc32a392a3f6f37bb73c9e33db2c61dde8fed7f3c2404a0f5a787d0e560c",
+      "bytes": 399979,
+      "displayWidth": 600.0,
+      "displayHeight": 200.0,
+      "transparent": false
+    },
+    {
+      "file": "assets/ui/aba-ativa.png",
+      "width": 320,
+      "height": 64,
+      "nineSlice": 24,
+      "method": "precision-vector-raster",
+      "sha256": "b389646980bc74116f4ac5083119884e201f908c64eef2023440578f99ed062e",
+      "bytes": 3206,
+      "displayWidth": 160.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/botao-segurar-preenchimento.png",
+      "width": 640,
+      "height": 96,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "efeba7c45e9c7e55bc6cbf99c452b4a519e687cc0217b0b01d0ecaf5b073f429",
+      "bytes": 29456,
+      "displayWidth": 320.0,
+      "displayHeight": 48.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        244
+      ]
+    },
+    {
+      "file": "assets/ui/botao-segurar.png",
+      "width": 640,
+      "height": 96,
+      "nineSlice": 20,
+      "method": "precision-vector-raster",
+      "sha256": "b27105998cfeb69e68a1440acc234406fc6dc2434663811e892646b0cc056cb3",
+      "bytes": 2095,
+      "displayWidth": 320.0,
+      "displayHeight": 48.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/card-constelacao.png",
+      "width": 660,
+      "height": 180,
+      "nineSlice": 20,
+      "method": "precision-vector-raster",
+      "sha256": "aadfd2823317e073ac0c3158c121ffc13957625d8a70009b76dbca9cd4629904",
+      "bytes": 1048,
+      "displayWidth": 330.0,
+      "displayHeight": 90.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        215
+      ]
+    },
+    {
+      "file": "assets/ui/divisor-ornamento.png",
+      "width": 600,
+      "height": 16,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "37ef77427c79ae5d5010506e88350ff6d42352d3dc6c4e3273c41e8d835a7d34",
+      "bytes": 1035,
+      "displayWidth": 300.0,
+      "displayHeight": 8.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/emblema-constelacao-1.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "462f5326a13093950c14059b633d39275e4eb71174842ac88ad63f130d4c4d5c",
+      "bytes": 29282,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/emblema-constelacao-2.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "c6ec8da10149a2a8d865352152d9e93eb113a934eb98ed0e0918342be3d3b5f0",
+      "bytes": 29251,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/emblema-constelacao-3.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "ecfa78a400b84e6c14a553ebbbd63446af24cdc7ffeecf5a16d1c48401f196f8",
+      "bytes": 29378,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/feixe-energia.png",
+      "width": 512,
+      "height": 48,
+      "method": "periodic-white-alpha",
+      "tileX": true,
+      "sha256": "1ff480c3800f6a4de130a53c6f5ceea32dbb597e3a609a73a39f93a0a2916a23",
+      "bytes": 2962,
+      "displayWidth": 256.0,
+      "displayHeight": 24.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/icone-cadeado.png",
+      "width": 32,
+      "height": 32,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "69d24352d0e783d5b60ceacdb44150e3f493e4b35518de838d4974a986f06e51",
+      "bytes": 1150,
+      "displayWidth": 16.0,
+      "displayHeight": 16.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/icone-coracao.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "16c492bcf66b1fee1e99a35c96fc13401e601f643c7998ed0e236c9b312bc2ba",
+      "bytes": 296,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-escudo.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "ad5326e1e01ec232456720205852cbd4191f26fc34ead36d81a4eb650a25e11a",
+      "bytes": 291,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-estrela.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "46cdb319c6cd9b6b0a8787620911bcadb3e38b95700bc6e6a87f1b49807a1067",
+      "bytes": 290,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-faisca.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "c90ebb9700f59f93cf78f6555cd3ba30313384f3fb2300cdc02400c65765307e",
+      "bytes": 284,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-keystone.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "38c71463f1a8b20e78be5c34106bcdf694529467f7b093ae724865125c205762",
+      "bytes": 362,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-lamina.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "31717cfb0026821519ffe73e165fdb8c10f2eb49f230b40706aca95075d81b04",
+      "bytes": 317,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-mira.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "3a0917b72e5e8d27edcc28f09800fc3648a69388f88a0922a876a31622beb32f",
+      "bytes": 330,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-no-moldura.png",
+      "width": 112,
+      "height": 112,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "f0b654df451e42a00d821e3f3dd629ecc37d538659c0e7ea709bad9ac92bc235",
+      "bytes": 3332,
+      "displayWidth": 56.0,
+      "displayHeight": 56.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/icone-prisma.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "5598a41df9a15ac30a51bdf5d34823439c816e807ea19d8ae8eb014998b323f6",
+      "bytes": 325,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-raio.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "8eb02d4f1e5c13acd9489f16b65f0f6cf4600fa63e3119ce5216a35012cbc19e",
+      "bytes": 271,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-relogio.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "0a1285c47e394fdc4552ddbcb063d9d7379a98b881bda03f200f42c8835bbf0f",
+      "bytes": 271,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/icone-sol.svg",
+      "width": 128,
+      "height": 128,
+      "method": "monochrome-svg",
+      "color": "#FFFFFF",
+      "sha256": "6b4fc72478fd12c5bfb5789fa23281b0870b2301609e65d52416c62e08a557e7",
+      "bytes": 313,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "monochrome": true
+    },
+    {
+      "file": "assets/ui/logo-emblema.png",
+      "width": 128,
+      "height": 128,
+      "method": "imagegen-built-in",
+      "sha256": "9ffd513853ed44bac8e624248a16fb634ade995751de7179e4d4f0ea3090dedd",
+      "bytes": 26016,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/lore-astrolabio.png",
+      "width": 128,
+      "height": 128,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "165acfcd06741c2b702aeff7a705561d0ef8097bfda69b8700e16a279b078fbc",
+      "bytes": 17549,
+      "displayWidth": 64.0,
+      "displayHeight": 64.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/moeda-pontos.png",
+      "width": 48,
+      "height": 48,
+      "method": "imagegen-built-in",
+      "sha256": "eb6aa9b071ae662cf661f7798671451aaef0ccb04312393872c2d4c2a835b735",
+      "bytes": 2945,
+      "displayWidth": 24.0,
+      "displayHeight": 24.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-circulo-adquirido.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "f4de9c1d663224cc24dc303a810c6be3f8b647e3e3877acbfd17d4acd3fcd437",
+      "bytes": 39265,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-circulo-bloqueado.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "b8347fdc5337a90ef7f26368f0262ccb5402c1175724a60c77a3edbd846cd1f4",
+      "bytes": 27296,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-circulo-disponivel.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "f61465cf4bef31bd045d5d25c0858179a164d72de863cc23540baed01ef11bb9",
+      "bytes": 31566,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-circulo-maestria.png",
+      "width": 160,
+      "height": 160,
+      "method": "imagegen-built-in",
+      "sha256": "bb3becdacc4e54f2032ed18bd628ef5c682475a3672d94e18fb3136eb154c70b",
+      "bytes": 38574,
+      "displayWidth": 80.0,
+      "displayHeight": 80.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-coroa-maestria.png",
+      "width": 256,
+      "height": 256,
+      "method": "imagegen-built-in",
+      "sha256": "39b4c965895077ade5abfab1891b1bb25bfc0df03dc6f828f352e013274ad89f",
+      "bytes": 47935,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-hexagono-adquirido.png",
+      "width": 200,
+      "height": 200,
+      "method": "imagegen-built-in",
+      "sha256": "dbb09a5206686efc41d45782b5d5a36c3ea503a323b71c913a925d6b4e391b55",
+      "bytes": 48540,
+      "displayWidth": 100.0,
+      "displayHeight": 100.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "file": "assets/ui/no-hexagono-bloqueado.png",
+      "width": 200,
+      "height": 200,
+      "method": "imagegen-built-in",
+      "sha256": "eced997d472fabaecb16be5331541fff12598d207882cf16ab785ccdfe02dcc2",
+      "bytes": 29603,
+      "displayWidth": 100.0,
+      "displayHeight": 100.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-hexagono-disponivel.png",
+      "width": 200,
+      "height": 200,
+      "method": "imagegen-built-in",
+      "sha256": "a542cd32786cfeed49bcbf92b315dab543738055f153cc03d90ba06604d74a9d",
+      "bytes": 40087,
+      "displayWidth": 100.0,
+      "displayHeight": 100.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-hexagono-maestria.png",
+      "width": 200,
+      "height": 200,
+      "method": "imagegen-built-in",
+      "sha256": "dfc33610a17e46f09fe44ea92b73eacf762172ee315e4de7777bfacb56dd78cc",
+      "bytes": 47040,
+      "displayWidth": 100.0,
+      "displayHeight": 100.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-keystone-adquirido.png",
+      "width": 256,
+      "height": 256,
+      "method": "imagegen-built-in",
+      "sha256": "f4d764a78d5f33bf79739258c84448e857c566ee59b8e86298b19d8e1ce106d5",
+      "bytes": 76729,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "file": "assets/ui/no-keystone-bloqueado.png",
+      "width": 256,
+      "height": 256,
+      "method": "imagegen-built-in",
+      "sha256": "5c9dde63752bead892dfafcab9e499150fb8f43ecbe75dcf3d2ac2c758bc4cad",
+      "bytes": 49265,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-keystone-disponivel.png",
+      "width": 256,
+      "height": 256,
+      "method": "imagegen-built-in",
+      "sha256": "dacdae505013a4f50a394a0c0c2b50741a896553ba94b611c0a3d32cbc384c71",
+      "bytes": 62578,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-keystone-maestria.png",
+      "width": 256,
+      "height": 256,
+      "method": "imagegen-built-in",
+      "sha256": "8d11f0b8c5904ce4ebd0ff7c8af6dfc3ab66a3ac29bfb957f8439f0bdedb0f93",
+      "bytes": 81903,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/no-selecao.png",
+      "width": 256,
+      "height": 256,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "0c92ed0986fe7d5e071ee4eb3ce6c329c46177c39b9943b44d90d89bf834c13a",
+      "bytes": 8456,
+      "displayWidth": 128.0,
+      "displayHeight": 128.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/painel-moldura.png",
+      "width": 400,
+      "height": 200,
+      "nineSlice": 24,
+      "method": "precision-vector-raster",
+      "sha256": "4943bd03927fe28daffa4e79ab585157107e8c42ae8fb7aebebdd0da65bdc2da",
+      "bytes": 4560,
+      "displayWidth": 200.0,
+      "displayHeight": 100.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-mouse-arrastar.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "47e54f8be26aa40cdf55ffe19ba1918148d1ef0ba47031a62473d374c40206d8",
+      "bytes": 2976,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-mouse-roda.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "d51532cd9ef6b18d63326e0603b5bf3ff6bbb6c563575078d443d6f9c4ee8ba7",
+      "bytes": 3069,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-tecla-e.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "4de5bd8193cde879ccfa1f58d09b68e4f036e266c807682e8c1819df8df457a4",
+      "bytes": 1553,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-tecla-esc.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "50611aded939086adaddb1af758c380126558ea8d54f1063c9fda4a861ec59d3",
+      "bytes": 2784,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-tecla-q.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "5b1386ca4c5bffb62343ee7ddc090f21246ba11eb140bedc29bdf89ec5bcb225",
+      "bytes": 2300,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/pc-tecla-r.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "fc9312cf760c3c3fffe5f3baa5a70cc397fe27407d4d2f33dac6187578555c27",
+      "bytes": 1966,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-analogico-l.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "8b629217449cd6a15ca4e2393d9bf4521cf913eb3984ed292889d37f0bd1426b",
+      "bytes": 5817,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-analogico-r.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "046c730212186caf1a0b44d4c115adfefd66d347948f95b43c4ee91807004942",
+      "bytes": 6131,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-circulo.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "44be0535025bdf6dc980852fe8d4a2a69b618141cf2971e4823b2475a2fb372c",
+      "bytes": 5397,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-cruz.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "e15f93435ef9496d3aaf8231b04363be5afec8f1c9fdbbab485e8ec485ff7f15",
+      "bytes": 4552,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-l1.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "1943fae21176b9a903e1fcb140f51483ad6c5e392016470ac59f1ce41fda78d1",
+      "bytes": 1895,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-quadrado.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "4e5845c33647144ff604dfa59a71801475eebe9dc69ff06faa28af948de9668c",
+      "bytes": 4186,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-r1.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "d4c90bd710f34d791c37b938488d03d252ea8e87cc39d3ceca2d2e2efec12636",
+      "bytes": 2193,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/ps-triangulo.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "3119a2d618f1f53ff3d1e5e1a2411f9bc147b0dc9dba550660b8e5202baea6da",
+      "bytes": 4884,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/radar-moldura.png",
+      "width": 320,
+      "height": 220,
+      "nineSlice": 16,
+      "method": "precision-vector-raster",
+      "sha256": "e380f156cead2b42377af8b7f0431d748f2e96e051bd682c4780191a6078e559",
+      "bytes": 3482,
+      "displayWidth": 160.0,
+      "displayHeight": 110.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/selo-rank.png",
+      "width": 96,
+      "height": 40,
+      "nineSlice": 8,
+      "method": "precision-vector-raster",
+      "sha256": "d29663fe2179fb609d0d8a49bf0856151b99e0e18e994f77f113315737a6fe87",
+      "bytes": 791,
+      "displayWidth": 48.0,
+      "displayHeight": 20.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        246
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-a.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "2234b0a2ab7c298006438513f60d2c80d500f3af0871737ff77310beac7e7871",
+      "bytes": 4798,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-analogico-l.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "8b629217449cd6a15ca4e2393d9bf4521cf913eb3984ed292889d37f0bd1426b",
+      "bytes": 5817,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-analogico-r.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "046c730212186caf1a0b44d4c115adfefd66d347948f95b43c4ee91807004942",
+      "bytes": 6131,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-b.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "d9dcc911d8936050478513af6facb7e872590cbaca8fa52aba806dec20c604c1",
+      "bytes": 4729,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-lb.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "c540b14565275904b2121cc0fa2ab11d03ced2653ba8abe2c37e4e870d89ff86",
+      "bytes": 2146,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-rb.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "4a06ed5c1a9456b92002170e28da3d94049e1151fb378b5db695aec73d6a8be5",
+      "bytes": 2412,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-x.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "28adbc22e929041198c3cb3391c1fc754dd86419197c7c3e15f987108a38ab4e",
+      "bytes": 4870,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/ui/xbox-y.png",
+      "width": 64,
+      "height": 64,
+      "nineSlice": null,
+      "method": "precision-vector-raster",
+      "sha256": "973a9902634b660c039bddee7cc138222f02402e26fc12b6d842a56242c261e4",
+      "bytes": 4559,
+      "displayWidth": 32.0,
+      "displayHeight": 32.0,
+      "transparent": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    }
+  ]
+}
