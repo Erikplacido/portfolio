@@ -19,8 +19,8 @@ Este documento registra o status de materiais, dados e decisões de cada case do
 - [x] Alternância multilíngue instantânea e sincronizada entre **PT**, **EN**, **ES** e **FR** — **Concluído ✓**
 
 ### Cobra Kai (Mobile Advergame & Pixel Art)
-- [x] Clipes curtos de gameplay em loop (`clip-combate.mp4/webm` e `clip-unlock.mp4/webm`) — **Concluído ✓**
-- [x] Player de gameplay interativo com alternância entre combate e unlock — **Concluído ✓**
+- [x] Conceito atualizado para **ativação de estreia da nova temporada**, onde o participante ganha brindes conforme sua pontuação no combate — **Concluído ✓**
+- [x] Remoção da seção redundante de clipes de vídeo para manter o foco no simulador de luta jogável em tempo real — **Concluído ✓**
 - [x] Diagrama interativo de ergonomia mobile de duas mãos (Zonas de Polegares, Safe Areas/Notch e Arquitetura de HUD) — **Concluído ✓**
 
 ### Loony Races (Board Game)

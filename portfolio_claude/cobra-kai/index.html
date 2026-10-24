@@ -4,31 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cobra Kai · Jogo Mobile</title>
-<meta name="description" content="Conceito de arte e UI para um jogo mobile de luta que promove a 3ª temporada de Cobra Kai, liberando acesso antecipado a quem atinge a pontuação máxima.">
+<meta name="description" content="Conceito de arte e UI para um jogo mobile de luta em ativação da estreia da nova temporada de Cobra Kai, onde a pessoa ganha brindes conforme sua pontuação.">
 <meta property="og:title" content="Cobra Kai · 3ª Temporada — conceito de jogo mobile">
 <meta property="og:image" content="assets/keyart.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Bebas+Neue&family=Permanent+Marker&family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 /* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
    Everything below is the game's own visual language. */
@@ -262,26 +246,6 @@
 .unlocked .play{animation:rise .8s .5s var(--ease) both,pulse 1.8s 1.4s infinite!important}
 .replay{display:block;margin:20px auto 0;font:400 9px/1 var(--pixel);color:#fff;border:2px solid rgba(255,255,255,.5);background:none;padding:10px 14px;border-radius:8px}
 
-/* ===== gameplay video clips showcase ===== */
-.ck-clips{margin-top:40px;background:#140806;border:3px solid #3d140e;border-radius:var(--pf-radius);padding:clamp(18px,3.2vw,30px);box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
-.ck-clips-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
-.ck-clips-ttl b{display:block;font:400 13px/1.4 var(--pixel);color:var(--yel);margin-bottom:4px}
-.ck-clips-ttl span{font-size:13px;color:#aaa}
-.ck-clips-tabs{display:inline-flex;padding:4px;border-radius:99px;background:rgba(255,255,255,.08);gap:4px}
-.ck-clips-tabs button{border:0;background:none;padding:8px 16px;border-radius:99px;font:400 9px/1 var(--pixel);color:#ccc;cursor:pointer;transition:all .15s}
-.ck-clips-tabs button[aria-selected="true"]{background:var(--yel);color:#111;box-shadow:0 2px 8px rgba(255,212,0,.4)}
-.ck-player-box{position:relative;width:100%;aspect-ratio:16/9;max-width:860px;margin:0 auto;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 20px 40px rgba(0,0,0,.8);border:2px solid #4a150e}
-.ck-player-box video{width:100%;height:100%;object-fit:cover;display:block}
-.ck-crt-overlay{position:absolute;inset:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px);box-shadow:inset 0 0 60px rgba(0,0,0,.6)}
-.ck-player-bar{position:absolute;left:14px;right:14px;bottom:12px;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15)}
-.ck-player-btn{background:none;border:0;color:#fff;font:400 9px/1 var(--pixel);cursor:pointer;display:flex;align-items:center;gap:6px}
-.ck-player-btn:hover{color:var(--yel)}
-.ck-badge-fps{font:400 8px/1 var(--pixel);color:var(--yel);background:rgba(255,212,0,.15);border:1px solid rgba(255,212,0,.3);padding:4px 6px;border-radius:4px}
-.ck-clip-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
-@media(max-width:760px){.ck-clip-meta{grid-template-columns:1fr}}
-.ck-clip-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px;color:#eee}
-.ck-clip-card b{display:block;font:400 9px/1.4 var(--pixel);color:var(--yel);margin-bottom:6px}
-.ck-clip-card p{font-size:13px;line-height:1.45;color:#bbb;margin:0}
 
 /* ===== 04 ergonomia mobile & arquitetura de hud ===== */
 .ergo-stage-box{position:relative;background:linear-gradient(180deg,#1c120c,#0c0604);border:2px solid #3d140e;border-radius:var(--pf-radius);padding:clamp(20px,4vw,36px);overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);margin-top:24px}
@@ -386,11 +350,11 @@
 <header class="pf-hero">
   <div class="wrap">
     <p class="eyebrow"><b>Case 02</b> · Conceito · Game UI · Pixel art</p>
-    <h1>Para ver a estreia antes de todo mundo, <em>vença a luta.</em></h1>
-    <p class="lede">Conceito de arte e UI para um jogo mobile de luta que promove a 3ª temporada de Cobra Kai no Brasil. Quem atinge a pontuação máxima ganha acesso antecipado ao primeiro episódio.</p>
+    <h1>Para ganhar brindes da nova temporada, <em>vença a luta.</em></h1>
+    <p class="lede">Conceito de arte e UI para um jogo mobile de luta criado para a ativação de estreia da nova temporada de Cobra Kai no Brasil. A pessoa ganha brindes conforme sua pontuação no combate.</p>
     <dl class="pf-meta">
-      <div><dt>Projeto</dt><dd>Cobra Kai · 3ª Temporada</dd></div>
-      <div><dt>Tipo</dt><dd>Advergame mobile (conceito)</dd></div>
+      <div><dt>Projeto</dt><dd>Cobra Kai · Estreia da Nova Temporada</dd></div>
+      <div><dt>Tipo</dt><dd>Advergame mobile &amp; ativação com brindes</dd></div>
       <div><dt>Entregas</dt><dd>Key art, pixel art, sprites, HUD e telas</dd></div>
       <div><dt>Ferramentas</dt><dd>Illustrator, Photoshop <span class="pf-tools" aria-hidden="true"><i style="color:#FF9A00;border-color:#FF9A00;background:#330000">Ai</i><i style="color:#31A8FF;border-color:#31A8FF;background:#001E36">Ps</i></span></dd></div>
     </dl>
@@ -406,14 +370,14 @@
   <div class="wrap">
     <div class="pf-head rv">
       <p class="eyebrow">Como funciona</p>
-      <h2>Quatro telas, uma recompensa.</h2>
-      <p class="lede">O jogador escolhe um lutador da série, enfrenta o rival numa luta curta no estilo arcade dos anos 90 e, ao atingir a pontuação máxima, libera o pré-lançamento da temporada.</p>
+      <h2>Quatro telas, uma ativação com brindes.</h2>
+      <p class="lede">O jogador escolhe um lutador da série, enfrenta o rival numa luta curta no estilo arcade dos anos 90 e ganha brindes exclusivos conforme sua pontuação na ativação de estreia da nova temporada.</p>
     </div>
     <div class="flow rv">
       <a class="pf-card" href="#inicio" style="--i:0"><span class="n">01</span><h3>Toque para iniciar</h3><p>Tela de abertura com o pôr do sol do dojô.</p></a>
       <a class="pf-card" href="#escolha" style="--i:1"><span class="n">02</span><h3>Escolha o lutador</h3><p>Oito personagens em pixel art e um aleatório.</p></a>
       <a class="pf-card" href="#luta" style="--i:2"><span class="n">03</span><h3>Use todo seu karatê</h3><p>Luta com HUD de arcade e combos.</p></a>
-      <a class="pf-card" href="#recompensa" style="--i:3"><span class="n">04</span><h3>Pré-lançamento</h3><p>A pontuação máxima libera o episódio.</p></a>
+      <a class="pf-card" href="#recompensa" style="--i:3"><span class="n">04</span><h3>Resgate de brindes</h3><p>A pontuação libera os prêmios da temporada.</p></a>
     </div>
   </div>
 </section>
@@ -523,7 +487,7 @@
               </g>
             </svg></div>
             <div class="btns"><button type="button" class="p" id="bP" data-key="J" aria-label="Soco (tecla J)">SOCO</button><button type="button" class="k" id="bK" data-key="K" aria-label="Chute (tecla K)">CHUTE</button></div>
-            <div class="ko" id="ko"><img class="badge" src="assets/badge.png" alt="K.O."><div class="msg">PONTUAÇÃO MÁXIMA!<br>PRÉ-ESTREIA LIBERADA</div></div>
+            <div class="ko" id="ko"><img class="badge" src="assets/badge.png" alt="K.O."><div class="msg">PONTUAÇÃO MÁXIMA!<br>BRINDES LIBERADOS</div></div>
           </div>
           <i class="notch"></i>
         </div>
@@ -544,66 +508,7 @@
       </div>
     </div>
 
-    <!-- gameplay video clips showcase -->
-    <div class="ck-clips rv" id="gameplayClips">
-      <div class="ck-clips-head">
-        <div class="ck-clips-ttl">
-          <b>Clipes de Gameplay em Ação · 60 FPS</b>
-          <span>Animação fluida de combate e transição cinematográfica de estreia</span>
-        </div>
-        <div class="ck-clips-tabs" role="tablist" id="clipTabs" aria-label="Seletor de Clipes de Gameplay">
-          <button type="button" role="tab" aria-selected="true" id="tabClip1" data-clip="combate">01 · Golpe do Grou & K.O.</button>
-          <button type="button" role="tab" aria-selected="false" id="tabClip2" data-clip="unlock">02 · Unlock da Estreia</button>
-        </div>
-      </div>
 
-      <div class="ck-player-box">
-        <video id="gameplayVid" autoplay loop muted playsinline poster="assets/dojo-bg.webp">
-          <source src="assets/clip-combate.mp4" type="video/mp4">
-          <source src="assets/clip-combate.webm" type="video/webm">
-        </video>
-        <div class="ck-crt-overlay"></div>
-        <div class="ck-player-bar">
-          <button type="button" class="ck-player-btn" id="btnPlayPause" aria-label="Pausar ou reproduzir vídeo">
-            <span id="playIcon">❚❚</span> <span id="playTxt">PAUSAR</span>
-          </button>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="ck-badge-fps">ARCADE 60 FPS</span>
-            <span id="clipTime" style="font:400 9px/1 var(--pixel);color:#fff;text-shadow:1px 1px 0 #000">00:04.2 / LOOP</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ck-clip-meta" id="clipMetaCombate">
-        <div class="ck-clip-card">
-          <b>Hit-Freeze (4 Frames)</b>
-          <p>Micro-pausa calculada no instante do impacto do chute alto para conferir sensação de peso e impacto ósseo clássico dos arcades dos anos 90.</p>
-        </div>
-        <div class="ck-clip-card">
-          <b>Câmera Dinâmica (Screen Shake)</b>
-          <p>Tremor de tela nos eixos X/Y durante o golpe crítico, amplificando o drama do K.O. e disparando o badge monumental com partículas.</p>
-        </div>
-        <div class="ck-clip-card">
-          <b>Multiplicador x5 Combo</b>
-          <p>Encadeamento de jabs com o Golpe do Grou acumula bônus exponencial de pontos, culminando na pontuação máxima de 999.999.</p>
-        </div>
-      </div>
-
-      <div class="ck-clip-meta" id="clipMetaUnlock" style="display:none">
-        <div class="ck-clip-card">
-          <b>Glitch CRT & Scanlines</b>
-          <p>Efeito analógico de tubo dos anos 80 simulando a transição de um fliperama de shopping para a transmissão da plataforma de streaming.</p>
-        </div>
-        <div class="ck-clip-card">
-          <b>Contagem Turbo de Pontos</b>
-          <p>A barra amarela carrega enquanto o contador sobe acelerado até o limite 999.999, gerando sensação imediata de recompensa merecida.</p>
-        </div>
-        <div class="ck-clip-card">
-          <b>Call-to-Action Pulsante</b>
-          <p>O botão "Assistir episódio" pulsa em ritmo cardíaco (1.8s) com brilho carmesim, convidando o usuário ao toque imediato para abrir a Netflix.</p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 <svg class="edge flip" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" style="background:var(--pf-bg)"><use href="#tear" fill="#E3120B"/></svg>
@@ -709,31 +614,31 @@
   <div class="wrap">
     <div class="pf-head rv">
       <p class="eyebrow"><b>05</b> · Recompensa</p>
-      <h2>A pontuação máxima libera a estreia.</h2>
-      <p class="lede">A transição sai do pixel art para a linguagem da plataforma: fundo preto, emblema em dourado, título em pincel e a marca do streaming. É o momento em que o jogo vira trailer.</p>
+      <h2>Sua pontuação libera os brindes da temporada.</h2>
+      <p class="lede">A transição sai do pixel art para a linguagem promocional: a pontuação acumulada na luta desbloqueia brindes e benefícios exclusivos na ativação de estreia da nova temporada.</p>
     </div>
     <figure class="rv">
       <div class="pf-stage st-dark">
-        <div class="tag-row"><span class="pill y">Sequência</span><span class="pill">Pontuação → carregamento → estreia</span></div>
+        <div class="tag-row"><span class="pill y">Sequência</span><span class="pill">Pontuação → carregamento → brindes</span></div>
         <div class="lphone">
           <div class="lscr" id="rewardScr" style="cursor:default">
             <div class="reward" id="reward">
               <img class="emb" src="assets/cobra.png" alt="" aria-hidden="true">
               <div class="content">
-                <span class="pre">ASSISTA AGORA O PRÉ-LANÇAMENTO</span>
+                <span class="pre">BRINDES EXCLUSIVOS LIBERADOS</span>
                 <img class="t" src="assets/logo2.png" alt="Cobra Kai">
                 <span class="s">SEASON 3</span>
                 <span class="n">NETFLIX</span>
-                <span class="play"><i></i>Assistir episódio</span>
+                <span class="play"><i></i>Resgatar brindes</span>
               </div>
-              <div class="gate"><div class="sc">PONTUAÇÃO<b id="gScore">000000</b>LIBERANDO ACESSO…<div class="bar"><i id="gBar"></i></div></div></div>
+              <div class="gate"><div class="sc">PONTUAÇÃO<b id="gScore">000000</b>CALCULANDO BRINDES…<div class="bar"><i id="gBar"></i></div></div></div>
             </div>
             <i class="notch"></i>
           </div>
         </div>
         <button type="button" class="replay" id="rReplay">↺ VER DE NOVO</button>
       </div>
-      <figcaption><b>Desbloqueio.</b> A pontuação sobe até 999.999, a barra carrega e a tela do pré-lançamento é revelada.</figcaption>
+      <figcaption><b>Desbloqueio de brindes.</b> A pontuação sobe até 999.999, a barra carrega e a tela de resgate dos brindes da nova temporada é revelada.</figcaption>
     </figure>
   </div>
 </section>
@@ -1150,58 +1055,6 @@
     $('#rReplay').addEventListener('click',run);
   })();
 
-  /* ===== gameplay video clips controller ===== */
-  (function(){
-    var vid = $('#gameplayVid');
-    var btn = $('#btnPlayPause'), icon = $('#playIcon'), txt = $('#playTxt'), timeDisp = $('#clipTime');
-    var tabs = $$('#clipTabs button');
-    var metaCombate = $('#clipMetaCombate'), metaUnlock = $('#clipMetaUnlock');
-    if(!vid || !btn) return;
-
-    var isPlaying = true;
-    btn.addEventListener('click', function(){
-      if(vid.paused){
-        vid.play();
-        isPlaying = true;
-        icon.textContent = '❚❚';
-        txt.textContent = 'PAUSAR';
-      } else {
-        vid.pause();
-        isPlaying = false;
-        icon.textContent = '▶';
-        txt.textContent = 'REPRODUZIR';
-      }
-    });
-
-    tabs.forEach(function(tb){
-      tb.addEventListener('click', function(){
-        tabs.forEach(function(x){ x.setAttribute('aria-selected', 'false') });
-        tb.setAttribute('aria-selected', 'true');
-        var clip = tb.dataset.clip;
-        if(clip === 'combate'){
-          vid.src = 'assets/clip-combate.mp4';
-          if(metaCombate) metaCombate.style.display = 'grid';
-          if(metaUnlock) metaUnlock.style.display = 'none';
-        } else {
-          vid.src = 'assets/clip-unlock.mp4';
-          if(metaCombate) metaCombate.style.display = 'none';
-          if(metaUnlock) metaUnlock.style.display = 'grid';
-        }
-        vid.load();
-        vid.play().catch(function(){});
-        isPlaying = true;
-        icon.textContent = '❚❚';
-        txt.textContent = 'PAUSAR';
-      });
-    });
-
-    vid.addEventListener('timeupdate', function(){
-      if(!vid.duration) return;
-      var cur = vid.currentTime.toFixed(1);
-      var dur = vid.duration.toFixed(1);
-      timeDisp.textContent = '00:0' + cur + ' / 00:0' + dur;
-    });
-  })();
 
   /* ===== 04 ergonomics & HUD layer switcher ===== */
   (function(){

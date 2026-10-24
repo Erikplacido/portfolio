@@ -6,6 +6,9 @@
      - os grupos por assunto da página inicial (index.html), pelo campo "group"
    Caminhos são relativos à raiz da pasta portfolio/.
 
+   Esconder um case ou pôr o site em manutenção, sem editar código:
+   use o admin (/admin/). O que ele marca vale mais que o draft daqui.
+
    Publicar um case ainda em produção, sem mostrá-lo:
    Acrescente  draft: true  no objeto do case (qualquer linha, junto dos
    outros campos). Com isso, o case:
@@ -60,12 +63,12 @@ window.PORTFOLIO_CASES_ALL = [
   {
     slug: 'cobra-kai',
     group: 'games',
-    title: 'Cobra Kai · 3ª Temporada',
+    title: 'Cobra Kai · Estreia da Temporada',
     short: 'Cobra Kai',                    // opcional: nome curto para o seletor
     color: '#E3120B',
     cover: 'cobra-kai/assets/keyart.jpg',
     tags: ['Conceito', 'Game UI', 'Pixel art'],
-    blurb: 'Um jogo de luta como trailer: arte e UI de um advergame mobile que libera a estreia.'
+    blurb: 'Advergame mobile para ativação de estreia: o jogador ganha brindes exclusivos conforme sua pontuação.'
   },
   {
     slug: 'loony-races',
@@ -217,7 +220,48 @@ window.PORTFOLIO_CASES_ALL = [
   }
 ];
 
-/* Lista pública: tudo que não está marcado draft. Todas as páginas (nav,
-   "Próximo case", home) leem PORTFOLIO_CASES — então um case com
-   draft:true some delas automaticamente, sem editar mais nada. */
-window.PORTFOLIO_CASES = window.PORTFOLIO_CASES_ALL.filter(function(c){ return !c.draft });
+/* Ajustes do admin (/admin/). A página carrega api/site/config antes
+   deste arquivo, e ele define window.PORTFOLIO_SITE:
+     { maintenance: true|false, hidden: { <slug>: true|false } }
+   - hidden[slug] vale mais que o draft deste arquivo (true esconde, false mostra);
+   - maintenance esconde todos os cases e desativa os botões de segmento.
+   Sem o config (arquivo aberto direto, API fora), vale só o que está aqui.
+
+   Quem edita vê tudo pela URL direta, como antes, e não pega a manutenção:
+   localhost/127.0.0.1, arquivo aberto direto, ?preview=1 na URL, ou o
+   navegador marcado no admin ("ver o site como admin"). ?simulate-live=1
+   desliga o localhost e a marca do admin, pra testar como um visitante. */
+(function(){
+  var ALL = window.PORTFOLIO_CASES_ALL;
+  var site = window.PORTFOLIO_SITE || {};
+  var hidden = site.hidden || {};
+  ALL.forEach(function(c){
+    if (typeof hidden[c.slug] === 'boolean') c.draft = hidden[c.slug];
+  });
+
+  var q = location.search;
+  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(q);
+  var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:';
+  var marked = false;
+  try { marked = localStorage.getItem('pf_preview') === '1' } catch (e) {}
+  var preview = /(^|[?&])preview=1(&|$)/.test(q) || (!forceLive && (local || marked));
+  var maintenance = !!site.maintenance && !preview;
+
+  window.PORTFOLIO_PREVIEW = preview;
+  window.PORTFOLIO_MAINTENANCE = maintenance;
+
+  /* Lista pública: tudo que não está marcado draft (e nada em manutenção).
+     Todas as páginas (nav, "Próximo case", home, segmentos) leem
+     PORTFOLIO_CASES, então um case escondido some delas sem editar mais nada. */
+  window.PORTFOLIO_CASES = maintenance ? [] : ALL.filter(function(c){ return !c.draft });
+
+  // Case escondido, ou site em manutenção: o visitante vai pra home antes da página desenhar.
+  if (preview) return;
+  var p = location.pathname;
+  var c = ALL.filter(function(x){ return p.indexOf('/' + x.slug + '/') > -1 })[0];
+  if (c && (c.draft || maintenance)) {
+    location.replace(p.slice(0, p.indexOf('/' + c.slug + '/') + 1) + 'index.html?' + (maintenance ? 'manutencao=1' : 'em-breve=' + c.slug));
+  } else if (maintenance && p.indexOf('/segmentos/') > -1) {
+    location.replace(p.slice(0, p.indexOf('/segmentos/') + 1) + 'index.html?manutencao=1');
+  }
+})();
