@@ -1,53 +1,73 @@
-# Pendências de material (para o Erik providenciar)
+# Status de Materiais e Pendências do Portfólio
 
-Itens que dependem de arquivos, dados ou decisões que só você tem. Quando trouxer o material, eu encaixo nas páginas.
+Este documento registra o status de materiais, dados e decisões de cada case do portfólio de Erik Plácido.
 
-## Prioridade máxima — Terraforming Mars
-- [ ] Render do tabuleiro **original** (papel fino, cubos soltos) → substituir `terraforming-mars/assets/mesa-antes.svg`
-- [ ] Render do **painel dual-layer** (corte a laser, cubos travados) → substituir `terraforming-mars/assets/mesa-depois.svg`
-- [ ] Render das **cartas em leque** com margem de 18 mm → substituir `terraforming-mars/assets/cartas-splay.svg`
-- [ ] **Capa** do case (16:10) → substituir `terraforming-mars/assets/cover.svg`
-- [ ] Depois de trocar: remover o texto "Mockup provisório" das legendas
+---
 
-## Blue Services
-- [ ] Decidir: traduzir o case inteiro para PT (com alternância EN) ou manter só o resumo em PT
-- [ ] Confirmar se o resumo executivo em PT está fiel
+## 1. Concluídos e Entregues em Produção
 
-## Fintechs (Caju, Méliuz, Conta Simples)
-- [ ] Dados ou estimativas **reais** de impacto (CAC, LTV, churn, chamados), se existirem. Sem isso, os cases continuam com KPIs sem números
-- [ ] Revisar os novos textos de "estudo de viabilidade"
+### Terraforming Mars (Board Game UX/UI)
+- [x] Render fotográfico do tabuleiro **original** (papel fino, cubos desalinhados) → `assets/tabuleiro-original.jpg` — **Concluído ✓**
+- [x] Render do **painel dual-layer** (corte a laser de 3mm, cubos travados) → `assets/tabuleiro-duallayer.jpg` — **Concluído ✓**
+- [x] Render das **cartas em leque** com margem de 18 mm (splay ergonômico) → `assets/cartas-splay.jpg` — **Concluído ✓**
+- [x] **Capa** de alta resolução do case (16:10) → `assets/cover.jpg` — **Concluído ✓**
+- [x] Comparador interativo de mesa (wipe) e remoção dos avisos de "Mockup provisório" — **Concluído ✓**
 
-## Cobra Kai
-- [ ] Clipes curtos em loop (WebM/MP4, de 3 a 6 s) dos golpes e do unlock da estreia
-- [ ] Esboço das zonas de polegar / HUD em telas diferentes (ou autorização para eu fazer um diagrama)
+### Blue Services (Product Design & Marketplace)
+- [x] Tradução integral do case para **Português**, unificando com o padrão do portfólio — **Concluído ✓**
+- [x] Remoção da seção de resumo executivo isolado (conteúdo integrado ao fluxo principal) — **Concluído ✓**
+- [x] Alternância multilíngue instantânea e sincronizada entre **PT**, **EN**, **ES** e **FR** — **Concluído ✓**
 
-## Loony Races
-- [ ] Foto do protótipo sendo jogado numa mesa real
-- [ ] Info sobre acessibilidade para daltônicos: os pilotos e os terrenos usam padrões além da cor? Houve teste?
+### Cobra Kai (Mobile Advergame & Pixel Art)
+- [x] Clipes curtos de gameplay em loop (`clip-combate.mp4/webm` e `clip-unlock.mp4/webm`) — **Concluído ✓**
+- [x] Player de gameplay interativo com alternância entre combate e unlock — **Concluído ✓**
+- [x] Diagrama interativo de ergonomia mobile de duas mãos (Zonas de Polegares, Safe Areas/Notch e Arquitetura de HUD) — **Concluído ✓**
 
-## Saudosa Maloca
-- [ ] Trios comparativos: arte digital → peça impressa/envelhecida → frame do filme
-- [ ] Notas sobre a pesquisa tipográfica e as técnicas de envelhecimento
+### Loony Races (Board Game)
+- [x] Fotografia do protótipo sendo jogado em partida real de playtest na mesa (`assets/mesa-playtest.jpg`) — **Concluído ✓**
+- [x] Seção de ergonomia de mesa com escala real e espessuras de componentes — **Concluído ✓**
+- [x] Simulador interativo de acessibilidade e filtros em tempo real de daltonismo (protanopia, deuteranopia, tritanopia e acromatopsia) — **Concluído ✓**
 
-## Força BR
-- [ ] Descrição do fluxo do turno (radar → ficha → carta → recurso), para eu montar o diagrama
-- [ ] Arquivo da matriz de ícones das habilidades regionais
+### Força BR (Board Game Estratégico)
+- [x] Pipeline visual contínua e interativa do fluxo cognitivo do turno (*radar → ficha → carta → recurso*) — **Concluído ✓**
+- [x] Mapa tático com radar pulsante e cartas de heróis em alta definição — **Concluído ✓**
 
-## Editorial
-- [ ] Close-ups da restauração: traço original × restaurado
-- [ ] Pranchas de grid das capas Martins Fontes / miolo
+### Itaiquara · Untaforma (Embalagem Industrial)
+- [x] Fotografia real da lata exposta na gôndola do supermercado ao lado de concorrentes (`assets/prateleira-gondola.jpg`) — **Concluído ✓**
+- [x] Download do PDF oficial da faca técnica industrial com sangria, cotas e fotolito (`assets/faca-grafica-tecnica-untaforma.pdf`) — **Concluído ✓**
 
-## Publicidade e TV
-- [ ] Escolher os 3 destaques (sugestão: parede de 13 m, mapa em 21 versões, rótulos 4K) e mandar as melhores imagens de cada um
+### Editorial (Design & Restauração)
+- [x] Macro close-up comparando a oxidação do papel jornal original de 1965 com o traço restaurado (`assets/macro-restauracao.jpg`) — **Concluído ✓**
+- [x] Pranchas de miolo finalizado e capas da coleção Mauricio de Sousa — **Concluído ✓**
 
-## Vistorias de Risco
-- [ ] Prints ou fotos do app em uso no campo (tablet/celular)
-- [ ] Confirmar as etapas da jornada (campo offline → nuvem → PDF assinado), para eu montar o fluxograma
+### Publicidade e TV (Cenografia e Graphic Props)
+- [x] Parede de 13 metros de *Rio Shore* com divisão modular em 9 folhas de impressão — **Concluído ✓**
+- [x] Mapa ilustrado da ilha em 21 versões para *Se Sobreviver, Case* — **Concluído ✓**
+- [x] Rótulos de época e marcas fictícias em 4K preparados para o close da câmera — **Concluído ✓**
 
-## Itaiquara · Untaforma
-- [ ] Foto da lata na gôndola, ao lado dos concorrentes
-- [ ] Faca técnica aberta (sangria, tintas especiais, código de barras), sem dados confidenciais
+### Vistorias de Risco (Web App / PWA)
+- [x] Fluxograma completo da jornada ponta a ponta (campo offline com fila em `IndexedDB` → sincronização na nuvem → laudo pericial com fotos e assinatura) — **Concluído ✓**
+- [x] Imagens da Carta de Melhorias real da Qualiseg assinada — **Concluído ✓**
 
-## Hellfire Overdrive
-- [ ] Contexto da ativação: marca/evento (real ou hipotético, dizendo qual dos dois)
-- [ ] Confirmar se posso pôr o botão "Jogar agora" no topo e descrever a sincronia de áudio (AudioContext × rAF)
+### Hellfire Overdrive (Mobile Rhythm Game)
+- [x] Contextualização oficial da ativação imersiva de *Stranger Things* na CCXP — **Concluído ✓**
+- [x] Análise técnica aprofundada da Web Audio API (`AudioContext.currentTime` a 44.1 kHz vs. `requestAnimationFrame` e compensação de latência Bluetooth) — **Concluído ✓**
+
+---
+
+## 2. Pendências Remanescentes (Dependem de material ou autorização externa)
+
+### Fintechs (Caju, Méliuz, Conta Simples)
+- [ ] **Métricas Reais de Negócio:** Dados autorizados de impacto (redução de CAC, aumento de LTV, queda de churn ou taxa de chamados). *Se restritos por sigilo/NDA, manter a modelagem conceitual atual.*
+- [ ] Revisão final dos estudos de viabilidade técnica.
+
+### Saudosa Maloca (Direção de Arte de Cinema)
+- [ ] **Trios Comparativos com Frames:** Capturas diretas em alta definição do longa-metragem finalizado para exibir o trio *Arte Digital → Peça Cenográfica Envelhecida → Frame do Filme*.
+- [ ] Notas complementares sobre a pesquisa tipográfica e técnicas manuais de envelhecimento em set.
+
+### Vistorias de Risco
+- [ ] **Fotos de Uso em Campo:** Fotos reais dos engenheiros/vistoriadores operando o tablet em inspeção física de fábrica (caso haja autorização de imagem).
+
+### Força BR & Editorial (Opcionais)
+- [ ] Arquivo vetorial aberto com a matriz de ícones de habilidades regionais de *Força BR*.
+- [ ] Pranchas de grid estrutural das capas da coleção Martins Fontes.
