@@ -36,7 +36,7 @@ export const BacenAuditModal: React.FC<BacenAuditModalProps> = ({
         body: JSON.stringify({
           plan: selectedPlan,
           entryValue,
-          iof: selectedPlan?.iof || 12.4,
+          iof: selectedPlan?.iof || 12.5,
           cetMonthly: selectedPlan?.cetMonthly || '1,89% a.m.',
           cetAnnual: selectedPlan?.cetAnnual || '25,18% a.a.',
           interestRate: selectedPlan?.interestRateMonthly || '1,89% a.m.',

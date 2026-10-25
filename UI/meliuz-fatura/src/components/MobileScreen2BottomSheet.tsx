@@ -282,7 +282,7 @@ export const MobileScreen2BottomSheet: React.FC<MobileScreen2BottomSheetProps> =
               <div className="bg-white rounded-lg p-1.5 border border-slate-200/70">
                 <span className="text-[10px] text-slate-500 block">IOF apurado</span>
                 <strong className="text-xs font-bold text-slate-900 font-mono">
-                  {formatBRL(currentSelectedPlan?.iof || 12.4)}
+                  {formatBRL(currentSelectedPlan?.iof || 12.5)}
                 </strong>
               </div>
               <div className="bg-white rounded-lg p-1.5 border border-slate-200/70">

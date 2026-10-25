@@ -66,7 +66,7 @@ async function startServer() {
             {
               criterion: "Discrimina\xE7\xE3o Individualizada de Tributos (IOF)",
               status: "compliant",
-              detail: `O valor do IOF (R$ ${iof || "12,40"}) est\xE1 segregado dos encargos financeiros, eliminando dubiedade na base de c\xE1lculo.`
+              detail: `O valor do IOF (R$ ${iof || "12,50"}) est\xE1 segregado dos encargos financeiros, eliminando dubiedade na base de c\xE1lculo.`
             },
             {
               criterion: "Aus\xEAncia de Sele\xE7\xE3o For\xE7ada ou Padr\xE3o Escuro (Dark Pattern)",
@@ -86,11 +86,11 @@ async function startServer() {
 Audite a seguinte simula\xE7\xE3o de parcelamento de fatura de cart\xE3o de cr\xE9dito da fintech M\xE9liuz:
 - Fatura original: R$ 2.450,80
 - Entrada selecionada: R$ ${entryValue || 0}
-- Plano de parcelamento: ${plan?.installments || 6}x de R$ ${plan?.installmentValue || "452,10"}
-- Valor Total a prazo: R$ ${plan?.total || "2.712,60"}
+- Plano de parcelamento: ${plan?.installments || 6}x de R$ ${plan?.installmentValue || "435,91"}
+- Valor Total a prazo: R$ ${plan?.total || "2.615,45"}
 - Taxa de juros nominal: ${interestRate || "1,89% a.m."}
 - CET (Custo Efetivo Total): ${cetMonthly || "1,89% a.m."} (${cetAnnual || "25,18% a.a."})
-- IOF apurado: R$ ${iof || "12,40"}
+- IOF apurado: R$ ${iof || "12,50"}
 - R\xF3tulos visuais: 'Op\xE7\xF5es de parcelamento', 'Mais recomendada', 'Quadro de Transpar\xEAncia Regulat\xF3ria'
 
 Avalie se h\xE1 pr\xE1ticas abusivas ou 'dark patterns' (como letras mi\xFAdas, omiss\xE3o de juros anuais ou taxas embutidas) e se atende \xE0s regras do Banco Central do Brasil.

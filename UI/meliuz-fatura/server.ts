@@ -53,7 +53,7 @@ async function startServer() {
             {
               criterion: "Discriminação Individualizada de Tributos (IOF)",
               status: "compliant",
-              detail: `O valor do IOF (R$ ${iof || "12,40"}) está segregado dos encargos financeiros, eliminando dubiedade na base de cálculo.`,
+              detail: `O valor do IOF (R$ ${iof || "12,50"}) está segregado dos encargos financeiros, eliminando dubiedade na base de cálculo.`,
             },
             {
               criterion: "Ausência de Seleção Forçada ou Padrão Escuro (Dark Pattern)",
@@ -74,11 +74,11 @@ async function startServer() {
 Audite a seguinte simulação de parcelamento de fatura de cartão de crédito da fintech Méliuz:
 - Fatura original: R$ 2.450,80
 - Entrada selecionada: R$ ${entryValue || 0}
-- Plano de parcelamento: ${plan?.installments || 6}x de R$ ${plan?.installmentValue || "452,10"}
-- Valor Total a prazo: R$ ${plan?.total || "2.712,60"}
+- Plano de parcelamento: ${plan?.installments || 6}x de R$ ${plan?.installmentValue || "435,91"}
+- Valor Total a prazo: R$ ${plan?.total || "2.615,45"}
 - Taxa de juros nominal: ${interestRate || "1,89% a.m."}
 - CET (Custo Efetivo Total): ${cetMonthly || "1,89% a.m."} (${cetAnnual || "25,18% a.a."})
-- IOF apurado: R$ ${iof || "12,40"}
+- IOF apurado: R$ ${iof || "12,50"}
 - Rótulos visuais: 'Opções de parcelamento', 'Mais recomendada', 'Quadro de Transparência Regulatória'
 
 Avalie se há práticas abusivas ou 'dark patterns' (como letras miúdas, omissão de juros anuais ou taxas embutidas) e se atende às regras do Banco Central do Brasil.

@@ -1,21 +1,8 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+<script src="../../api/site/config"></script>
 <script src="../../shared/cases.js"></script>
-<script>
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <script>/* portfolio: static build. Answers the prototype's /api calls with the same fallback content its Node server returns without an API key. */
 (function(){var R={"/api/audit-bacen":{"status":"approved","complianceScore":99,"verdict":"Em total conformidade com a Resolução CMN nº 4.549/2017 e Lei nº 14.690/2023","badges":["Zero Dark Patterns","CET Transparente","IOF Discriminado","Amortização Imediata"],"analysis":[{"criterion":"Transparência de CET e Juros Anuais","status":"compliant","detail":"Taxa mensal (1,89% a.m.) e anual (25,18% a.a.) claramente visíveis antes da contratação."},{"criterion":"Segregação de Impostos (IOF)","status":"compliant","detail":"O IOF é discriminado em reais sem ser somado secretamente ao custo da taxa."},{"criterion":"Neutralidade de Escolha do Consumidor","status":"compliant","detail":"Sem caixas pré-marcadas ou opções forçadas. O plano recomendado tem justificação clara."}],"aiGenerated":false}};var f=window.fetch;window.fetch=function(u,o){var p=typeof u==='string'?u:(u&&u.url)||'';for(var k in R){if(p.indexOf(k)>-1){return Promise.resolve(new Response(JSON.stringify(R[k]),{status:200,headers:{'Content-Type':'application/json'}}))}}return f.apply(this,arguments)}})();
 </script>

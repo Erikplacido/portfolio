@@ -162,45 +162,6 @@ export const mockTransactions: Transaction[] = [
   },
 ];
 
-export const baseInstallmentPlans: InstallmentPlan[] = [
-  {
-    id: 'plan-3x',
-    installments: 3,
-    installmentValue: 860.00,
-    total: 2580.00,
-    cetMonthly: '1,89% a.m.',
-    cetAnnual: '25,18% a.a.',
-    interestRateMonthly: '1,89% a.m.',
-    iof: 9.80,
-    isRecommended: false,
-    tag: 'Menor Custo Total',
-  },
-  {
-    id: 'plan-6x',
-    installments: 6,
-    installmentValue: 452.10,
-    total: 2712.60,
-    cetMonthly: '1,89% a.m.',
-    cetAnnual: '25,18% a.a.',
-    interestRateMonthly: '1,89% a.m.',
-    iof: 12.40,
-    isRecommended: true,
-    tag: 'Mais recomendada',
-  },
-  {
-    id: 'plan-12x',
-    installments: 12,
-    installmentValue: 248.30,
-    total: 2979.60,
-    cetMonthly: '2,15% a.m.',
-    cetAnnual: '29,08% a.a.',
-    interestRateMonthly: '2,15% a.m.',
-    iof: 18.60,
-    isRecommended: false,
-    tag: 'Menor Parcela',
-  },
-];
-
 export const mockMonthlyHistory: MonthlyHistory[] = [
   { month: 'Maio', label: 'Mai', amount: 1940.20, cashback: 38.80, status: 'paga' },
   { month: 'Junho', label: 'Jun', amount: 2180.50, cashback: 43.61, status: 'paga' },
@@ -252,38 +213,41 @@ export const calculatePlansForEntry = (
     {
       id: 'plan-3x',
       installments: 3,
-      installmentValue: entry === 0 ? 860.00 : Math.round(pmt3 * 100) / 100,
-      total: entry === 0 ? 2580.00 : Math.round(total3 * 100) / 100,
+      installmentValue: Math.round(pmt3 * 100) / 100,
+      total: Math.round(total3 * 100) / 100,
       cetMonthly: '1,89% a.m.',
       cetAnnual: '25,18% a.a.',
       interestRateMonthly: '1,89% a.m.',
-      iof: entry === 0 ? 9.80 : Math.round(principal * 0.0038 * 100) / 100,
+      iof: Math.round(principal * 0.0038 * 100) / 100,
       isRecommended: false,
       tag: 'Menor Custo Total',
     },
     {
       id: 'plan-6x',
       installments: 6,
-      installmentValue: entry === 0 ? 452.10 : Math.round(pmt6 * 100) / 100,
-      total: entry === 0 ? 2712.60 : Math.round(total6 * 100) / 100,
+      installmentValue: Math.round(pmt6 * 100) / 100,
+      total: Math.round(total6 * 100) / 100,
       cetMonthly: '1,89% a.m.',
       cetAnnual: '25,18% a.a.',
       interestRateMonthly: '1,89% a.m.',
-      iof: entry === 0 ? 12.40 : Math.round(principal * 0.0051 * 100) / 100,
+      iof: Math.round(principal * 0.0051 * 100) / 100,
       isRecommended: true,
       tag: 'Mais recomendada',
     },
     {
       id: 'plan-12x',
       installments: 12,
-      installmentValue: entry === 0 ? 248.30 : Math.round(pmt12 * 100) / 100,
-      total: entry === 0 ? 2979.60 : Math.round(total12 * 100) / 100,
+      installmentValue: Math.round(pmt12 * 100) / 100,
+      total: Math.round(total12 * 100) / 100,
       cetMonthly: '2,15% a.m.',
       cetAnnual: '29,08% a.a.',
       interestRateMonthly: '2,15% a.m.',
-      iof: entry === 0 ? 18.60 : Math.round(principal * 0.0076 * 100) / 100,
+      iof: Math.round(principal * 0.0076 * 100) / 100,
       isRecommended: false,
       tag: 'Menor Parcela',
     },
   ];
 };
+
+// Plans with no down payment: same Price formula as any other entry value.
+export const baseInstallmentPlans: InstallmentPlan[] = calculatePlansForEntry(initialInvoiceData.currentSpent, 0);
