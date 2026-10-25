@@ -59,9 +59,9 @@
       '#luta .eyebrow': '<b>03</b> · Combat Experience',
       '#luta h2': 'Unleash your karate.',
       '#luta .lede': 'Retro arcade HUD: framed portraits, slanted nametags, segmented health meters, and the centered K.O. emblem. On-screen controls were engineered specifically for natural thumb ergonomics.',
-      '#luta figcaption': '<b>Interactive demo.</b> Tap KICK or PUNCH (or press K and J). The demo plays automatically until you take control.',
-      '#bP': 'PUNCH',
-      '#bK': 'KICK',
+      '#luta figcaption': '<b>Interactive demo.</b> Use the D-Pad to walk, retreat, crouch, and jump (or W, A, S, D / Arrows). Yellow button (J) for PUNCH and red button (K) for KICK. Chain rapid strikes to unleash combos!',
+      '#bP span': 'PUNCH',
+      '#bK span': 'KICK',
 
       // Ergonomics
       '#ergonomia .eyebrow': '<b>04</b> · Mobile Ergonomics & HUD Architecture',
@@ -147,9 +147,9 @@
       '#luta .eyebrow': '<b>03</b> · Experiencia de Combate',
       '#luta h2': 'Usa todo tu karate.',
       '#luta .lede': 'HUD clásico de recreativa: retratos enmarcados, cartelas diagonales, barras de vida segmentadas y sello K.O. en el centro. Controles optimizados para el pulgar.',
-      '#luta figcaption': '<b>Demostración interactiva.</b> Pulsa PATADA o PUÑETAZO (o las teclas K y J). La máquina juega automáticamente hasta que tomas el mando.',
-      '#bP': 'PUÑO',
-      '#bK': 'PATADA',
+      '#luta figcaption': '<b>Demostración interactiva.</b> Usa la cruceta D-Pad para moverte, agacharte y saltar (o teclas W, A, S, D / Flechas). Botón amarillo (J) para PUÑO y rojo (K) para PATADA. ¡Encadena golpes para combos!',
+      '#bP span': 'PUÑO',
+      '#bK span': 'PATADA',
 
       // Reward
       '#recompensa .eyebrow': '<b>05</b> · Recompensa y Premios',
@@ -217,9 +217,9 @@
       '#luta .eyebrow': '<b>03</b> · Expérience de Combat',
       '#luta h2': 'Libérez toute votre puissance martiale.',
       '#luta .lede': 'HUD typique des bornes d’arcade : médaillons de portrait, bandeaux de nom inclinés, jauges de santé segmentées et insigne K.O. au centre. Contrôles tactiles optimisés pour les pouces.',
-      '#luta figcaption': '<b>Démonstration jouable.</b> Touchez COUP DE PIED ou COUP DE POING (touches K et J). Le combat tourne en démonstration jusqu’à votre intervention.',
-      '#bP': 'POING',
-      '#bK': 'PIED',
+      '#luta figcaption': '<b>Démonstration interactive.</b> Utilisez le D-Pad pour avancer, reculer, vous baisser et sauter (touches W, A, S, D ou Flèches). Bouton jaune (J) pour POING et rouge (K) pour PIED.',
+      '#bP span': 'POING',
+      '#bK span': 'PIED',
 
       // Reward
       '#recompensa .eyebrow': '<b>05</b> · Récompenses & Cadeaux',

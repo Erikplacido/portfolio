@@ -144,18 +144,30 @@
 /* escurece o topo e a base do dojo para o HUD e os controles lerem sobre a parede clara */
 .fight::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.55) 0,rgba(0,0,0,0) 26cqh),linear-gradient(0deg,rgba(0,0,0,.45) 0,rgba(0,0,0,0) 24cqh)}
 .fight .shadow{position:absolute;z-index:2;bottom:16.6cqh;width:26cqh;height:4cqh;border-radius:50%;background:rgba(0,0,0,.4);filter:blur(2px)}
-.fighter{position:absolute;bottom:16cqh;height:58cqh;display:flex;align-items:flex-end;z-index:4;transition:transform .18s var(--ease)}
+.fighter{position:absolute;bottom:16cqh;height:58cqh;display:flex;align-items:flex-end;z-index:4;transition:transform .12s var(--ease)}
 .fighter img{height:100%;width:auto;image-rendering:pixelated}
-/* sprites: Daniel olha para a esquerda e Johnny para a direita no arquivo; ambos espelhados para se encararem.
-   P1 ancorado pela esquerda e P2 pela direita, para que quadros mais largos (chute, soco, queda) cresçam na direção do golpe */
 .f1{left:calc(50% - 36cqh)}
 .f2{right:calc(50% - 27cqh)}
-.fighter img{transform:scaleX(-1)}
-.f1.kick{transform:translateX(7cqh)}
-.f1.punch{transform:translateX(4cqh)}
+.f1 img{transform:none}
+.f2 img{transform:scaleX(-1)}
+.f1.walk-fwd{transform:translateX(7cqh)}
+.f1.walk-back{transform:translateX(-5cqh)}
+.f1.crouch{transform:translateY(1cqh)}
+.f1.jump{transform:translateY(-8cqh) translateX(3cqh)}
+.f1.kick-w{transform:translateX(5cqh)}
+.f1.kick-s{transform:translateX(8cqh)}
+.f1.punch-w{transform:translateX(4cqh)}
+.f1.punch-s{transform:translateX(7cqh)}
+.f1.hit{animation:hitL .28s var(--ease)}
+.f2.walk-fwd{transform:translateX(-7cqh)}
+.f2.walk-back{transform:translateX(4cqh)}
+.f2.crouch{transform:translateY(1cqh)}
+.f2.jump{transform:translateY(-8cqh) translateX(-3cqh)}
+.f2.kick-w{transform:translateX(-5cqh)}
+.f2.kick-s{transform:translateX(-8cqh)}
+.f2.punch-w{transform:translateX(-4cqh)}
+.f2.punch-s{transform:translateX(-7cqh)}
 .f2.hit{animation:hit .32s var(--ease)}
-.f1.hit{animation:hitL .32s var(--ease)}
-/* derrotado: nome próprio, porque .ko é o painel de K.O. (position:absolute;inset:0) e jogava o sprite para o topo */
 .f2.down{transition:transform .45s var(--ease);transform:translate(8cqh,5cqh)}
 .spark{position:absolute;z-index:6;width:14cqh;height:14cqh;pointer-events:none;opacity:0;background:radial-gradient(circle,#fff 0 18%,#FFE04D 22%,#FF7A00 40%,transparent 62%);clip-path:polygon(50% 0,60% 35%,100% 20%,68% 52%,100% 80%,58% 66%,50% 100%,42% 66%,0 80%,32% 52%,0 20%,40% 35%)}
 .spark.on{animation:spark .3s ease-out}
@@ -178,25 +190,30 @@
 .score{position:absolute;right:7cqh;top:25cqh;z-index:8;font:400 2.4cqh/1.5 var(--pixel);color:#fff;text-align:right;text-shadow:.35cqh .35cqh 0 #000}
 .combo{position:absolute;left:30%;top:28cqh;z-index:9;font:400 6cqh/1 var(--brush);color:var(--yel);-webkit-text-stroke:.3cqh #8B0A00;opacity:0;transform:scale(.6) rotate(-10deg)}
 .combo.on{animation:combo .7s var(--snap)}
-/* direcional: base translúcida, cruz de plástico escuro, setas que acendem quando o P1 avança */
-.pad{position:absolute;left:9cqh;bottom:7cqh;width:27cqh;height:27cqh;z-index:9}
-.pad svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 1cqh 1.2cqh rgba(0,0,0,.45))}
-.pad .ar{fill:rgba(255,255,255,.55);transition:fill .12s}
-.pad.fwd .ar.r{fill:var(--yel)}
-.pad .cross{transition:transform .12s;transform-origin:50px 50px}
-.pad.fwd .cross{transform:perspective(200px) rotateY(10deg)}
-/* botões de fliperama: aro preto, tampa com brilho, curso de 1cqh ao apertar; letra da tecla no canto */
-.btns{position:absolute;right:9cqh;bottom:7cqh;z-index:9;width:36cqh;height:30cqh}
-.btns button{position:absolute;display:grid;place-items:center;padding:0;border:0;border-radius:50%;cursor:pointer;
-  font:400 2.1cqh/1 var(--pixel);letter-spacing:.04em;color:#fff;text-shadow:0 .3cqh 0 rgba(0,0,0,.45);
-  background:radial-gradient(circle at 50% 28%,rgba(255,255,255,.75) 0 12%,rgba(255,255,255,0) 34%),radial-gradient(circle at 50% 40%,var(--c1) 0 45%,var(--c2) 72%,var(--c3) 100%);
-  box-shadow:inset 0 -1.1cqh 0 var(--c3),inset 0 .5cqh 0 rgba(255,255,255,.35),0 0 0 .8cqh #151515,0 0 0 1.25cqh rgba(255,255,255,.28),0 1.4cqh 0 .8cqh #000,0 2.4cqh 2cqh .8cqh rgba(0,0,0,.4);
-  transition:transform .07s,box-shadow .07s}
-.btns button:active,.btns button.press{transform:translateY(1cqh);box-shadow:inset 0 -.3cqh 0 var(--c3),inset 0 .8cqh 1.4cqh rgba(0,0,0,.35),0 0 0 .8cqh #151515,0 0 0 1.25cqh rgba(255,255,255,.28),0 .4cqh 0 .8cqh #000,0 1cqh 1.2cqh .8cqh rgba(0,0,0,.4)}
-.btns button:focus-visible{outline:.6cqh solid #fff;outline-offset:1.8cqh}
-.btns button::after{content:attr(data-key);position:absolute;right:-1.6cqh;top:-1.6cqh;font:400 1.7cqh/1 var(--pixel);color:#fff;background:rgba(0,0,0,.55);border:.3cqh solid rgba(255,255,255,.45);border-radius:.6cqh;padding:.5cqh .7cqh .4cqh;text-shadow:none}
-.btns .p{--c1:#FFE45C;--c2:#FFC400;--c3:#A86E00;color:#3a1a00;text-shadow:0 .3cqh 0 rgba(255,255,255,.4);left:0;top:0;width:14cqh;height:14cqh}
-.btns .k{--c1:#FF6A55;--c2:var(--red);--c3:#7A0400;right:0;bottom:4cqh;width:17cqh;height:17cqh;font-size:2.3cqh}
+/* D-Pad arcade com aro dourado metálico e resposta direcional */
+.pad{position:absolute;left:8cqh;bottom:6cqh;width:29cqh;height:29cqh;z-index:9;user-select:none;-webkit-user-select:none}
+.pad-bg{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 1cqh 2cqh rgba(0,0,0,.6));transition:transform .1s var(--ease);pointer-events:none}
+.pad.dir-u .pad-bg{transform:perspective(160px) rotateX(14deg) scale(.97)}
+.pad.dir-d .pad-bg{transform:perspective(160px) rotateX(-14deg) scale(.97)}
+.pad.dir-l .pad-bg{transform:perspective(160px) rotateY(-14deg) scale(.97)}
+.pad.dir-r .pad-bg{transform:perspective(160px) rotateY(14deg) scale(.97)}
+.pad-btn{position:absolute;background:none;border:0;padding:0;cursor:pointer;z-index:2;-webkit-tap-highlight-color:transparent}
+.pad-btn.u{top:0;left:26%;width:48%;height:38%}
+.pad-btn.d{bottom:0;left:26%;width:48%;height:38%}
+.pad-btn.l{left:0;top:26%;width:38%;height:48%}
+.pad-btn.r{right:0;top:26%;width:38%;height:48%}
+/* Botões arcade com aros metálicos (amarelo: soco, vermelho: chute) */
+.btns{position:absolute;right:8cqh;bottom:6cqh;z-index:9;width:38cqh;height:30cqh;user-select:none;-webkit-user-select:none}
+.btn-arcade{position:absolute;display:grid;place-items:center;padding:0;border:0;background:none;cursor:pointer;transition:transform .08s ease,filter .08s ease;-webkit-tap-highlight-color:transparent}
+.btn-arcade img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 1.2cqh 2cqh rgba(0,0,0,.6))}
+.btn-arcade span{position:absolute;font:400 2.2cqh/1 var(--pixel);letter-spacing:.04em;pointer-events:none;z-index:2}
+.btn-arcade::after{content:attr(data-key);position:absolute;right:-.8cqh;top:-.8cqh;font:400 1.6cqh/1 var(--pixel);color:#fff;background:rgba(0,0,0,.8);border:.3cqh solid rgba(255,212,0,.7);border-radius:.6cqh;padding:.4cqh .6cqh;text-shadow:none;z-index:3}
+.btn-arcade.p{left:0;top:0;width:17cqh;height:17cqh}
+.btn-arcade.p span{color:#3a1a00;text-shadow:0 .2cqh 0 rgba(255,255,255,.5)}
+.btn-arcade.k{right:0;bottom:1cqh;width:19.5cqh;height:19.5cqh}
+.btn-arcade.k span{color:#fff;text-shadow:0 .2cqh 0 rgba(0,0,0,.8)}
+.btn-arcade:active,.btn-arcade.press{transform:translateY(1.2cqh) scale(.95);filter:brightness(1.25)}
+.btn-arcade:focus-visible{outline:.6cqh solid #fff;outline-offset:1.2cqh}
 .ko{position:absolute;inset:0;z-index:12;display:grid;place-items:center;pointer-events:none}
 .ko .badge{width:44cqh;height:auto;aspect-ratio:291/259;transform:scale(0) rotate(-12deg);transition:transform .45s var(--snap);filter:drop-shadow(0 1cqh 2cqh rgba(0,0,0,.6))}
 .ko.on .badge{transform:scale(1) rotate(-4deg)}
@@ -465,8 +482,8 @@
         <div class="lscr" id="fightScr" aria-label="Demonstração da luta. Use os botões Chute e Soco, ou as teclas K e J">
           <div class="fight" id="fight">
             <i class="shadow" style="left:calc(50% - 30cqh)"></i><i class="shadow" style="left:calc(50% + 2cqh)"></i>
-            <div class="fighter f1" id="f1"><img src="assets/novos/daniel1.png" alt="LaRusso"></div>
-            <div class="fighter f2" id="f2"><img src="assets/novos/parado1.png" alt="Lawrence"></div>
+            <div class="fighter f1" id="f1"><img src="assets/novos/daniel_idle_1.png" alt="LaRusso"></div>
+            <div class="fighter f2" id="f2"><img src="assets/novos/johnny_idle_1.png" alt="Lawrence"></div>
             <i class="spark" id="spark"></i>
             <div class="hud">
               <div class="side l"><div class="pp"><img src="assets/p-larusso.png" alt=""></div><div><div class="plate">D. LARUSSO</div><div class="hp" id="hp1"><em></em><i></i></div></div></div>
@@ -475,36 +492,41 @@
             </div>
             <div class="score">PONTOS<br><span id="score">000000</span></div>
             <div class="combo" id="combo">x2 COMBO!</div>
-            <div class="pad" id="pad" aria-hidden="true"><svg viewBox="0 0 100 100">
-              <defs><linearGradient id="padG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4a4a"/><stop offset="1" stop-color="#121212"/></linearGradient></defs>
-              <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,.42)" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
-              <g class="cross">
-                <path d="M38 12h24a4 4 0 0 1 4 4v18h18a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H66v18a4 4 0 0 1-4 4H38a4 4 0 0 1-4-4V66H16a4 4 0 0 1-4-4V38a4 4 0 0 1 4-4h18V16a4 4 0 0 1 4-4z" fill="url(#padG)" stroke="#000" stroke-width="2.5"/>
-                <path d="M39 14.5h22M14.5 39v22" stroke="rgba(255,255,255,.28)" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="50" cy="50" r="8" fill="#0d0d0d" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
-                <path class="ar u" d="M50 19l-6 8h12z"/><path class="ar d" d="M50 81l-6-8h12z"/>
-                <path class="ar l" d="M19 50l8-6v12z"/><path class="ar r" d="M81 50l-8-6v12z"/>
-              </g>
-            </svg></div>
-            <div class="btns"><button type="button" class="p" id="bP" data-key="J" aria-label="Soco (tecla J)">SOCO</button><button type="button" class="k" id="bK" data-key="K" aria-label="Chute (tecla K)">CHUTE</button></div>
+            <div class="pad" id="pad" role="group" aria-label="Direcional D-Pad arcade">
+              <img class="pad-bg" src="assets/btn-dpad.png" alt="D-Pad arcade">
+              <button type="button" class="pad-btn u" id="padU" data-dir="u" aria-label="Pular (W / Cima)"></button>
+              <button type="button" class="pad-btn d" id="padD" data-dir="d" aria-label="Agachar (S / Baixo)"></button>
+              <button type="button" class="pad-btn l" id="padL" data-dir="l" aria-label="Recuar (A / Esquerda)"></button>
+              <button type="button" class="pad-btn r" id="padR" data-dir="r" aria-label="Avançar (D / Direita)"></button>
+            </div>
+            <div class="btns" role="group" aria-label="Botões de ataque">
+              <button type="button" class="btn-arcade p" id="bP" data-key="J" aria-label="Soco (tecla J)">
+                <img src="assets/btn-punch.png" alt="" aria-hidden="true">
+                <span>SOCO</span>
+              </button>
+              <button type="button" class="btn-arcade k" id="bK" data-key="K" aria-label="Chute (tecla K)">
+                <img src="assets/btn-kick.png" alt="" aria-hidden="true">
+                <span>CHUTE</span>
+              </button>
+            </div>
             <div class="ko" id="ko"><img class="badge" src="assets/badge.png" alt="K.O."><div class="msg">PONTUAÇÃO MÁXIMA!<br>BRINDES LIBERADOS</div></div>
           </div>
           <i class="notch"></i>
         </div>
       </div>
-      <figcaption><b>Interativo.</b> Toque em CHUTE ou SOCO (ou use as teclas K e J). A demonstração joga sozinha até você assumir.</figcaption>
+      <figcaption><b>Interativo.</b> Use o D-Pad para andar, recuar, agachar e pular (ou teclas W, A, S, D / Setas). Botão amarelo (J) para SOCO e botão vermelho (K) para CHUTE. Encadeie toques rápidos para disparar combos arcade!</figcaption>
     </figure>
 
     <div class="sprites">
       <div class="pf-card sheet rv">
-        <span class="tag"><span>Sprite · Miyagi-Do</span><span>3 frames</span></span>
-        <div class="frames"><figure><img src="assets/novos/daniel_chute1.png" alt="Frame 1: antecipação"><figcaption>01 GUARDA</figcaption></figure><figure><img src="assets/novos/daniel_chute2.png" alt="Frame 2: chute alto"><figcaption>02 CHUTE</figcaption></figure><figure><img src="assets/novos/daniel_chute3.png" alt="Frame 3: recuo"><figcaption>03 RECUO</figcaption></figure></div>
-        <div class="preview"><div class="live"><img id="liveW" src="assets/novos/daniel_chute1.png" alt="Animação do sprite em loop"></div><div><p>Golpe do grou em 3 quadros: antecipação, impacto do chute alto e retorno à base.</p><div class="fps" data-for="liveW"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
+        <span class="tag"><span>Sprite · Miyagi-Do</span><span>5 frames</span></span>
+        <div class="frames"><figure><img src="assets/novos/daniel_kick_strong_1.png" alt="Frame 1: base"><figcaption>01 BASE</figcaption></figure><figure><img src="assets/novos/daniel_kick_strong_2.png" alt="Frame 2: elevação"><figcaption>02 PREP</figcaption></figure><figure><img src="assets/novos/daniel_kick_strong_3.png" alt="Frame 3: golpe do grou"><figcaption>03 CHUTE</figcaption></figure><figure><img src="assets/novos/daniel_kick_strong_4.png" alt="Frame 4: impacto"><figcaption>04 IMPACTO</figcaption></figure><figure><img src="assets/novos/daniel_kick_strong_5.png" alt="Frame 5: retorno"><figcaption>05 RETORNO</figcaption></figure></div>
+        <div class="preview"><div class="live"><img id="liveW" src="assets/novos/daniel_kick_strong_1.png" alt="Animação do sprite em loop"></div><div><p>Golpe do grou em 5 quadros: postura de equilíbrio, armação da perna, chute voador esticado e recuperação à base.</p><div class="fps" data-for="liveW"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
       </div>
       <div class="pf-card sheet rv">
         <span class="tag"><span>Sprite · Cobra Kai</span><span>5 frames</span></span>
-        <div class="frames"><figure><img src="assets/novos/soco1.png" alt="Frame 1"><figcaption>01 BASE</figcaption></figure><figure><img src="assets/novos/soco2.png" alt="Frame 2"><figcaption>02 PREP</figcaption></figure><figure><img src="assets/novos/soco3.png" alt="Frame 3"><figcaption>03 IMPACTO</figcaption></figure><figure><img src="assets/novos/soco4.png" alt="Frame 4"><figcaption>04 RECUO</figcaption></figure><figure><img src="assets/novos/soco5.png" alt="Frame 5"><figcaption>05 RETORNO</figcaption></figure></div>
-        <div class="preview"><div class="live"><img id="liveB" src="assets/novos/soco1.png" alt="Animação do sprite em loop"></div><div><p>Soco do Cobra Kai em 5 quadros: postura de ataque, avanço com jab, impacto esticado e recuperação rápida.</p><div class="fps" data-for="liveB"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
+        <div class="frames"><figure><img src="assets/novos/johnny_punch_strong_1.png" alt="Frame 1: base"><figcaption>01 BASE</figcaption></figure><figure><img src="assets/novos/johnny_punch_strong_2.png" alt="Frame 2: preparação"><figcaption>02 PREP</figcaption></figure><figure><img src="assets/novos/johnny_punch_strong_3.png" alt="Frame 3: golpe direto"><figcaption>03 IMPACTO</figcaption></figure><figure><img src="assets/novos/johnny_punch_strong_4.png" alt="Frame 4: extensão"><figcaption>04 RECUO</figcaption></figure><figure><img src="assets/novos/johnny_punch_strong_5.png" alt="Frame 5: retorno"><figcaption>05 RETORNO</figcaption></figure></div>
+        <div class="preview"><div class="live"><img id="liveB" src="assets/novos/johnny_punch_strong_1.png" alt="Animação do sprite em loop"></div><div><p>Soco forte do Cobra Kai em 5 quadros: postura de ataque, avanço com jab, impacto esticado e recuperação rápida.</p><div class="fps" data-for="liveB"><button type="button" data-f="4">4 FPS</button><button type="button" data-f="8" aria-pressed="true">8 FPS</button><button type="button" data-f="12">12 FPS</button></div></div></div>
       </div>
     </div>
 
@@ -536,8 +558,8 @@
         <div class="ergo-phone">
           <div class="ergo-screen">
             <!-- ghosts of fighters in playfield -->
-            <img class="f-ghost g1" src="assets/novos/daniel_chute2.png" alt="">
-            <img class="f-ghost g2" src="assets/novos/soco3.png" alt="">
+            <img class="f-ghost g1" src="assets/novos/daniel_kick_strong_3.png" alt="">
+            <img class="f-ghost g2" src="assets/novos/johnny_punch_strong_3.png" alt="">
 
             <!-- HUD wireframe -->
             <div class="ergo-hud-wire" id="ergoHudWire">
@@ -787,8 +809,8 @@
 
   /* ===== generic sprite player ===== */
   var SETS = {
-    w: ['novos/daniel_chute1', 'novos/daniel_chute2', 'novos/daniel_chute2', 'novos/daniel_chute3'],
-    b: ['novos/soco1', 'novos/soco2', 'novos/soco3', 'novos/soco4', 'novos/soco5']
+    w: ['novos/daniel_kick_strong_1', 'novos/daniel_kick_strong_2', 'novos/daniel_kick_strong_3', 'novos/daniel_kick_strong_4', 'novos/daniel_kick_strong_5'],
+    b: ['novos/johnny_punch_strong_1', 'novos/johnny_punch_strong_2', 'novos/johnny_punch_strong_3', 'novos/johnny_punch_strong_4', 'novos/johnny_punch_strong_5']
   };
   function player(img,set,fps){
     var i = 0, t = null, frames = SETS[set], host = img.closest('.sheet');
@@ -796,8 +818,7 @@
     function tick(){
       i = (i+1)%frames.length;
       img.src = 'assets/'+frames[i]+'.png';
-      var real = set==='w' ? (i<=1 ? i : (i===2 ? 1 : 2)) : i;
-      figs.forEach(function(f,k){ f.classList.toggle('on', k===real) });
+      figs.forEach(function(f,k){ f.classList.toggle('on', k===i) });
     }
     function setFps(f){ clearInterval(t); if(!RM) t = setInterval(tick,1000/f) }
     setFps(fps); return {fps:setFps};
@@ -822,34 +843,50 @@
         o.type = 'triangle';
         o.frequency.setValueAtTime(180, now);
         o.frequency.exponentialRampToValueAtTime(45, now + 0.1);
-        g.gain.setValueAtTime(0.25, now);
+        g.gain.setValueAtTime(0.3, now);
         g.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
         o.connect(g); g.connect(aCtx.destination);
         o.start(now); o.stop(now + 0.1);
       } else if(t === 'kick'){
         o.type = 'sawtooth';
         o.frequency.setValueAtTime(260, now);
-        o.frequency.exponentialRampToValueAtTime(50, now + 0.16);
-        g.gain.setValueAtTime(0.3, now);
-        g.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+        o.frequency.exponentialRampToValueAtTime(50, now + 0.18);
+        g.gain.setValueAtTime(0.35, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
         o.connect(g); g.connect(aCtx.destination);
-        o.start(now); o.stop(now + 0.16);
+        o.start(now); o.stop(now + 0.18);
+      } else if(t === 'jump'){
+        o.type = 'sine';
+        o.frequency.setValueAtTime(180, now);
+        o.frequency.exponentialRampToValueAtTime(440, now + 0.14);
+        g.gain.setValueAtTime(0.2, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.14);
+      } else if(t === 'block'){
+        o.type = 'square';
+        o.frequency.setValueAtTime(320, now);
+        o.frequency.exponentialRampToValueAtTime(160, now + 0.08);
+        g.gain.setValueAtTime(0.25, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        o.connect(g); g.connect(aCtx.destination);
+        o.start(now); o.stop(now + 0.08);
       } else if(t === 'ko'){
         o.type = 'square';
-        o.frequency.setValueAtTime(110, now);
-        o.frequency.exponentialRampToValueAtTime(28, now + 0.55);
-        g.gain.setValueAtTime(0.4, now);
-        g.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+        o.frequency.setValueAtTime(120, now);
+        o.frequency.exponentialRampToValueAtTime(26, now + 0.6);
+        g.gain.setValueAtTime(0.45, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
         o.connect(g); g.connect(aCtx.destination);
-        o.start(now); o.stop(now + 0.55);
+        o.start(now); o.stop(now + 0.6);
       } else if(t === 'combo'){
         o.type = 'sine';
         o.frequency.setValueAtTime(520, now);
-        o.frequency.exponentialRampToValueAtTime(680, now + 0.12);
-        g.gain.setValueAtTime(0.2, now);
-        g.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+        o.frequency.exponentialRampToValueAtTime(780, now + 0.14);
+        g.gain.setValueAtTime(0.25, now);
+        g.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
         o.connect(g); g.connect(aCtx.destination);
-        o.start(now); o.stop(now + 0.12);
+        o.start(now); o.stop(now + 0.14);
       }
     }catch(err){}
   }
@@ -858,20 +895,48 @@
   (function(){
     var scr = $('#fightScr'), fight = $('#fight'), f1 = $('#f1'), f2 = $('#f2'), i1 = $('img',f1), i2 = $('img',f2);
     var hp1 = $('#hp1'), hp2 = $('#hp2'), spark = $('#spark'), combo = $('#combo'), ko = $('#ko'), sc = $('#score'), tm = $('#timer'), pad = $('#pad');
-    var S, user = false, attacking = false, rivalAttacking = false, lastHit = 0, chain = 0;
+    var S, user = false, attacking = false, moving = false, rivalAttacking = false, lastHit = 0, chain = 0;
 
-    var D_IDLE = ['daniel1','daniel2','daniel3','daniel4','daniel3','daniel2'];
-    var J_IDLE = ['parado1','parado2','parado3','parado4','parado3','parado2'];
+    var D_IDLE = ['daniel_idle_1','daniel_idle_2','daniel_idle_3','daniel_idle_4','daniel_idle_5','daniel_idle_6'];
+    var D_WALK_FWD = ['daniel_walk_fwd_1','daniel_walk_fwd_2','daniel_walk_fwd_3','daniel_walk_fwd_4','daniel_walk_fwd_5','daniel_walk_fwd_6'];
+    var D_WALK_BACK = ['daniel_walk_back_1','daniel_walk_back_2','daniel_walk_back_3','daniel_walk_back_4','daniel_walk_back_5','daniel_walk_back_6'];
+    var D_PUNCH_W = ['daniel_punch_weak_1','daniel_punch_weak_2','daniel_punch_weak_3','daniel_punch_weak_4','daniel_punch_weak_5'];
+    var D_PUNCH_S = ['daniel_punch_strong_1','daniel_punch_strong_2','daniel_punch_strong_3','daniel_punch_strong_4','daniel_punch_strong_5'];
+    var D_KICK_W = ['daniel_kick_weak_1','daniel_kick_weak_2','daniel_kick_weak_3','daniel_kick_weak_4','daniel_kick_weak_5'];
+    var D_KICK_S = ['daniel_kick_strong_1','daniel_kick_strong_2','daniel_kick_strong_3','daniel_kick_strong_4','daniel_kick_strong_5'];
+    var D_BLOCK = ['daniel_block_1','daniel_block_2','daniel_block_3','daniel_block_4'];
+    var D_CROUCH = ['daniel_crouch_1','daniel_crouch_2','daniel_crouch_3','daniel_crouch_4'];
+    var D_JUMP = ['daniel_jump_1','daniel_jump_2','daniel_jump_3','daniel_jump_4','daniel_jump_5'];
+
+    var J_IDLE = ['johnny_idle_1','johnny_idle_2','johnny_idle_3','johnny_idle_4','johnny_idle_5'];
+    var J_WALK_FWD = ['johnny_walk_fwd_1','johnny_walk_fwd_2','johnny_walk_fwd_3','johnny_walk_fwd_4','johnny_walk_fwd_5','johnny_walk_fwd_6','johnny_walk_fwd_7'];
+    var J_WALK_BACK = ['johnny_walk_back_1','johnny_walk_back_2','johnny_walk_back_3','johnny_walk_back_4','johnny_walk_back_5','johnny_walk_back_6'];
+    var J_PUNCH_W = ['johnny_punch_weak_1','johnny_punch_weak_2','johnny_punch_weak_3','johnny_punch_weak_4','johnny_punch_weak_5'];
+    var J_PUNCH_S = ['johnny_punch_strong_1','johnny_punch_strong_2','johnny_punch_strong_3','johnny_punch_strong_4','johnny_punch_strong_5'];
+    var J_KICK_W = ['johnny_kick_weak_1','johnny_kick_weak_2','johnny_kick_weak_3','johnny_kick_weak_4','johnny_kick_weak_5'];
+    var J_KICK_S = ['johnny_kick_strong_1','johnny_kick_strong_2','johnny_kick_strong_3','johnny_kick_strong_4','johnny_kick_strong_5'];
+    var J_BLOCK = ['johnny_block_1','johnny_block_2','johnny_block_3','johnny_block_4'];
+    var J_CROUCH = ['johnny_crouch_1','johnny_crouch_2','johnny_crouch_3','johnny_crouch_4'];
+    var J_JUMP = ['johnny_jump_1','johnny_jump_2','johnny_jump_3','johnny_jump_4','johnny_jump_5'];
+    var J_KO = ['caindo1','caindo2','caindo3'];
+
+    async function playSeq(imgEl, list, delayMs, onFrame){
+      for(var i = 0; i < list.length; i++){
+        imgEl.src = 'assets/novos/' + list[i] + '.png';
+        if(onFrame) onFrame(i);
+        await sleep(delayMs);
+      }
+    }
 
     function setHp(el,v){ el.style.setProperty('--hp',v+'%'); setTimeout(function(){el.style.setProperty('--lag',v+'%')},20) }
     function reset(){
       S = {h1:100,h2:100,score:0,t:99,over:false};
       setHp(hp1,100); setHp(hp2,100); sc.textContent='000000'; tm.textContent='99';
-      f2.classList.remove('down'); f2.style.transform='';
-      f1.classList.remove('kick'); f1.classList.remove('punch'); f1.classList.remove('hit');
+      f2.className = 'fighter f2'; f2.style.transform='';
+      f1.className = 'fighter f1'; f1.style.transform='';
       ko.classList.remove('on');
-      i1.src='assets/novos/daniel1.png'; i2.src='assets/novos/parado1.png';
-      attacking = false; rivalAttacking = false;
+      i1.src='assets/novos/daniel_idle_1.png'; i2.src='assets/novos/johnny_idle_1.png';
+      attacking = false; moving = false; rivalAttacking = false; chain = 0;
     }
 
     var idleB = 0, idleW = 0;
@@ -881,7 +946,7 @@
         idleB = (idleB + 1) % J_IDLE.length;
         i2.src = 'assets/novos/' + J_IDLE[idleB] + '.png';
       }
-      if(!attacking && !f1.classList.contains('hit')){
+      if(!attacking && !moving && !f1.classList.contains('hit')){
         idleW = (idleW + 1) % D_IDLE.length;
         i1.src = 'assets/novos/' + D_IDLE[idleW] + '.png';
       }
@@ -893,60 +958,111 @@
       tm.textContent = String(S.t).padStart(2,'0');
     }, 1000);
 
+    async function move(dir){
+      if(S.over || attacking || moving) return;
+      moving = true;
+      pad.className = 'pad dir-' + dir;
+
+      if(dir === 'r'){
+        f1.classList.add('walk-fwd');
+        await playSeq(i1, D_WALK_FWD, 60);
+        f1.classList.remove('walk-fwd');
+      } else if(dir === 'l'){
+        f1.classList.add('walk-back');
+        await playSeq(i1, D_WALK_BACK, 60);
+        f1.classList.remove('walk-back');
+      } else if(dir === 'd'){
+        f1.classList.add('crouch');
+        await playSeq(i1, D_CROUCH, 70);
+        f1.classList.remove('crouch');
+      } else if(dir === 'u'){
+        f1.classList.add('jump');
+        sfx('jump');
+        await playSeq(i1, D_JUMP, 80);
+        f1.classList.remove('jump');
+      }
+
+      pad.className = 'pad';
+      i1.src = 'assets/novos/' + D_IDLE[0] + '.png';
+      moving = false;
+    }
+
     async function attack(kind){
       if(S.over || attacking) return;
       attacking = true;
       var isKick = kind === 'k';
-      var dmg = isKick ? 14 : 8;
-      $(isKick ? '#bK' : '#bP').classList.add('press');
-      pad.classList.add('fwd');
-
-      if(isKick){
-        i1.src = 'assets/novos/daniel_chute1.png';
-        await sleep(70);
-        i1.src = 'assets/novos/daniel_chute2.png';
-        f1.classList.add('kick');
-        sfx('kick');
-      } else {
-        i1.src = 'assets/novos/danieldefesa.png';
-        f1.classList.add('punch');
-        sfx('punch');
-      }
-
-      await sleep(75);
-      var r = f2.getBoundingClientRect(), R = fight.getBoundingClientRect();
-      spark.style.left = ((r.left - R.left)/R.width*100 + 2) + '%';
-      spark.style.top = (isKick ? 20 : 34) + '%';
-      spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
-      f2.classList.remove('hit'); void f2.offsetWidth; f2.classList.add('hit');
-
       var now = performance.now();
       chain = (now - lastHit < 950) ? chain + 1 : 1;
       lastHit = now;
+
+      var isHeavy = (chain % 3 === 0) || (chain > 1 && isKick);
+      var dmg = isKick ? (isHeavy ? 18 : 10) : (isHeavy ? 14 : 7);
+
+      var btn = $(isKick ? '#bK' : '#bP');
+      if(btn) btn.classList.add('press');
+
+      if(isKick){
+        var kickFrames = isHeavy ? D_KICK_S : D_KICK_W;
+        f1.classList.add(isHeavy ? 'kick-s' : 'kick-w');
+        sfx('kick');
+        i1.src = 'assets/novos/' + kickFrames[0] + '.png';
+        await sleep(50);
+        i1.src = 'assets/novos/' + kickFrames[1] + '.png';
+        await sleep(50);
+        i1.src = 'assets/novos/' + kickFrames[2] + '.png';
+      } else {
+        var punchFrames = isHeavy ? D_PUNCH_S : D_PUNCH_W;
+        f1.classList.add(isHeavy ? 'punch-s' : 'punch-w');
+        sfx('punch');
+        i1.src = 'assets/novos/' + punchFrames[0] + '.png';
+        await sleep(40);
+        i1.src = 'assets/novos/' + punchFrames[1] + '.png';
+        await sleep(40);
+        i1.src = 'assets/novos/' + punchFrames[2] + '.png';
+      }
+
+      var r = f2.getBoundingClientRect(), R = fight.getBoundingClientRect();
+      spark.style.left = ((r.left - R.left)/R.width*100 + 4) + '%';
+      spark.style.top = (isKick ? (isHeavy ? 16 : 28) : (isHeavy ? 24 : 32)) + '%';
+      spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
+
+      var johnnyGuards = (chain >= 4 && Math.random() < 0.4);
+      if(johnnyGuards){
+        sfx('block');
+        i2.src = 'assets/novos/johnny_block_2.png';
+        dmg = Math.round(dmg * 0.3);
+      } else {
+        f2.classList.remove('hit'); void f2.offsetWidth; f2.classList.add('hit');
+      }
+
       if(chain >= 2){
         sfx('combo');
         combo.textContent = 'x' + chain + ' COMBO!';
         combo.classList.remove('on'); void combo.offsetWidth; combo.classList.add('on');
       }
+
       S.h2 = Math.max(0, S.h2 - dmg);
       setHp(hp2, S.h2);
       S.score += dmg * 1000 * Math.max(1, chain);
       sc.textContent = String(Math.min(999999, S.score)).padStart(6,'0');
 
       if(isKick){
-        await sleep(150);
-        i1.src = 'assets/novos/daniel_chute3.png';
-        await sleep(90);
+        await sleep(80);
+        i1.src = 'assets/novos/' + (isHeavy ? D_KICK_S[3] : D_KICK_W[3]) + '.png';
+        await sleep(65);
+        i1.src = 'assets/novos/' + (isHeavy ? D_KICK_S[4] : D_KICK_W[4]) + '.png';
+        await sleep(55);
       } else {
-        await sleep(130);
+        await sleep(65);
+        i1.src = 'assets/novos/' + (isHeavy ? D_PUNCH_S[3] : D_PUNCH_W[3]) + '.png';
+        await sleep(50);
+        i1.src = 'assets/novos/' + (isHeavy ? D_PUNCH_S[4] : D_PUNCH_W[4]) + '.png';
+        await sleep(50);
       }
 
-      f1.classList.remove('kick');
-      f1.classList.remove('punch');
-      i1.src = 'assets/novos/daniel1.png';
-      $('#bK').classList.remove('press');
-      $('#bP').classList.remove('press');
-      pad.classList.remove('fwd');
+      f1.className = 'fighter f1';
+      i1.src = 'assets/novos/' + D_IDLE[0] + '.png';
+      if(btn) btn.classList.remove('press');
       attacking = false;
 
       if(S.h2 <= 0) finish();
@@ -961,12 +1077,7 @@
       f2.classList.remove('hit'); f2.style.transition=''; f2.style.transform='';
       f2.classList.add('down');
 
-      // 3-frame knockout fall
-      i2.src = 'assets/novos/caindo1.png';
-      await sleep(160);
-      i2.src = 'assets/novos/caindo2.png';
-      await sleep(160);
-      i2.src = 'assets/novos/caindo3.png';
+      await playSeq(i2, J_KO, 160);
 
       await sleep(350);
       ko.classList.add('on');
@@ -974,49 +1085,55 @@
       reset();
     }
 
-    /* Johnny rival counter-attack: steps forward, throws punch, Daniel defends */
     async function rivalAttack(){
-      if(!visible(scr) || S.over || attacking || rivalAttacking) return;
+      if(!visible(scr) || S.over || attacking || moving || rivalAttacking) return;
       rivalAttacking = true;
 
-      // 1. Johnny walks forward
-      f2.style.transition = 'transform .2s ease-out';
-      f2.style.transform = 'translateX(-3cqh)';
-      i2.src = 'assets/novos/anda2.png';
-      await sleep(100);
-      i2.src = 'assets/novos/anda4.png';
-      await sleep(100);
+      var roll = Math.random();
+      if(roll < 0.5){
+        f2.classList.add('walk-fwd');
+        await playSeq(i2, J_WALK_FWD.slice(0, 4), 60);
+        f2.classList.remove('walk-fwd');
 
-      // 2. Johnny strikes with punch
-      if(S.over){ rivalAttacking = false; return }
-      i2.src = 'assets/novos/soco1.png';
-      await sleep(70);
-      if(S.over){ rivalAttacking = false; return }
-      i2.src = 'assets/novos/soco3.png';
-      sfx('punch');
+        if(S.over){ rivalAttacking = false; return; }
+        f2.classList.add('punch-w');
+        sfx('punch');
+        await playSeq(i2, J_PUNCH_W, 50, function(idx){
+          if(idx === 2){
+            var r = f1.getBoundingClientRect(), R = fight.getBoundingClientRect();
+            spark.style.left = ((r.right - R.left)/R.width*100 - 6) + '%';
+            spark.style.top = '30%';
+            spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
 
-      // Spark on Daniel
-      var r = f1.getBoundingClientRect(), R = fight.getBoundingClientRect();
-      spark.style.left = ((r.right - R.left)/R.width*100 - 8) + '%';
-      spark.style.top = '32%';
-      spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
+            i1.src = 'assets/novos/daniel_block_2.png';
+            f1.classList.remove('hit'); void f1.offsetWidth; f1.classList.add('hit');
+            S.h1 = Math.max(16, S.h1 - 7);
+            setHp(hp1, S.h1);
+          }
+        });
+        f2.classList.remove('punch-w');
+      } else {
+        f2.classList.add('kick-w');
+        sfx('kick');
+        await playSeq(i2, J_KICK_W, 60, function(idx){
+          if(idx === 2){
+            var r = f1.getBoundingClientRect(), R = fight.getBoundingClientRect();
+            spark.style.left = ((r.right - R.left)/R.width*100 - 6) + '%';
+            spark.style.top = '24%';
+            spark.classList.remove('on'); void spark.offsetWidth; spark.classList.add('on');
 
-      // Daniel blocks / reacts
-      i1.src = 'assets/novos/danieldefesa.png';
-      f1.classList.remove('hit'); void f1.offsetWidth; f1.classList.add('hit');
-      S.h1 = Math.max(16, S.h1 - 7);
-      setHp(hp1, S.h1);
+            i1.src = 'assets/novos/daniel_block_3.png';
+            f1.classList.remove('hit'); void f1.offsetWidth; f1.classList.add('hit');
+            S.h1 = Math.max(16, S.h1 - 10);
+            setHp(hp1, S.h1);
+          }
+        });
+        f2.classList.remove('kick-w');
+      }
 
-      await sleep(140);
-      if(S.over){ rivalAttacking = false; return }
-      i2.src = 'assets/novos/soco5.png';
-      await sleep(110);
-      if(S.over){ rivalAttacking = false; return }
-
-      // 3. Return to stance
-      f2.style.transform = '';
-      i2.src = 'assets/novos/parado1.png';
-      i1.src = 'assets/novos/daniel1.png';
+      f2.className = 'fighter f2';
+      i2.src = 'assets/novos/' + J_IDLE[0] + '.png';
+      i1.src = 'assets/novos/' + D_IDLE[0] + '.png';
       await sleep(200);
       rivalAttacking = false;
     }
@@ -1026,18 +1143,36 @@
     function takeOver(){ user = true }
     $('#bK').addEventListener('click',function(e){ e.stopPropagation(); takeOver(); attack('k') });
     $('#bP').addEventListener('click',function(e){ e.stopPropagation(); takeOver(); attack('p') });
+
+    var pU = $('#padU'), pD = $('#padD'), pL = $('#padL'), pR = $('#padR');
+    if(pU) pU.addEventListener('click', function(e){ e.stopPropagation(); takeOver(); move('u'); });
+    if(pD) pD.addEventListener('click', function(e){ e.stopPropagation(); takeOver(); move('d'); });
+    if(pL) pL.addEventListener('click', function(e){ e.stopPropagation(); takeOver(); move('l'); });
+    if(pR) pR.addEventListener('click', function(e){ e.stopPropagation(); takeOver(); move('r'); });
+
     scr.addEventListener('click',function(){ takeOver(); attack('k') });
+
     document.addEventListener('keydown',function(e){
       if(!visible(scr)) return;
-      if(e.key==='k'||e.key==='K'){ takeOver(); attack('k') }
-      else if(e.key==='j'||e.key==='J'){ takeOver(); attack('p') }
+      var k = e.key.toLowerCase();
+      if(k === 'k'){ takeOver(); attack('k'); }
+      else if(k === 'j'){ takeOver(); attack('p'); }
+      else if(k === 'd' || e.key === 'ArrowRight'){ takeOver(); move('r'); }
+      else if(k === 'a' || e.key === 'ArrowLeft'){ takeOver(); move('l'); }
+      else if(k === 's' || e.key === 'ArrowDown'){ takeOver(); move('d'); }
+      else if(k === 'w' || e.key === 'ArrowUp'){ takeOver(); move('u'); }
     });
 
     reset();
     if(RM){ setHp(hp2,0); i2.src='assets/novos/caindo3.png'; ko.classList.add('on'); return }
 
-    var pattern = ['k','p','p','k','k','p','k'], n = 0;
-    setInterval(function(){ if(user||!visible(scr)||S.over) return; attack(pattern[n++%pattern.length]) }, 680);
+    var pattern = ['r','p','p','k','d','k','p','u','k'], n = 0;
+    setInterval(function(){
+      if(user||!visible(scr)||S.over) return;
+      var cmd = pattern[n++ % pattern.length];
+      if(cmd === 'k' || cmd === 'p') attack(cmd);
+      else move(cmd);
+    }, 750);
   })();
 
   /* ===== 04 reward ===== */
