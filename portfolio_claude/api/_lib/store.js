@@ -15,7 +15,8 @@
      topic:<id>   sid da conversa desse tópico
      notopics     marca temporária: o grupo não aceitou criar tópico
      seen:<id>    update do webhook já processado (o Telegram reenvia)
-     rl:*         contadores de limite de envio */
+     rl:*         contadores de limite de envio (e de tentativas de login do admin)
+     site:settings ajustes do admin: manutenção e cases escondidos (api/_lib/site.js) */
 
 var P = 'pfchat:';
 export var TTL = 60 * 60 * 24 * 30; // conversas somem 30 dias depois da última mensagem

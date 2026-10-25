@@ -152,6 +152,15 @@
     document.body.appendChild(s);
   }
 
+  // 4. Aviso pro Erik: site em manutenção, mas este navegador vê tudo (shared/cases.js)
+  if (window.PORTFOLIO_PREVIEW && window.PORTFOLIO_SITE && window.PORTFOLIO_SITE.maintenance) {
+    var badge = document.createElement('a');
+    badge.className = 'pf-admin-badge';
+    badge.href = ROOT + 'admin/';
+    badge.textContent = 'Manutenção ligada · só você vê os cases';
+    document.body.appendChild(badge);
+  }
+
   // Nav overflow handling
   var nav = $('.pf-nav');
   var row = nav && nav.querySelector('.wrap');

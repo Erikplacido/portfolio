@@ -65,6 +65,20 @@ A mensagem do visitante vai para `api/chat/send`, que a posta num grupo "Chat Si
 
 Para testar o chat localmente, use `npm run dev` (http://127.0.0.1:8780, com modo de teste sem Telegram) em vez do `python3 -m http.server`, que não roda `/api`.
 
+## Admin (`/admin/`)
+
+Página para o Erik mudar o que o site mostra, sem editar código nem fazer deploy. Entra com a senha `ADMIN_PASSWORD` (variável de ambiente na Vercel) e guarda os ajustes no mesmo Upstash Redis do chat.
+
+- **Site em manutenção:** esconde todos os cases. Na home, os botões de segmento ficam apagados e sem link, com um aviso traduzido no lugar da sequência de cases. Páginas de case e de segmento mandam o visitante para a home. Currículos e contato continuam no ar.
+- **Cases visíveis:** liga e desliga cada case. Desligado funciona como `draft: true` e vale mais que ele. Voltar ao estado do código tira a marcação.
+- **Ver o site como admin neste navegador:** ligado no login. Ignora a manutenção e abre cases escondidos pelo link direto, só naquele navegador. Durante a manutenção aparece um aviso no canto: "Manutenção ligada · só você vê os cases".
+
+Como chega às páginas: cada página carrega `api/site/config` logo antes de `shared/cases.js`. Ele define `window.PORTFOLIO_SITE`, e `cases.js` aplica os ajustes e redireciona quando precisa. Fica em cache por uns 10 segundos, então uma mudança leva esse tempo para aparecer. Se a API falhar ou a página for aberta como arquivo, vale só o que está em `cases.js`.
+
+Isso esconde, mas não tranca: os arquivos dos cases continuam públicos para quem souber o endereço exato, como já acontecia com o `draft: true`.
+
+Para testar localmente com o admin, use `npm run dev` sem token do Telegram (configuração `portfolio-mock` do `.claude/launch.json`). A senha de teste é `admin`. No `localhost` o site sempre mostra tudo; acrescente `?simulate-live=1` na URL para ver como visitante.
+
 ---
 
 ## O princípio: moldura × case
@@ -146,7 +160,7 @@ Isso basta para o case aparecer **automaticamente** no grupo certo da home, no s
 
 Para criar um assunto novo, acrescente um objeto em `PORTFOLIO_GROUPS` (no topo do mesmo arquivo) com `id`, `label` (o nome que aparece embaixo do ícone) e `icon` (uma classe `fa-…` do Font Awesome 6). Grupos sem nenhum case não aparecem.
 
-**Publicar o site com um case ainda em produção:** acrescente `draft: true` no objeto do case. Ele some do seletor de navegação, do "Próximo case" e da home em todas as páginas, sem editar mais nada. A página do case continua funcionando normalmente para você (em `localhost`/arquivo local, ou com `?preview=1` na URL em qualquer lugar); se alguém abrir a URL direta no site já publicado, é redirecionado para a home com um aviso. Tire o `draft: true` quando o case estiver pronto para aparecer. Detalhes no comentário no topo de `shared/cases.js`.
+**Publicar o site com um case ainda em produção:** desligue o case no admin (`/admin/`) ou acrescente `draft: true` no objeto do case. Ele some do seletor de navegação, do "Próximo case" e da home em todas as páginas, sem editar mais nada. A página do case continua funcionando normalmente para você (em `localhost`/arquivo local, ou com `?preview=1` na URL em qualquer lugar); se alguém abrir a URL direta no site já publicado, é redirecionado para a home com um aviso. Tire o `draft: true` quando o case estiver pronto para aparecer. Detalhes no comentário no topo de `shared/cases.js`.
 
 ### 4. Preencher a página
 
@@ -206,7 +220,7 @@ Os dois cases existentes servem de referência (`blue-services`: demo de reserva
 - [ ] Cada imagem tem `alt` ou é decorativa (`alt=""`), e cada figura tem legenda.
 - [ ] Nada confidencial, nenhum dado pessoal real sem permissão.
 - [ ] `--accent` da página igual ao `color` do `cases.js`.
-- [ ] Sem `draft: true` sobrando em `cases.js` (a menos que o case ainda não deva aparecer no site publicado).
+- [ ] Sem `draft: true` sobrando em `cases.js` (a menos que o case ainda não deva aparecer no site publicado), e o case ligado no admin.
 
 ---
 

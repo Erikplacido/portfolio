@@ -13,6 +13,17 @@
       "runtimeArgs": [
         "dev/server.mjs"
       ]
+    },
+    {
+      "name": "portfolio-mock",
+      "port": 8781,
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "PORT=8781",
+        "TELEGRAM_BOT_TOKEN=",
+        "node",
+        "dev/server.mjs"
+      ]
     }
   ]
 }

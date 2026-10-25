@@ -22,6 +22,18 @@
       es: 'Contacto',
       fr: 'Contact'
     },
+    'home.maintenance': {
+      pt: 'O portfólio está em manutenção. Os cases voltam em breve. Enquanto isso, o currículo e o contato continuam aqui.',
+      en: 'The portfolio is under maintenance. The cases will be back soon. Meanwhile, the résumé and contact are still here.',
+      es: 'El portafolio está en mantenimiento. Los casos vuelven pronto. Mientras tanto, el currículum y el contacto siguen aquí.',
+      fr: 'Le portfolio est en maintenance. Les projets reviennent bientôt. En attendant, le CV et le contact sont toujours là.'
+    },
+    'home.seg_soon': {
+      pt: 'em breve',
+      en: 'soon',
+      es: 'pronto',
+      fr: 'bientôt'
+    },
     'nav.view_cv': {
       pt: 'Ver currículo',
       en: 'View resume',

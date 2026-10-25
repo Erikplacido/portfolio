@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin do portfólio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<!-- Lista de cases e segmentos. Sem o api/site/config aqui de propósito:
+     cada case mostra o draft do código como "padrão". -->
+<script src="../shared/cases.js"></script>
+<style>
+.ad{max-width:760px;margin:0 auto;padding:40px 16px 80px}
+.ad-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.ad-head h1{font:600 26px/1.2 var(--pf-sans);margin:0}
+.ad-panel{background:#fff;border:1px solid rgba(16,22,31,.1);border-radius:16px;padding:20px 22px;margin-bottom:18px}
+.ad-panel h2{font:600 17px/1.3 var(--pf-sans);margin:0 0 4px}
+.ad-panel > p{font-size:14px;line-height:1.5;color:var(--pf-ink-2);margin:0 0 14px}
+.ad-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-top:1px solid rgba(16,22,31,.07)}
+.ad-row:first-of-type{border-top:0}
+.ad-row img{width:56px;height:36px;object-fit:cover;border-radius:6px;flex:none;background:#eee}
+.ad-row .t{flex:1;min-width:0}
+.ad-row .t b{display:block;font:600 14.5px/1.3 var(--pf-sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ad-row .t small{font-size:12px;color:var(--pf-ink-2)}
+.ad-row .t small a{color:inherit}
+.ad-group{font:600 11px/1 var(--pf-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--pf-ink-2);margin:18px 0 4px}
+.ad-group:first-child{margin-top:0}
+.ad-sw{position:relative;flex:none;width:44px;height:26px;margin:0;appearance:none;-webkit-appearance:none;border-radius:99px;background:#C9CDD3;cursor:pointer;transition:background .2s}
+.ad-sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.ad-sw:checked{background:#1F8A4C}
+.ad-sw:checked::after{transform:translateX(18px)}
+.ad-sw:focus-visible{outline:2px solid #1d1d1f;outline-offset:2px}
+.ad-sw.warn:checked{background:#D97706}
+.ad-btn{font:600 14px/1 var(--pf-sans);padding:11px 16px;border-radius:10px;border:1px solid #1d1d1f;background:#1d1d1f;color:#fff;cursor:pointer}
+.ad-btn.ghost{background:transparent;color:#1d1d1f}
+.ad-login{display:flex;gap:10px;flex-wrap:wrap}
+.ad-login input{flex:1;min-width:200px;font:400 16px/1.2 var(--pf-sans);padding:11px 14px;border-radius:10px;border:1px solid rgba(16,22,31,.25)}
+.ad-msg{font-size:13.5px;min-height:20px;margin:10px 0 0;color:var(--pf-ink-2)}
+.ad-msg.err{color:#B42318}
+.ad-status{position:sticky;top:0;z-index:5;margin:-8px 0 18px;padding:8px 12px;border-radius:10px;font-size:13px;background:#F1F5F2;color:#1F5E39;text-align:center}
+.ad-status.err{background:#FDECEA;color:#B42318}
+.ad-status:empty{display:none}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion: reduce){ .ad-sw,.ad-sw::after{transition:none} }
+</style>
+</head>
+<body>
+<main class="ad">
+  <div class="ad-head">
+    <h1>Admin do portfólio</h1>
+    <a href="../index.html" class="ad-btn ghost">Abrir o site</a>
+  </div>
+
+  <!-- Login -->
+  <section class="ad-panel" id="login">
+    <h2>Entrar</h2>
+    <p>Use a senha definida em <code>ADMIN_PASSWORD</code> na Vercel.</p>
+    <form class="ad-login" id="login-form">
+      <input type="password" id="pw" autocomplete="current-password" aria-label="Senha" placeholder="Senha" required>
+      <button class="ad-btn" type="submit">Entrar</button>
+    </form>
+    <p class="ad-msg" id="login-msg" role="status"></p>
+  </section>
+
+  <!-- Painel -->
+  <div id="panel" hidden>
+    <p class="ad-status" id="status" role="status" aria-live="polite"></p>
+
+    <section class="ad-panel">
+      <div class="ad-row">
+        <div class="t">
+          <h2>Site em manutenção</h2>
+          <p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--pf-ink-2)">Esconde todos os cases e deixa os botões de segmento apagados, sem link. Currículo e contato continuam no ar.</p>
+        </div>
+        <input type="checkbox" class="ad-sw warn" id="maint" role="switch" aria-label="Site em manutenção">
+      </div>
+    </section>
+
+    <section class="ad-panel">
+      <h2>Cases visíveis</h2>
+      <p>Desligado, o case some da home, dos segmentos e do "Próximo case", e quem abrir o link direto volta pra home. "Padrão" é o que está em <code>shared/cases.js</code>.</p>
+      <div id="cases"></div>
+    </section>
+
+    <section class="ad-panel">
+      <div class="ad-row">
+        <div class="t">
+          <h2>Ver o site como admin neste navegador</h2>
+          <p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--pf-ink-2)">Ignora a manutenção e abre cases escondidos pelo link direto, só aqui. Desligue para ver o que um visitante vê.</p>
+        </div>
+        <input type="checkbox" class="ad-sw" id="preview" role="switch" aria-label="Ver o site como admin neste navegador">
+      </div>
+    </section>
+
+    <button class="ad-btn ghost" type="button" id="logout">Sair</button>
+  </div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var API = '../api/admin/';
+  var $ = function(id){ return document.getElementById(id) };
+  var esc = function(t){ return String(t).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]}) };
+  var ALL = window.PORTFOLIO_CASES_ALL || [], GROUPS = window.PORTFOLIO_GROUPS || [];
+  var settings = { maintenance: false, hidden: {} };
+
+  function call(path, body){
+    return fetch(API + path, body === undefined ? { credentials: 'same-origin' } : {
+      method: 'POST', credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+    }).then(function(r){ return r.json().catch(function(){ return {} }).then(function(j){ j._status = r.status; return j }) });
+  }
+
+  function status(text, err){ var s = $('status'); s.textContent = text; s.classList.toggle('err', !!err) }
+
+  // Estado efetivo de um case: o que o admin marcou, ou o draft do código.
+  function visible(c){ return typeof settings.hidden[c.slug] === 'boolean' ? !settings.hidden[c.slug] : !c.draft }
+
+  function renderCases(){
+    $('cases').innerHTML = GROUPS.map(function(g){
+      var list = ALL.filter(function(c){ return c.group === g.id });
+      if (!list.length) return '';
+      return '<p class="ad-group">' + esc(g.label) + '</p>' + list.map(function(c){
+        var own = typeof settings.hidden[c.slug] === 'boolean';
+        var note = own ? 'definido aqui' : 'padrão' + (c.draft ? ' (rascunho no código)' : '');
+        return '<div class="ad-row">' +
+          '<img src="../' + esc(c.cover) + '" alt="" loading="lazy">' +
+          '<div class="t"><b>' + esc(c.short || c.title) + '</b><small>' + note + ' · <a href="../' + esc(c.slug) + '/index.html?preview=1" target="_blank" rel="noopener">ver</a></small></div>' +
+          '<input type="checkbox" class="ad-sw" role="switch" data-slug="' + esc(c.slug) + '"' + (visible(c) ? ' checked' : '') + ' aria-label="' + esc(c.short || c.title) + ' visível">' +
+        '</div>';
+      }).join('');
+    }).join('');
+  }
+
+  function render(){
+    $('maint').checked = settings.maintenance;
+    renderCases();
+  }
+
+  function save(){
+    status('Salvando…');
+    call('settings', settings).then(function(j){
+      if (j._status === 401) return showLogin('Sua sessão expirou. Entre de novo.');
+      if (j._status !== 200) return status('Não consegui salvar. Tente de novo.', true);
+      settings = { maintenance: j.maintenance, hidden: j.hidden };
+      render();
+      status('Salvo. No site, chega em até uns 10 segundos.');
+    }).catch(function(){ status('Sem conexão. Nada foi salvo.', true) });
+  }
+
+  function showPanel(){
+    $('login').hidden = true; $('panel').hidden = false;
+    var marked = false; try { marked = localStorage.getItem('pf_preview') === '1' } catch (e) {}
+    $('preview').checked = marked;
+    render();
+  }
+  function showLogin(msg){
+    $('panel').hidden = true; $('login').hidden = false;
+    $('login-msg').textContent = msg || ''; $('login-msg').classList.toggle('err', !!msg);
+  }
+
+  function load(){
+    return call('settings').then(function(j){
+      if (j._status === 200) { settings = { maintenance: j.maintenance, hidden: j.hidden }; showPanel(); return true }
+      if (j._status === 503) showLogin('O admin não está configurado: falta ADMIN_PASSWORD ou o Redis na Vercel.');
+      else showLogin();
+      return false;
+    }).catch(function(){ showLogin('Sem conexão com o servidor.') });
+  }
+
+  $('login-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    $('login-msg').textContent = 'Entrando…'; $('login-msg').classList.remove('err');
+    call('login', { password: $('pw').value }).then(function(j){
+      if (j._status === 200) {
+        $('pw').value = '';
+        try { localStorage.setItem('pf_preview', '1') } catch (e) {}
+        return load();
+      }
+      var msg = j._status === 401 ? 'Senha errada.' : j._status === 429 ? 'Muitas tentativas. Espere 15 minutos.' : 'O admin não está disponível agora.';
+      showLogin(msg);
+    }).catch(function(){ showLogin('Sem conexão com o servidor.') });
+  });
+
+  $('maint').addEventListener('change', function(){ settings.maintenance = this.checked; save() });
+
+  $('cases').addEventListener('change', function(e){
+    var slug = e.target.getAttribute('data-slug');
+    var c = ALL.filter(function(x){ return x.slug === slug })[0];
+    if (!c) return;
+    var hide = !e.target.checked;
+    // igual ao código: tira a marcação, pra valer o que estiver em shared/cases.js
+    if (hide === !!c.draft) delete settings.hidden[slug]; else settings.hidden[slug] = hide;
+    save();
+  });
+
+  $('preview').addEventListener('change', function(){
+    try { this.checked ? localStorage.setItem('pf_preview', '1') : localStorage.removeItem('pf_preview') } catch (e) {}
+  });
+
+  $('logout').addEventListener('click', function(){
+    try { localStorage.removeItem('pf_preview') } catch (e) {}
+    call('logout', {}).then(function(){ showLogin('Você saiu.') });
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
