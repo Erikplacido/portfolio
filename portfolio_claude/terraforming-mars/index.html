@@ -12,24 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root{
   --accent:#C84B31;
@@ -157,7 +141,7 @@
   <div class="wrap">
     <p class="eyebrow"><b>Case 06</b> · Tabletop UX · Component Redesign</p>
     <h1>Terraforming Mars: <em>Re-Engineered.</em></h1>
-    <p class="lede">Um estudo profundo de Arquitetura de Informação, Ergonomia de Mesa e Design de Componentes para um dos jogos de tabuleiro mais aclamados do mundo.</p>
+    <p class="lede">Redesenhei a experiência física de um dos jogos de tabuleiro mais jogados do mundo: engenharia de console dual-layer de 3mm com travas anti-esbarrão, arquitetura de cartas com splay de 18mm para economizar 65% de mesa e um sistema iconográfico limpo que substitui textos longos de regras.</p>
     <dl class="pf-meta">
       <div><dt>Papel</dt><dd>UX/UI Design, Ergonomia e Design de Componentes</dd></div>
       <div><dt>Projeto</dt><dd>Redesign conceitual independente · 2024</dd></div>
@@ -177,7 +161,7 @@
       <h2>Por que um dos maiores jogos de tabuleiro do mundo precisava de um redesign?</h2>
       <p class="lede">Com mais de 100 mil avaliações e no top 5 global do BoardGameGeek, Terraforming Mars é uma obra-prima de game design criada por Jacob Fryxelius. No entanto, sua produção original de 2016 sofre com componentes de papel fino que causam fricção física constante na mesa.</p>
     </div>
-    <div class="callout rv"><b>Objetivo de UX:</b> eliminar completamente a perda de estado de jogo causada por esbarrões no tabuleiro, otimizar em 65% a área de mesa ocupada pelas cartas e unificar a iconografia relacional.</div>
+    <div class="callout rv"><b>Objetivo do projeto:</b> resolver as dores reais de quem joga: o esbarrão de cotovelo que desmonta 3 horas de partida, a falta de espaço na mesa após a 8ª rodada e a confusão visual causada pela mistura de fotos amadoras e ícones desconexos na edição de 2016.</div>
     <div class="tm-count rv" style="margin-top:40px">
       <div class="pf-card"><span class="tag">Ranking BGG</span><b>#5</b><p>no ranking mundial de jogos de tabuleiro estratégicos.</p></div>
       <div class="pf-card"><span class="tag">Fricção Física</span><b>0%</b><p>cubos travados em cavidades cortadas a laser milimétricas.</p></div>

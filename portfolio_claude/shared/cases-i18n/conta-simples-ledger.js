@@ -12,7 +12,7 @@
       '.pf-hero .eyebrow': '<b>Case 12</b> · Design System · B2B Corporate Banking · Design Engineering',
       '.pf-hero h1': 'A single transaction row, <em>every complex edge case.</em>',
       '.pf-hero .lede': 'Component family for corporate card transaction ledgers: atomic anatomy, comprehensive state matrix, semantic tokens, and an AI-drafted handoff featuring JSON Schema and reference implementations for React Native and Jetpack Compose. Documented on an interactive 1920 × 1080 canvas.',
-      '.cs-note': 'Design System & Component Architecture for Corporate Expense Management and B2B Reconciliation',
+      '.cs-note': 'Design System Architecture · Financial component standardization and B2B reconciliation',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'Design System Lead, UI & Design Engineering',
@@ -129,7 +129,7 @@
       '.pf-hero .eyebrow': '<b>Caso 12</b> · Design System · Banca Corporativa B2B · Design Engineering',
       '.pf-hero h1': 'Una línea de extracto, <em>todos los casos complejos.</em>',
       '.pf-hero .lede': 'Familia de componentes para el extracto de tarjetas corporativas: anatomía atómica, matriz de estados, tokens semánticos y entrega técnica con JSON Schema y código de referencia en React Native y Jetpack Compose, prototipados con IA. Documentado en una lámina interactiva de 1920 × 1080.',
-      '.cs-note': 'Design System & Arquitectura de Componentes para Conciliación y Gestión de Gastos B2B',
+      '.cs-note': 'Arquitectura de Design System · Estandarización de componentes financieros y conciliación B2B',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'Design System Lead, UI e Ingeniería de Diseño',
@@ -246,7 +246,7 @@
       '.pf-hero .eyebrow': '<b>Projet 12</b> · Design System · Banque d’Entreprise B2B · Design Engineering',
       '.pf-hero h1': 'Une seule ligne de relevé, <em>tous les cas complexes résolus.</em>',
       '.pf-hero .lede': 'Famille de composants dédiée au relevé de transactions pour cartes d’entreprise : anatomie atomique, matrice d’états, design tokens sémantiques et handoff avec schéma JSON et implémentations de référence pour React Native et Jetpack Compose, conçus avec l’aide de l’IA. Documenté sur une planche interactive de 1920 × 1080.',
-      '.cs-note': 'Design System & Architecture de Composants pour la Gestion des Dépenses et la Réconciliation B2B',
+      '.cs-note': 'Architecture de Design System · Standardisation des composants financiers et réconciliation B2B',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'Design System Lead, UI & Ingénierie de Design',

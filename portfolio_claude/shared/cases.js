@@ -30,23 +30,23 @@
 window.PORTFOLIO_GROUPS = [
   { id: 'uxui',           label: 'UX/UI',            icon: 'fa-mobile-screen-button',
     color: '#0F766E', resume: '../curriculo_product_design.html',
-    desc: 'Sistemas escaláveis, onboarding, design systems, handoff e impacto direto em CAC/LTV.',
-    kpi: 'Redução de churn em ~18% · Design Tokens · Hand-off de código' },
+    desc: 'Arquitetura de informação, fluxos de onboarding, Design Systems e redução de atrito transacional em fintechs.',
+    kpi: 'Design Tokens em código · Acessibilidade WCAG · Protótipos funcionais em React' },
   { id: 'tabletop',       label: 'Tabletop',         icon: 'fa-dice-d20',
     color: '#D97706', resume: '../tabletop.html',
-    desc: 'Ergonomia física de mesa, consoles dual-layer cortados a laser, card games e iconografia.',
-    kpi: 'Dual-Layer rígido 3mm · Splay de 18mm · Regras universais' },
+    desc: 'Ergonomia física de mesa, consoles dual-layer cortados a laser, card games e iconografia para leitura rápida.',
+    kpi: 'Dual-Layer rígido 3mm · Splay de 18mm · Regras visuais sem texto' },
   { id: 'games',          label: 'Games Digitais',   icon: 'fa-gamepad',
     color: '#E3120B', resume: '../curriculo_games.html',
-    desc: 'HUDs contextuais, interfaces diegéticas, 3D WebGL em tempo real, Godot 4 e árvores de talentos.',
-    kpi: '60 FPS estáveis · Web Audio API · Compensação de latência' },
+    desc: 'HUDs contextuais, interfaces diegéticas, renderização 3D WebGL em tempo real e conformidade TRC/TCR de console.',
+    kpi: '60 FPS estáveis · Web Audio API · Adaptação para L10n +35%' },
   { id: 'design-grafico', label: 'Design Gráfico',   icon: 'fa-compass-drafting',
     color: '#B44A17', resume: '../curriculo_editorial_embalagens.html',
-    desc: 'Design editorial, grid suíço, restauração histórica com Wacom e embalagens calibradas para impressão industrial.',
+    desc: 'Design editorial, grid suíço, restauração histórica no traço digital e embalagens calibradas para impressão industrial.',
     kpi: 'Grid suíço de 6 colunas · Restauração Wacom · Calibração industrial' },
   { id: 'audiovisual',    label: 'Áudio Visual',     icon: 'fa-clapperboard',
     color: '#1E2A7A', resume: '../curriculo_direcao_de_arte.html',
-    desc: 'Direção de arte para cinema e TV: cenografia, rótulos de época e peças gráficas de cena que aguentam o close.',
+    desc: 'Direção de arte para cinema e TV: cenografia, rótulos de época e peças gráficas de cena que aguentam o close em 4K.',
     kpi: 'Rótulos e paredes em 4K pro close · Épocas de 1950 e 1980 · Peças que resistem à câmera' }
 ];
 
@@ -58,7 +58,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#11284B',                      // mesma cor do --accent da página
     cover: 'blue-services/assets/home_cleaning_banner-1024x683.webp',
     tags: ['Product design', 'Web e mobile', 'Design system'],
-    blurb: 'Reserva com preço ao vivo, rastreio em tempo real e operações para um marketplace de limpeza.'
+    blurb: 'Reserva com cálculo de diária ao vivo, rastreio de prestadores por GPS e console operacional para marketplace.'
   },
   {
     slug: 'cobra-kai',
@@ -68,7 +68,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#E3120B',
     cover: 'cobra-kai/assets/keyart.jpg',
     tags: ['Conceito', 'Game UI', 'Pixel art'],
-    blurb: 'Advergame mobile para ativação de estreia: o jogador ganha brindes exclusivos conforme sua pontuação.'
+    blurb: 'Advergame de luta em pixel art para ativação de estreia: pontuação arcade que desbloqueia brindes por faixas de score.'
   },
   {
     slug: 'loony-races',
@@ -77,7 +77,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#17803A',                      // mesma cor do --accent da página
     cover: 'loony-races/assets/card.jpg',
     tags: ['Board game', 'Identidade visual', 'Ilustração'],
-    blurb: 'Marca, dez pilotos de dez países, cartas sem texto e uma pista montada durante a corrida.'
+    blurb: 'Marca, 10 pilotos de países distintos, cartas com linguagem 100% visual e pista modular montada durante a corrida.'
   },
   {
     slug: 'saudosa-maloca',
@@ -86,7 +86,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#1E2A7A',                      // mesma cor do --accent da página
     cover: 'saudosa-maloca/assets/card.jpg',
     tags: ['Cinema', 'Design gráfico', 'Peças de época'],
-    blurb: 'Placa-título, marcas, rótulos e cartazes dos anos 50 e 80 para um longa sobre os sambas de Adoniran.'
+    blurb: 'Placa-título, marcas fictícias, rótulos e cartazes das décadas de 1950 e 1980 para longa-metragem sobre Adoniran Barbosa.'
   },
   {
     slug: 'forca-br',
@@ -96,7 +96,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#2453B3',                      // mesma cor do --accent da página
     cover: 'forca-br/assets/card.jpg',
     tags: ['Board game', 'Design gráfico'],
-    blurb: 'Cartas, tabuleiro, fichas e logos de um jogo cooperativo de heróis que defendem as regiões do Brasil.'
+    blurb: 'Cartas, tabuleiro regional, fichas de ameaça e identidade de um board game cooperativo com heróis do folclore e da história do Brasil.'
   },
   {
     slug: 'terraforming-mars',
@@ -106,7 +106,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#C84B31',
     cover: 'terraforming-mars/assets/cover.jpg',
     tags: ['Tabletop UX', 'Redesign', 'Dual-Layer Mat'],
-    blurb: 'Arquitetura de informação e ergonomia para o clássico: dashboard dual-layer, card splaying e iconografia.'
+    blurb: 'Ergonomia de mesa para o clássico: console dual-layer com travas anti-esbarrão, splay de cartas de 18mm e iconografia de alto contraste.'
   },
   {
     slug: 'editorial',
@@ -116,7 +116,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#B44A17',                      // mesma cor do --accent da página
     cover: 'editorial/assets/card.jpg',
     tags: ['Design editorial', 'Capas', 'Restauração'],
-    blurb: 'Capas para a WMF Martins Fontes e os três primeiros livros de Mauricio de Sousa, restaurados num só volume.'
+    blurb: 'Projetos de capa para a WMF Martins Fontes e restauração minuciosa dos 3 primeiros livros históricos de Mauricio de Sousa.'
   },
   {
     slug: 'publicidade',
@@ -126,7 +126,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#C01A6E',                      // mesma cor do --accent da página
     cover: 'publicidade/assets/card.jpg',
     tags: ['Design gráfico de cena', 'Publicidade', 'Séries e TV'],
-    blurb: 'Rótulos, cartazes, paredes, viaturas e mapas que não existem, feitos para aguentar o close.'
+    blurb: 'Rótulos, embalagens cenográficas, documentos fictícios e cartazes de época projetados para sustentar closes em alta resolução.'
   },
   {
     slug: 'vistorias-risco',
@@ -136,7 +136,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#0369A1',                      // mesma cor do --accent da página
     cover: 'vistorias-risco/assets/card.jpg',
     tags: ['Product design', 'UI', 'Desenvolvimento'],
-    blurb: 'Vistoria de seguros do questionário ao laudo: fotos geolocalizadas, três fases por item e cliente remoto sem conta.'
+    blurb: 'Sistema de vistoria securitária: coleta fotográfica geolocalizada, laudo técnico estruturado e fluxo web sem fricção para o cliente remoto.'
   },
   {
     slug: 'caju-cartao',
@@ -146,7 +146,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#D42D28',                      // mesma cor do --accent da página
     cover: 'caju-cartao/assets/card.jpg',
     tags: ['Conceito', 'UI mobile', 'Motion'],
-    blurb: 'Do envelope à carteira digital: código, NFC ou QR, senha validada em tempo real e cinco edge cases.'
+    blurb: 'Do envelope à carteira digital: ativação por NFC, QR ou código manual, validação de regras de senha em tempo real e 5 edge cases.'
   },
   {
     slug: 'meliuz-fatura',
@@ -156,7 +156,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#D10043',                      // mesma cor do --accent da página
     cover: 'meliuz-fatura/assets/card.jpg',
     tags: ['Conceito', 'UI', 'Mobile e desktop'],
-    blurb: 'Simulador de parcelamento com juros, IOF e CET à vista, no celular e no desktop.'
+    blurb: 'Simulador de parcelamento de fatura: cálculo instantâneo de juros, IOF e CET sem surpresas, reduzindo a armadilha do crédito rotativo.'
   },
   {
     slug: 'conta-simples-ledger',
@@ -166,7 +166,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#0F766E',                      // mesma cor do --accent da página
     cover: 'conta-simples-ledger/assets/card.jpg',
     tags: ['Conceito', 'Design system', 'Documentação'],
-    blurb: 'Uma linha de extrato documentada até o código: anatomia, estados, tokens e handoff com IA.'
+    blurb: 'Componente de extrato financeiro documentado do token ao código: hierarquia W3C, estados de conciliação e contraste WCAG APCA.'
   },
   {
     slug: 'itaiquara-untaforma',
@@ -176,7 +176,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#012169',                      // mesma cor do --accent da página
     cover: 'itaiquara-untaforma/assets/card.jpg',
     tags: ['Embalagem', 'Direção de arte', 'Arte-final'],
-    blurb: 'Rótulo de lata aerossol para um desmoldante novo: a frente num terço da lata, o resto na volta.'
+    blurb: 'Lata aerossol para desmoldante culinário: hierarquia visual no terço frontal e calibração milimétrica da sangria na curvatura do tubo.'
   },
   {
     slug: 'hellfire-overdrive',
@@ -186,7 +186,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#8C1D40',                      // mesma cor do --accent da página
     cover: 'hellfire-overdrive/assets/card.jpg',
     tags: ['Game design', 'Web Audio', 'Advergame'],
-    blurb: 'Advergame de ritmo de guitarra em pixel art para ativação na CCXP: rank A ou S libera brinde no estande.'
+    blurb: 'Advergame de ritmo musical em pixel art para ativações de evento: compensação de latência na Web Audio API e liberação de brindes no estande.'
   },
   {
     slug: 'aether-protocol',
@@ -196,7 +196,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#E63926',
     cover: 'aether-protocol/assets/card.jpg',
     tags: ['Game UI/UX', 'HUD contextual', 'UI diegética', 'Protótipo 3D jogável'],
-    blurb: 'HUD que muda com o contexto, glyphs automáticos PS/Xbox/teclado e roda com bullet time num protótipo 3D jogável.'
+    blurb: 'HUD contextual para combate espacial: alternância instantânea de glifos de controle (PlayStation/Xbox/PC) e protótipo 3D jogável.'
   },
   {
     slug: 'sanctum-armory',
@@ -206,7 +206,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#905D31',                      // mesma cor do --accent da página
     cover: 'sanctum-armory/assets/card.jpg',
     tags: ['Game UI/UX', 'Inventário', 'Tooltip comparativo', 'Acessibilidade'],
-    blurb: 'Tela de inventário de um RPG autoral: tooltip comparativo, grade com arrastar e soltar e raridade legível sem cor.'
+    blurb: 'Inventário para RPG de ação: comparação direta de atributos no tooltip, grade com drag-and-drop e codificação de raridade acessível para daltônicos.'
   },
   {
     slug: 'chronos-weave',
@@ -216,7 +216,7 @@ window.PORTFOLIO_CASES_ALL = [
     color: '#D4AF37',
     cover: 'chronos-weave/assets/card.jpg',
     tags: ['Game UI/UX', 'Skill Tree', 'Unreal Engine UMG', 'Sony TRC / L10n'],
-    blurb: 'Árvore de talentos em astrolábio celestial, design system com 9-slice e homologação Sony TRC/TCR com L10n +35%.'
+    blurb: 'Árvore de habilidades em astrolábio celestial: arquitetura em Unreal UMG, docking responsivo e conformidade estrita com Sony TRC e expansão de texto.'
   }
 ];
 

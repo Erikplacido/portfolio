@@ -12,7 +12,7 @@
       '.pf-hero .eyebrow': '<b>Case 11</b> · Product Design · Fintech & Credit · Omnichannel',
       '.pf-hero h1': 'Display installment costs <em>before the revolving credit trap.</em>',
       '.pf-hero .lede': 'Invoice management, credit limit control, and installment simulation across three views: mobile dashboard and bottom-sheet simulator, plus a consolidated desktop portal. The simulator calculates interest, taxes (IOF), and APR (CET) before user confirmation. Functional React prototype.',
-      '.mz-note': 'Executive Business Case & UI Engineering applied to credit cards, debt restructuring, and default prevention',
+      '.mz-note': 'Product Study & Frontend Architecture · Transparent credit installment simulator and omnichannel invoice management',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'UI Design, Interaction Design, and Frontend Architecture',
@@ -143,7 +143,7 @@
       '.pf-hero .eyebrow': '<b>Caso 11</b> · Product Design · Fintech y Crédito · Omnicanal',
       '.pf-hero h1': 'Mostrar el costo de financiar <em>antes del crédito rotativo.</em>',
       '.pf-hero .lede': 'Gestión de facturas, control de límite y simulación de cuotas en tres vistas: dashboard y simulador en móvil, más panel consolidado en escritorio. El simulador desglosa intereses, impuestos (IOF) y Costo Efectivo Total (CET) antes de confirmar. Prototipo funcional en React.',
-      '.mz-note': 'Executive Business Case & UI Engineering aplicada a tarjetas de crédito, cuotas y prevención de mora',
+      '.mz-note': 'Estudio de Producto y Arquitectura Frontend · Simulador de crédito transparente y gestión de estado de cuenta omnicanal',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'UI Design, Diseño de Interacción y Arquitectura Frontend',
@@ -274,7 +274,7 @@
       '.pf-hero .eyebrow': '<b>Projet 11</b> · Product Design · Fintech & Crédit · Omnicanal',
       '.pf-hero h1': 'Afficher le coût des facilités de paiement <em>avant le piège du crédit renouvelable.</em>',
       '.pf-hero .lede': 'Gestion des relevés, ajustement des plafonds et simulation d’échéanciers sur trois écrans : tableau de bord mobile, simulateur en volet inférieur et portail desktop consolidé. Le simulateur détaille les intérêts, taxes et TAEG avant validation. Prototype fonctionnel React.',
-      '.mz-note': 'Business Case Exécutif & Ingénierie UI pour les cartes de crédit, l’échelonnement et la prévention du surendettement',
+      '.mz-note': 'Étude Produit & Architecture Frontend · Simulateur d’échelonnement transparent et gestion de facture omnicanale',
 
       // Meta
       '.pf-meta div:nth-child(1) dd': 'UI Design, Design d’Interaction et Architecture Frontend',

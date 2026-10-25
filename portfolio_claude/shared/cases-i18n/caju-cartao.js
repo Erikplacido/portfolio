@@ -12,7 +12,7 @@
       '.pf-hero .eyebrow': '<b>Case 10</b> · Product Design · Fintech & Benefits · Mobile UX',
       '.pf-hero h1': 'From envelope to first purchase, <em>without waiting ten days.</em>',
       '.pf-hero .lede': 'Physical benefits card activation flow in three screens: identifying the card via code, NFC or QR, creating the password with rules visible from the first digit, and adding directly to digital wallets. With functional React prototype.',
-      '.cj-note': 'Executive Business Case & UI Architecture applied to corporate benefits · Focus on Activation, Churn, and TTV',
+      '.cj-note': 'Product Study & UI Engineering · Reducing time-to-first-purchase and preventing support tickets',
       
       // Fact Sheet
       '.pf-meta div:nth-child(1) dd': 'UI Design, Motion, and Frontend Engineering',
@@ -106,7 +106,7 @@
       '.pf-hero .eyebrow': '<b>Caso 10</b> · Product Design · Fintech y Beneficios · UX Móvil',
       '.pf-hero h1': 'Del sobre a la primera compra, <em>sin esperar diez días.</em>',
       '.pf-hero .lede': 'Flujo de activación de tarjeta física de beneficios en tres pantallas: identificación por código, NFC o QR, creación de contraseña con reglas visibles desde el primer dígito y alta directa en billeteras digitales. Con prototipo interactivo en React.',
-      '.cj-note': 'Business Case Ejecutivo y Arquitectura UI aplicada a beneficios corporativos · Enfoque en Activación, Churn y TTV',
+      '.cj-note': 'Estudio de Producto e Ingeniería de UI · Reducción del tiempo hasta la primera compra y prevención de tickets de soporte',
       
       // Fact Sheet
       '.pf-meta div:nth-child(1) dd': 'Diseño UI, Motion y Entrega Frontend',
@@ -200,7 +200,7 @@
       '.pf-hero .eyebrow': '<b>Projet 10</b> · Product Design · Fintech & Avantages Salariés · UX Mobile',
       '.pf-hero h1': 'De l’enveloppe au premier achat, <em>sans attendre dix jours.</em>',
       '.pf-hero .lede': 'Parcours d’activation de la carte physique d’avantages en trois étapes : identification par code, NFC ou QR, création du code PIN avec règles affichées en direct, et ajout immédiat aux portefeuilles numériques. Avec prototype fonctionnel React.',
-      '.cj-note': 'Business Case Exécutif & Architecture UI pour le secteur des avantages salariés · Focus sur Activation, Churn et TTV',
+      '.cj-note': 'Étude Produit & Ingénierie UI · Réduire le délai avant le premier achat et prévenir les tickets support',
       
       // Fact Sheet
       '.pf-meta div:nth-child(1) dd': 'UI Design, Motion et Handoff Frontend',

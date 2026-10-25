@@ -66,6 +66,9 @@
   .home-seg-btn:hover .home-seg-ic,.home-seg-btn:focus-visible .home-seg-ic{transform:translateY(-3px) scale(1.05)}
   .home-seg-name{font:600 12.5px/1.25 var(--pf-sans);text-align:center}
   .home-seg-count{font-size:10.5px;color:var(--pf-ink-2)}
+  .home-seg-btn.is-off{opacity:.35;cursor:not-allowed;filter:grayscale(.6)}
+  .home-seg-btn.is-off .home-seg-ic{box-shadow:none;transform:none}
+  .home-maint{max-width:520px;margin:0 auto 18px;padding:0 16px;text-align:center;font-size:14.5px;line-height:1.5;color:var(--pf-ink-2)}
 
   /* ---------- botão de rolar: mesma máscara de vídeo, redondo ---------- */
   .home-scroll-cue{
@@ -673,6 +676,7 @@
 <script>
 /* Visitante caiu aqui vindo de um case marcado draft:true (shared/cases.js). */
 (function(){
+  if (/[?&]manutencao=1/.test(location.search)) history.replaceState(null, '', location.pathname); // o aviso de manutenção já aparece na home
   var m = /[?&]em-breve=([^&]+)/.exec(location.search);
   if (!m) return;
   history.replaceState(null, '', location.pathname);
@@ -825,7 +829,7 @@
         <i class="fa-solid fa-wand-magic-sparkles"></i> Perfil Profissional Multidisciplinar
       </div>
       <p class="modal-summary-desc" id="modal-summary-desc">
-        UI/UX & AX Designer e Diretor de Arte com mais de 20 anos de repertório visual combinando direção de arte generalista de alto rigor estético (audiovisual, cenografia, editorial e marcas) com design de produto digital avançado e IA.
+        Atuo há mais de 20 anos na intersecção entre produto digital e direção de arte. Desenvolvo interfaces transacionais com foco em usabilidade, arquitetura de Design Systems em código e direção de arte para cinema, TV e marcas — unindo rigor técnico de engenharia com acabamento visual de alto padrão.
       </p>
       <div class="modal-summary-tags" id="modal-summary-tags">
         <span class="modal-summary-tag">AX & IA de Produto</span>
@@ -857,10 +861,10 @@
           <span class="track-badge ui-ux">Mobile-First</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Concepção de interfaces ponta a ponta para mobile (iOS/Android) e web responsiva.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Especificação de fluxos transacionais (checkout, pagamentos e onboarding via Stripe Connect).</li>
-          <li><i class="fa-solid fa-circle-check"></i> Governança de Design Systems modulares em Figma com tokens e documentação técnica.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Aceleração do fluxo com IA generativa e IDEs assistidas (Cursor, Google AI Studio).</li>
+          <li><i class="fa-solid fa-circle-check"></i> Desenvolvi interfaces de produto ponta a ponta para mobile (iOS/Android) e web, com protótipos funcionais interativos em React.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Projetei e refinei fluxos transacionais críticos: checkout, split de pagamentos e onboarding com Stripe Connect.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Estruturei e governei Design Systems modulares em Figma com tokens de design sincronizados diretamente com o código.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Integrei fluxos de IA generativa e agentes de código no dia a dia para acelerar prototipagem e validação de hipóteses de UI.</li>
         </ul>
         <div class="cv-exp-links">
           <a href="https://www.behance.net/erikplacido" target="_blank" rel="noopener noreferrer" class="cv-card-link behance">
@@ -886,7 +890,7 @@
           <span class="track-badge audiovisual">Produção de Objetos</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Concepção e direção de arte para peças gráficas de cena e ambientação visual para produções audiovisuais sob prazos de estúdio.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Dirigi a arte e executei peças gráficas de cena (documentos, rótulos e cenografia de época) para produções audiovisuais com rigor para closes em 4K.</li>
         </ul>
       </article>
 
@@ -904,8 +908,8 @@
           <span class="track-badge branding">Branding Internacional</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Projeto completo de interface do usuário e experiência digital para plataforma internacional.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Criação do guia de estilos, manual de identidade e componentes responsivos.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Desenhei a experiência de ponta a ponta do marketplace australiano: web responsiva, precificação dinâmica e PWA de campo para prestadores.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Estruturei o Design System da plataforma: manual de marca, biblioteca de componentes no Figma e documentação técnica.</li>
         </ul>
         <div class="cv-exp-links">
           <a href="https://behance.net/erikplacido" target="_blank" rel="noopener noreferrer" class="cv-card-link behance">
@@ -928,7 +932,7 @@
           <span class="track-badge editorial">Packaging</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Desenvolvimento de linha completa de embalagens para a indústria alimentícia, campanhas sazonais e apresentações comerciais de alto impacto.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Desenvolvi linhas completas de embalagens industriais e de varejo (aerossóis, pós e misturas), calculando sangrias e distorção técnica em suportes metálicos.</li>
         </ul>
       </article>
 
@@ -946,7 +950,7 @@
           <span class="track-badge audiovisual">Props & Cena</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Concepção gráfica de rótulos fictícios, documentos de época e adereços cenográficos para séries e produções de streaming.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Pesquisei referências históricas e criei adereços de cena, jornais de época e rótulos fictícios para séries de streaming.</li>
         </ul>
       </article>
 
@@ -964,7 +968,7 @@
           <span class="track-badge audiovisual">Mockups</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Desenvolvimento de mockups de alta fidelidade e elementos gráficos para programas de televisão de grande formato.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Produzi mockups de alta fidelidade e peças gráficas cenográficas aplicadas aos estúdios de gravação para grandes formatos de TV.</li>
         </ul>
       </article>
 
@@ -982,8 +986,7 @@
           <span class="track-badge branding">Identidade de Programa</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Direção de arte das temporadas 1 e 2 dos programas <em>Que Seja Doce</em> e <em>Desafio da Beleza</em> no canal GNT.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Desenvolvimento de embalagens, rótulos e adereços de estúdio.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Assinei a arte gráfica das temporadas 1 e 2 de <em>Que Seja Doce</em> e <em>Desafio da Beleza</em> no GNT, desenvolvendo identidades cenográficas e embalagens de estúdio.</li>
         </ul>
       </article>
 
@@ -1001,8 +1004,7 @@
           <span class="track-badge editorial">Packaging Maxcote</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Criação de identidade visual e embalagens de produtos para a linha pet (Maxcote).</li>
-          <li><i class="fa-solid fa-circle-check"></i> Planejamento de layouts de e-commerce e peças digitais orientadas à conversão.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Criei a identidade visual da linha pet Maxcote, projetando embalagens técnicas e interfaces de e-commerce com foco em conversão.</li>
         </ul>
       </article>
 
@@ -1020,7 +1022,7 @@
           <span class="track-badge branding">Key Visuals</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Tratamento de imagem, direção de arte para propostas comerciais e finalização de key visuals para aprovação de campanhas publicitárias e projetos audiovisuais.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Elaborei key visuals e tratamentos estéticos de alta fidelidade para defesa e aprovação de filmes comerciais e projetos audiovisuais.</li>
         </ul>
       </article>
 
@@ -1038,8 +1040,8 @@
           <span class="track-badge branding">Iconografia</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Design gráfico para projetos de jogos de tabuleiro táticos de alcance internacional (<em>Tanares RPG</em>, <em>Super Batalha</em>).</li>
-          <li><i class="fa-solid fa-circle-check"></i> Estruturação de manuais de regras, cartas de combate, tabuleiros e iconografia modular.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Projetei componentes visuais para board games táticos internacionais (<em>Tanares RPG</em>): manuais de regras em grid, cartas de combate e tabuleiros modulares.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Criei sistemas de iconografia de alta legibilidade para leitura rápida durante partidas de mesa sem dependência de texto.</li>
         </ul>
       </article>
 
@@ -1056,7 +1058,7 @@
           <span class="track-badge branding">Branding B2B</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Reestruturação visual de marca corporativa, padronização tipográfica e comunicação institucional.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Conduzi a modernização de marcas corporativas B2B, estabelecendo manuais tipográficos e padrões de comunicação institucional.</li>
         </ul>
       </article>
 
@@ -1074,8 +1076,8 @@
           <span class="track-badge branding">Tipografia & Grid</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Concepção de capas, projetos gráficos completos para livros, jornais e periódicos.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Controle rigoroso de calibração de cor, diagramação em InDesign e gestão técnica de pré-impressão.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Desenvolvi projetos gráficos e capas para dezenas de títulos literários com rigor em grid suíço e tipografia editorial clássica.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Gerenciei provas contratuais, perfis de cor e fechamento de arquivos para parques gráficos industriais.</li>
         </ul>
       </article>
 
@@ -1093,7 +1095,7 @@
           <span class="track-badge branding">Comunicação Visual</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Criação de sinalização, totens, prismas e peças digitais para conferências internacionais de engenharia de software e tecnologia (QCon SP e RJ).</li>
+          <li><i class="fa-solid fa-circle-check"></i> Desenvolvi a identidade espacial e sinalização das conferências internacionais de engenharia de software QCon em São Paulo e Rio de Janeiro.</li>
         </ul>
       </article>
 
@@ -1111,8 +1113,7 @@
           <span class="track-badge branding">Digital</span>
         </div>
         <ul class="modal-exp-bullets">
-          <li><i class="fa-solid fa-circle-check"></i> Diagramação e adaptação de mangás, HQs e RPGs internacionais para o mercado brasileiro.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Criação de newsletters em HTML, banners para web e materiais promocionais.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Diagramei e adaptei mangás, histórias em quadrinhos e manuais de RPG internacionais para o mercado brasileiro, garantindo fidelidade de letreramento.</li>
         </ul>
       </article>
 
@@ -1186,6 +1187,7 @@
   </div>
 </div>
 
+<script src="api/site/config"></script>
 <script src="shared/cases.js"></script>
 <script src="shared/frame.js"></script>
 <script src="shared/segment.js?v=3"></script>
@@ -1196,6 +1198,25 @@
     var row = document.getElementById('home-seg-row');
     if (!row) return;
     var esc = function(t){ return String(t).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]}) };
+
+    /* Em manutenção (admin): todos os segmentos aparecem, apagados e sem link. */
+    if (window.PORTFOLIO_MAINTENANCE) {
+      row.innerHTML = groups.map(function(g){
+        return '<span class="home-seg-btn is-off" aria-disabled="true">' +
+          '<span class="home-seg-ic" style="--c:'+g.color+'" aria-hidden="true"><i class="fa-solid '+esc(g.icon)+'"></i></span>' +
+          '<span class="home-seg-name">'+esc(g.label)+'</span>' +
+          '<span class="home-seg-count" data-i18n="home.seg_soon">em breve</span>' +
+        '</span>';
+      }).join('');
+      var note = document.createElement('p');
+      note.className = 'home-maint';
+      note.setAttribute('data-i18n', 'home.maintenance');
+      note.textContent = 'O portfólio está em manutenção. Os cases voltam em breve. Enquanto isso, o currículo e o contato continuam aqui.';
+      row.parentNode.insertBefore(note, row);
+      var cue = document.getElementById('home-scroll-cue');
+      if (cue) cue.hidden = true;
+      return;
+    }
 
     groups = groups.filter(function(g){ return cases.some(function(c){ return c.group===g.id }) });
     row.innerHTML = groups.map(function(g){
@@ -1266,27 +1287,27 @@
     const TRACK_DATA_MODAL = {
       'all': {
         title: '<i class="fa-solid fa-wand-magic-sparkles"></i> Perfil Profissional Multidisciplinar',
-        text: 'UI/UX & AX Designer e Diretor de Arte com mais de 20 anos de repertório visual combinando direção de arte generalista de alto rigor estético (audiovisual, cenografia, editorial e marcas) com design de produto digital avançado e IA.',
+        text: 'Atuo há mais de 20 anos na intersecção entre produto digital e direção de arte. Desenvolvo interfaces transacionais com foco em usabilidade, arquitetura de Design Systems em código e direção de arte para cinema, TV e marcas — unindo rigor técnico de engenharia com acabamento visual de alto padrão.',
         highlights: ['AX & IA de Produto', 'Design Systems (Figma)', 'Mobile-First (iOS/Android)', 'Fintech & Checkout Flows', 'Direção de Arte & TV', 'Editorial & Packaging']
       },
       'ui-ux': {
         title: '<i class="fa-solid fa-mobile-screen-button"></i> UI / UX & AX Product Design (Tech & Fintech)',
-        text: 'Design de interfaces para produtos digitais complexos, interfaces assistidas por IA (AX), Design Systems modulares (Andes/Material/Tokens-first), prototipagem interativa e fluxos transacionais com foco em redução de atrito e alta conversão.',
+        text: 'Projeto fluxos transacionais ponta a ponta para mobile e web: onboarding, ativação de meios de pagamento, simuladores de crédito e consoles operacionais. Domino a criação de Design Systems com tokens em código, protótipos funcionais em React e interfaces que eliminam atritos reais do usuário.',
         highlights: ['AI Experience (AX)', 'Mobile Apps iOS/Android', 'Sistemas de Checkout / Stripe', 'Design Tokens & Andes DS', 'Google UX Certificate', 'Bhand Melbourne']
       },
       'branding': {
         title: '<i class="fa-solid fa-palette"></i> Direção de Arte & Branding Corporativo',
-        text: 'Posicionamento visual de marcas, tipografia avançada, teoria de cores, brand guidelines e campanhas multiplataforma com forte apelo visual e consistência omnichannel.',
+        text: 'Crio identidades visuais com fundamento tipográfico, teoria de cores e sistemas de componentes prontos para escala. Da embalagem industrial na gôndola à interface da plataforma digital, garanto coerência e legibilidade em qualquer suporte.',
         highlights: ['Brand Guidelines', 'Identidade para Fintech & SaaS', 'Itaiquara Alimentos', 'Bentonisa B2B', 'Dogs Can Fly', 'Tipografia Técnica']
       },
       'audiovisual': {
         title: '<i class="fa-solid fa-clapperboard"></i> Audiovisual, Cenografia & Props',
-        text: 'Criação de assets de alta fidelidade para cenografia, mockups funcionais e direção de arte para programas de televisão e cinema com atenção minuciosa ao detalhe em cena.',
+        text: 'Direção de arte e cenografia gráfica para cinema, TV e streaming. Concepção e produção física de rótulos de época, documentos fictícios, cartazes e peças de cena projetadas para resistir ao close em 4K sem quebrar a imersão.',
         highlights: ['GNT (Que Seja Doce, Desafio da Beleza)', 'Coração da Selva', 'Boutique Filmes', 'Endemol Shine Group', 'Dogs Can Fly', 'Rótulos Hiper-realistas']
       },
       'editorial': {
         title: '<i class="fa-solid fa-book-open"></i> Editorial, Embalagens & Games',
-        text: 'Rigor técnico de impressão, grid e diagramação avançada, projetos de embalagens industriais e design de componentes para jogos de tabuleiro táticos.',
+        text: 'Design editorial com grid suíço, projetos de embalagens calibrados para a indústria gráfica e engenharia ergonômica de jogos de tabuleiro — de consoles dual-layer cortados a laser a cartelas de iconografia sem dependência de texto.',
         highlights: ['Editora WMF Martins Fontes', 'Editora Devir Livraria', 'Itaiquara Alimentos', 'Maxcote Pet', 'Dragori Games (Tanares RPG)', 'Packaging & Pré-Impressão']
       }
     };
