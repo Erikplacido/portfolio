@@ -10,24 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root{ --accent:#D42D28; --hl:#F0DF0A;
   --cj-red:#EA3C36; --cj-ink:#171717; --cj-ink-2:#262626; --cj-line:rgba(255,255,255,.1);
@@ -137,77 +121,209 @@
 .cj-edge .acts span{font:600 13px/1 var(--cj-sans);padding:10px 12px;border-radius:12px;background:var(--cj-red);color:#fff}
 .cj-edge .acts span+span{background:#F5F5F5;color:var(--pf-ink)}
 
-/* Embedded Prototype Stage — full-bleed breakout to provide expansive desktop width like Chronos Weave */
+/* Embedded Prototype Stage — Interactive Device Lab Studio */
 .sim-wide {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  padding-inline: clamp(12px, 2.5vw, 40px);
+  width: 100%;
+  margin: 0 auto;
+}
+@media(min-width:1200px) {
+  .sim-wide {
+    width: calc(100% + 80px);
+    margin-left: -40px;
+  }
 }
 .sim-embed-stage {
   position: relative;
   width: 100%;
-  max-width: 1800px;
-  margin: 0 auto;
-  border-radius: 24px;
+  border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(234, 60, 54, 0.35);
-  box-shadow: 0 30px 90px -20px rgba(234, 60, 54, 0.2), 0 16px 48px -12px rgba(10, 10, 10, 0.45);
-  background: #0E0E10;
+  border: 1px solid rgba(234, 60, 54, 0.22);
+  box-shadow: 0 28px 80px -16px rgba(10, 10, 14, 0.38), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  background: #0E0E12;
 }
+.proto-chrome {
+  background: #151821;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  user-select: none;
+}
+.proto-dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.proto-dots span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.proto-dots span.r { background: #FF5F56; }
+.proto-dots span.y { background: #FFBD2E; }
+.proto-dots span.g { background: #27C93F; }
+
+.proto-bar-url {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font: 500 12px/1 var(--pf-sans);
+  color: #A3B1C2;
+}
+.proto-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #27C93F;
+  box-shadow: 0 0 8px #27C93F;
+  animation: protoPulse 2s infinite ease-in-out;
+}
+@keyframes protoPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(1.25); }
+}
+.proto-bar-url b {
+  color: #fff;
+  font-weight: 600;
+}
+.proto-tag {
+  font: 700 9.5px/1 var(--pf-sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--cj-red);
+  background: rgba(234, 60, 54, 0.16);
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.proto-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.proto-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 12px/1 var(--pf-sans);
+  color: #C5D1E0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+.proto-btn-action:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+.proto-btn-action svg {
+  flex: none;
+}
+.proto-btn-action.rotating svg {
+  animation: protoSpin .6s ease-in-out;
+}
+@keyframes protoSpin {
+  to { transform: rotate(360deg); }
+}
+.proto-btn-action.proto-btn-primary {
+  background: var(--cj-red);
+  color: #fff;
+  border-color: transparent;
+}
+.proto-btn-action.proto-btn-primary:hover {
+  background: #d42d28;
+  transform: translateY(-1px);
+}
+
 .sim-embed-stage iframe {
   width: 100%;
-  height: min(960px, 86vh);
+  height: min(920px, 86vh);
   border: none;
   display: block;
   background: #0A0A0C;
 }
-@media(max-width:1100px) { .sim-embed-stage iframe { height: 1100px; } }
-@media(max-width:640px) { .sim-embed-stage iframe { height: 1300px; } }
+@media(max-width:1100px) { .sim-embed-stage iframe { height: 1060px; } }
+@media(max-width:640px) { .sim-embed-stage iframe { height: 1260px; } }
 
-.sim-wide .cj-hints {
-  max-width: 1800px;
-  margin: 24px auto 0;
+/* Integrated Interaction Guide HUD */
+.cj-hints-panel {
+  background: #fff;
+  border: 1px solid var(--pf-line);
+  border-radius: 20px;
+  padding: 22px 24px;
+  margin-top: 20px;
+  box-shadow: 0 8px 24px -6px rgba(16, 22, 31, 0.05);
+}
+.cj-hints-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--pf-line);
+  flex-wrap: wrap;
+}
+.cj-hints-head b {
+  font: 600 14px/1.2 var(--pf-sans);
+  color: var(--pf-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cj-hints-head b svg {
+  color: var(--cj-red);
+}
+.cj-hints-head span {
+  font-size: 13px;
+  color: var(--pf-ink-2);
+}
+.cj-hints-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
-@media(max-width:980px) { .sim-wide .cj-hints { grid-template-columns: repeat(2, 1fr); } }
-@media(max-width:540px) { .sim-wide .cj-hints { grid-template-columns: 1fr; } }
-.sim-wide .cj-hints div {
-  background: #fff;
-  border: 1px solid var(--pf-line);
-  border-radius: 16px;
-  padding: 16px 18px;
-  font-size: 14px;
+@media(max-width:980px) { .cj-hints-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:540px) { .cj-hints-grid { grid-template-columns: 1fr; } }
+
+.cj-hint-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
   line-height: 1.5;
   color: var(--pf-ink-2);
-  box-shadow: 0 4px 16px -4px rgba(16,22,31,.05);
 }
-.sim-wide .cj-hints b {
+.cj-hint-item b {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 14px;
   color: var(--pf-ink);
-  font-size: 14.5px;
-  margin-bottom: 4px;
 }
-.sim-wide .cj-hints b::before {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--cj-red);
+.cj-hint-item b svg {
+  color: var(--cj-red);
+  flex: none;
 }
-.sim-wide .cj-hints code {
-  font: 700 13px var(--cj-mono);
-  color: var(--accent);
-  background: rgba(212,45,40,.08);
+.cj-hint-item code {
+  font: 700 12.5px var(--cj-mono);
+  color: var(--cj-red);
+  background: rgba(234, 60, 54, 0.08);
   padding: 2px 6px;
-  border-radius: 6px;
+  border-radius: 5px;
 }
+
 .sim-wide figcaption {
-  max-width: 1800px;
   margin: 18px auto 0;
   display: flex;
   flex-wrap: wrap;
@@ -225,10 +341,23 @@
   align-items: center;
   gap: 8px;
   font-weight: 600;
-  font-size: 14px;
-  color: var(--accent);
+  font-size: 13.5px;
+  color: var(--cj-red);
   text-decoration: none;
-  padding: 8px 18px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  background: #fff;
+  border: 1px solid rgba(234, 60, 54, 0.25);
+  box-shadow: 0 2px 8px -2px rgba(234, 60, 54, 0.12);
+  transition: all .2s ease;
+}
+.cj-open-btn:hover {
+  background: var(--cj-red);
+  color: #fff;
+  border-color: var(--cj-red);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -4px rgba(234, 60, 54, 0.3);
+}
   border-radius: 99px;
   background: #fff;
   border: 1px solid rgba(212, 45, 40, 0.25);
@@ -488,14 +617,70 @@
 
     <figure class="rv sim-wide">
       <div class="sim-embed-stage">
-        <iframe src="proto/index.html" title="Protótipo Interativo da Ativação de Cartão Caju Benefícios" loading="lazy"></iframe>
+        <div class="proto-chrome">
+          <div class="proto-dots" aria-hidden="true">
+            <span class="r"></span><span class="y"></span><span class="g"></span>
+          </div>
+          <div class="proto-bar-url">
+            <span class="proto-live-dot" aria-hidden="true"></span>
+            <b>caju.com.br</b>/ativacao-cartao
+            <span class="proto-tag">React 19</span>
+          </div>
+          <div class="proto-bar-actions">
+            <button type="button" class="proto-btn-action" id="btnReloadProto" aria-label="Recarregar protótipo">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/></svg>
+              <span>Reiniciar</span>
+            </button>
+            <a class="proto-btn-action proto-btn-primary cj-open-btn" href="proto/index.html" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+              <span>Tela cheia</span>
+            </a>
+          </div>
+        </div>
+
+        <iframe id="protoFrame" src="proto/index.html" title="Protótipo Interativo da Ativação de Cartão Caju Benefícios"></iframe>
       </div>
-      <div class="cj-hints">
-        <div><b>Código de ativação</b>Digite <code>7291</code> na Tela 1 ou use a aproximação NFC instantânea.</div>
-        <div><b>iOS e Android</b>Alterne no seletor da barra superior para alternar Apple Wallet e Google Pay na Tela 3.</div>
-        <div><b>Simular falhas</b>O painel lateral à esquerda dispara os 5 cenários de exceção e bloqueio preventivo.</div>
-        <div><b>Specs de motion</b>O botão no topo abre a tabela de curvas cúbicas e handoff de frontend.</div>
+
+      <div class="cj-hints-panel">
+        <div class="cj-hints-head">
+          <b>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+            Guia de navegação no protótipo interativo
+          </b>
+          <span>Experimente os recursos e validações diretamente no smartphone</span>
+        </div>
+        <div class="cj-hints-grid">
+          <div class="cj-hint-item">
+            <b>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+              Código no envelope
+            </b>
+            <span>Digite <code>7291</code> na Tela 1 ou use a aproximação NFC instantânea.</span>
+          </div>
+          <div class="cj-hint-item">
+            <b>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
+              iOS e Android
+            </b>
+            <span>Alterne no seletor da barra superior para alternar Apple Wallet e Google Pay na Tela 3.</span>
+          </div>
+          <div class="cj-hint-item">
+            <b>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              5 Edge Cases (PM)
+            </b>
+            <span>O menu lateral à esquerda dispara os 5 cenários de exceção e bloqueio preventivo.</span>
+          </div>
+          <div class="cj-hint-item">
+            <b>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="1" x2="7" y1="14" y2="14"/><line x1="9" x2="15" y1="8" y2="8"/><line x1="17" x2="23" y1="16" y2="16"/></svg>
+              Specs de Motion
+            </b>
+            <span>O botão no topo abre a tabela de curvas cúbicas e handoff de frontend.</span>
+          </div>
+        </div>
       </div>
+
       <figcaption>
         <span><b>Protótipo funcional em React.</b> Simulação interativa com arquitetura de tokens semânticos, máquina de estados finitos previsível e conformidade com diretrizes PCI-DSS &amp; BACEN.</span>
         <a class="cj-open-btn" href="proto/index.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a>
@@ -689,6 +874,23 @@
       btn.setAttribute('aria-pressed', on);
       btn.textContent = on ? 'Desativar' : 'Ativar cartão';
     });
+  })();
+
+  /* 05.1 · embedded prototype reload controller */
+  (function(){
+    var btnReload = $('#btnReloadProto');
+    var frame = $('#protoFrame');
+    if(btnReload && frame){
+      btnReload.addEventListener('click', function(){
+        btnReload.classList.add('rotating');
+        var src = frame.getAttribute('src');
+        frame.setAttribute('src', 'about:blank');
+        setTimeout(function(){
+          frame.setAttribute('src', src);
+          setTimeout(function(){ btnReload.classList.remove('rotating'); }, 500);
+        }, 50);
+      });
+    }
   })();
 
 })();
