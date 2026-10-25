@@ -228,9 +228,9 @@
 @media(max-width:760px){.sprites{grid-template-columns:1fr}}
 .sheet{color:var(--pf-ink)}
 .sheet .tag{display:flex;justify-content:space-between}
-.frames{display:flex;gap:6px;align-items:flex-end;background:repeating-conic-gradient(#f1f1f1 0 25%,#fff 0 50%) 0 0/16px 16px;border-radius:10px;padding:10px;overflow-x:auto}
-.frames figure{margin:0;flex:none;text-align:center}
-.frames img{height:110px;width:auto;image-rendering:pixelated;transition:transform .3s var(--snap)}
+.frames{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:flex-end;background:repeating-conic-gradient(#f1f1f1 0 25%,#fff 0 50%) 0 0/16px 16px;border-radius:10px;padding:10px;overflow:visible}
+.frames figure{margin:0;min-width:0;text-align:center}
+.frames img{width:100%;max-width:100px;height:auto;max-height:110px;object-fit:contain;image-rendering:pixelated;transition:transform .3s var(--snap)}
 .frames figure.on img{transform:translateY(-6px)}
 .frames figcaption{font:400 7px/1 var(--pixel);color:#999;margin-top:6px}
 .frames figure.on figcaption{color:var(--red)}

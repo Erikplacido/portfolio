@@ -116,9 +116,9 @@ section[id]{scroll-margin-top:80px}
 .ms-howto span{display:flex;align-items:center;gap:7px}
 .ms-band kbd{display:inline-flex;align-items:center;min-width:24px;height:24px;padding:0 7px;border:1px solid #8a6a43;border-radius:4px;background:#2a1c14;font:600 12px var(--pf-sans);color:var(--hl)}
 .ms-screen-wrap{max-width:1536px;margin:36px auto 0;padding:0 clamp(0px,2vw,24px)}
-.ms-scroll-hint{display:none;font-size:13px;color:var(--ms-mute);padding:0 var(--pf-gut) 10px}
-.ms-scroll{overflow-x:auto;overscroll-behavior-x:contain;border-radius:10px}
-.ms-screen{container-type:inline-size;position:relative;aspect-ratio:1536/1024;--u:calc(100cqw/1536);overflow:hidden;border-radius:10px;box-shadow:0 0 0 1px rgba(228,209,164,.14),0 40px 80px -30px rgba(0,0,0,.75);user-select:none;-webkit-user-select:none}
+.ms-scroll-hint{display:none!important}
+.ms-scroll{overflow:visible;border-radius:10px}
+.ms-screen{container-type:inline-size;position:relative;width:100%;max-width:100%;aspect-ratio:1536/1024;--u:calc(100cqw/1536);overflow:hidden;border-radius:10px;box-shadow:0 0 0 1px rgba(228,209,164,.14),0 40px 80px -30px rgba(0,0,0,.75);user-select:none;-webkit-user-select:none}
 .ms-base{position:absolute;inset:0;width:100%;height:100%}
 .ms-abs,.ms-screen [style*="--x"]{position:absolute;left:calc(var(--x)*var(--u));top:calc(var(--y)*var(--u))}
 .ms-abs{width:calc(var(--w)*var(--u));height:auto;pointer-events:none}
@@ -214,7 +214,7 @@ section[id]{scroll-margin-top:80px}
 .ms-rules article{border-top:1px solid rgba(201,146,62,.3);padding-top:18px}
 .ms-band .ms-num{color:var(--hl)}
 .ms-model{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:52px;padding:28px;border:1px solid rgba(201,146,62,.3);border-radius:8px;align-items:center}
-.ms-code{margin:0;padding:20px;background:#120c08;border-radius:6px;overflow-x:auto;font:500 13px/1.6 ui-monospace,Menlo,monospace;color:#e3d3b5}
+.ms-code{margin:0;padding:20px;background:#120c08;border-radius:6px;overflow-x:hidden;white-space:pre-wrap;word-break:break-word;font:500 13px/1.6 ui-monospace,Menlo,monospace;color:#e3d3b5}
 .ms-code .c{color:#8f7f66}
 
 /* ---------- 04 acessibilidade ---------- */
@@ -273,9 +273,9 @@ section[id]{scroll-margin-top:80px}
   .ms-a11y-notes{border-left:0;border-top:1px solid rgba(201,146,62,.25)}
   .ms-anatomy-notes .ms-list{grid-template-columns:1fr}
   .ms-rules{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .ms-scroll-hint{display:block}
-  .ms-scroll,.ms-screen{border-radius:0}
-  .ms-screen{min-width:980px}
+  .ms-scroll-hint{display:none!important}
+  .ms-scroll,.ms-screen{border-radius:10px}
+  .ms-screen{width:100%;min-width:0}
 }
 @media(max-width:600px){
   .ms-rules,.ms-three{grid-template-columns:1fr}

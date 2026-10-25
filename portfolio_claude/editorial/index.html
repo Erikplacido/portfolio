@@ -11,24 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 /* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
    Everything below is the case's own language: a bookshelf, newsprint and the blue of Mauricio's cover. */
@@ -225,8 +209,8 @@
 .kp-viewer{position:relative;width:100%;aspect-ratio:16/9;background:#0F0D0C;display:grid;place-items:center;overflow:hidden}
 .kp-viewer img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transition:opacity .28s,transform .4s var(--pf-ease)}
 .kp-viewer img.out{opacity:0;transform:scale(.98)}
-.kp-nav{display:flex;gap:10px;padding:14px 20px;background:#1E1916;border-top:1px solid rgba(255,255,255,.06);overflow-x:auto;-webkit-overflow-scrolling:touch}
-.kp-thumb{flex:0 0 94px;height:62px;border-radius:6px;overflow:hidden;border:2px solid transparent;background:#100E0D;cursor:pointer;padding:0;transition:all .2s;opacity:.55}
+.kp-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px 20px;background:#1E1916;border-top:1px solid rgba(255,255,255,.06);overflow:visible}
+.kp-thumb{flex:0 0 clamp(72px,14vw,94px);height:clamp(48px,9vw,62px);border-radius:6px;overflow:hidden;border:2px solid transparent;background:#100E0D;cursor:pointer;padding:0;transition:all .2s;opacity:.55}
 .kp-thumb:hover{opacity:.9}
 .kp-thumb[aria-pressed="true"]{border-color:var(--hl);opacity:1;transform:scale(1.04);box-shadow:0 4px 12px rgba(0,0,0,.6)}
 .kp-thumb img{width:100%;height:100%;object-fit:cover;display:block}

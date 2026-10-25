@@ -13,24 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root {
   --accent: #D4AF37;
@@ -142,18 +126,43 @@
 }
 .states-table-wrap {
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
 }
 .states-table {
   width: 100%;
-  min-width: 840px;
   border-collapse: separate;
   border-spacing: 0;
   font-family: var(--pf-sans, 'Inter', system-ui, sans-serif);
   font-size: 14px;
   line-height: 1.65;
   text-align: left;
+}
+@media(max-width: 840px) {
+  .states-table thead {
+    display: none;
+  }
+  .states-table, .states-table tbody, .states-table tr, .states-table td {
+    display: block;
+    width: 100%;
+  }
+  .states-table tbody tr {
+    padding: 20px;
+    border-bottom: 1px solid rgba(201, 160, 74, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .states-table td {
+    padding: 0;
+    border: none !important;
+    background: transparent !important;
+  }
+  .states-table td:first-child {
+    min-width: 0;
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
 }
 .states-table th {
   background: rgba(12, 18, 30, 0.95);

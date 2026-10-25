@@ -11,24 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noticia+Text:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 /* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
    Everything below is the film's own visual language: wall, plaster, old paper and enamel street signs. */
@@ -167,13 +151,12 @@
 .dk-bar button:hover{transform:scale(1.08)}
 .dk-pg{min-width:min(52vw,250px);text-align:center;font-size:14px;font-weight:500;color:var(--pf-ink);font-variant-numeric:tabular-nums}
 .dk-pg small{color:var(--pf-ink-2);font-size:13px}
-.dk-signs{display:flex;gap:clamp(10px,2vw,20px);overflow-x:auto;scroll-snap-type:x proximity;padding:10px 6px 14px;margin:0 -6px;scrollbar-width:thin;scrollbar-color:rgba(60,30,10,.4) transparent}
-.dk-signs button{flex:none;height:clamp(52px,6.6vw,70px);background:none;border:0;padding:0;scroll-snap-align:center;transform:rotate(var(--r,0deg));filter:saturate(.25) brightness(.95) contrast(.9);opacity:.72;transition:filter .35s,opacity .35s,transform .45s var(--snap)}
+.dk-signs{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(8px,1.5vw,16px);padding:10px 6px;margin:0;overflow:visible}
+.dk-signs button{flex:none;height:clamp(46px,6vw,70px);background:none;border:0;padding:0;transform:rotate(var(--r,0deg));filter:saturate(.25) brightness(.95) contrast(.9);opacity:.72;transition:filter .35s,opacity .35s,transform .45s var(--snap)}
 .dk-signs button:hover{opacity:1;filter:saturate(.7)}
 .dk-signs button img{height:100%;width:auto;filter:drop-shadow(0 6px 5px rgba(30,15,5,.45))}
 .dk-signs button[aria-pressed="true"]{opacity:1;filter:none;transform:rotate(0deg) translateY(-5px) scale(1.07)}
-.dk-signs button[data-k="samba"]{height:clamp(64px,8.4vw,90px);margin:-10px 0}
-@media(min-width:761px){.dk-signs{flex-wrap:wrap;justify-content:center;overflow:visible;row-gap:14px}}
+.dk-signs button[data-k="samba"]{height:clamp(56px,7.5vw,90px);margin:-6px 0}
 
 /* ===== visual system ===== */
 .sys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:48px}

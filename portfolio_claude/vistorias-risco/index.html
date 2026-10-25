@@ -10,24 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root{ --accent:#0369A1; --hl:#F0DF0A;
   /* the product's own palette (after the colour consolidation shown in section 04) */
@@ -360,7 +344,7 @@
 /* ---------- 05 · process ---------- */
 .vr-proc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:48px}
 @media(max-width:980px){.vr-proc{grid-template-columns:minmax(0,1fr)}}
-.vr-tree{margin:14px 0 0;padding:16px 18px;border-radius:14px;background:var(--vr-bg);color:#CBD5E1;font:500 12.5px/1.75 var(--vr-mono);white-space:pre;overflow-x:auto}
+.vr-tree{margin:14px 0 0;padding:16px 18px;border-radius:14px;background:var(--vr-bg);color:#CBD5E1;font:500 12.5px/1.75 var(--vr-mono);white-space:pre-wrap;word-break:break-word;overflow:visible}
 .vr-tree b{color:#7DD3FC;font-weight:600}
 .vr-tree em{font-style:normal;color:var(--vr-tx3)}
 .vr-proc ol,.vr-proc ul{margin:14px 0 0;padding-left:20px;color:var(--pf-ink-2);font-size:15px;line-height:1.55}

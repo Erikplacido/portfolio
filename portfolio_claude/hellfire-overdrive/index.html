@@ -10,24 +10,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root{ --accent:#8C1D40; --hl:#F0DF0A;
   /* the game's own palette */
@@ -642,8 +626,8 @@
 .ho-thread-arrow{font:700 22px var(--ho-mono);color:var(--ho-gold)}
 @media(max-width:700px){.ho-thread-arrow{transform:rotate(90deg)}}
 
-.ho-code-engine{margin-top:28px;border-radius:18px;background:#0D060C;border:1px solid rgba(255,255,255,.12);padding:22px;overflow-x:auto}
-.ho-code-engine pre{margin:0;font:500 12.5px/1.65 var(--ho-mono);color:#D9C8D2}
+.ho-code-engine{margin-top:28px;border-radius:18px;background:#0D060C;border:1px solid rgba(255,255,255,.12);padding:22px;overflow:visible}
+.ho-code-engine pre{margin:0;font:500 12.5px/1.65 var(--ho-mono);color:#D9C8D2;white-space:pre-wrap;word-break:break-word}
 .ho-code-engine .kw{color:#E9574B}
 .ho-code-engine .fn{color:#F2C46D}
 .ho-code-engine .str{color:#7BC67B}

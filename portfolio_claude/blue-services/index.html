@@ -13,24 +13,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
 <script src="../shared/cases.js"></script>
-<script>
-/* Se este case estiver marcado draft:true em shared/cases.js, manda o
-   visitante pra home antes da página desenhar -- a menos que seja edicao
-   local (localhost/arquivo) ou tenha ?preview=1 na URL. */
-(function(){
-  var ALL = window.PORTFOLIO_CASES_ALL || [];
-  var p = location.pathname;
-  var c = ALL.filter(function(x){ return p.indexOf('/'+x.slug+'/') > -1 })[0];
-  var forceLive = /(^|[?&])simulate-live=1(&|$)/.test(location.search);
-  var local = !forceLive && (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === 'file:');
-  var preview = /(^|[?&])preview=1(&|$)/.test(location.search);
-  if (c && c.draft && !local && !preview) {
-    var root = p.slice(0, p.indexOf('/'+c.slug+'/')+1);
-    location.replace(root + 'index.html?em-breve=' + c.slug);
-  }
-})();
-</script>
 <style>
 :root{
   --accent:#11284B; --hl:#F0DF0A;
@@ -428,7 +412,7 @@
 .tabs button{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#cfdbee;border-radius:14px;padding:12px 16px 14px;font-size:14px;font-weight:600;text-align:left;min-width:170px;flex:1;transition:all .4s var(--ease)}
 .tabs button small{display:block;font-weight:500;font-size:11px;color:#8ea3c4;margin-top:2px}
 .tabs button[aria-selected="true"]{background:#fff;color:var(--navy);border-color:#fff}
-@media(max-width:640px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:calc(var(--pf-gut)*-1);padding-inline:var(--pf-gut)}.tabs button{min-width:160px;flex:none}}
+@media(max-width:640px){.tabs{flex-wrap:wrap;justify-content:center;gap:8px;margin-inline:0;padding-inline:0;overflow:visible}.tabs button{min-width:0;flex:1 1 calc(50% - 8px)}}
 .tabs button[aria-selected="true"] small{color:var(--ink-2)}
 .tabs button .tp{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--yellow);transform-origin:0;transform:scaleX(0)}
 .tabs button[aria-selected="true"] .tp{animation:tabp var(--tab-ms,8s) linear both}
@@ -602,7 +586,8 @@ tbody tr{transition:background .3s} tbody tr:hover{background:var(--paper)}
 .real-flow img{display:block;width:100%;height:auto}
 .rf-l{display:block;margin-top:10px;font-size:13px;line-height:1.4;color:var(--ink-2)}
 .rf-l b{display:block;font:700 11px var(--sans);letter-spacing:.08em;color:var(--navy-2);margin-bottom:2px}
-@media(max-width:1000px){.real-flow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(var(--pf-gut)*-1);padding:4px var(--pf-gut) 18px;scrollbar-width:thin}.real-flow>div{flex:0 0 clamp(170px,44vw,220px);scroll-snap-align:start}}
+@media(max-width:1000px){.real-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-inline:0;padding:0;overflow:visible}}
+@media(max-width:640px){.real-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 
 /* pause loops while off-screen */
 .offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
