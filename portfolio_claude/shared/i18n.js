@@ -327,6 +327,21 @@
         fr: 'Titre principal, marques, étiquettes d’époque et affiches des années 50 et 80 pour un film sur Adoniran.'
       }
     },
+    'super-batalha': {
+      title: { pt: 'Super Batalha', en: 'Super Batalha', es: 'Super Batalha', fr: 'Super Batalha' },
+      tags: {
+        pt: ['Board game', 'Identidade visual', 'Design gráfico'],
+        en: ['Board game', 'Brand identity', 'Graphic design'],
+        es: ['Juego de mesa', 'Identidad visual', 'Diseño gráfico'],
+        fr: ['Jeu de société', 'Identité visuelle', 'Design graphique']
+      },
+      blurb: {
+        pt: 'Logo, caixa, cartas, biombos e standees de uma arena de super-heróis brasileiros com 33 convidados.',
+        en: 'Logo, box, cards, screens, and standees for an arena of Brazilian superheroes with 33 guest characters.',
+        es: 'Logo, caja, cartas, biombos y standees de una arena de superhéroes brasileños con 33 invitados.',
+        fr: 'Logo, boîte, cartes, écrans et standees d’une arène de super-héros brésiliens avec 33 invités.'
+      }
+    },
     'forca-br': {
       title: { pt: 'Projeto Força BR', en: 'Projeto Força BR', es: 'Proyecto Força BR', fr: 'Projet Força BR' },
       tags: {

@@ -219,6 +219,15 @@ window.PORTFOLIO_CASES_ALL = [
     cover: 'chronos-weave/assets/card.jpg',
     tags: ['Game UI/UX', 'Skill Tree', 'Unreal Engine UMG', 'Sony TRC / L10n'],
     blurb: 'Árvore de habilidades em astrolábio celestial: arquitetura em Unreal UMG, docking responsivo e conformidade estrita com Sony TRC e expansão de texto.'
+  },
+  {
+    slug: 'super-batalha',
+    group: 'tabletop',
+    title: 'Super Batalha',
+    color: '#3B2A8C',                      // mesma cor do --accent da página
+    cover: 'super-batalha/assets/card.jpg',
+    tags: ['Board game', 'Identidade visual', 'Design gráfico'],
+    blurb: 'Logo, caixa, cartas, biombos e standees de uma arena de super-heróis brasileiros com 33 convidados.'
   }
 ];
 
