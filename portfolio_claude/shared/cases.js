@@ -222,6 +222,7 @@ window.PORTFOLIO_CASES_ALL = [
   },
   {
     slug: 'super-batalha',
+    draft: true,                           // provisório: textos em revisão
     group: 'tabletop',
     title: 'Super Batalha',
     color: '#3B2A8C',                      // mesma cor do --accent da página
