@@ -9,8 +9,9 @@ Erik foi o **designer gráfico** das capas: 11 para a WMF Martins Fontes (2012�
 | Abertura | Mosaico de capas em diagonal (sem Kaputt) | O mosaico desliza devagar; pausa fora da tela |
 | Contexto | Tipos de livro, o papel, 11 capas, 2 projetos de miolo, 3 livros dos anos 60 | — |
 | 01 Capas | Estante com as 11 capas WMF, capa grande e uma nota sobre o recurso de cada uma | Filtro Tipografia, Desenho ou Imagem; escolher livro (setas no teclado); troca sozinho até o primeiro toque |
-| 02 Mauricio (faixa assinatura) | 4 etapas: a ideia, restauração, diagramação, capa e lançamento | As etapas avançam quando a barra amarela enche; o primeiro toque entrega o controle |
-| 03 Restauração | Registro e cor (comparadores antes/depois) e continuidade do padrão; citação de Erik sobre o charme da falha | Arrastar, tocar ou usar as setas; uma varredura curta na primeira vez que aparece |
+| 02 Kaputt | Capa e três páginas reais do miolo (arte de Guazzelli), lado a lado na mesma altura | — |
+| 03 Mauricio (faixa assinatura) | 4 etapas: o contato com a MSP, restauração, diagramação, capa | As etapas avançam quando a barra amarela enche; clique ou tecla entrega o controle (rolar a página não para) |
+| 04 Restauração | Registro e cor (comparadores antes/depois) e continuidade do padrão; citação de Erik sobre o charme da falha | Arrastar, tocar ou usar as setas; uma varredura curta na primeira vez que aparece |
 | Ficha | Tabela livro, autor, recurso, entrega; recursos das capas; ferramentas | — |
 | Resultado | Alcance e créditos | — |
 
@@ -21,6 +22,8 @@ Com `prefers-reduced-motion` nada troca sozinho, o mosaico fica parado e os comp
 - **Capas: reais.** `c-*.webp` são capas planas. Cinco vêm dos PNGs de `tralha/Editorial/` (Monografia, Novo Espírito, Verbos, Arquitetura, Sobre o Político), recortadas da margem branca. As outras seis (Metodologia, Falsa Medida, Kaputt, Mil Vezes, Tratado, caixa C.S. Lewis) e `c-mauricio` foram recortadas das imagens do Behance do autor, que têm só 533 px de largura.
 - **Mauricio — O Início: fotos reais do Behance.** `m-originais` (os três livros dos anos 60), `m-detalhes` (polaroides de antes/depois), `m-miolo` (livro aberto), `m-capa` (mockup da capa), todos com 843 px ou menos.
 - **Comparadores: recortes reais, alinhados.** `r-registro-*` e `r-cor-*` saem das metades de cada polaroide de `m-detalhes`, alinhadas pelo traço preto (deslocamento achado por correlação) e ampliadas 3×. `r-padrao` é a polaroide das bolinhas, endireitada 4,5° e ampliada 2×.
+- **Kaputt: páginas reais.** A seção usa só a capa e as três páginas planas de `assets/kaputt/` (02, 03, 04). As fotos 05–09 têm a marca d'água "pipocamusical" (são de terceiros) e ficaram fora da página, assim como o PDF montado com elas. Para usar fotos do livro impresso, falta foto própria ou permissão.
+- **Fora da página (out/2026):** a seção "Grid suíço" (raio-X com grade fixa sobreposta a qualquer capa, proporções, entrelinhas e fontes sem fonte confirmada), a "macro-inspeção" (`macro-restauracao.jpg` é imagem gerada, não foto do livro, e vinha com números de registro sem fonte) e o card do miolo de Mauricio (212 páginas, formato álbum, capa dura: sem fonte; a foto mostra miolo vertical). Os arquivos continuam em `assets/` e o texto antigo está no git. Volta se o autor confirmar os fatos.
 - **Composição:** `cover.jpg` (2400×1200) e `card.jpg` (1600×1200) são mosaicos das capas sobre fundo escuro. Não é foto. Kaputt ficou de fora do mosaico porque a suástica da capa precisa do contexto que a estante dá.
 
 ## De onde vêm os fatos

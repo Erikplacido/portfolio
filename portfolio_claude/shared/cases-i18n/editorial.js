@@ -9,9 +9,9 @@
     en: {
       // Nav links
       '.pf-links a[href="#capas"]': 'Covers',
-      '.pf-links a[href="#grid-suico"]': 'Swiss Grid',
-      '.pf-links a[href="#restauracao"]': 'Mauricio · Restoration',
-      '.pf-links a[href="#miolo"]': 'Kaputt & Book Interiors',
+      '.pf-links a[href="#kaputt"]': 'Kaputt',
+      '.pf-links a[href="#mauricio"]': 'Mauricio',
+      '.pf-links a[href="#restauracao"]': 'Restoration',
       '.pf-links a[href="#ficha"]': 'Specs',
 
       // Hero
@@ -50,32 +50,31 @@
       '#esFilter button:nth-child(3)': 'Drawing <span>3</span>',
       '#esFilter button:nth-child(4)': 'Image <span>4</span>',
       '#capas figcaption': '<b>Eleven book covers for WMF Martins Fontes, 2012–2016.</b> Commercial published covers designed by the author. Filter by primary design language or select a volume; keyboard arrow keys navigate the shelf.',
+      // Section 02: Kaputt
+      '#kaputt .eyebrow': '<b>02</b> · Kaputt',
+      '#kaputt h2': 'On a war comic, the work ran from cover to interior.',
+      '#kaputt .lede': 'Kaputt is Guazzelli’s comic adaptation of Curzio Malaparte’s novel about World War II, published by WMF Martins Fontes. Besides the cover, Erik also designed the interior. The page art is by Guazzelli.',
+      '#kaputt .tag-row .pill:nth-child(1)': 'Cover and interior',
+      '#kaputt figcaption': '<b>Kaputt, WMF Martins Fontes.</b> Cover and three actual interior pages, with art by Guazzelli.',
 
-      // Section 01.1: Swiss Grid Inspector
-      '#grid-suico .eyebrow': '<b>Swiss Grid & Mathematical Rigor</b> · Cover Design Architecture',
-      '#grid-suico h2': 'The invisible grid providing visual weight and breathing room to Martins Fontes.',
-      '#grid-suico .lede': 'WMF Martins Fontes’ editorial identity is rooted in the International Typographic Style: strict modular column grids, optical baseline rhythm, and deliberate use of active white space. Storefront shelf appeal emerges from mathematical tension between typographic block weight and cover silence.',
-      '#grid-suico .tag-row .pill:nth-child(1)': 'Interactive',
-      '#grid-suico .tag-row .pill:nth-child(2)': 'Typographic X-Ray',
-      '#grid-suico .title-box span': 'Golden Ratio Zone · Modular Title (6 columns)',
-      '#grid-suico .author-box span': 'Baseline Anchor · Author (Baseline 14/28pt)',
-      '#grid-suico .colophon-box span': 'Colophon & Publisher Imprint',
-      '#swGridBtn span': 'Toggle Grid X-Ray',
-      '#swCoverBtns button:nth-child(1)': 'Monography (6 columns)',
-      '#swCoverBtns button:nth-child(2)': 'Capitalism (Asymmetric)',
-      '#swCoverBtns button:nth-child(3)': 'Methodology (Vertical)',
-      '#grid-suico .sw-cards > div:nth-child(1) b': '6 & 12 Column Modular Grid',
-      '#grid-suico .sw-cards > div:nth-child(1) p': 'The layout balances visual weight with asymmetric proportions (<code>1:1.618</code>). Forced word wraps (like <code>MONO / GRAFIA</code>) are not accidental: they lock cleanly into 3- and 4-column module widths, transforming the title into pure architectural geometry.',
-      '#grid-suico .sw-cards > div:nth-child(2) b': 'Baseline Grid & Vertical Rhythm',
-      '#grid-suico .sw-cards > div:nth-child(2) p': 'Strict baseline increments of <code>14pt</code> and <code>28pt</code>. Ensures author names, collection seals, spine lettering, and back-cover copy share uniform vertical cadence across the volume.',
-      '#grid-suico .sw-cards > div:nth-child(3) b': 'Active Negative Space (> 55%)',
-      '#grid-suico .sw-cards > div:nth-child(3) p': 'Unlike covers cluttered from margin to margin, Swiss editorial design dedicates over half of total cover area to visual silence. This restraint generates instant standout visibility on competitive bookstore tables.',
-      '#grid-suico .sw-cards > div:nth-child(4) b': 'Swiss Typographic Tension',
-      '#grid-suico .sw-cards > div:nth-child(4) p': 'Surgical contrast between modernist Zurich/Basel sans-serifs (<em>Akzidenz-Grotesk</em>, <em>Univers</em>, <em>Helvetica</em>) and noble academic serif families (Jan Tschichold’s <em>Sabon</em>, <em>Bembo</em>, and <em>Garamond</em>).',
-      '#grid-suico figcaption': '<b>Swiss Typographic Grid X-Ray Board.</b> Click "Toggle Grid X-Ray" to inspect the 6-column modular overlay, baseline leadings, and golden ratio spatial divisions across WMF Martins Fontes covers.',
+      // Section 03: Mauricio (signature band)
+      '#mauricio .eyebrow': '<b>03</b> · Mauricio — The Beginning',
+      '#mauricio h2': 'A book that started with a message.',
+      '#mauricio .lede': 'Three rare 1960s books by Mauricio de Sousa, gathered into one volume for his 80th birthday. The project began when Erik reached out to MSP, and went through restoration, layout and cover.',
+      '#mauricio .tag-row .pill:nth-child(1)': 'Interactive',
+      '#mauricio .tag-row .pill:nth-child(2)': 'From first contact to book',
+      '#mauricio .mi-steps li:nth-child(1) b': 'The contact',
+      '#mauricio .mi-steps li:nth-child(1) span': 'After an interview with Sidney Gusman, from MSP, on The Noite (SBT), Erik reached out to MSP on Facebook. The starting point was three rare books from the 1960s.',
+      '#mauricio .mi-steps li:nth-child(2) b': 'Restoration',
+      '#mauricio .mi-steps li:nth-child(2) span': 'Page by page: color back inside the line, tones corrected, and patterns kept the same from start to finish.',
+      '#mauricio .mi-steps li:nth-child(3) b': 'Layout',
+      '#mauricio .mi-steps li:nth-child(3) span': 'The three books in one volume, with text on one page and the restored illustration on the other.',
+      '#mauricio .mi-steps li:nth-child(4) b': 'Cover',
+      '#mauricio .mi-steps li:nth-child(4) span': 'Mauricio’s signature in yellow on blue, the title in colored letters, and the characters lined up along the bottom.',
+      '#mauricio figcaption': '<b>From contact to book.</b> Actual photos published by the author: the three original books, restoration details and the open book. The cover is shown as a mockup. The steps advance on their own until the first touch.',
 
-      // Section 02: Restoration
-      '#restauracao .eyebrow': '<b>02</b> · Mauricio — The Beginning · Historical Restoration',
+      // Section 04: Restoration
+      '#restauracao .eyebrow': '<b>04</b> · Restoration',
       '#restauracao h2': 'The book as Mauricio intended it to be printed in the 1960s.',
       '#restauracao .lede': 'Digital restoration corrected three persistent flaws originating from 1960s industrial letterpress printing: misregistered color offset, inaccurate color fills, and erratic apparel patterns shifting across consecutive pages.',
       '#restauracao .tag-row .pill:nth-child(1)': 'Interactive',
@@ -93,35 +92,7 @@
       '#restauracao figcaption': '<b>Restoration details.</b> Authentic crops comparing original 1960s letterpress with restored 2015 plates. Drag the interactive line to examine alignment corrections.',
       '#restauracao .callout': '<b>Flaws had historical charm.</b> “As an enthusiast of historical printing and gravure, I appreciate the organic charm in vintage registration flaws. However, Mauricio wanted these stories released in the finest form possible, exactly as he envisioned back in the 60s.” Erik Placido, on purposeful restoration over passive preservation.',
 
-      // Macro Inspection
-      '.macro-header b': 'Macro Inspection: Oxidation & Photolith Misalignment (1965) vs. Clean Vector Trapping (2015)',
-      '.macro-grid-specs > div:nth-child(1) h4': '<span class="old">●</span> Original 1965 Letterpress Print (FTD)',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(1)': '<b>Acidic Newsprint & Oxidation:</b> Yellowed brittle pulp fibers with degraded mechanical contrast after 50 years of storage.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(2)': '<b>1.8mm Registration Shift:</b> CMYK halftone plates drifted on cylinder flatbed presses, spilling color fills past line contours.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(3)': '<b>Coarse Screen & Heavy Dot Gain:</b> Heavy ink absorption clogged delicate character expressions and linework.',
-      '.macro-grid-specs > div:nth-child(2) h4': '<span class="new">●</span> Digital Restoration 2015 (MSP / WMF)',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(1)': '<b>Digital Inking & Stylus Pressure:</b> Outlines meticulously redrawn on Photoshop with Wacom tablet, preserving Mauricio’s organic brush stroke weight.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(2)': '<b>Pristine CMYK Channel Separation:</b> Pure solid spot color trapping eliminating coarse halftone grain and visual noise.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(3)': '<b>Fidelity to Original Intent:</b> Reversal of historic plate inversion and pattern inconsistencies, realizing the book as it was meant to be printed.',
-
-      // Section 03: Miolo & Graphic Novel
-      '#miolo .eyebrow': '<b>03</b> · Interior Typesetting & Graphic Novel · Kaputt and Mauricio',
-      '#miolo h2': 'Editorial typesetting: pacing the reading experience beyond the cover.',
-      '#miolo .lede': 'Two comprehensive book interior layout projects with complementary challenges: the visceral, expressionist wartime graphic narrative of <em>Kaputt</em> and the 212-page hardcover historical compilation of <em>Mauricio — The Beginning</em>.',
-      '.kp-top b': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kaputt · Graphic Novel (WMF Martins Fontes)',
-      '.kp-top .kp-tag': 'Cover & Complete Interior',
-      '.miolo-pdf-btn': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> View High-Res Interior PDF (9 pages) ↗',
-
-      '.miolo-card-body .miolo-badge:nth-child(1)': 'MSP · 80th Anniversary',
-      '.miolo-card-body .miolo-badge:nth-child(2)': '212 Pages',
-      '.miolo-card-body .miolo-badge:nth-child(3)': 'Hardcover Album',
-      '.miolo-card-body .miolo-badge:nth-child(4)': 'Deluxe Historical Edition',
-      '.miolo-card-body b:nth-of-type(1)': 'Mauricio — The Beginning · Album Format Typesetting',
-      '.miolo-card-body p:nth-of-type(1)': 'Classic horizontal deluxe picture book layout across 212 pages: even pages host narrative text set with generous leading and legible typography suited for shared family reading; odd pages showcase full restored illustrations with calibrated inner gutter margins compensating for bound hardcover curvature.',
-      '.miolo-card-body div b': 'Published Physical Volume',
-      '.miolo-card-body div span': 'Single omnibus volume published for Mauricio de Sousa’s official 80th birthday celebrations, compiling <em>A Caixa da Bondade</em>, <em>Piteco</em>, and <em>O Astronauta no Planeta dos Homens Sorvete</em>.',
-
-      // Section 04: Specs Sheet
+      // Sheet
       '#ficha .eyebrow': 'Specifications',
       '#ficha h2': 'Covers for all. Interior layout for two.',
       '#ficha .lede': 'Book by book, primary graphic device and project scope. For both interior projects, design spanned from typography to final pre-press production.',
@@ -161,9 +132,9 @@
     es: {
       // Nav links
       '.pf-links a[href="#capas"]': 'Cubiertas',
-      '.pf-links a[href="#grid-suico"]': 'Grid Suizo',
-      '.pf-links a[href="#restauracao"]': 'Mauricio · Restauración',
-      '.pf-links a[href="#miolo"]': 'Kaputt y Páginas Interiores',
+      '.pf-links a[href="#kaputt"]': 'Kaputt',
+      '.pf-links a[href="#mauricio"]': 'Mauricio',
+      '.pf-links a[href="#restauracao"]': 'Restauración',
       '.pf-links a[href="#ficha"]': 'Ficha Técnica',
 
       // Hero
@@ -202,32 +173,31 @@
       '#esFilter button:nth-child(3)': 'Dibujo <span>3</span>',
       '#esFilter button:nth-child(4)': 'Imagen <span>4</span>',
       '#capas figcaption': '<b>Once cubiertas para WMF Martins Fontes, 2012–2016.</b> Cubiertas reales publicadas por la editorial. Filtra por recurso visual o navega con las teclas de flecha.',
+      // Section 02: Kaputt
+      '#kaputt .eyebrow': '<b>02</b> · Kaputt',
+      '#kaputt h2': 'En un cómic de guerra, el trabajo fue de la portada al interior.',
+      '#kaputt .lede': 'Kaputt es la adaptación en cómic de Guazzelli de la novela de Curzio Malaparte sobre la Segunda Guerra Mundial, publicada por WMF Martins Fontes. Además de la portada, Erik también diseñó el interior. El arte de las páginas es de Guazzelli.',
+      '#kaputt .tag-row .pill:nth-child(1)': 'Portada e interior',
+      '#kaputt figcaption': '<b>Kaputt, WMF Martins Fontes.</b> Portada y tres páginas reales del interior, con arte de Guazzelli.',
 
-      // Section 01.1: Grid Suizo
-      '#grid-suico .eyebrow': '<b>Grid & Rigor Suizo</b> · Diseño de Cubiertas',
-      '#grid-suico h2': 'La retícula invisible que aporta peso y respiro a Martins Fontes.',
-      '#grid-suico .lede': 'La tradición editorial de Martins Fontes se fundamenta en el Estilo Tipográfico Internacional: cuadrículas modulares rigurosas, alineación óptica en línea base (baseline grid) y uso activo del espacio negativo. El impacto visual en librerías nace de la tensión matemática entre el bloque de texto y el silencio de la portada.',
-      '#grid-suico .tag-row .pill:nth-child(1)': 'Interactivo',
-      '#grid-suico .tag-row .pill:nth-child(2)': 'Rayos X Tipográfico',
-      '#grid-suico .title-box span': 'Zona Áurea · Título Modular (6 columnas)',
-      '#grid-suico .author-box span': 'Anclaje · Autor (Baseline 14/28pt)',
-      '#grid-suico .colophon-box span': 'Colofón y Sello WMF',
-      '#swGridBtn span': 'Activar Rayos X del Grid',
-      '#swCoverBtns button:nth-child(1)': 'Monografía (6 columnas)',
-      '#swCoverBtns button:nth-child(2)': 'Capitalismo (Asimétrico)',
-      '#swCoverBtns button:nth-child(3)': 'Metodología (Vertical)',
-      '#grid-suico .sw-cards > div:nth-child(1) b': 'Grid Modular de 6 y 12 Columnas',
-      '#grid-suico .sw-cards > div:nth-child(1) p': 'La maquetación distribuye pesos en proporción asimétrica (<code>1:1.618</code>). La partición forzada de palabras (como <code>MONO / GRAFIA</code>) se ajusta al ancho exacto de 3 y 4 columnas, convirtiendo el título en arquitectura pura.',
-      '#grid-suico .sw-cards > div:nth-child(2) b': 'Baseline Grid y Anclaje Vertical',
-      '#grid-suico .sw-cards > div:nth-child(2) p': 'Línea de base regular en incrementos de <code>14pt</code> y <code>28pt</code>. Asegura que autores, sellos de colección y textos de contracubierta mantengan un ritmo vertical unificado.',
-      '#grid-suico .sw-cards > div:nth-child(3) b': 'Espacio Negativo Activo (> 55%)',
-      '#grid-suico .sw-cards > div:nth-child(3) p': 'Frente a portadas saturadas, el diseño suizo reserva más de la mitad del espacio al respiro visual, generando distinción inmediata en las estanterías de librerías.',
-      '#grid-suico .sw-cards > div:nth-child(4) b': 'Tensión Tipográfica Suiza',
-      '#grid-suico .sw-cards > div:nth-child(4) p': 'Contraste riguroso entre familias grotescas suizas (<em>Akzidenz-Grotesk</em>, <em>Univers</em>, <em>Helvetica</em>) y fuentes romanas clásicas de prestigio (<em>Sabon</em> de Jan Tschichold, <em>Bembo</em> y <em>Garamond</em>).',
-      '#grid-suico figcaption': '<b>Retícula de Rayos X Tipográfica Suiza.</b> Pulsa "Activar Rayos X del Grid" para visualizar la cuadrícula modular de 6 columnas y las líneas de base.',
+      // Section 03: Mauricio (signature band)
+      '#mauricio .eyebrow': '<b>03</b> · Mauricio — El Inicio',
+      '#mauricio h2': 'Un libro que empezó con un mensaje.',
+      '#mauricio .lede': 'Tres libros raros de Mauricio de Sousa de los años 60, reunidos en un solo volumen por sus 80 años. El proyecto nació de un contacto de Erik con MSP y pasó por restauración, maquetación y portada.',
+      '#mauricio .tag-row .pill:nth-child(1)': 'Interactivo',
+      '#mauricio .tag-row .pill:nth-child(2)': 'Del contacto al libro',
+      '#mauricio .mi-steps li:nth-child(1) b': 'El contacto',
+      '#mauricio .mi-steps li:nth-child(1) span': 'Tras una entrevista de Sidney Gusman, de MSP, en The Noite (SBT), Erik contactó a MSP por Facebook. La base eran tres libros raros de los años 60.',
+      '#mauricio .mi-steps li:nth-child(2) b': 'Restauración',
+      '#mauricio .mi-steps li:nth-child(2) span': 'Página por página: el color de vuelta dentro del trazo, los tonos corregidos y los estampados iguales de principio a fin.',
+      '#mauricio .mi-steps li:nth-child(3) b': 'Maquetación',
+      '#mauricio .mi-steps li:nth-child(3) span': 'Los tres libros en un volumen, con el texto en una página y la ilustración restaurada en la otra.',
+      '#mauricio .mi-steps li:nth-child(4) b': 'Portada',
+      '#mauricio .mi-steps li:nth-child(4) span': 'La firma de Mauricio en amarillo sobre azul, el título en letras de colores y los personajes en fila al pie de la portada.',
+      '#mauricio figcaption': '<b>Del contacto al libro.</b> Fotos reales publicadas por el autor: los tres libros originales, los detalles de la restauración y el libro abierto. La portada aparece en un mockup. Los pasos avanzan solos hasta el primer toque.',
 
-      // Section 02: Restauración
-      '#restauracao .eyebrow': '<b>02</b> · Mauricio — El Inicio · Restauración Histórica',
+      // Section 04: Restoration
+      '#restauracao .eyebrow': '<b>04</b> · Restauración',
       '#restauracao h2': 'El libro tal como Mauricio soñaba imprimirlo en los años 60.',
       '#restauracao .lede': 'La restauración digital subsanó tres errores clásicos de imprenta tipográfica de los 60: desajustes de registro cromático, virados accidentales de color e incoherencias de tramas textiles entre pliegos continuos.',
       '#restauracao .tag-row .pill:nth-child(1)': 'Interactivo',
@@ -245,35 +215,7 @@
       '#restauracao figcaption': '<b>Detalles de la restauración.</b> Comparativa entre la impresión original de los 60 y la página restaurada en 2015.',
       '#restauracao .callout': '<b>El encanto del error de imprenta.</b> “Como amante del grabado y la tipografía tradicional, encuentro magia en los fallos de registro antiguos. Sin embargo, Mauricio deseaba publicar este tesoro en su máxima pureza, tal como habría querido en los 60.” Erik Placido.',
 
-      // Macro Inspection
-      '.macro-header b': 'Macro-inspección: Oxidación y Registro (1965) vs. Vectorización Limpia (2015)',
-      '.macro-grid-specs > div:nth-child(1) h4': '<span class="old">●</span> Impresión Original de 1965 (FTD)',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(1)': '<b>Papel Periódico Ácido y Oxidación:</b> Fibras amarilleadas con pérdida de contraste tras 50 años de almacenaje.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(2)': '<b>Desfase de Registro de 1,8 mm:</b> Planchas de semitono CMYK desplazadas, desbordando color fuera de la línea negra.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(3)': '<b>Ganancia de Punto Excesiva:</b> Tramas gruesas que empastaban expresiones faciales y detalles sutiles.',
-      '.macro-grid-specs > div:nth-child(2) h4': '<span class="new">●</span> Restauración Digital de 2015 (MSP / WMF)',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(1)': '<b>Entintado Digital con Sensibilidad de Plumilla:</b> Trazos redibujados en Photoshop con tableta Wacom preservando el pulso orgánico de Mauricio.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(2)': '<b>Separación Limpia de Canales CMYK:</b> Tintas planas sin el grano y ruido de fotolitos antiguos.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(3)': '<b>Fidelidad al Proyecto Original:</b> Corrección de inversiones de plancha y patrones erróneos de imprenta.',
-
-      // Section 03: Miolo & Graphic Novel
-      '#miolo .eyebrow': '<b>03</b> · Páginas Interiores y Novela Gráfica · Kaputt y Mauricio',
-      '#miolo h2': 'Maquetación editorial: el ritmo de lectura más allá de la cubierta.',
-      '#miolo .lede': 'Dos proyectos de diseño interior con exigencias contrapuestas: la narrativa expresionista bélica de <em>Kaputt</em> y la recuperación histórica de 212 páginas en tapa dura de <em>Mauricio — El Inicio</em>.',
-      '.kp-top b': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kaputt · Novela Gráfica (WMF Martins Fontes)',
-      '.kp-top .kp-tag': 'Cubierta y Páginas Interiores',
-      '.miolo-pdf-btn': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Ver PDF Interior en Alta Definición (9 págs.) ↗',
-
-      '.miolo-card-body .miolo-badge:nth-child(1)': 'MSP · 80 Años',
-      '.miolo-card-body .miolo-badge:nth-child(2)': '212 Páginas',
-      '.miolo-card-body .miolo-badge:nth-child(3)': 'Tapa Dura Álbum',
-      '.miolo-card-body .miolo-badge:nth-child(4)': 'Edición Histórica de Lujo',
-      '.miolo-card-body b:nth-of-type(1)': 'Mauricio — El Inicio · Maquetación en Formato Álbum',
-      '.miolo-card-body p:nth-of-type(1)': 'Maquetación clásica de libro infantil de lujo en formato horizontal de 212 páginas: la página par contiene el texto narrativo con interlineado generoso para lectura compartida; la página impar expone la ilustración restaurada a gran tamaño, con márgenes internos calculados para compensar la curvatura del lomo cosido.',
-      '.miolo-card-body div b': 'Ejemplar Físico Publicado',
-      '.miolo-card-body div span': 'Tomo único publicado en la celebración oficial de los 80 años de Mauricio de Sousa, reuniendo <em>A Caixa da Bondade</em>, <em>Piteco</em> y <em>O Astronauta no Planeta dos Homens Sorvete</em>.',
-
-      // Section 04: Ficha
+      // Sheet
       '#ficha .eyebrow': 'Ficha Técnica',
       '#ficha h2': 'Cubierta en todos. Interior en dos.',
       '#ficha .lede': 'Libro a libro, el recurso gráfico principal y la entrega realizada.',
@@ -313,9 +255,9 @@
     fr: {
       // Nav links
       '.pf-links a[href="#capas"]': 'Couvertures',
-      '.pf-links a[href="#grid-suico"]': 'Grille Suisse',
-      '.pf-links a[href="#restauracao"]': 'Mauricio · Restauration',
-      '.pf-links a[href="#miolo"]': 'Kaputt & Pages Intérieures',
+      '.pf-links a[href="#kaputt"]': 'Kaputt',
+      '.pf-links a[href="#mauricio"]': 'Mauricio',
+      '.pf-links a[href="#restauracao"]': 'Restauration',
       '.pf-links a[href="#ficha"]': 'Fiche Technique',
 
       // Hero
@@ -354,32 +296,31 @@
       '#esFilter button:nth-child(3)': 'Dessin <span>3</span>',
       '#esFilter button:nth-child(4)': 'Image <span>4</span>',
       '#capas figcaption': '<b>Onze couvertures pour WMF Martins Fontes, 2012–2016.</b> Couvertures réelles publiées par l’éditeur. Filtrez par ressource ou naviguez avec les flèches du clavier.',
+      // Section 02: Kaputt
+      '#kaputt .eyebrow': '<b>02</b> · Kaputt',
+      '#kaputt h2': 'Pour une BD de guerre, le travail est allé de la couverture à l’intérieur.',
+      '#kaputt .lede': 'Kaputt est l’adaptation en bande dessinée, par Guazzelli, du roman de Curzio Malaparte sur la Seconde Guerre mondiale, publiée par WMF Martins Fontes. En plus de la couverture, Erik a aussi conçu l’intérieur. Les planches sont de Guazzelli.',
+      '#kaputt .tag-row .pill:nth-child(1)': 'Couverture et intérieur',
+      '#kaputt figcaption': '<b>Kaputt, WMF Martins Fontes.</b> Couverture et trois vraies pages intérieures, dessinées par Guazzelli.',
 
-      // Section 01.1: Grille Suisse
-      '#grid-suico .eyebrow': '<b>Grille & Rigueur Suisse</b> · Conception de Couvertures',
-      '#grid-suico h2': 'La grille invisible qui confère aplomb et respiration à Martins Fontes.',
-      '#grid-suico .lede': 'L’identité éditoriale de Martins Fontes s’appuie sur le Style Typographique International : grilles modulaires strictes, calage rigoureux sur ligne de base (baseline grid) et valorisation de l’espace négatif. L’impact visuel en librairie naît de la tension mathématique entre le bloc typographique et le silence de la page.',
-      '#grid-suico .tag-row .pill:nth-child(1)': 'Interactif',
-      '#grid-suico .tag-row .pill:nth-child(2)': 'Rayons X Typographiques',
-      '#grid-suico .title-box span': 'Zone d’Or · Titre Modulaire (6 colonnes)',
-      '#grid-suico .author-box span': 'Ancrage · Auteur (Ligne de base 14/28pt)',
-      '#grid-suico .colophon-box span': 'Colophon & Sceau WMF',
-      '#swGridBtn span': 'Activer les Rayons X de la Grille',
-      '#swCoverBtns button:nth-child(1)': 'Monographie (6 colonnes)',
-      '#swCoverBtns button:nth-child(2)': 'Capitalisme (Asymétrique)',
-      '#swCoverBtns button:nth-child(3)': 'Méthodologie (Vertical)',
-      '#grid-suico .sw-cards > div:nth-child(1) b': 'Grille Modulaire de 6 et 12 Colonnes',
-      '#grid-suico .sw-cards > div:nth-child(1) p': 'La mise en page distribue les masses selon un rapport asymétrique (<code>1:1.618</code>). La coupure des mots (telle que <code>MONO / GRAFIA</code>) s’inscrit précisément dans des modules de 3 et 4 colonnes, transformant le titre en pur bloc architectural.',
-      '#grid-suico .sw-cards > div:nth-child(2) b': 'Ligne de Base & Rythme Vertical',
-      '#grid-suico .sw-cards > div:nth-child(2) p': 'Calage strict par incréments de <code>14pt</code> et <code>28pt</code>. Garantit que les noms d’auteurs, logos de collection et textes de dos partagent une cadence verticale homogène.',
-      '#grid-suico .sw-cards > div:nth-child(3) b': 'Espace Négatif Actif (> 55%)',
-      '#grid-suico .sw-cards > div:nth-child(3) p': 'Contrairement aux couvertures surchargées, la grille suisse consacre plus de la moitié de la surface au vide visuel. Cette respiration crée une distinction immédiate sur les étals des librairies.',
-      '#grid-suico .sw-cards > div:nth-child(4) b': 'Tension Typographique Suisse',
-      '#grid-suico .sw-cards > div:nth-child(4) p': 'Contraste rigoureux entre linéales suisses (<em>Akzidenz-Grotesk</em>, <em>Univers</em>, <em>Helvetica</em>) et polices sérif académiques nobles (<em>Sabon</em> de Jan Tschichold, <em>Bembo</em> et <em>Garamond</em>).',
-      '#grid-suico figcaption': '<b>Planche de Rayons X de la Grille Typographique Suisse.</b> Cliquez sur "Activer les Rayons X de la Grille" pour faire apparaître la superposition des 6 colonnes et le calage sur ligne de base.',
+      // Section 03: Mauricio (signature band)
+      '#mauricio .eyebrow': '<b>03</b> · Mauricio — Les Débuts',
+      '#mauricio h2': 'Un livre qui a commencé par un message.',
+      '#mauricio .lede': 'Trois livres rares de Mauricio de Sousa des années 60, réunis en un seul volume pour ses 80 ans. Le projet est né d’une prise de contact d’Erik avec la MSP, puis est passé par la restauration, la mise en page et la couverture.',
+      '#mauricio .tag-row .pill:nth-child(1)': 'Interactif',
+      '#mauricio .tag-row .pill:nth-child(2)': 'Du contact au livre',
+      '#mauricio .mi-steps li:nth-child(1) b': 'Le contact',
+      '#mauricio .mi-steps li:nth-child(1) span': 'Après une interview de Sidney Gusman, de la MSP, dans The Noite (SBT), Erik a contacté la MSP sur Facebook. Le point de départ : trois livres rares des années 60.',
+      '#mauricio .mi-steps li:nth-child(2) b': 'Restauration',
+      '#mauricio .mi-steps li:nth-child(2) span': 'Page par page : la couleur de nouveau dans le trait, les teintes corrigées et les motifs identiques du début à la fin.',
+      '#mauricio .mi-steps li:nth-child(3) b': 'Mise en page',
+      '#mauricio .mi-steps li:nth-child(3) span': 'Les trois livres en un volume, avec le texte sur une page et l’illustration restaurée sur l’autre.',
+      '#mauricio .mi-steps li:nth-child(4) b': 'Couverture',
+      '#mauricio .mi-steps li:nth-child(4) span': 'La signature de Mauricio en jaune sur bleu, le titre en lettres de couleur et les personnages alignés en bas de la couverture.',
+      '#mauricio figcaption': '<b>Du contact au livre.</b> Vraies photos publiées par l’auteur : les trois livres originaux, les détails de la restauration et le livre ouvert. La couverture est présentée en maquette. Les étapes avancent seules jusqu’au premier geste.',
 
-      // Section 02: Restauration
-      '#restauracao .eyebrow': '<b>02</b> · Mauricio — Les Débuts · Restauration Historique',
+      // Section 04: Restoration
+      '#restauracao .eyebrow': '<b>04</b> · Restauration',
       '#restauracao h2': 'Le livre tel que Mauricio rêvait de le voir imprimé dans les années 60.',
       '#restauracao .lede': 'La restauration a corrigé trois écueils typiques de l’imprimerie des années 60 : le décalage de repérage des encres, les virages accidentels de teinte et les variations de motifs d’une page à l’autre.',
       '#restauracao .tag-row .pill:nth-child(1)': 'Interactif',
@@ -397,35 +338,7 @@
       '#restauracao figcaption': '<b>Détails de la restauration.</b> Extraits réels confrontant l’impression d’époque et la planche restaurée en 2015.',
       '#restauracao .callout': '<b>L’imperfection avait aussi son charme.</b> « Passionné d’estampes et d’imprimerie artisanale, je trouve une poésie certaine aux défauts de repérage d’époque. Cependant, Mauricio souhaitait restituer ce patrimoine dans sa perfection idéale, telle qu’il l’avait imaginée dans les années 60. » Erik Placido.',
 
-      // Macro Inspection
-      '.macro-header b': 'Macro-inspection : Oxydation & Dérive Photolithographique (1965) vs. Vectorisation Épurée (2015)',
-      '.macro-grid-specs > div:nth-child(1) h4': '<span class="old">●</span> Impression Originale de 1965 (FTD)',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(1)': '<b>Papier Journal Acide & Jaunissement :</b> Fibres oxydées et perte de contraste mécanique après 50 ans de conservation.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(2)': '<b>Décalage de Repérage de 1,8 mm :</b> Plaques de demi-teinte CMJN désaxées débordant hors de l’encrage au trait.',
-      '.macro-grid-specs > div:nth-child(1) li:nth-child(3)': '<b>Trame Grossière & Engraissement de Point :</b> Empâtement des expressions faciales et finesse des contours.',
-      '.macro-grid-specs > div:nth-child(2) h4': '<span class="new">●</span> Restauration Numérique 2015 (MSP / WMF)',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(1)': '<b>Encrage Numérique & Sensibilité Plume :</b> Contours redessinés sur Photoshop avec tablette Wacom préservant le souffle organique du trait de Mauricio.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(2)': '<b>Séparation Nette des Canaux CMJN :</b> Aplats d’une grande pureté chromatique, éliminant le bruit de trame ancien.',
-      '.macro-grid-specs > div:nth-child(2) li:nth-child(3)': '<b>Fidélité au Projet Originel :</b> Rectification des erreurs de flashage et inversion de plaques, redonnant au livre son éclat rêvé.',
-
-      // Section 03: Miolo & Graphic Novel
-      '#miolo .eyebrow': '<b>03</b> · Pages Intérieures & Roman Graphique · Kaputt et Mauricio',
-      '#miolo h2': 'Mise en page éditoriale : cadencer le récit au-delà de la couverture.',
-      '#miolo .lede': 'Deux projets de conception intérieure aux esthétiques complémentaires : la narration de guerre brute et expressionniste de <em>Kaputt</em> et l’album historique de 212 pages en couverture rigide de <em>Mauricio — Les Débuts</em>.',
-      '.kp-top b': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kaputt · Roman Graphique (WMF Martins Fontes)',
-      '.kp-top .kp-tag': 'Couverture & Pages Intérieures',
-      '.miolo-pdf-btn': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Consulter le PDF Haute Définition (9 pages) ↗',
-
-      '.miolo-card-body .miolo-badge:nth-child(1)': 'MSP · 80 Ans',
-      '.miolo-card-body .miolo-badge:nth-child(2)': '212 Pages',
-      '.miolo-card-body .miolo-badge:nth-child(3)': 'Couverture Rigide Album',
-      '.miolo-card-body .miolo-badge:nth-child(4)': 'Édition Historique de Luxe',
-      '.miolo-card-body b:nth-of-type(1)': 'Mauricio — Les Débuts · Maquette au Format Album',
-      '.miolo-card-body p:nth-of-type(1)': 'Mise en page classique d’album jeunesse de prestige à l’italienne sur 212 pages : la page paire accueille le texte avec un interlignage aéré adapté à la lecture partagée parents-enfants ; la page impaire met en valeur la planche restaurée avec marge de petit fond calculée pour compenser la courbure de reliure.',
-      '.miolo-card-body div b': 'Exemplaire Imprimé',
-      '.miolo-card-body div span': 'Volume unique publié pour les 80 ans de Mauricio de Sousa, regroupant <em>A Caixa da Bondade</em>, <em>Piteco</em> et <em>O Astronauta no Planeta dos Homens Sorvete</em>.',
-
-      // Section 04: Fiche
+      // Sheet
       '#ficha .eyebrow': 'Fiche Technique',
       '#ficha h2': 'Couverture sur tous. Pages intérieures sur deux.',
       '#ficha .lede': 'Livre par livre, ressource graphique principale et livrables finaux.',

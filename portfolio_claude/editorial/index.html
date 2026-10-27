@@ -64,7 +64,7 @@
 @media(max-width:860px){.es>div:first-child{order:2}.es-info{min-height:0}}
 @media(max-width:560px){.es-shelf{--rh:118px;grid-template-columns:repeat(auto-fill,minmax(54px,1fr))}.es-big{--bh:250px}}
 
-/* ===== 02 Mauricio: signature band in the blue of the cover, with print dots ===== */
+/* ===== 03 Mauricio: signature band in the blue of the cover, with print dots ===== */
 .mi-band{background:radial-gradient(rgba(255,255,255,.09) 1.3px,transparent 1.9px) 0 0/16px 16px,linear-gradient(160deg,#2399DA,var(--gibi-2) 58%,var(--gibi-3))}
 .mi-band .eyebrow{color:#CFE7F7}.mi-band .eyebrow b{color:var(--amarelo)}
 .mi-band h2,.mi-band .lede{color:#fff}
@@ -89,7 +89,7 @@
 .mi-steps .bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--amarelo);transform:scaleX(0);transform-origin:0 50%}
 .mi.auto .mi-steps button[aria-pressed="true"] .bar{animation:fill 4.6s linear forwards}
 
-/* ===== 03 restoration: compare 60s print and 2015 page ===== */
+/* ===== 04 restoration: compare 60s print and 2015 page ===== */
 .st-mesa{background:linear-gradient(180deg,#F5F0E7,#EAE2D3)}
 .st-mesa .pill{background:rgba(255,255,255,.8)}
 .st-mesa .pill.y{background:var(--hl)}
@@ -138,86 +138,11 @@
 .chips span{font:500 12px/1 var(--pf-sans);padding:7px 10px;border-radius:99px;background:rgba(16,22,31,.06);color:var(--pf-ink)}
 .sys-n{font-size:13px;line-height:1.5;margin-top:12px}
 
-/* ===== Swiss Grid Inspector ===== */
-.st-grid-suico{background:linear-gradient(180deg,#F8F5EE,#ECE3D2);position:relative}
-.sw-grid-wrap{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1.2fr);gap:clamp(24px,4vw,52px);align-items:start;margin-top:28px}
-@media(max-width:860px){.sw-grid-wrap{grid-template-columns:1fr;justify-items:center}}
-.sw-stage{position:relative;width:min(100%,350px);aspect-ratio:3/4.5;border-radius:6px;overflow:hidden;box-shadow:0 3px 6px rgba(40,24,10,.18),0 30px 48px -20px rgba(40,24,10,.7);background:#fff}
-.sw-stage img{width:100%;height:100%;object-fit:cover;display:block}
-.sw-overlay{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s var(--pf-ease)}
-.sw-overlay.active{opacity:1}
-.sw-overlay-lines{position:absolute;inset:0;background-image:
-  linear-gradient(to right,rgba(0,195,255,.35) 1px,transparent 1px),
-  linear-gradient(to bottom,rgba(255,0,128,.28) 1px,transparent 1px);
-  background-size:calc(100% / 6) 100%, 100% 18px;
-}
-.sw-overlay-box{position:absolute;border:1.5px dashed rgba(0,195,255,.9);background:rgba(0,195,255,.08);font:600 10.5px/1 var(--pf-sans);color:#007a9e;padding:5px 8px;text-transform:uppercase;letter-spacing:.08em}
-.sw-overlay-box.title-box{top:10%;left:8%;right:8%;height:38%;border-color:#ff0080;color:#c00060;background:rgba(255,0,128,.08)}
-.sw-overlay-box.author-box{top:54%;left:8%;right:8%;height:14%}
-.sw-overlay-box.colophon-box{bottom:6%;left:8%;right:50%;height:10%}
-.sw-controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;justify-content:center}
-.sw-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;border:1px solid var(--pf-line);background:#fff;font:600 13px/1 var(--pf-sans);color:var(--pf-ink);cursor:pointer;transition:all .25s}
-.sw-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-.sw-btn[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
-.sw-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.sw-cards{grid-template-columns:1fr}}
-.sw-card{background:#fff;border:1px solid var(--pf-line);border-radius:14px;padding:18px 20px;box-shadow:0 8px 20px -14px rgba(40,24,10,.3)}
-.sw-card b{display:block;font:600 15px/1.3 var(--pf-sans);color:var(--pf-ink);margin-bottom:6px}
-.sw-card p{font-size:14px;line-height:1.5;color:#4A3A2C;margin:0}
-.sw-card code{font:600 11.5px/1 var(--pf-mono);color:var(--accent);background:rgba(180,74,23,.08);padding:3px 6px;border-radius:4px}
-
-/* ===== Macro Inspection Stage ===== */
-.macro-stage{margin-top:36px;border-radius:14px;overflow:hidden;background:#181412;box-shadow:0 24px 48px -20px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08)}
-.macro-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:#241E1A;border-bottom:1px solid rgba(255,255,255,.08);color:#E6DFD5;font-size:13px}
-.macro-header b{color:#fff;font-size:14px}
-.macro-img-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#100E0D}
-.macro-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-.macro-grid-specs{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 24px;background:#1C1714;color:#C9BFB5;font-size:14px;line-height:1.55}
-@media(max-width:700px){.macro-grid-specs{grid-template-columns:1fr}}
-.macro-grid-specs h4{margin:0 0 8px;font:600 15px/1.2 var(--pf-sans);color:#fff}
-.macro-grid-specs ul{margin:0;padding-left:18px}
-.macro-grid-specs li+li{margin-top:6px}
-.macro-grid-specs span.old{color:#E59866}
-.macro-grid-specs span.new{color:#76D7C4}
-
-/* ===== Miolo & Editorial Design Gallery ===== */
-.st-miolo{background:linear-gradient(180deg,#F5EFE6,#E7DCCA)}
-.miolo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;margin-top:32px}
-.miolo-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 12px 28px -16px rgba(40,24,10,.4);border:1px solid rgba(40,24,10,.08);display:flex;flex-direction:column}
-.miolo-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#24201C}
-.miolo-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--pf-ease)}
-.miolo-card:hover .miolo-card-media img{transform:scale(1.03)}
-.miolo-card-body{padding:18px 20px;display:flex;flex-direction:column;flex:1}
-.miolo-card-body b{font:400 22px/1.15 var(--pf-serif);color:var(--pf-ink);margin-bottom:6px}
-.miolo-card-body p{font-size:14px;line-height:1.5;color:#4A3A2C;margin:0 0 14px;flex:1}
-.miolo-badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.miolo-badge{font:600 11px/1 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:99px;background:rgba(40,24,10,.06);color:var(--pf-ink)}
-.miolo-badge.pdf{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA}
-.miolo-pdf-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;background:var(--accent);color:#fff;font:600 13px/1 var(--pf-sans);text-decoration:none;align-self:flex-start;transition:opacity .25s}
-.miolo-pdf-btn:hover{opacity:.9}
-
-.sw-cover-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;justify-content:center}
-.sw-cover-btn{border:0;padding:7px 12px;border-radius:99px;background:rgba(40,24,10,.08);font:600 12px/1 var(--pf-sans);color:var(--pf-ink);cursor:pointer;transition:all .2s}
-.sw-cover-btn:hover{background:rgba(40,24,10,.16)}
-.sw-cover-btn[aria-pressed="true"]{background:var(--accent);color:#fff}
-
-/* ===== Kaputt Interactive Showcase ===== */
-.kp-stage{background:#181412;border-radius:18px;overflow:hidden;box-shadow:0 24px 50px -20px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08);margin-bottom:32px}
-.kp-top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#241E1A;border-bottom:1px solid rgba(255,255,255,.08);color:#E6DFD5;flex-wrap:wrap;gap:12px}
-.kp-top b{color:#fff;font-size:16px;display:flex;align-items:center;gap:10px}
-.kp-top .kp-tag{font:600 11px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:rgba(180,74,23,.3);color:#F6C945;border:1px solid rgba(246,201,69,.3)}
-.kp-viewer{position:relative;width:100%;aspect-ratio:16/9;background:#0F0D0C;display:grid;place-items:center;overflow:hidden}
-.kp-viewer img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;transition:opacity .28s,transform .4s var(--pf-ease)}
-.kp-viewer img.out{opacity:0;transform:scale(.98)}
-.kp-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px 20px;background:#1E1916;border-top:1px solid rgba(255,255,255,.06);overflow:visible}
-.kp-thumb{flex:0 0 clamp(72px,14vw,94px);height:clamp(48px,9vw,62px);border-radius:6px;overflow:hidden;border:2px solid transparent;background:#100E0D;cursor:pointer;padding:0;transition:all .2s;opacity:.55}
-.kp-thumb:hover{opacity:.9}
-.kp-thumb[aria-pressed="true"]{border-color:var(--hl);opacity:1;transform:scale(1.04);box-shadow:0 4px 12px rgba(0,0,0,.6)}
-.kp-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.kp-meta{padding:18px 24px;background:#241E1A;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.kp-meta-info b{display:block;color:#fff;font:600 15px/1.3 var(--pf-sans);margin-bottom:4px}
-.kp-meta-info span{color:#B8ADA2;font-size:13.5px;line-height:1.4}
-.kp-actions{display:flex;gap:10px;align-items:center}
+/* ===== 02 Kaputt: cover and three pages side by side, all at the same height ===== */
+.st-kaputt{background:#151210}
+.kp{display:grid;grid-template-columns:minmax(0,.748fr) minmax(0,.762fr) minmax(0,1.777fr) minmax(0,.733fr);gap:clamp(10px,1.6vw,18px);align-items:start}
+.kp img{display:block;width:100%;height:auto;box-shadow:0 2px 3px rgba(0,0,0,.45),0 24px 36px -20px rgba(0,0,0,.9)}
+@media(max-width:860px){.kp{grid-template-columns:repeat(3,minmax(0,1fr))}.kp .wide{grid-column:1/-1;order:-1}}
 
 .offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
 @keyframes drift{from{transform:scale(1.06) translate(-1.6%,.6%)}to{transform:scale(1.06) translate(1.6%,-.6%)}}
@@ -234,9 +159,9 @@
     <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Editorial</span></a>
     <ul class="pf-links">
       <li><a href="#capas">Capas</a></li>
-      <li><a href="#grid-suico">Grid Suíço</a></li>
-      <li><a href="#restauracao">Mauricio · Restauração</a></li>
-      <li><a href="#miolo">Kaputt &amp; Miolos</a></li>
+      <li><a href="#kaputt">Kaputt</a></li>
+      <li><a href="#mauricio">Mauricio</a></li>
+      <li><a href="#restauracao">Restauração</a></li>
       <li><a href="#ficha">Ficha</a></li>
     </ul>
     <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
@@ -256,7 +181,8 @@
       <div><dt>Ferramentas</dt><dd>InDesign, Photoshop, Illustrator e mesa digitalizadora</dd></div>
     </dl>
   </div>
-  <div class="pf-cover ed-cover" data-loop>
+  <div class="pf-cover ed-cover has-mobile-cover" data-loop>
+    <img class="pf-cover-mobile" src="assets/capa_mobile.png" alt="Capas de livro e Mauricio — O Início" loading="eager" fetchpriority="high">
     <img src="assets/cover.jpg" alt="Capas de livro enfileiradas em diagonal sobre fundo escuro: Como Fazer uma Monografia, Tratado de História das Religiões, A Falsa Medida do Homem, Mauricio — O Início, a caixa de C.S. Lewis, O Novo Espírito do Capitalismo e outras">
   </div>
 </header>
@@ -312,71 +238,60 @@
   </div>
 </section>
 
-<!-- 01.1 · Swiss Grid Inspector -->
-<section id="grid-suico" class="pf-sec alt st-grid-suico">
+<!-- 02 · Kaputt -->
+<section id="kaputt" class="pf-sec alt">
   <div class="wrap">
     <div class="pf-head rv">
-      <p class="eyebrow"><b>Grid & Rigor Suíço</b> · Design de Capas</p>
-      <h2>O grid invisível que dá peso e respiração à Martins Fontes.</h2>
-      <p class="lede">A tradição editorial da WMF Martins Fontes apoia-se no Estilo Tipográfico Internacional: grids modulares estritos, alinhamento óptico em linha de base (baseline grid) e uso deliberado do espaço negativo. O impacto visual nas livrarias nasce da tensão matemática entre a mancha de texto e o silêncio da capa.</p>
+      <p class="eyebrow"><b>02</b> · Kaputt</p>
+      <h2>Num quadrinho de guerra, o trabalho foi da capa ao miolo.</h2>
+      <p class="lede">Kaputt é a adaptação em quadrinho de Guazzelli para o romance de Curzio Malaparte sobre a Segunda Guerra, publicada pela WMF Martins Fontes. Além da capa, o miolo também foi projeto de Erik. A arte das páginas é de Guazzelli.</p>
     </div>
-
     <figure class="rv">
-      <div class="pf-stage" style="background:#fff;border-radius:18px;padding:clamp(20px,3.5vw,40px);box-shadow:0 20px 40px -20px rgba(40,24,10,.25)">
-        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Raio-X Tipográfico</span></div>
-        <div class="sw-grid-wrap">
-          <div>
-            <div class="sw-stage" id="swStage">
-              <img id="swCoverImg" src="assets/c-monog.webp" alt="Capa de Como Fazer uma Monografia com grid tipográfico suíço">
-              <div class="sw-overlay" id="swOverlay">
-                <div class="sw-overlay-lines" aria-hidden="true"></div>
-                <div class="sw-overlay-box title-box"><span>Zona Áurea · Título Modular (6 colunas)</span></div>
-                <div class="sw-overlay-box author-box"><span>Ancoragem · Autor (Baseline 14/28pt)</span></div>
-                <div class="sw-overlay-box colophon-box"><span>Colofão & Chancela WMF</span></div>
-              </div>
-            </div>
-            <div class="sw-cover-btns" id="swCoverBtns" role="group" aria-label="Escolher capa para o Raio-X">
-              <button type="button" class="sw-cover-btn" aria-pressed="true" data-src="assets/c-monog.webp" data-title="Como Fazer uma Monografia">Monografia (6 colunas)</button>
-              <button type="button" class="sw-cover-btn" aria-pressed="false" data-src="assets/c-novo.webp" data-title="O Novo Espírito do Capitalismo">Capitalismo (Assimétrico)</button>
-              <button type="button" class="sw-cover-btn" aria-pressed="false" data-src="assets/c-metod.webp" data-title="Metodologia Filosófica">Metodologia (Vertical)</button>
-            </div>
-            <div class="sw-controls">
-              <button type="button" class="sw-btn" id="swGridBtn" aria-pressed="false">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-                <span>Ativar Raio-X do Grid</span>
-              </button>
-            </div>
-          </div>
-          <div class="sw-cards">
-            <div class="sw-card">
-              <b>Grid Modular de 6 & 12 Colunas</b>
-              <p>O layout distribui pesos com proporção assimétrica (<code>1:1.618</code>). A quebra forçada das palavras (como <code>MONO / GRAFIA</code>) não é mero acaso: ela responde à largura exata de 3 e 4 módulos de coluna, tornando o título um bloco arquitetônico puro.</p>
-            </div>
-            <div class="sw-card">
-              <b>Baseline Grid & Ancoragem</b>
-              <p>Linha de base rígida em incrementos de <code>14pt</code> e <code>28pt</code>. Garante que os nomes dos autores, selos de coleção e textos de quarta capa e orelhas compartilhem o mesmo ritmo vertical na lombada e no miolo.</p>
-            </div>
-            <div class="sw-card">
-              <b>Espaço Negativo Ativo (&gt; 55%)</b>
-              <p>Ao contrário das capas que tentam preencher cada centímetro, o grid suíço reserva mais da metade da área total ao respiro visual. O vazio gera distinção imediata nas gôndolas e prateleiras de livrarias.</p>
-            </div>
-            <div class="sw-card">
-              <b>Tensão Tipográfica Suíça</b>
-              <p>Contraste cirúrgico entre famílias sem serifa da escola de Zurique/Basileia (<em>Akzidenz-Grotesk</em>, <em>Univers</em>, <em>Helvetica</em>) e fontes serifadas acadêmicas nobres (<em>Sabon</em> de Jan Tschichold, <em>Bembo</em> e <em>Garamond</em>).</p>
-            </div>
-          </div>
+      <div class="pf-stage st-kaputt">
+        <div class="tag-row"><span class="pill y">Capa e miolo</span><span class="pill w">WMF Martins Fontes</span></div>
+        <div class="kp">
+          <img src="assets/c-kaputt.webp" alt="Capa preta de Kaputt com uma suástica vermelha em chamas no centro" loading="lazy">
+          <img src="assets/kaputt/02_miolo_pagina_tanque_neve.jpg" alt="Página em três quadros a nanquim: a vista de dentro de um carro numa estrada de neve, com soldados e tanques ao longe" loading="lazy">
+          <img class="wide" src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" alt="Dois quadros lado a lado em preto e branco: um homem de frente e um oficial de quepe; no balão, “Sim, sou judeu.”" loading="lazy">
+          <img src="assets/kaputt/04_miolo_capitulo_sangue.jpg" alt="Página em seis quadros em tons de roxo, com rostos no escuro e um balão com a palavra sangue" loading="lazy">
         </div>
       </div>
-      <figcaption><b>Prancha de Raio-X do Grid Tipográfico Suíço.</b> Clique em "Ativar Raio-X do Grid" para visualizar a sobreposição das 6 colunas, o baseline grid de entrelinhas e a divisão áurea do espaço nas capas da WMF Martins Fontes.</figcaption>
+      <figcaption><b>Kaputt, WMF Martins Fontes.</b> Capa e três páginas reais do miolo, com arte de Guazzelli.</figcaption>
     </figure>
   </div>
 </section>
 
-<!-- 02 · restoration -->
+<!-- 03 · Mauricio: signature band -->
+<section id="mauricio" class="pf-sec mi-band">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Mauricio — O Início</p>
+      <h2>Um livro que começou com uma mensagem.</h2>
+      <p class="lede">Três livros de Mauricio de Sousa dos anos 60, raros, reunidos num só volume para os 80 anos dele. O projeto nasceu de um contato de Erik com a MSP e passou por restauração, diagramação e capa.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-gibi" id="mi" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Do contato ao livro</span></div>
+        <div class="mi auto">
+          <div class="mi-view"><img id="miImg" src="assets/m-originais.webp" alt="Os três livros originais dos anos 60: A Caixa da Bondade, Piteco e O Astronauta no Planeta dos Homens Sorvete, da Editora Coleção F.T.D."></div>
+          <ol class="mi-steps">
+            <li><button type="button" aria-pressed="true" data-src="assets/m-originais.webp" data-alt="Os três livros originais dos anos 60: A Caixa da Bondade, Piteco e O Astronauta no Planeta dos Homens Sorvete, da Editora Coleção F.T.D."><i class="n">1</i><b>O contato</b><span>Depois de uma entrevista de Sidney Gusman, da MSP, no The Noite (SBT), Erik procurou a MSP pelo Facebook. A base eram três livros raros dos anos 60.</span><i class="bar" aria-hidden="true"></i></button></li>
+            <li><button type="button" aria-pressed="false" data-src="assets/m-detalhes.webp" data-full data-alt="Três polaroides com detalhes lado a lado: a impressão dos anos 60 e a página restaurada"><i class="n">2</i><b>Restauração</b><span>Página por página: a cor de volta para dentro do traço, os tons corrigidos e as estampas iguais do começo ao fim do livro.</span><i class="bar" aria-hidden="true"></i></button></li>
+            <li><button type="button" aria-pressed="false" data-src="assets/m-miolo.webp" data-full data-alt="Livro aberto: texto na página da esquerda e, na da direita, a ilustração restaurada de um menino de chapéu de palha pulando uma cerca"><i class="n">3</i><b>Diagramação</b><span>Os três livros num volume, com o texto numa página e a ilustração restaurada na outra.</span><i class="bar" aria-hidden="true"></i></button></li>
+            <li><button type="button" aria-pressed="false" data-src="assets/m-capa.webp" data-alt="Mockup da capa azul de Mauricio — O Início, com a assinatura de Mauricio em amarelo e os personagens em fila no pé da capa"><i class="n">4</i><b>Capa</b><span>A assinatura de Mauricio em amarelo sobre azul, o título em letras coloridas e os personagens em fila no pé da capa.</span><i class="bar" aria-hidden="true"></i></button></li>
+          </ol>
+        </div>
+      </div>
+      <figcaption><b>Do contato ao livro.</b> Fotos reais publicadas pelo autor: os três livros originais, os detalhes da restauração e o livro aberto. A capa aparece num mockup. As etapas avançam sozinhas até o primeiro toque.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 04 · restoration -->
 <section id="restauracao" class="pf-sec">
   <div class="wrap">
     <div class="pf-head rv">
-      <p class="eyebrow"><b>02</b> · Mauricio — O Início · Restauração Histórica</p>
+      <p class="eyebrow"><b>04</b> · Restauração</p>
       <h2>O livro como Mauricio queria que ele tivesse saído nos anos 60.</h2>
       <p class="lede">A restauração corrigiu três tipos de erro que vieram da gráfica dos anos 60: a cor fora do traço, a cor errada e a estampa que mudava de uma página para outra. A régua era o livro que Mauricio gostaria de ter lançado na época.</p>
     </div>
@@ -411,120 +326,6 @@
       <figcaption><b>Detalhes da restauração.</b> Recortes reais da imagem publicada pelo autor, que mostra cada detalhe lado a lado: à esquerda a impressão dos anos 60, à direita a página restaurada. No comparador, as duas metades foram alinhadas para ficar uma sobre a outra.</figcaption>
     </figure>
     <div class="callout rv"><b>A falha também tinha charme.</b> “Sendo um apaixonado por impressões e gravuras, vejo um charme em cada falha de registro e outros detalhes das impressões antigas. Porém, o Mauricio gostaria de lançar esse material da melhor forma possível, assim como ele gostaria que fosse lançado nos anos 60.” Erik Placido, sobre corrigir em vez de preservar.</div>
-
-    <!-- Macro Close-up Inspection -->
-    <div class="macro-stage rv">
-      <div class="macro-header">
-        <b>Macro-inspeção: Oxidação & Desvio de Fotolito (1965) vs. Vetorização Limpa (2015)</b>
-        <span class="pill" style="background:rgba(255,255,255,.15);color:#fff">Zoom Óptico 400%</span>
-      </div>
-      <div class="macro-img-wrap">
-        <img src="assets/macro-restauracao.jpg" alt="Macro close-up da restauração: papel jornal oxidado com falha de registro de 1.5mm nos anos 60 à esquerda vs. traço preto limpo e cor pura de 2015 à direita" loading="lazy">
-      </div>
-      <div class="macro-grid-specs">
-        <div>
-          <h4><span class="old">●</span> A Impressão Original de 1965 (FTD)</h4>
-          <ul>
-            <li><b>Papel Jornal Ácido & Oxidação:</b> Fibras amareladas com perda de contraste mecânico ao longo de 50 anos de armazenamento dos exemplares raros.</li>
-            <li><b>Desvio de Registro de 1.8mm:</b> Chapas de meio-tom CMYK desalinhadas na impressora plana, com a cor vazando para fora do nanquim.</li>
-            <li><b>Retícula Grosseira & Ponto Estourado:</b> Ganho de ponto (dot gain) que empastava detalhes expressivos dos rostos dos personagens.</li>
-          </ul>
-        </div>
-        <div>
-          <h4><span class="new">●</span> A Restauração Digital de 2015 (MSP / WMF)</h4>
-          <ul>
-            <li><b>Vetorização & Sensibilidade de Bico de Pena:</b> Traço de contorno refeito digitalmente no Photoshop com mesa Wacom, preservando a caligrafia orgânica de Mauricio.</li>
-            <li><b>Separação Limpa de Canais CMYK:</b> Cores chapadas de alta pureza cromática, eliminando o ruído de retícula antiga.</li>
-            <li><b>Fidelidade ao Padrão Pretendido:</b> Correção de erros históricos de estampa e fotolitos invertidos de fábrica, alcançando o livro como ele deveria ter sido impresso.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 03 · Miolo & Graphic Novel: Kaputt e Mauricio -->
-<section id="miolo" class="pf-sec alt st-miolo">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow"><b>03</b> · Miolo &amp; Graphic Novel · Kaputt e Mauricio</p>
-      <h2>Diagramação editorial: o ritmo da página além da capa.</h2>
-      <p class="lede">Dois projetos de miolo completo com desafios opostos e complementares: a narrativa expressionista e crua da guerra em <em>Kaputt</em> e o resgate histórico de 212 páginas em capa dura comemorativa de <em>Mauricio — O Início</em>.</p>
-    </div>
-
-    <!-- Kaputt Interactive Showcase -->
-    <div class="kp-stage rv">
-      <div class="kp-top">
-        <b><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Kaputt · Graphic Novel (WMF Martins Fontes)</b>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <span class="kp-tag">Capa &amp; Miolo Completo</span>
-          <span class="pill" style="background:rgba(255,255,255,.12);color:#fff">Curzio Malaparte &amp; Eloar Guazzelli</span>
-        </div>
-      </div>
-      <div class="kp-viewer">
-        <img id="kpMainImg" src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" alt="Página dupla de Kaputt: cena dramática de guerra com traço denso a nanquim e mancha expressionista">
-      </div>
-      <div class="kp-nav" id="kpNav" role="group" aria-label="Selecione uma página do miolo de Kaputt">
-        <button type="button" class="kp-thumb" aria-pressed="true" data-src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" data-title="Cena Principal HD: 'Sim, sou judeu'" data-desc="Página dupla em alta definição: traço denso a nanquim de Guazzelli, mancha expressionista crua e ritmo de leitura cinematográfico." data-alt="Cena dramática de confronto com oficiais alemães e soldados em Kaputt">
-          <img src="assets/kaputt/03_miolo_cena_sim_sou_judeu_hd.jpg" alt="Miniatura cena Sim sou judeu">
-        </button>
-        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/02_miolo_pagina_tanque_neve.jpg" data-title="Abertura de Sequência: Tanque na Neve" data-desc="Página inteira vertical de abertura: tensão dramática brutal no contraste extremo entre o branco do papel e os pretos puros de nanquim." data-alt="Página vertical com soldado soviético e tanque sob tempestade de neve">
-          <img src="assets/kaputt/02_miolo_pagina_tanque_neve.jpg" alt="Miniatura tanque na neve">
-        </button>
-        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/04_miolo_capitulo_sangue.jpg" data-title="Abertura de Capítulo: Sangue" data-desc="Página de título capitular: tipografia expressionista irregular integrada à estética visceral da obra de Malaparte." data-alt="Abertura do capítulo Sangue em Kaputt">
-          <img src="assets/kaputt/04_miolo_capitulo_sangue.jpg" alt="Miniatura capítulo Sangue">
-        </button>
-        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/06_miolo_dialogo_alemaes.jpg" data-title="Grid de Diálogos &amp; Chiaroscuro" data-desc="Diagramação de balões e recordatórios: distribuição de espaço que equilibra o texto literário denso com a respiração visual dos quadros." data-alt="Página de diálogos entre oficiais em Kaputt">
-          <img src="assets/kaputt/06_miolo_dialogo_alemaes.jpg" alt="Miniatura diálogos">
-        </button>
-        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/08_miolo_prefacio_guazzelli.jpg" data-title="Prefácio Ilustrado por Eloar Guazzelli" data-desc="Abertura editorial do livro: diagramação de prefácio com colunas acadêmicas em Sabon e vinheta ilustrada de abertura." data-alt="Prefácio de Kaputt com texto diagramado e ilustração">
-          <img src="assets/kaputt/08_miolo_prefacio_guazzelli.jpg" alt="Miniatura prefácio">
-        </button>
-        <button type="button" class="kp-thumb" aria-pressed="false" data-src="assets/kaputt/09_foto_livro_impresso.jpg" data-title="O Livro Impresso: Edição WMF Martins Fontes" data-desc="Fotografia real da edição publicada: papel offset de alta gramatura, lombada quadrada costurada e acabamento industrial de prestígio." data-alt="Fotografia do exemplar impresso de Kaputt">
-          <img src="assets/kaputt/09_foto_livro_impresso.jpg" alt="Miniatura livro impresso">
-        </button>
-      </div>
-      <div class="kp-meta">
-        <div class="kp-meta-info">
-          <b id="kpTitle">Cena Principal HD: "Sim, sou judeu"</b>
-          <span id="kpDesc">Página dupla em alta definição: traço denso a nanquim de Guazzelli, mancha expressionista crua e ritmo de leitura cinematográfico.</span>
-        </div>
-        <div class="kp-actions">
-          <a class="miolo-pdf-btn" href="assets/kaputt/kaputt_paginas_miolo_alta_resolucao.pdf" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Visualizar PDF do Miolo em Alta Definição (9 pág.) ↗
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mauricio Album Card -->
-    <div class="miolo-grid rv">
-      <article class="miolo-card" style="grid-column: 1 / -1;">
-        <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(20px,3vw,36px);align-items:center;">
-          <div class="miolo-card-media" style="aspect-ratio:16/10;">
-            <img src="assets/mauricio-pagina-finalizada-miolo.png" alt="Página diagramada do livro Mauricio — O Início, com texto à esquerda e ilustração restaurada à direita" loading="lazy">
-          </div>
-          <div class="miolo-card-body" style="padding:clamp(16px,2.5vw,28px);">
-            <div class="miolo-badge-row">
-              <span class="miolo-badge">MSP · 80 Anos</span>
-              <span class="miolo-badge">212 Páginas</span>
-              <span class="miolo-badge">Capa Dura Álbum</span>
-              <span class="miolo-badge" style="background:#FEF3C7;color:#92400E">Edição Histórica de Luxo</span>
-            </div>
-            <b style="font-size:clamp(22px,2.8vw,30px)">Mauricio — O Início · Diagramação em Formato Álbum</b>
-            <p>Diagramação clássica de livro infantil de luxo em formato horizontal com 212 páginas: a página par recebe o texto narrativo com entrelinha generosa e tipografia legível para leitura compartilhada entre pais e filhos; a página ímpar é dedicada à ilustração restaurada em toda a sua amplitude, com recuo calculado de calha para compensar a curvatura natural da lombada de capa dura encadernada.</p>
-            <div style="display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:14px;border-top:1px solid rgba(40,24,10,.08);">
-              <img src="assets/mauricio-livro-finalizado-foto.jpg" alt="Foto do exemplar impresso de Mauricio — O Início" style="width:68px;height:68px;border-radius:10px;object-fit:cover;box-shadow:0 3px 8px rgba(0,0,0,.25)">
-              <div>
-                <b style="font-size:14px;display:block;margin-bottom:2px">Exemplar Físico Publicado</b>
-                <span style="font-size:13px;color:#6B5745;line-height:1.4">Volume único lançado na comemoração oficial dos 80 anos de Mauricio de Sousa, reunindo <em>A Caixa da Bondade</em>, <em>Piteco</em> e <em>O Astronauta no Planeta dos Homens Sorvete</em>.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
   </div>
 </section>
 
@@ -696,48 +497,27 @@
     autoplay(es, 3200, function(){ eShow(eStep(1)) });
   }
 
-  /* ===== Swiss Grid toggle & cover switcher ===== */
-  var swBtn = $('#swGridBtn'), swOverlay = $('#swOverlay'), swCoverImg = $('#swCoverImg');
-  if(swBtn && swOverlay){
-    swBtn.addEventListener('click', function(){
-      var on = swOverlay.classList.toggle('active');
-      swBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-      swBtn.querySelector('span').textContent = on ? 'Ocultar Raio-X do Grid' : 'Ativar Raio-X do Grid';
-    });
+  /* ===== 03 Mauricio: a step advances when its yellow bar fills; the first touch takes over ===== */
+  var mi = $('#mi');
+  if(mi){
+    var mWrap = $('.mi', mi), mImg = $('#miImg'), mBtns = $$('.mi-steps button', mi), mCur = 0, mAuto = !RM;
+    function mShow(i){
+      if(i===mCur) return;
+      var b = mBtns[i]; mCur = i;
+      mBtns.forEach(function(x,k){ x.setAttribute('aria-pressed', k===i ? 'true' : 'false') });
+      var go = function(){ mImg.src = b.dataset.src; mImg.alt = b.dataset.alt; mImg.classList.toggle('full', b.dataset.full!==undefined); mImg.classList.remove('out') };
+      if(RM){ go(); return }
+      mImg.classList.add('out');
+      setTimeout(function(){ var n = new Image(); n.onload = n.onerror = go; n.src = b.dataset.src }, 220);
+    }
+    function mStop(){ mAuto = false; mWrap.classList.remove('auto') }
+    if(!mAuto) mStop();
+    ['pointerdown','keydown'].forEach(function(ev){ mi.addEventListener(ev,mStop,{capture:true,passive:true}) });
+    mBtns.forEach(function(b,k){ b.addEventListener('click',function(){ mShow(k) }) });
+    mi.addEventListener('animationend',function(e){ if(mAuto && e.target.classList.contains('bar')) mShow((mCur + 1) % mBtns.length) });
   }
-  $$('#swCoverBtns button').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      $$('#swCoverBtns button').forEach(function(b){ b.setAttribute('aria-pressed', b===btn ? 'true' : 'false') });
-      if(swCoverImg){
-        swCoverImg.style.opacity = '0';
-        setTimeout(function(){
-          swCoverImg.src = btn.dataset.src;
-          swCoverImg.alt = 'Capa de ' + btn.dataset.title + ' com grid tipográfico suíço';
-          swCoverImg.style.opacity = '1';
-        }, 180);
-      }
-    });
-  });
 
-  /* ===== Kaputt interactive page viewer ===== */
-  var kpMainImg = $('#kpMainImg'), kpTitle = $('#kpTitle'), kpDesc = $('#kpDesc');
-  $$('#kpNav button').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      $$('#kpNav button').forEach(function(b){ b.setAttribute('aria-pressed', b===btn ? 'true' : 'false') });
-      if(kpMainImg){
-        kpMainImg.classList.add('out');
-        setTimeout(function(){
-          kpMainImg.src = btn.dataset.src;
-          kpMainImg.alt = btn.dataset.alt || btn.dataset.title;
-          if(kpTitle) kpTitle.textContent = btn.dataset.title;
-          if(kpDesc) kpDesc.textContent = btn.dataset.desc;
-          kpMainImg.classList.remove('out');
-        }, 180);
-      }
-    });
-  });
-
-  /* ===== 03 compare sliders: drag, tap or use the arrow keys; one sweep shows that it moves ===== */
+  /* ===== 04 compare sliders: drag, tap or use the arrow keys; one sweep shows that it moves ===== */
   $$('.cmp').forEach(function(c){
     var input = $('input', c), touched = false, raf = 0;
     function set(v){ v = Math.max(0, Math.min(100, v)); c.style.setProperty('--x', v+'%'); input.value = Math.round(v) }
