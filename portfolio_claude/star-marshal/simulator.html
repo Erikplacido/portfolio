@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR MARSHAL — A Lei não termina na última estrela · 1960s Pulp Diegetic & Contextual HUD Simulator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Pre-compiled 3D OBJ Models (vespera_city.obj + star_marshal.obj) -->
+    <script src="assets/models_3d.js"></script>
+    <script src="input-core.js"></script>
+    <!-- Google Fonts: Bebas Neue (números e títulos), Oswald (rótulos), Courier Prime (legendas datilografadas da prancha) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:wght@400;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Paleta amostrada da prancha Star Marshal (faixa "Paleta de cores"). */
+        :root {
+            --pulp-ink: #0C2229;
+            --pulp-teal-deep: #12313A;
+            --pulp-teal: #026574;
+            --pulp-cyan: #5FB5AE;
+            --pulp-red: #F94524;
+            --pulp-gold: #FAB02D;
+            --pulp-cream: #FCE8B5;
+            --pulp-paper: #D9C291;
+            --pulp-magenta: #C83A6E;
+            --pulp-crit: #571A15;
+            --font-pulp: 'Bebas Neue', sans-serif;
+            --font-hud: 'Oswald', sans-serif;
+            --font-mono: 'Courier Prime', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0C2229;
+            color: var(--pulp-cream);
+            font-family: var(--font-hud);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 1960s Pulp Halftone & Distressed Paper Grain Overlay */
+        .pulp-grain-overlay {
+            background-image:
+                radial-gradient(rgba(252, 232, 181, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(13, 59, 73, 0) 50%, rgba(5, 18, 24, 0.25) 50%);
+            background-size: 10px 10px, 100% 4px;
+        }
+
+        /* Vintage Pulp Chamfered Frames */
+        .pulp-panel {
+            background: rgba(9, 32, 42, 0.90);
+            border: 2.5px solid var(--pulp-cream);
+            box-shadow: 0 0 0 2px #0C2229, 0 10px 28px rgba(0, 0, 0, 0.65), inset 0 0 18px rgba(95, 181, 174, 0.14);
+        }
+
+        .pulp-panel-gold {
+            background: rgba(12, 36, 46, 0.92);
+            border: 2.5px solid var(--pulp-gold);
+            box-shadow: 0 0 0 2px #0C2229, 0 10px 28px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(250, 176, 45, 0.18);
+        }
+
+        .pulp-panel-critical {
+            background: rgba(42, 10, 12, 0.92);
+            border: 2.5px solid var(--pulp-red);
+            box-shadow: 0 0 24px rgba(249, 69, 36, 0.65), inset 0 0 22px rgba(249, 69, 36, 0.35);
+        }
+
+        .clip-pulp-box {
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+        }
+
+        .clip-pulp-tag {
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+        }
+
+        /* Smooth Contextual State Transitions (450ms Cubic-Bezier) */
+        .hud-state-transition {
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.35s ease;
+        }
+
+        /* Estado Crítico (<15% HP): Distorção Cromática RGB & Pulso Vermelho */
+        @keyframes pulp-chromatic-glitch {
+            0%, 100% {
+                filter: drop-shadow(-3px 0 0 rgba(249, 69, 36, 0.92)) drop-shadow(3px 0 0 rgba(95, 181, 174, 0.92));
+                transform: translate(0, 0);
+            }
+            25% {
+                filter: drop-shadow(-5px 1px 0 rgba(249, 69, 36, 1)) drop-shadow(4px -1px 0 rgba(250, 176, 45, 0.95));
+                transform: translate(-2px, 1px);
+            }
+            50% {
+                filter: drop-shadow(3px -1px 0 rgba(95, 181, 174, 0.9)) drop-shadow(-3px 1px 0 rgba(249, 69, 36, 0.9));
+                transform: translate(1.5px, -1px);
+            }
+            75% {
+                filter: drop-shadow(-4px -1px 0 rgba(249, 69, 36, 0.95)) drop-shadow(4px 1px 0 rgba(95, 181, 174, 0.95));
+                transform: translate(-1px, 1.5px);
+            }
+        }
+
+        .critical-rgb-glitch {
+            animation: pulp-chromatic-glitch 0.75s infinite steps(2, end);
+        }
+
+        @keyframes critical-red-vignette {
+            0%, 100% {
+                opacity: 0.85;
+                box-shadow: inset 0 0 120px 45px rgba(249, 69, 36, 0.75), inset 0 0 50px 15px rgba(180, 20, 10, 0.55);
+            }
+            50% {
+                opacity: 0.96;
+                box-shadow: inset 0 0 190px 75px rgba(249, 69, 36, 0.95), inset 0 0 85px 30px rgba(250, 176, 45, 0.45);
+            }
+        }
+
+        .critical-vignette-pulse {
+            animation: critical-red-vignette 1.05s infinite ease-in-out;
+        }
+
+        /* Bullet-Time Viewport Filter (0.10x Time Dilation) */
+        .bullet-time-active {
+            filter: sepia(0.25) saturate(1.35) contrast(1.18) brightness(0.82);
+            transform: scale(1.03);
+        }
+
+        /* Pulp Floating Onomatopoeia ("ZAP!", "ATOM-HIT!", "PEW!") */
+        @keyframes pulp-pop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.35) rotate(-10deg); }
+            25% { opacity: 1; transform: translate(-50%, -85%) scale(1.2) rotate(4deg); }
+            60% { opacity: 1; transform: translate(-50%, -120%) scale(1.0) rotate(-2deg); }
+            100% { opacity: 0; transform: translate(-50%, -165%) scale(0.8) rotate(5deg); }
+        }
+        .pulp-floater {
+            position: absolute;
+            pointer-events: none;
+            font-family: var(--font-pulp);
+            letter-spacing: 0.08em;
+            animation: pulp-pop 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            z-index: 45;
+        }
+
+        /* Radial Wheel Sectors */
+        .wheel-wedge {
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .wheel-wedge:hover {
+            filter: drop-shadow(0 0 12px rgba(250, 176, 45, 0.85));
+        }
+
+        /* ECG Pulse Animation */
+        @keyframes ecg-scroll {
+            0% { stroke-dashoffset: 240; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .ecg-line-anim {
+            stroke-dasharray: 240;
+            animation: ecg-scroll 1.2s linear infinite;
+        }
+
+        /* UX Zones Animated Dash */
+        @keyframes ux-dash {
+            to { stroke-dashoffset: -40; }
+        }
+        .ux-zone-dash {
+            animation: ux-dash 2.2s linear infinite;
+        }
+
+        body[data-hud-state="exploration"] #wp-evidence, body[data-hud-state="exploration"] #wp-spire{opacity:.45}
+        @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important} .critical-vignette-pulse{opacity:.7!important;box-shadow:inset 0 0 100px 35px #e6392688}.critical-rgb-glitch{filter:none}}
+    </style>
+<link rel="stylesheet" href="art-direction.css?v=20261026m">
+<script src="art-world.js?v=20261026c"></script>
+<script src="pulp-render.js?v=20261026d"></script>
+</head>
+<body class="relative select-none overflow-hidden bg-[#0C2229]">
+
+
+    <!-- =====================================================================
+         1. MAIN 3D VIEWPORT (THREE.JS REALTIME .OBJ ENGINE: VESPERA-9 + STAR MARSHAL)
+    ====================================================================== -->
+    <div id="control-dock" class="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 max-w-[99vw]">
+        <span id="input-device" aria-live="polite"></span><span id="time-scale">TEMPO · 1,00×</span>
+        <p id="state-caption" aria-live="polite">HUD 90% invisível para valorizar o mundo.</p>
+
+        <!-- 1. Contextual HUD State Switcher -->
+        <div class="dock-group">
+            <button id="btn-st-exploration" onclick="setHudState('exploration')" class="dock-btn" aria-pressed="false">
+                [1] EXPLORAÇÃO
+            </button>
+            <button id="btn-st-combat" onclick="setHudState('combat')" class="dock-btn" aria-pressed="false">
+                [2] COMBATE
+            </button>
+            <button id="btn-st-critical" onclick="setHudState('critical')" class="dock-btn" aria-pressed="false">
+                [3] ESTADO CRÍTICO
+            </button>
+        </div>
+
+        <!-- 2. Dynamic Platform Button Glyphs (PS / Xbox / PC) -->
+        <div class="platform-tabs dock-group" role="group" aria-label="Dispositivo de entrada">
+            <button id="btn-plat-ps" onclick="setPlatformGlyphs('ps', true)" class="dock-btn" aria-pressed="false">
+                PS (✕◯▢△)
+            </button>
+            <button id="btn-plat-xbox" onclick="setPlatformGlyphs('xbox', true)" class="dock-btn" aria-pressed="false">
+                XBOX (ABXY)
+            </button>
+            <button id="btn-plat-pc" onclick="setPlatformGlyphs('pc', true)" class="dock-btn" aria-pressed="false">
+                PC (E/R/TAB)
+            </button>
+        </div>
+
+        <!-- 3. Diegetic & Combat Simulation Controls -->
+        <div class="control-extra dock-group">
+            <button onclick="fireRaygun(event)"
+                    class="dock-btn">
+                Disparar [LMB]
+            </button>
+            <button onclick="toggleWristScanner(event)"
+                    class="dock-btn">
+                Scanner de Pulso [V]
+            </button>
+
+            <button onclick="toggleUxZones()"
+                    class="dock-btn">
+                Análise UX [U]
+            </button>
+        </div>
+        <p class="control-extra dock-hint">WASD ou analógico esquerdo: andar · Mouse ou analógico direito: girar e mirar · Segure o clique ou R2/RT: atirar correndo</p>
+        <button id="tools-toggle" type="button" aria-expanded="false" onclick="const open=document.body.dataset.tools!=='open';document.body.dataset.tools=open?'open':'';this.setAttribute('aria-expanded',open);this.textContent=open?'Fechar −':'Controles +';">Controles +</button>
+    </div>
+    <main id="game-viewport" class="relative w-screen h-screen overflow-hidden cursor-crosshair">
+
+        <!-- Three.js WebGL Canvas -->
+        <div id="webgl-container" class="absolute inset-0 w-full h-full transition-all duration-300 z-0"></div>
+
+        <!-- 1960s Pulp Halftone & CRT Scanline Grain -->
+        <div class="absolute inset-0 pointer-events-none pulp-grain-overlay z-10"></div>
+
+        <!-- Critical State (<15% HP) Red Pulsing Vignette -->
+        <div id="critical-vignette" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 z-15"></div>
+
+        <!-- =================================================================
+             2. CAMADA ESPACIAL 3D (IN-WORLD WAYPOINTS & EVIDÊNCIAS EM VESPERA-9)
+        ================================================================== -->
+        <div id="spatial-waypoints-layer" class="absolute inset-0 pointer-events-none z-20 overflow-hidden">
+
+            <!-- Waypoint 1: Torre Central da Federação Solar -->
+            <div id="wp-spire" class="absolute -translate-x-1/2 -translate-y-full flex flex-col items-center transition-transform duration-75">
+                <div class="flex items-center gap-2.5 px-3 py-1 pulp-panel-gold clip-pulp-box">
+                    <!-- 4-Point Solar Federation Star -->
+                    <svg class="w-5 h-5 shrink-0 text-[#FAB02D]" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12,0 14.8,9.2 24,12 14.8,14.8 12,24 9.2,14.8 0,12 9.2,9.2"/>
+                        <circle cx="12" cy="12" r="2.5" fill="#F94524"/>
+                    </svg>
+                    <div class="text-left">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[9px] font-mono tracking-widest uppercase text-[#5FB5AE] font-bold">FEDERAÇÃO SOLAR</span>
+                            <span id="wp-spire-dist" class="text-[10px] font-mono font-bold bg-[#FAB02D] text-[#0C2229] px-1">240m</span>
+                        </div>
+                        <div class="text-xs font-bold tracking-wider uppercase text-[#FCE8B5] leading-tight">
+                            TORRE DE COMANDO · VESPERA-9
+                        </div>
+                    </div>
+                </div>
+                <div class="w-0.5 h-12 bg-gradient-to-b from-[#FAB02D] to-transparent"></div>
+                <div class="w-2.5 h-2.5 rounded-full border border-[#FAB02D] bg-[#F94524]"></div>
+            </div>
+
+            <!-- Waypoint 2: Evidência / Rastro de Radiação (Interativo na Exploração e Scanner) -->
+            <div id="wp-evidence"
+                 onclick="investigateEvidence(event)"
+                 class="pointer-events-auto cursor-pointer absolute -translate-x-1/2 -translate-y-full flex flex-col items-center group transition-transform duration-75">
+                <div class="flex items-center gap-2.5 px-3 py-1.5 pulp-panel clip-pulp-box group-hover:scale-105 transition-transform border-[#5FB5AE]">
+                    <div id="glyph-interact" class="w-7 h-7 flex items-center justify-center shrink-0"></div>
+                    <div class="text-left pr-1">
+                        <div class="text-[9px] font-mono uppercase tracking-widest text-[#5FB5AE] flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-[#5FB5AE] animate-ping"></span>
+                            EVIDÊNCIA DE CONTRABANDO
+                        </div>
+                        <div id="evidence-label" class="text-xs font-bold uppercase text-[#FCE8B5] tracking-wide">
+                            INVESTIGAR RASTRO DE RADIAÇÃO
+                        </div>
+                    </div>
+                </div>
+                <div class="w-0.5 h-10 bg-gradient-to-b from-[#5FB5AE] to-transparent"></div>
+            </div>
+
+            <!-- Waypoint 3: Patrulha Hostil (Aparece em Combate/Crítico) -->
+            <div id="wp-hostile" class="absolute -translate-x-1/2 -translate-y-full flex flex-col items-center opacity-0 transition-opacity duration-300">
+                <div class="flex items-center gap-2 px-2.5 py-0.5 bg-[#571A15]/95 border border-[#F94524] clip-pulp-tag">
+                    <span class="w-2 h-2 rounded-full bg-[#F94524] animate-ping"></span>
+                    <span class="text-[10px] font-mono font-bold text-[#FCE8B5] uppercase tracking-wider"></span>
+                </div>
+                <div class="w-0.5 h-8 bg-gradient-to-b from-[#F94524] to-transparent"></div>
+            </div>
+
+        </div>
+
+        <!-- =================================================================
+             3. TOP HEADER BAR (LOCALIZAÇÃO VESPERA-9 & ESTADO ATUAL)
+        ================================================================== -->
+        <div id="hud-header" class="absolute top-3 left-4 right-4 z-30 flex items-start justify-between pointer-events-none">
+
+            <!-- Top-Left: Star Marshal Emblem & Sector Readout -->
+            <div id="mission-heading" class="flex items-center gap-3 px-4 py-2 pulp-panel clip-pulp-box pointer-events-auto">
+                <!-- Solar Federation 4-Point Compass Star -->
+                <div class="relative w-9 h-9 flex items-center justify-center bg-[#164550] border border-[#FAB02D] rounded-full">
+                    <svg class="w-7 h-7 text-[#FAB02D]" viewBox="0 0 32 32" fill="currentColor">
+                        <polygon points="16,1 19.5,12.5 31,16 19.5,19.5 16,31 12.5,19.5 1,16 12.5,12.5"/>
+                        <circle cx="16" cy="16" r="3.5" fill="#F94524"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-['Bebas_Neue'] text-xl tracking-widest text-[#FAB02D] leading-none">
+                            STAR MARSHAL
+                        </span>
+                        <span class="text-[10px] font-mono px-1.5 py-0.2 bg-[#F94524] text-[#FCE8B5] font-bold">
+                            VESPERA-9
+                        </span>
+                    </div>
+                    <div id="hud-mode-subtitle" class="text-[10px] font-mono uppercase tracking-widest text-[#5FB5AE] mt-0.5">
+                        PORTO DOS CONDENADOS · [2] COMBATE TÁTICO
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center-Top: Estado Crítico Alert Box (Visible ONLY in Critical State) -->
+            <div id="critical-top-alert"
+                 class="hud-state-transition opacity-0 -translate-y-4 pulp-panel-critical text-center" role="alert">
+                <div class="crit-title">INTEGRIDADE CRÍTICA</div>
+                <div class="crit-prompt"><span id="glyph-heal-alert" class="crit-glyph"></span><span>VIDA <b id="crit-health">12%</b> · RESTAURAR TRAJE</span></div>
+            </div>
+
+            <!-- Top-Right: 1960s Circular CRT Threat Radar (Visible in Combat & Critical) -->
+            <div id="combat-top-radar" class="hud-state-transition relative w-28 h-28 sm:w-32 sm:h-32 rounded-full pulp-panel flex items-center justify-center p-1">
+                <svg class="w-full h-full overflow-visible" viewBox="0 0 120 120">
+                    <!-- Polar Rings -->
+                    <circle cx="60" cy="60" r="54" fill="#0C2229" stroke="#5FB5AE" stroke-width="1.5"/>
+                    <circle cx="60" cy="60" r="38" fill="none" stroke="#026574" stroke-width="1" stroke-dasharray="4 3"/>
+                    <circle cx="60" cy="60" r="20" fill="none" stroke="#026574" stroke-width="1"/>
+                    <!-- Crosshair Lines -->
+                    <line x1="6" y1="60" x2="114" y2="60" stroke="#026574" stroke-width="1"/>
+                    <line x1="60" y1="6" x2="60" y2="114" stroke="#026574" stroke-width="1"/>
+                    <!-- Rotating Radar Sweep -->
+                    <g style="transform-origin: 60px 60px; animation-duration: 4s;" class="animate-spin">
+                        <path d="M60,60 L60,6 A54,54 0 0,1 102,26 Z" fill="rgba(95, 181, 174, 0.22)"/>
+                        <line x1="60" y1="60" x2="60" y2="6" stroke="#5FB5AE" stroke-width="1.5"/>
+                    </g>
+                    <!-- Center Player Dot -->
+                    <circle cx="60" cy="60" r="3.5" fill="#FAB02D"/>
+                    <!-- Hostile Robot Blips (Red) -->
+                    <circle cx="42" cy="28" r="4" fill="#F94524" class="animate-ping"/>
+                    <circle cx="42" cy="28" r="3.5" fill="#F94524"/>
+                    <circle cx="82" cy="34" r="3.5" fill="#F94524"/>
+                    <circle cx="68" cy="22" r="3" fill="#FAB02D"/>
+                </svg>
+                <div class="absolute -bottom-2 px-2 py-0.2 bg-[#12313A] border border-[#5FB5AE] text-[8px] font-mono uppercase tracking-widest text-[#5FB5AE]">
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =================================================================
+             4. CENTER DYNAMIC RETICLE & DIRECTIONAL THREAT ARCS (COMBAT / CRITICAL)
+        ================================================================== -->
+        <div id="combat-center-reticle" class="hud-state-transition absolute inset-0 pointer-events-none z-25 flex items-center justify-center">
+
+            <!-- Directional Threat Indicator Arcs -->
+            <svg class="w-64 h-64 sm:w-72 sm:h-72 overflow-visible" viewBox="0 0 240 240" fill="none">
+                <g id="threat-arc-top" class="opacity-85 transition-opacity duration-300">
+                    <path d="M 85 22 A 98 98 0 0 1 155 22" stroke="#F94524" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="120,8 113,19 127,19" fill="#F94524"/>
+                </g>
+                <g id="threat-arc-right" transform="rotate(65 120 120)" class="opacity-65 transition-opacity duration-300">
+                    <path d="M 92 22 A 98 98 0 0 1 148 22" stroke="#FAB02D" stroke-width="3" stroke-dasharray="6 4"/>
+                </g>
+            </svg>
+
+            <!-- Retro-Atomic Recoil Crosshair -->
+            <div class="absolute flex items-center justify-center">
+                <svg class="w-28 h-28 overflow-visible" viewBox="0 0 120 120" fill="none">
+                    <circle id="reticle-outer-ring" cx="60" cy="60" r="20" stroke="#5FB5AE" stroke-width="1.8" class="transition-all duration-75"/>
+                    <circle cx="60" cy="60" r="3" fill="#FAB02D"/>
+                    <!-- 4 Recoil Ticks -->
+                    <line id="ret-tick-n" x1="60" y1="28" x2="60" y2="42" stroke="#FCE8B5" stroke-width="2"/>
+                    <line id="ret-tick-s" x1="60" y1="78" x2="60" y2="92" stroke="#FCE8B5" stroke-width="2"/>
+                    <line id="ret-tick-w" x1="28" y1="60" x2="42" y2="60" stroke="#FCE8B5" stroke-width="2"/>
+                    <line id="ret-tick-e" x1="78" y1="60" x2="92" y2="60" stroke="#FCE8B5" stroke-width="2"/>
+                    <!-- Hitmarker X -->
+                    <g id="reticle-hit-flash" class="opacity-0 transition-opacity duration-75" stroke="#F94524" stroke-width="3">
+                        <line x1="44" y1="44" x2="53" y2="53"/>
+                        <line x1="76" y1="44" x2="67" y2="53"/>
+                        <line x1="44" y1="76" x2="53" y2="67"/>
+                        <line x1="76" y1="76" x2="67" y2="67"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- =================================================================
+             5. DIEGETIC WRIST PULSE SCANNER OVERLAY (SCANNER DE PULSO — [V] / [△] / [Y])
+             Matches Concept Art Image 2: Brass/Gold 1960s Wrist Casing + Cyan Saturn CRT!
+        ================================================================== -->
+        <div id="diegetic-wrist-scanner"
+             class="hud-state-transition fixed bottom-24 left-6 z-35 pointer-events-none opacity-0 translate-y-8">
+            <div class="relative w-80 sm:w-96 p-3.5 pulp-panel-gold clip-pulp-box bg-[#12313A]/95">
+                <div class="flex items-center justify-between border-b border-[#FAB02D]/40 pb-1.5 mb-2.5">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#F94524] animate-ping"></span>
+                        <span class="font-['Bebas_Neue'] text-lg tracking-wider text-[#FAB02D]">
+                            UI DIEGÉTICA · SCANNER DE PULSO
+                        </span>
+                    </div>
+                    <span class="text-[9px] font-mono px-1.5 py-0.5 bg-[#5FB5AE]/20 border border-[#5FB5AE] text-[#5FB5AE]">
+                        ANTEBRAÇO ESQ.
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-3.5">
+                    <!-- 1960s Brass Wrist Scanner Graphic with Cyan Ringed Planet CRT -->
+                    <div class="relative w-24 h-24 shrink-0 rounded-full bg-[#0C2229] border-4 border-[#FAB02D] shadow-inner flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="44" fill="none" stroke="#5FB5AE" stroke-width="0.8" stroke-dasharray="3 3"/>
+                            <circle cx="50" cy="50" r="28" fill="none" stroke="#5FB5AE" stroke-width="0.8"/>
+                            <line x1="6" y1="50" x2="94" y2="50" stroke="#5FB5AE" stroke-width="0.7" opacity="0.6"/>
+                            <line x1="50" y1="6" x2="50" y2="94" stroke="#5FB5AE" stroke-width="0.7" opacity="0.6"/>
+                            <!-- Cyan Ringed Planet in Center of Wrist CRT -->
+                            <g transform="rotate(-24 50 50)">
+                                <ellipse cx="50" cy="50" rx="26" ry="7" fill="none" stroke="#5FB5AE" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="11" fill="#5FB5AE" fill-opacity="0.85"/>
+                            </g>
+                            <!-- Yellow & White Anomaly Blips -->
+                            <circle cx="28" cy="54" r="4" fill="#FAB02D" class="animate-pulse"/>
+                            <circle cx="68" cy="36" r="2.5" fill="#FFFFFF"/>
+                        </svg>
+                    </div>
+
+                    <!-- Telemetry Details -->
+                    <div class="text-xs space-y-1 font-mono">
+                        <div class="text-[#5FB5AE] font-bold uppercase">VARREDURA ATIVA: VESPERA-9</div>
+                        <div class="text-[11px] text-[#FCE8B5]/90 leading-snug font-sans">
+                            Investiga rastros, mecanismos, radiação cósmica e evidências ocultas no cenário 3D.
+                        </div>
+                        <div class="pt-1 flex items-center gap-3 text-[10px] text-[#FAB02D]">
+                            <span>RADIAÇÃO: 4.8 mSv</span>
+                            <span>•</span>
+                            <span>PISTAS: 03 ATIVAS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =================================================================
+             6. BOTTOM HUD PANELS:
+                - LEFT: ESCUDO (Segmented 1960s Bar + Critical ECG Waveform)
+                - RIGHT: RAIO MK-II (Diegetic Raygun Ammo Counter + Overheat Gauge)
+        ================================================================== -->
+        <div id="combat-bottom-hud" class="hud-state-transition absolute bottom-16 left-4 right-4 z-30 flex items-end justify-between pointer-events-none">
+
+            <div id="shield-hud-panel" class="pulp-panel hud-card pointer-events-auto">
+                <div class="vital-meters">
+                    <div id="health-meter" class="vital-segments" role="progressbar" aria-label="Vida" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i data-meter="health" data-segment="0" aria-hidden="true"></i><i data-meter="health" data-segment="1" aria-hidden="true"></i><i data-meter="health" data-segment="2" aria-hidden="true"></i><i data-meter="health" data-segment="3" aria-hidden="true"></i><i data-meter="health" data-segment="4" aria-hidden="true"></i><i data-meter="health" data-segment="5" aria-hidden="true"></i><i data-meter="health" data-segment="6" aria-hidden="true"></i><i data-meter="health" data-segment="7" aria-hidden="true"></i><i data-meter="health" data-segment="8" aria-hidden="true"></i><i data-meter="health" data-segment="9" aria-hidden="true"></i></div>
+                    <div id="shield-meter" class="vital-segments" role="progressbar" aria-label="Escudo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i data-meter="shield" data-segment="0" aria-hidden="true"></i><i data-meter="shield" data-segment="1" aria-hidden="true"></i><i data-meter="shield" data-segment="2" aria-hidden="true"></i><i data-meter="shield" data-segment="3" aria-hidden="true"></i><i data-meter="shield" data-segment="4" aria-hidden="true"></i><i data-meter="shield" data-segment="5" aria-hidden="true"></i><i data-meter="shield" data-segment="6" aria-hidden="true"></i><i data-meter="shield" data-segment="7" aria-hidden="true"></i><i data-meter="shield" data-segment="8" aria-hidden="true"></i><i data-meter="shield" data-segment="9" aria-hidden="true"></i></div>
+                </div>
+                <div class="vital-symbols" aria-hidden="true">
+                    <span><svg viewBox="0 0 32 32"><path d="M12 3h8v9h9v8h-9v9h-8v-9H3v-8h9z"/></svg></span>
+                    <span><svg viewBox="0 0 32 32"><path d="M16 2 29 6c-1 11-6 19-13 24C9 25 4 17 3 6Z"/></svg></span>
+                </div>
+            </div>
+            <div id="weapon-hud-panel" class="pulp-panel hud-card pointer-events-auto">
+                <div id="hud-weapon-svg" aria-hidden="true"></div>
+                <div class="thermal-meter">
+                    <div class="thermal-label"><span>SUPERAQUECIMENTO</span><span id="hud-heat-pct">0%</span></div>
+                    <div id="heat-meter" role="progressbar" aria-label="Superaquecimento" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="hud-heat-bar"></div></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =================================================================
+             7. 1960s PULP WEAPON RADIAL WHEEL (RODA DE ARMAS · SPECTRA-7)
+             Faithful recreation of uploaded Concept Art Slide 05!
+        ================================================================== -->
+        <div id="weapon-wheel-modal"
+             class="fixed inset-0 z-40 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+
+            <div id="wheel-modal-inner" class="relative flex flex-col md:flex-row items-center gap-8 max-w-5xl px-6 scale-90 transition-transform duration-300">
+
+                <!-- LEFT / CENTER: THE 1960s PULP RADIAL WHEEL WITH SATURN RING & L1/R1 BUMPERS -->
+                <div class="relative flex items-center justify-center">
+
+                    <!-- L1 / LB Left Bumper Prompt Pill (Matches Concept Art!) -->
+                    <button onclick="cycleWheelSector(-1)" class="wheel-bumper pointer-events-auto mr-2" aria-label="Arma anterior">
+                        <span id="wheel-bumper-left">L1</span>
+                    </button>
+
+                    <!-- Radial Wheel SVG with 1960s Ringed Planet Backdrop & 4-Point Stars -->
+                    <svg id="spectra-wheel-svg" class="w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] overflow-visible" viewBox="0 0 460 460">
+                        <defs>
+                            <linearGradient id="activeGoldSector" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#FAB02D"/>
+                                <stop offset="100%" stop-color="#C87A10"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Tilted Cyan Planetary Ring Behind the Wheel (Exact match to Slide 05!) -->
+                        <g transform="rotate(-28 230 230)">
+                            <ellipse cx="230" cy="230" rx="245" ry="52" fill="none" stroke="#5FB5AE" stroke-width="8" opacity="0.65"/>
+                            <ellipse cx="230" cy="230" rx="228" ry="42" fill="none" stroke="#026574" stroke-width="2" opacity="0.8"/>
+                        </g>
+
+                        <!-- Decorative 1960s 4-Point Pulp Stars Around Wheel -->
+                        <polygon points="48,95 53,115 73,120 53,125 48,145 43,125 23,120 43,115" fill="#FAB02D"/>
+                        <polygon points="410,320 414,336 430,340 414,344 410,360 406,344 390,340 406,336" fill="#FAB02D"/>
+                        <polygon points="75,345 78,358 91,361 78,364 75,377 72,364 59,361 72,358" fill="#FAB02D"/>
+
+                        <!-- Outer Cream Circle Frame -->
+                        <circle cx="230" cy="230" r="186" fill="#12313A" stroke="#FCE8B5" stroke-width="4"/>
+
+                        <!-- Dynamic 6 Sectors Group (Populated by JS) -->
+                        <g id="wheel-sectors-group"></g>
+
+
+                        <!-- Center Hub Circle -->
+                        <circle cx="230" cy="230" r="82" fill="#12313A" stroke="#FCE8B5" stroke-width="3.5"/>
+                        <circle cx="230" cy="230" r="76" fill="none" stroke="#5FB5AE" stroke-width="1" stroke-dasharray="4 3"/>
+                    </svg>
+
+                    <!-- R1 / RB Right Bumper Prompt Pill (Matches Concept Art!) -->
+                    <button onclick="cycleWheelSector(1)" class="wheel-bumper pointer-events-auto ml-2" aria-label="Próxima arma">
+                        <span id="wheel-bumper-right">R1</span>
+                    </button>
+
+                    <!-- Center Hub Text Overlay ("CARABINA DE PARTÍCULAS / 120") -->
+                    <div id="wheel-hub" class="absolute flex flex-col items-center justify-center text-center pointer-events-none">
+                        <div id="wheel-center-title" class="font-['Bebas_Neue'] text-lg sm:text-xl tracking-wider text-[#FCE8B5] leading-tight uppercase">
+                            CARABINA DE PARTÍCULAS
+                        </div>
+                        <div id="wheel-center-ammo" class="font-['Bebas_Neue'] text-4xl sm:text-5xl text-[#FCE8B5] tracking-wider leading-none mt-1">
+                            120
+                        </div>
+                        <div id="wheel-center-type" class="text-[8px] font-mono uppercase tracking-widest text-[#FAB02D] mt-1">
+                            ARSENAL MODULAR
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: SPECTRA-7 DEPARTMENT OF TECHNOLOGY BRIEFING (Matches Slide 05!) -->
+                <div id="wheel-brief" class="text-left max-w-xs">
+                    <div class="pulp-tab">RODA DE ARMAS</div>
+                    <h2 id="wheel-brief-name">CARABINA DE PARTÍCULAS</h2>
+                    <p id="wheel-brief-sub" class="wheel-brief-sub">CADÊNCIA CONTÍNUA · SPECTRA-7</p>
+                    <div class="time-gauge" aria-hidden="true">
+                        <div class="time-gauge-head"><span>TEMPO DO MUNDO</span><b id="wheel-time-value">1,00×</b></div>
+                        <div class="time-gauge-track"><div id="wheel-time-bar"></div></div>
+                        <div class="time-gauge-scale"><span>0,10×</span><span>1,00×</span></div>
+                    </div>
+                    <p class="pulp-caption">Seleção radial com desaceleração de tempo.</p>
+                    <button id="wheel-confirm" onclick="selectWheelWeapon(STATE.hoveredIdx, event)"
+                            class="wheel-confirm pointer-events-auto mt-4">
+                        EQUIPAR &amp; VOLTAR [ENTER]
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- =================================================================
+             8. UX COGNITIVE ZONES OVERLAY (FOVEAL 5°, PARAFOVEAL 15°, PERIFÉRICA >30°)
+        ================================================================== -->
+        <div id="ux-zones-overlay"
+             class="fixed inset-0 z-40 pointer-events-none opacity-0 transition-opacity duration-300 flex items-center justify-center bg-[#041117]/65 backdrop-blur-[2px]">
+            <svg class="w-full h-full" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+                <!-- Peripheral Zone (>30°) -->
+                <rect x="45" y="35" width="1510" height="810" rx="18"
+                      fill="rgba(249, 69, 36, 0.04)" stroke="#F94524" stroke-width="2" stroke-dasharray="14 8" class="ux-zone-dash"/>
+                <text x="75" y="72" fill="#F94524" font-family="Oswald" font-size="14" font-weight="bold">
+                    ZONA PERIFÉRICA (&gt;30°): Vinheta Vermelha Pulsante Crítica, Bússola &amp; Radar Orbital CRT
+                </text>
+
+                <!-- Parafoveal Zone (15°) -->
+                <ellipse cx="800" cy="460" rx="510" ry="285"
+                         fill="rgba(250, 176, 45, 0.05)" stroke="#FAB02D" stroke-width="2" stroke-dasharray="10 6" class="ux-zone-dash"/>
+                <text x="800" y="198" text-anchor="middle" fill="#FAB02D" font-family="Oswald" font-size="14" font-weight="bold">
+                    ZONA PARAFOVEAL (15°): Scanner de Pulso Diegético no Antebraço &amp; Indicadores Físicos da Pistola Raio MK-II
+                </text>
+
+                <!-- Foveal Zone (5°) -->
+                <circle cx="800" cy="450" r="195"
+                        fill="rgba(95, 181, 174, 0.08)" stroke="#5FB5AE" stroke-width="2.5" stroke-dasharray="8 4" class="ux-zone-dash"/>
+                <text x="800" y="280" text-anchor="middle" fill="#5FB5AE" font-family="Oswald" font-size="14" font-weight="bold">
+                    ZONA FOVEAL (5°): Star Marshal 3D (.OBJ), Mira Dinâmica &amp; Ameaças Direcionais
+                </text>
+            </svg>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="pulp-toast"
+             class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 px-5 py-1 pulp-panel-gold clip-pulp-tag text-[#FAB02D] font-mono text-xs uppercase tracking-widest">
+            SISTEMA FEDERAÇÃO SOLAR SINCRONIZADO
+        </div>
+
+    </main>
+
+    <!-- =====================================================================
+         9. BOTTOM CONTROL DOCK (CONTEXTUAL STATES + DYNAMIC GLYPHS + ACTIONS)
+    ====================================================================== -->
+
+
+    <!-- =====================================================================
+         10. JAVASCRIPT ENGINE: THREE.JS .OBJ LOADER + HUD STATE MACHINE + WEBAUDIO
+    ====================================================================== -->
+    <script>
+        /*********************************************************************
+         * 1. STATE & 1960s RETRO-FUTURIST ARSENAL (SPECTRA-7)
+         *********************************************************************/
+        const STATE = {
+            hudState: 'combat',      // 'exploration' | 'combat' | 'critical'
+            fireHold: 0, triggerHeld: false, enemyHit: 0, flashSpin: 0,
+            aimBlend: 0, shotPending: false, beamLife: 0,
+            platform: 'ps',          // 'ps' | 'xbox' | 'pc'
+            wheelOpen: false,
+            scannerOpen: false,
+            uxOpen: false,
+            timeScale: 1.0,
+            targetTimeScale: 1.0,
+            shield: 100,
+            health: 100,
+            heat: 18,
+            recoil: 0,
+            equippedIdx: 0,
+            hoveredIdx: 1,
+            mouseX: 0,
+            mouseY: 0,
+            smoothX: 0,
+            smoothY: 0
+        };
+
+        const SPECTRA_WEAPONS = [
+            {
+                id: 'raio_mk2',
+                name: 'RAIO MK-II',
+                fullName: 'PISTOLA DE RAIOS MK-II',
+                sub: 'INDICADOR FÍSICO INTEGRADO',
+                badge: 'SOLAR',
+                ammo: 24,
+                maxAmmo: 30,
+                beamColor: 0xF94524,
+                words: ['ZAP!', 'RAIO SOLAR!', 'ATOM-HIT!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M30 30 C29 19 42 15 58 16 L76 18 L76 30 L58 32 C50 33 44 34 40 34 Z"/><path d="M76 20 L92 21.5 L92 27.5 L76 29"/><line x1="82" y1="19.5" x2="82" y2="29.5"/><line x1="87" y1="20.5" x2="87" y2="28.5"/><path d="M40 33 L34 44 L44 44 L50 33"/><path d="M31 22 L20 15 L24 27"/><circle cx="54" cy="24" r="3.5" fill="#F94524" stroke="none"/><circle cx="99" cy="24.5" r="3" fill="#F94524" stroke="none"/></svg>`
+            },
+            {
+                id: 'carabina_particulas',
+                name: 'CARABINA DE PARTÍCULAS',
+                fullName: 'CARABINA DE PARTÍCULAS',
+                sub: 'CADÊNCIA CONTÍNUA · SPECTRA-7',
+                badge: 'PARTÍCULAS',
+                ammo: 120,
+                maxAmmo: 120,
+                beamColor: 0x5FB5AE,
+                words: ['PARTICLE BURST!', '120 VOLTS!', 'PEW-PEW!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 27 L18 20 L34 20 L38 22 L86 22 L86 28 L48 28 L44 37 L36 37 L38 28 L22 28 L14 34 Z"/><path d="M86 23 L100 24 L100 27 L86 27"/><rect x="46" y="12" width="22" height="5" rx="2.5"/><line x1="52" y1="17" x2="52" y2="22"/><line x1="62" y1="17" x2="62" y2="22"/><circle cx="105" cy="25.5" r="2.5" fill="#5FB5AE" stroke="none"/></svg>`
+            },
+            {
+                id: 'desintegrador_atomico',
+                name: 'BLASTER ATÔMICO',
+                fullName: 'DESINTEGRADOR ATÔMICO',
+                sub: 'PULSO DE PLASMA PESADO',
+                badge: 'ATÔMICO',
+                ammo: 12,
+                maxAmmo: 15,
+                beamColor: 0xFAB02D,
+                words: ['DESINTEGRADO!', 'KRA-KOOM!', 'PULSO SOLAR!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M20 21 L62 18 L62 32 L20 29 Z"/><path d="M62 16 L74 11 L74 39 L62 34 Z"/><ellipse cx="81" cy="25" rx="5" ry="14"/><circle cx="40" cy="25" r="4" fill="#FAB02D" stroke="none"/><path d="M30 29.5 L26 42 L36 42 L40 30.5"/><line x1="20" y1="22" x2="11" y2="19"/><line x1="20" y1="28" x2="11" y2="31"/></svg>`
+            },
+            {
+                id: 'bomba_crio',
+                name: 'CÁPSULA CRIO-SOLAR',
+                fullName: 'CÁPSULA CRIO-SOLAR',
+                sub: 'CONGELAMENTO DE ÁREA',
+                badge: 'CRIO',
+                ammo: 6,
+                maxAmmo: 6,
+                beamColor: 0x5FB5AE,
+                words: ['ZERO ABSOLUTO!', 'CRIO-BLAST!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M41 32 C39 37 42 42 47 42 L63 42 C68 42 71 37 69 32 Z" fill="#5FB5AE" stroke="none" opacity=".85"/><path d="M48 8 L62 8 L62 16 L72 34 C74 40 70 44 64 44 L46 44 C40 44 36 40 38 34 L48 16 Z"/><line x1="45" y1="8" x2="65" y2="8"/><line x1="53" y1="22" x2="57" y2="22"/></svg>`
+            },
+            {
+                id: 'mina_sonica',
+                name: 'MINA DISCO-SÔNICA',
+                fullName: 'MINA DISCO-SÔNICA',
+                sub: 'ONDA DE CHOQUE GRAVITACIONAL',
+                badge: 'SÔNICO',
+                ammo: 8,
+                maxAmmo: 8,
+                beamColor: 0xFAB02D,
+                words: ['SONIC RING!', 'SHOCKWAVE!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="55" cy="29" rx="26" ry="8"/><path d="M41 27 C43 17 67 17 69 27"/><circle cx="55" cy="20" r="2.5" fill="#F94524" stroke="none"/><path d="M21 22 C17 26 17 31 21 35"/><path d="M89 22 C93 26 93 31 89 35"/><path d="M14 19 C8 25 8 32 14 38"/><path d="M96 19 C102 25 102 32 96 38"/></svg>`
+            },
+            {
+                id: 'granada_termica',
+                name: 'GRANADA DE PLASMA',
+                fullName: 'GRANADA DE PLASMA',
+                sub: 'FRAGMENTAÇÃO MAGNÉTICA',
+                badge: 'PLASMA',
+                ammo: 4,
+                maxAmmo: 4,
+                beamColor: 0xF94524,
+                words: ['KABOOM!', 'PLASMA BURST!'],
+                svg: `<svg viewBox="0 0 110 48" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="55" cy="30" rx="12" ry="14"/><rect x="50" y="10" width="10" height="6" rx="1"/><path d="M60 12 L71 10 L70 19"/><circle cx="46" cy="11" r="3"/><line x1="43" y1="30" x2="67" y2="30"/><line x1="55" y1="16" x2="55" y2="44"/><line x1="45" y1="22" x2="65" y2="22"/><line x1="45" y1="38" x2="65" y2="38"/></svg>`
+            }
+        ];
+
+        /*********************************************************************
+         * 2. DYNAMIC PLATFORM GLYPHS (PS5 / XBOX / PC — Matches Concept Art!)
+         *********************************************************************/
+        const PLATFORM_GLYPHS = {
+            ps: {
+                name: 'PLAYSTATION DUALSENSE',
+                lb: 'L1', rb: 'R1',
+                interact: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#5FB5AE" stroke-width="2"/><line x1="9" y1="9" x2="19" y2="19" stroke="#5FB5AE" stroke-width="2.4"/><line x1="19" y1="9" x2="9" y2="19" stroke="#5FB5AE" stroke-width="2.4"/></svg>`,
+                reload: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#C83A6E" stroke-width="2"/><rect x="9" y="9" width="10" height="10" fill="none" stroke="#E46A97" stroke-width="2.2"/></svg>`,
+                scanner: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#5FB5AE" stroke-width="2"/><polygon points="14,7 21,19 7,19" fill="none" stroke="#5FB5AE" stroke-width="2.2"/></svg>`,
+                heal: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#F94524" stroke-width="2"/><circle cx="14" cy="14" r="5.5" fill="none" stroke="#F94524" stroke-width="2.2"/></svg>`,
+                wheel: `<span class="px-1.5 py-0.2 bg-[#FCE8B5] text-[#12313A] font-bold text-[10px] rounded-sm">L1</span>`
+            },
+            xbox: {
+                name: 'XBOX SERIES X|S',
+                lb: 'LB', rb: 'RB',
+                interact: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#8DBF5A" stroke-width="2"/><text x="14" y="18" text-anchor="middle" fill="#8DBF5A" font-family="Oswald" font-weight="bold" font-size="13">A</text></svg>`,
+                reload: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#5FB5AE" stroke-width="2"/><text x="14" y="18" text-anchor="middle" fill="#5FB5AE" font-family="Oswald" font-weight="bold" font-size="13">X</text></svg>`,
+                scanner: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#FAB02D" stroke-width="2"/><text x="14" y="18" text-anchor="middle" fill="#FAB02D" font-family="Oswald" font-weight="bold" font-size="13">Y</text></svg>`,
+                heal: `<svg viewBox="0 0 28 28" class="w-full h-full"><circle cx="14" cy="14" r="12" fill="#12313A" stroke="#F94524" stroke-width="2"/><text x="14" y="18" text-anchor="middle" fill="#F94524" font-family="Oswald" font-weight="bold" font-size="13">B</text></svg>`,
+                wheel: `<span class="px-1.5 py-0.2 bg-[#FCE8B5] text-[#12313A] font-bold text-[10px] rounded-sm">LB</span>`
+            },
+            pc: {
+                name: 'TECLADO & MOUSE (PC)',
+                lb: 'Q', rb: 'E',
+                interact: `<span class="px-1.5 py-0.5 bg-[#12313A] border border-[#FCE8B5] text-[#FCE8B5] font-mono font-bold text-[11px]">E</span>`,
+                reload: `<span class="px-1.5 py-0.5 bg-[#12313A] border border-[#FCE8B5] text-[#FCE8B5] font-mono font-bold text-[11px]">R</span>`,
+                heal: `<span class="px-1.5 py-0.5 bg-[#12313A] border border-[#5FB5AE] text-[#5FB5AE] font-mono font-bold text-[11px]">Q</span>`,
+                scanner: `<span class="px-1.5 py-0.5 bg-[#12313A] border border-[#FAB02D] text-[#FAB02D] font-mono font-bold text-[11px]">V</span>`,
+                wheel: `<span class="px-1.5 py-0.2 bg-[#FAB02D] text-[#12313A] font-bold text-[9px]">TAB</span>`
+            }
+        };
+
+        /*********************************************************************
+         * 3. 1960s RETRO SCI-FI WEBAUDIO SYNTHESIZER
+         *********************************************************************/
+        let audioCtx = null;
+        function playPulpAudio(type) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+
+                if (type === 'raygun') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(920, now);
+                    osc.frequency.exponentialRampToValueAtTime(130, now + 0.16);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.17);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.17);
+                } else if (type === 'scanner') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(1320, now);
+                    osc.frequency.setValueAtTime(1760, now + 0.08);
+                    gain.gain.setValueAtTime(0.11, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.33);
+                } else if (type === 'bullet_time') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.exponentialRampToValueAtTime(95, now + 0.35);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.36);
+                } else if (type === 'alarm') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(155, now + 0.12);
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.29);
+                } else if (type === 'click') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(740, now);
+                    osc.frequency.exponentialRampToValueAtTime(1180, now + 0.06);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.07);
+                }
+            } catch (e) {}
+        }
+
+        /*********************************************************************
+         * 4. THREE.JS 3D SCENE WITH REAL .OBJ MODELS (VESPERA-9 & STAR MARSHAL)
+         *********************************************************************/
+        let scene, camera, renderer;
+        let marshalGroup, marshalRig = null, cityMesh, planetGroup, saucerGroup, robotHostileGroup;
+        let wristScanner3DMesh, raygunMuzzle3D, raygunVisual;
+        let clock = new THREE.Clock();
+        let sky, enemyMesh, playerContactShadow, muzzleFlash, scannerProjection, scannerAnchor;
+
+        const anchors3D = {
+            spire: new THREE.Vector3(0, 6.2, 14),
+            evidence: new THREE.Vector3(-1.35, 0.05, 2.2),
+            hostile: new THREE.Vector3(0.85, 0.55, 3.8)
+        };
+
+        let scannerCanvas, scannerTexture;
+        const scannerIcons = [];
+        function createScannerSelector() {
+            scannerCanvas = document.createElement('canvas');
+            scannerCanvas.width = 1200; scannerCanvas.height = 720;
+            scannerTexture = new THREE.CanvasTexture(scannerCanvas);
+            scannerTexture.encoding = THREE.sRGBEncoding;
+            SPECTRA_WEAPONS.forEach((weapon, i) => {
+                const icon = new Image();
+                icon.onload = () => { scannerIcons[i] = icon; drawScannerSelector(); };
+                icon.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(weapon.svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="90" ').replaceAll('currentColor', '#85F8FF'));
+            });
+            drawScannerSelector();
+            return scannerTexture;
+        }
+        function drawScannerSelector() {
+            if (!scannerCanvas) return;
+            const c = scannerCanvas.getContext('2d');
+            c.clearRect(0, 0, 1200, 720);
+            const cx=600, cy=610, outer=550, inner=185, count=SPECTRA_WEAPONS.length;
+            for (let i=0;i<count;i++) {
+                const a=Math.PI+i*Math.PI/count, b=a+Math.PI/count;
+                const weaponIndex=(STATE.equippedIdx+i-2+count)%count;
+                const selected=weaponIndex===STATE.equippedIdx;
+                c.beginPath(); c.arc(cx,cy,outer,a,b); c.arc(cx,cy,inner,b,a,true); c.closePath();
+                c.fillStyle=selected?'rgba(65,48,13,.88)':'rgba(3,35,45,.80)'; c.fill();
+                c.strokeStyle=selected?'#FFBC37':'#70EEFC'; c.lineWidth=selected?6:3;
+                c.shadowColor=c.strokeStyle;c.shadowBlur=12;c.stroke();c.shadowBlur=0;
+                const mid=(a+b)/2, x=cx+Math.cos(mid)*365, y=cy+Math.sin(mid)*365;
+                if (scannerIcons[weaponIndex]) c.drawImage(scannerIcons[weaponIndex],x-73,y-45,146,82);
+            }
+            c.strokeStyle='#A7FAFF';c.lineWidth=3;
+            for(const r of [170,195,530,565]){c.beginPath();c.arc(cx,cy,r,Math.PI,Math.PI*2);c.stroke();}
+            // Gatilhos destacados como teclas; os setores são identificados pelos ícones.
+            c.textAlign='center';c.textBaseline='middle';
+            for (const [label,x] of [['L2',335],['R2',865]]) {
+                c.fillStyle='rgba(3,25,35,.95)';c.fillRect(x-70,632,140,64);
+                c.strokeStyle='#FFD36B';c.lineWidth=4;c.strokeRect(x-70,632,140,64);
+                c.fillStyle='#FFF0B5';c.font='bold 40px monospace';c.fillText(label,x,666);
+            }
+            c.fillStyle='#A7FAFF';c.font='bold 23px monospace';
+            c.fillText('←  ALTERNAR ARMA  →',600,666);
+            c.textBaseline='alphabetic';
+            scannerTexture.needsUpdate=true;
+        }
+        function cycleScannerWeapon(direction) {
+            STATE.equippedIdx=(STATE.equippedIdx+direction+SPECTRA_WEAPONS.length)%SPECTRA_WEAPONS.length;
+            STATE.hoveredIdx=STATE.equippedIdx;
+            drawScannerSelector();updateHudCounters();playPulpAudio('click');
+        }
+
+        let enemyAttackClock=0, enemyBeam, forceField, forceWire, impactTime=0;
+        let enemyBolt, enemyMuzzleFlash, enemyImpactFlash, enemyFlight=-1;
+        const enemyShotStart=new THREE.Vector3(), enemyShotEnd=new THREE.Vector3();
+        const enemyTrailStart=new THREE.Vector3(), enemyFlightPoint=new THREE.Vector3();
+        function updateEnemyAttack(dt) {
+            if (!robotHostileGroup || !marshalGroup) return;
+            enemyAttackClock+=dt;
+            if (enemyAttackClock>=10) {
+                enemyAttackClock%=10;
+                if (!enemyBeam) {
+                    const glowMaterial=(color,opacity=1)=>new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,fog:false,blending:THREE.AdditiveBlending});
+                    const trailGeometry=new THREE.CylinderGeometry(.018,.032,1,8);
+                    trailGeometry.rotateX(Math.PI/2);trailGeometry.translate(0,0,.5);
+                    enemyBeam=new THREE.Mesh(trailGeometry,glowMaterial(0xff4a17,.85));
+                    enemyBolt=new THREE.Group();
+                    enemyBolt.add(new THREE.Mesh(new THREE.SphereGeometry(.055,12,8),glowMaterial(0xffedab)));
+                    enemyBolt.add(new THREE.Mesh(new THREE.SphereGeometry(.13,12,8),glowMaterial(0xff5025,.28)));
+                    enemyMuzzleFlash=buildMuzzleFlash();enemyMuzzleFlash.material.color.setHex(0xff682e);
+                    enemyMuzzleFlash.material.depthTest=true;
+                    enemyImpactFlash=new THREE.Mesh(new THREE.SphereGeometry(.16,16,12),glowMaterial(0xb4faff,.7));
+                    for(const effect of [enemyBeam,enemyBolt,enemyMuzzleFlash,enemyImpactFlash]) {
+                        effect.traverse(o=>{o.userData.noShadow=o.userData.pulpSkip=true;});
+                        effect.visible=false;scene.add(effect);
+                    }
+                    forceField=new THREE.Mesh(new THREE.SphereGeometry(1,32,20),new THREE.MeshBasicMaterial({color:0x69e9ff,transparent:true,opacity:.2,depthWrite:false}));
+                    forceField.scale.set(.55,.85,.45);
+                    forceField.userData.noShadow=forceField.userData.pulpSkip=true;forceField.visible=false;scene.add(forceField);
+                    forceWire=new THREE.Mesh(new THREE.SphereGeometry(1.01,16,12),new THREE.MeshBasicMaterial({color:0xa4f9ff,transparent:true,wireframe:true,opacity:.4,depthWrite:false}));
+                    forceField.add(forceWire);
+                }
+                robotHostileGroup.getWorldPosition(enemyShotStart);enemyShotStart.y+=1.08;
+                enemyShotEnd.copy(PLAYER.pos);enemyShotEnd.y+=.85;
+                enemyFlight=0;
+                enemyMuzzleFlash.position.copy(enemyShotStart);
+                enemyMuzzleFlash.quaternion.copy(camera.quaternion);
+                playPulpAudio('raygun');
+            }
+            if (enemyFlight>=0) {
+                enemyFlight=Math.min(1,enemyFlight+dt/.45);
+                // A trajetória tem duração legível; dano e impacto chegam junto com o projétil.
+                enemyShotEnd.copy(PLAYER.pos);enemyShotEnd.y+=.85;
+                enemyFlightPoint.lerpVectors(enemyShotStart,enemyShotEnd,enemyFlight);
+                enemyTrailStart.lerpVectors(enemyShotStart,enemyShotEnd,Math.max(0,enemyFlight-.18));
+                enemyBolt.position.copy(enemyFlightPoint);enemyBolt.visible=enemyFlight<1;
+                enemyBeam.position.copy(enemyTrailStart);enemyBeam.lookAt(enemyFlightPoint);
+                enemyBeam.scale.set(1,1,Math.max(.001,enemyTrailStart.distanceTo(enemyFlightPoint)));
+                enemyBeam.visible=enemyFlight<1;
+                enemyMuzzleFlash.visible=enemyFlight<.3;
+                enemyMuzzleFlash.scale.setScalar(.2*(1-enemyFlight));
+                if(enemyFlight===1) {
+                    enemyFlight=-1;
+                    const shieldBefore=STATE.shield;
+                    const health=Math.max(0,STATE.health-Math.max(0,16-shieldBefore));
+                    const shield=Math.max(0,shieldBefore-16);
+                    if(STATE.hudState==='exploration' || (health<15 && STATE.hudState!=='critical')) setHudState(health<15?'critical':'combat');
+                    STATE.health=health;STATE.shield=shield;updateHudCounters();
+                    enemyImpactFlash.position.copy(enemyShotEnd);impactTime=.9;
+                }
+            }
+            if (forceField) {
+                impactTime=Math.max(0,impactTime-dt);
+                forceField.position.copy(PLAYER.pos);forceField.position.y+=.8;
+                forceField.visible=impactTime>0;
+                enemyImpactFlash.visible=impactTime>.55;
+                enemyImpactFlash.material.opacity=Math.max(0,(impactTime-.55)/.35)*.7;
+                enemyImpactFlash.scale.setScalar(reducedMotion.matches?1:1+(.9-impactTime)*5);
+                const pulse=reducedMotion.matches?.18:.12+.17*(.5+.5*Math.cos((.9-impactTime)*Math.PI*4));
+                forceField.material.opacity=pulse;forceWire.material.opacity=pulse*1.8;
+            }
+        }
+
+        function initThreeScene() {
+            const container = document.getElementById('webgl-container');
+            scene = new THREE.Scene();
+            // Névoa quente de horizonte, a mesma tinta creme-dourada do céu da prancha.
+            scene.fog = new THREE.FogExp2(new THREE.Color(0xE6C48A).convertSRGBToLinear(), 0.006);
+
+            camera = new THREE.PerspectiveCamera(52, document.getElementById('game-viewport').clientWidth / document.getElementById('game-viewport').clientHeight, 0.1, 250);
+            fitCameraFov();
+            camera.position.set(0.28, 0.78, -1.05);
+            camera.lookAt(-0.05, 0.68, 4.0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(document.getElementById('game-viewport').clientWidth, document.getElementById('game-viewport').clientHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            // Sem ACES: a curva fílmica dessatura e desloca os matizes; aqui as tintas da prancha saem como estão.
+            renderer.toneMapping = THREE.NoToneMapping;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Luz da cena do Godot: sol de fim de tarde por trás da cidade (contraluz dourado que recorta
+            // personagem e prédios juntos) e preenchimento ciano vindo do lado da câmera.
+            const hemiLight = new THREE.HemisphereLight(0xE9E3CF, 0x34484B, 0.42);
+            scene.add(hemiLight);
+
+            const sunLight = new THREE.DirectionalLight(0xFFF0CD, 1.25);
+            sunLight.position.set(-6, 10, 30);
+            sunLight.castShadow = true;
+            sunLight.shadow.mapSize.set(2048, 2048);
+            Object.assign(sunLight.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 70 });
+            sunLight.shadow.bias = -0.0008;
+            sunLight.target.position.set(0, 0, 4);
+            scene.add(sunLight.target);
+            scene.add(sunLight);
+
+            const cyanRim = new THREE.DirectionalLight(0xD5ECE5, 0.55);
+            cyanRim.position.set(4, 5, -10);
+            scene.add(cyanRim);
+
+            buildVesperaSkyAndPlanet();
+            buildRealObjModels();
+            buildHostileRobotAndSaucers();
+            buildArtDirectedPort();
+            pulpifyScene(scene);
+            sky = buildPsychedelicSky(planetGroup.position);
+            scene.add(sky);
+            PULP_SHARED.uDotScale.value = 3 * renderer.getPixelRatio();
+            renderer.getDrawingBufferSize(PULP_SHARED.uViewport.value);
+            scene.traverse(o => { if (o.isMesh && !o.userData.noShadow) { o.castShadow = true; o.receiveShadow = true; } });
+            planetGroup.traverse(o => { o.castShadow = false; o.receiveShadow = false; if (o.material) o.material.fog = false; });
+            initPostFX();
+        }
+
+        /*********************************************************************
+         * 4b. PÓS-PROCESSAMENTO: DISTORÇÃO CROMÁTICA (CRÍTICO) E DUOTONE (BULLET TIME)
+         * A cena só passa pelo render target quando um dos efeitos está ativo.
+         * No r128 o tone mapping já é aplicado no target; o quad só converte para sRGB.
+         *********************************************************************/
+        let post = null;
+        const FX = { critical: 0, bullet: 0 };
+
+        function initPostFX() {
+            const size = renderer.getDrawingBufferSize(new THREE.Vector2());
+            const Target = renderer.capabilities.isWebGL2 ? THREE.WebGLMultisampleRenderTarget : THREE.WebGLRenderTarget;
+            const target = new Target(size.x, size.y);
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    tScene: { value: target.texture },
+                    uResolution: { value: size },
+                    uAberration: { value: 0 },
+                    uCritical: { value: 0 },
+                    uBullet: { value: 0 }
+                },
+                vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+                fragmentShader: `
+                    uniform sampler2D tScene;
+                    uniform vec2 uResolution;
+                    uniform float uAberration, uCritical, uBullet;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 c = vUv - 0.5;
+                        // Separação RGB cresce do centro para as bordas: a mira continua nítida.
+                        vec2 off = c * (uAberration / uResolution) * (0.4 + dot(c, c) * 8.0) * 2.0;
+                        vec3 col = vec3(texture2D(tScene, vUv + off).r, texture2D(tScene, vUv).g, texture2D(tScene, vUv - off).b);
+                        float l = dot(col, vec3(0.299, 0.587, 0.114));
+                        // Cores em espaço linear (o quadro converte para sRGB no fim).
+                        // Estado crítico: rampa #2A0806 → #A8281A → #F8835A, como o quadro "Estado crítico".
+                        // A cena é clara; a luminância é comprimida para o creme cair no vermelho médio.
+                        float lc = pow(l, 2.0) * 0.55;
+                        vec3 crit = lc < 0.3
+                            ? mix(vec3(0.023, 0.0025, 0.002), vec3(0.39, 0.021, 0.010), lc / 0.3)
+                            : mix(vec3(0.39, 0.021, 0.010), vec3(0.94, 0.23, 0.10), clamp((lc - 0.3) / 0.5, 0.0, 1.0));
+                        col = mix(col, crit, uCritical * 0.85);
+                        // Bullet time: duotone petróleo #0C2229 → creme #FCE8B5; o mundo vira pano de fundo da roda.
+                        vec3 slow = mix(vec3(0.0037, 0.016, 0.022), vec3(0.97, 0.81, 0.46), smoothstep(0.02, 0.9, l));
+                        col = mix(col, slow * 0.8, uBullet * 0.75);
+                        gl_FragColor = vec4(col, 1.0);
+                        #include <encodings_fragment>
+                    }`,
+                depthTest: false,
+                depthWrite: false,
+                toneMapped: false
+            });
+            const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+            quad.frustumCulled = false;
+            const postScene = new THREE.Scene();
+            postScene.add(quad);
+            post = { target, material, scene: postScene, camera: new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1) };
+        }
+
+        function renderFrame(elapsed, rawDelta) {
+            const k = 1 - Math.exp(-8 * Math.min(rawDelta, 0.05));
+            FX.critical += ((STATE.hudState === 'critical' ? 1 : 0) - FX.critical) * k;
+            FX.bullet += ((STATE.wheelOpen ? 1 : 0) - FX.bullet) * k;
+            if (!post || (FX.critical < 0.002 && FX.bullet < 0.002)) {
+                renderer.render(scene, camera);
+                return;
+            }
+            const u = post.material.uniforms;
+            // Pulso lento (~0,9 Hz) acompanha a vinheta; com movimento reduzido fica estático.
+            const pulse = reducedMotion.matches ? 0.5 : 0.5 + 0.5 * Math.sin(elapsed * 5.6);
+            u.uAberration.value = FX.critical * (3 + pulse * 5) * renderer.getPixelRatio();
+            u.uCritical.value = FX.critical;
+            u.uBullet.value = FX.bullet;
+            renderer.setRenderTarget(post.target);
+            renderer.render(scene, camera);
+            renderer.setRenderTarget(null);
+            renderer.render(post.scene, post.camera);
+        }
+
+        function createContactShadowMesh(width = 0.85, height = 0.65) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(64, 64, 8, 64, 64, 60);
+            grad.addColorStop(0, 'rgba(7, 26, 33, 0.85)');
+            grad.addColorStop(0.45, 'rgba(7, 26, 33, 0.45)');
+            grad.addColorStop(1, 'rgba(7, 26, 33, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 128, 128);
+            const tex = new THREE.CanvasTexture(canvas);
+            const mesh = new THREE.Mesh(
+                new THREE.PlaneGeometry(width, height),
+                new THREE.MeshBasicMaterial({
+                    map: tex,
+                    transparent: true,
+                    opacity: 0.85,
+                    depthWrite: false
+                })
+            );
+            mesh.rotation.x = -Math.PI / 2;
+            mesh.position.y = 0.006;
+            return mesh;
+        }
+
+        // =====================================================================
+        // PROCEDURAL RETRO-PULP TEXTURES (FROM 1960s STAR MARSHAL BOARD)
+        // =====================================================================
+        function createPlanetTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // Rich burnt-orange & crimson Martian gradient
+            const grad = ctx.createLinearGradient(0, 0, 0, 512);
+            grad.addColorStop(0, '#8B180D');
+            grad.addColorStop(0.25, '#D6341D');
+            grad.addColorStop(0.55, '#E65100');
+            grad.addColorStop(0.80, '#FAB02D');
+            grad.addColorStop(1.0, '#B71C1C');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 1024, 512);
+
+            // Swirling atmospheric turbulence cloud bands in cream and amber
+            for (let y = 0; y < 512; y += 3) {
+                const wave = Math.sin(y * 0.038) * Math.cos(y * 0.016);
+                if (Math.abs(wave) > 0.2) {
+                    ctx.fillStyle = wave > 0 ? 'rgba(252, 232, 181, 0.22)' : 'rgba(250, 176, 45, 0.26)';
+                    ctx.fillRect(0, y, 1024, 3 + Math.abs(wave) * 6);
+                }
+            }
+
+            // Impact craters & geological basins
+            const craters = [
+                { x: 300, y: 190, r: 48, rim: '#6B1208', fill: '#E65100' },
+                { x: 690, y: 320, r: 64, rim: '#541008', fill: '#FAB02D' },
+                { x: 860, y: 140, r: 32, rim: '#541008', fill: '#E65100' },
+                { x: 180, y: 380, r: 38, rim: '#6B1208', fill: '#FAB02D' },
+                { x: 510, y: 110, r: 24, rim: '#541008', fill: '#D6341D' }
+            ];
+            craters.forEach(c => {
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+                ctx.fillStyle = c.rim;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(c.x - c.r * 0.16, c.y - c.r * 0.16, c.r * 0.82, 0, Math.PI * 2);
+                ctx.fillStyle = c.fill;
+                ctx.fill();
+            });
+
+            // Shadow of planetary rings cast across upper hemisphere
+            ctx.fillStyle = 'rgba(10, 18, 28, 0.78)';
+            ctx.beginPath();
+            ctx.ellipse(512, 165, 490, 56, -0.07, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 1960s Ben-Day comic halftone dots
+            for (let x = 0; x < 1024; x += 8) {
+                for (let y = 0; y < 512; y += 8) {
+                    if ((x + y) % 16 === 0) {
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.09)';
+                        ctx.beginPath();
+                        ctx.arc(x, y, 1.8, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.ClampToEdgeWrapping;
+            return tex;
+        }
+
+        function createRingTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+
+            const grad = ctx.createLinearGradient(0, 0, 512, 0);
+            grad.addColorStop(0, 'rgba(250, 176, 45, 0)');
+            grad.addColorStop(0.12, 'rgba(250, 176, 45, 0.85)');
+            grad.addColorStop(0.35, 'rgba(252, 232, 181, 0.95)');
+            grad.addColorStop(0.48, 'rgba(214, 69, 26, 0.9)');
+            grad.addColorStop(0.52, 'rgba(12, 24, 34, 0.1)'); // Cassini gap
+            grad.addColorStop(0.56, 'rgba(250, 176, 45, 0.8)');
+            grad.addColorStop(0.78, 'rgba(252, 232, 181, 0.88)');
+            grad.addColorStop(0.92, 'rgba(250, 176, 45, 0.45)');
+            grad.addColorStop(1.0, 'rgba(250, 176, 45, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 512, 64);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function createDeckTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1024;
+            const ctx = canvas.getContext('2d');
+
+            // Warm sandstone tarmac deck
+            ctx.fillStyle = '#C8B88C';
+            ctx.fillRect(0, 0, 1024, 1024);
+
+            // Concrete tile expansion joints
+            ctx.strokeStyle = 'rgba(45, 35, 25, 0.35)';
+            ctx.lineWidth = 4;
+            for (let x = 0; x <= 1024; x += 128) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 1024); ctx.stroke();
+            }
+            for (let y = 0; y <= 1024; y += 128) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1024, y); ctx.stroke();
+            }
+
+            // Central flight apron with hazard chevrons (Red & Cream)
+            const chevronY = 440;
+            const chevronH = 144;
+            ctx.fillStyle = 'rgba(23, 76, 87, 0.38)';
+            ctx.fillRect(0, chevronY, 1024, chevronH);
+
+            for (let x = -64; x < 1088; x += 64) {
+                ctx.fillStyle = '#D63C24';
+                ctx.beginPath();
+                ctx.moveTo(x, chevronY);
+                ctx.lineTo(x + 32, chevronY);
+                ctx.lineTo(x + 64, chevronY + chevronH);
+                ctx.lineTo(x + 32, chevronY + chevronH);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#F2DFAD';
+                ctx.beginPath();
+                ctx.moveTo(x + 32, chevronY);
+                ctx.lineTo(x + 64, chevronY);
+                ctx.lineTo(x + 96, chevronY + chevronH);
+                ctx.lineTo(x + 64, chevronY + chevronH);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Golden boundary lines
+            ctx.strokeStyle = '#FAB02D';
+            ctx.lineWidth = 10;
+            ctx.beginPath();
+            ctx.moveTo(0, chevronY); ctx.lineTo(1024, chevronY);
+            ctx.moveTo(0, chevronY + chevronH); ctx.lineTo(1024, chevronY + chevronH);
+            ctx.stroke();
+
+            // Stenciled vintage typography & landing targets
+            ctx.fillStyle = '#174C57';
+            ctx.font = 'bold 36px monospace';
+            ctx.fillText('VESPERA-9 // RUNWAY-04', 120, chevronY - 24);
+            ctx.fillText('FEDERAÇÃO SOLAR · SETOR D-7', 480, chevronY + chevronH + 42);
+
+            ctx.strokeStyle = '#FAB02D';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.arc(512, 512, 280, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Halftone comic dots across deck
+            for (let x = 0; x < 1024; x += 6) {
+                for (let y = 0; y < 1024; y += 6) {
+                    if ((x * 3 + y * 7) % 17 === 0) {
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.07)';
+                        ctx.fillRect(x, y, 2, 2);
+                    }
+                }
+            }
+
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.wrapT = THREE.RepeatWrapping;
+            tex.repeat.set(4, 4);
+            return tex;
+        }
+
+        function createStarMarshalEmblemTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            const cx = 128, cy = 128;
+
+            // Emblema do peito na arte do personagem: aro dourado, disco marinho e estrela de quatro pontas dourada.
+            ctx.beginPath();
+            ctx.arc(cx, cy, 124, 0, Math.PI * 2);
+            ctx.fillStyle = '#E8A934';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(cx, cy, 104, 0, Math.PI * 2);
+            ctx.fillStyle = '#24426E';
+            ctx.fill();
+
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.beginPath();
+            for (let i = 0; i < 8; i++) {
+                const angle = (i * Math.PI) / 4 - Math.PI / 2;
+                const r = i % 2 === 0 ? 96 : 26;
+                ctx[i ? 'lineTo' : 'moveTo'](Math.cos(angle) * r, Math.sin(angle) * r);
+            }
+            ctx.closePath();
+            ctx.fillStyle = '#E8A934';
+            ctx.fill();
+            ctx.strokeStyle = '#14191E';
+            ctx.lineWidth = 5;
+            ctx.stroke();
+            // Vinco central de cada ponta, como na ilustração.
+            ctx.strokeStyle = '#B07A18';
+            ctx.lineWidth = 4;
+            for (let i = 0; i < 4; i++) {
+                const angle = (i * Math.PI) / 2 - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(Math.cos(angle) * 90, Math.sin(angle) * 90);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function createWristScannerTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+
+            // CRT phosphor dark teal background
+            ctx.fillStyle = '#061820';
+            ctx.fillRect(0, 0, 128, 128);
+
+            // Radar concentric rings
+            ctx.strokeStyle = '#026574';
+            ctx.lineWidth = 1.5;
+            for (const r of [20, 38, 56]) {
+                ctx.beginPath();
+                ctx.arc(64, 64, r, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Radar crosshairs
+            ctx.beginPath();
+            ctx.moveTo(64, 8); ctx.lineTo(64, 120);
+            ctx.moveTo(8, 64); ctx.lineTo(120, 64);
+            ctx.stroke();
+
+            // Active radar sweep cone
+            const sweepGrad = ctx.createRadialGradient(64, 64, 4, 64, 64, 56);
+            sweepGrad.addColorStop(0, 'rgba(95, 181, 174, 0.55)');
+            sweepGrad.addColorStop(1, 'rgba(95, 181, 174, 0.04)');
+            ctx.fillStyle = sweepGrad;
+            ctx.beginPath();
+            ctx.moveTo(64, 64);
+            ctx.arc(64, 64, 56, -Math.PI * 0.45, -Math.PI * 0.05);
+            ctx.closePath();
+            ctx.fill();
+
+            // Radar blips (Hostile red and Evidence amber)
+            ctx.fillStyle = '#F94524';
+            ctx.beginPath();
+            ctx.arc(88, 44, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#FAB02D';
+            ctx.beginPath();
+            ctx.arc(42, 82, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cathode scanline raster
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
+            for (let y = 0; y < 128; y += 4) {
+                ctx.fillRect(0, y, 128, 1.5);
+            }
+
+            // High-contrast cyan bezel
+            ctx.strokeStyle = '#5FB5AE';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(2, 2, 124, 124);
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        function buildVesperaSkyAndPlanet() {
+            planetGroup = new THREE.Group();
+            planetGroup.position.set(-6, 14, 40);
+
+            // 1. Procedural Planet with Craters, Bands & Ring Shadow
+            const planetTex = createPlanetTexture();
+            const planetGeo = new THREE.SphereGeometry(6.2, 48, 48);
+            const planetMat = new THREE.MeshStandardMaterial({
+                map: planetTex,
+                roughness: 0.75,
+                metalness: 0.05
+            });
+            planetGroup.add(new THREE.Mesh(planetGeo, planetMat));
+
+            // 2. Procedural Planetary Rings with Cassini Gap
+            const ringTex = createRingTexture();
+            const ringGeo = new THREE.RingGeometry(8.2, 13.0, 64);
+            ringTex.encoding = THREE.sRGBEncoding;
+            const ringMat = new THREE.MeshBasicMaterial({
+                map: ringTex,
+                fog: false,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.92
+            });
+            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+            ringMesh.rotation.x = Math.PI * 0.38;
+            ringMesh.rotation.y = -0.35;
+            planetGroup.add(ringMesh);
+            scene.add(planetGroup);
+
+            // 3. Moon
+            const moonMesh = new THREE.Mesh(
+                new THREE.SphereGeometry(1.6, 24, 24),
+                new THREE.MeshStandardMaterial({ color: 0xD6F0F2, roughness: 0.85, metalness: 0.1 })
+            );
+            moonMesh.position.set(14.5, 13.5, 42);
+            scene.add(moonMesh);
+
+            // 4. Spaceport Deck with Tarmac, Red/White Hazard Chevrons & Golden Flight Lanes
+            const deckGeo = new THREE.PlaneGeometry(60, 60, 32, 32);
+            const deckTex = createDeckTexture();
+            const deckMat = new THREE.MeshStandardMaterial({
+                map: deckTex,
+                roughness: 0.88,
+                metalness: 0.1
+            });
+            const deck = new THREE.Mesh(deckGeo, deckMat);
+            deck.rotation.x = -Math.PI / 2;
+            deck.position.y = 0;
+            scene.add(deck);
+
+            const gridHelper = new THREE.GridHelper(40, 40, 0xFAB02D, 0x026574);
+            gridHelper.position.y = 0.01;
+        }
+
+        function buildRealObjModels() {
+            if (!window.STAR_MARSHAL_MODELS) return;
+
+            // 1. Load Vespera-9 3D Spaceport City (tripo_convert_4cfaeb0b-ff77-43a5-bbd2-3633ac534f3b.obj)
+            // Cidade: faixas de altura viram tintas da prancha (base petróleo, corpo creme, coroa mostarda).
+            const cityData = window.STAR_MARSHAL_MODELS.city;
+            const cityCol = [];
+            for (let i = 1; i < cityData.v.length; i += 3) {
+                const h = Math.min(1, Math.max(0, cityData.v[i] / 0.42));
+                if (h > 0.62) cityCol.push(0.91, 0.66, 0.2);
+                else if (h > 0.25) cityCol.push(0.92, 0.85, 0.68);
+                else cityCol.push(0.18, 0.55, 0.57);
+            }
+            const cityGeo = pulpIndexedGeometry(cityData.v, cityData.f, pulpQuantizeColors(cityCol));
+            cityMesh = new THREE.Mesh(cityGeo, new THREE.MeshToonMaterial({ vertexColors: true }));
+            addInkOutline(cityMesh, 0.0011);
+            // Escala da cena do Godot: a cidade cerca a arena logo atrás do inimigo, em vez de ser fundo distante.
+            cityMesh.scale.set(22, 22, 22);
+            cityMesh.position.set(0, -1.2, 17);
+            scene.add(cityMesh);
+
+            // 2. Load Sliced & Articulated Star Marshal 3D Character (star_marshal.obj segmented rig)
+            marshalGroup = new THREE.Group();
+            marshalGroup.position.x = 0.68;
+            marshalGroup.scale.setScalar(1.35);
+
+            if (window.STAR_MARSHAL_MODELS && window.STAR_MARSHAL_MODELS.characterGroups) {
+                const groups = window.STAR_MARSHAL_MODELS.characterGroups;
+
+                // Pintura fiel à arte do personagem: capacete creme com faixa vermelha entre filetes azul-marinho,
+                // viseira preta e fones de latão; lenço e capa vermelhos; traje marinho com painel frontal creme
+                // e suspensórios de couro; ombreiras creme com estrela vermelha; manoplas creme e luvas pretas;
+                // cinto de couro com fivelas douradas e coldre; faixa creme na coxa; joelheiras creme com aro
+                // dourado; botas creme com tira preta.
+                // O modelo não está centrado na origem: o eixo do corpo fica em x = 0,035 e a frente aponta para +z.
+                const hex = h => [((h >> 16) & 255) / 255, ((h >> 8) & 255) / 255, (h & 255) / 255];
+                const SUIT = {
+                    navy: hex(0x24426E), cream: hex(0xEBD9AE), red: hex(0xDA4429), crimson: hex(0x8F2A1D),
+                    gold: hex(0xE8A934), leather: hex(0x6E4529), ink: hex(0x14191E)
+                };
+                const BODY_AXIS_X = 0.035;
+                function paintMarshal(part, x, y, z, nx, ny, nz) {
+                    const lx = x - BODY_AXIS_X, ax = Math.abs(lx);
+                    const outward = Math.sign(lx) * nx; // > 0: a face olha para fora do corpo
+                    switch (part) {
+                        case 'cape':
+                            return nz > 0.25 ? SUIT.crimson : SUIT.red; // forro voltado para o corpo fica na sombra
+                        case 'collar':
+                            return SUIT.red;
+                        case 'head':
+                            if (ax > 0.074 && y > 0.82 && y < 0.9 && Math.abs(nx) > 0.55) return SUIT.gold; // fones
+                            if (nz > 0.3 && y > 0.805 && y < 0.915 && ax < 0.078) return SUIT.ink; // viseira
+                            if (ax < 0.014) return SUIT.red;
+                            if (ax < 0.032) return SUIT.navy;
+                            return SUIT.cream;
+                        case 'chest':
+                            if (y > 0.765 && ax < 0.075) return SUIT.red; // lenço sobre a gola
+                            if (nz < -0.2 || ax > 0.075) return SUIT.navy; // costas e laterais, sob a capa e as ombreiras
+                            if (ax < 0.042) return SUIT.cream; // painel frontal
+                            if (ax < 0.062 && y > 0.6) return SUIT.leather; // suspensórios
+                            return SUIT.navy;
+                        case 'belt':
+                            if (lx < -0.08 && y < 0.545) return z > 0.135 ? SUIT.gold : SUIT.leather; // coldre
+                            if (y > 0.54) return nz > 0.4 && (ax < 0.026 || Math.abs(ax - 0.075) < 0.013) ? SUIT.gold : SUIT.leather;
+                            return SUIT.navy;
+                        case 'shoulder':
+                            if (y > 0.7) return outward > 0.8 && y > 0.738 && y < 0.772 && Math.abs(z - 0.06) < 0.022 ? SUIT.red : SUIT.cream; // estrela vermelha
+                            return SUIT.navy;
+                        case 'arm':
+                            if (y < 0.474) return SUIT.ink; // luva
+                            if (y < 0.575) return SUIT.cream; // manopla
+                            return SUIT.navy;
+                        case 'leg':
+                            if (y > 0.545) return SUIT.leather;
+                            if (y < 0.022) return SUIT.ink; // sola
+                            if (y < 0.196) return y > 0.1 && y < 0.116 ? SUIT.ink : SUIT.cream; // bota até o joelho, com tira
+                            if (y > 0.196 && y < 0.3 && nz > 0.3) return y < 0.207 || y > 0.288 ? SUIT.gold : SUIT.cream; // joelheira
+                            if (y > 0.3 && outward > 0.55) return SUIT.cream; // faixa da coxa
+                            return SUIT.navy;
+                    }
+                    return SUIT.navy;
+                }
+
+                // Cada parte do rig: cor chapada por face, sombra de gráfica, rim psicodélico e nanquim.
+                function createGroupMesh(gData, part) {
+                    const geo = pulpFaceColoredGeometry(gData.v, gData.f, (...a) => paintMarshal(part, ...a));
+                    const m = new THREE.Mesh(geo, new THREE.MeshToonMaterial({ vertexColors: true }));
+                    m.userData.rim = 0.08;
+                    m.userData.dotContrast = 1.65;
+                    addInkOutline(m, 0.0045);
+                    return m;
+                }
+                // Separa a ombreira do braço: ela acompanha só parte do giro, como uma peça presa ao tronco.
+                function splitFaces(gData, keep) {
+                    const f = [];
+                    for (let i = 0; i < gData.f.length; i += 3) {
+                        const cy = (gData.v[gData.f[i] * 3 + 1] + gData.v[gData.f[i + 1] * 3 + 1] + gData.v[gData.f[i + 2] * 3 + 1]) / 3;
+                        if (keep(cy)) f.push(gData.f[i], gData.f[i + 1], gData.f[i + 2]);
+                    }
+                    return { v: gData.v, f, pivot: gData.pivot };
+                }
+                const PAD_Y = 0.7;
+
+                // Hierarchical Bone Groups
+                const rig = {
+                    hips: new THREE.Group(),
+                    chest: new THREE.Group(),
+                    head: new THREE.Group(),
+                    capeLeft: new THREE.Group(),
+                    capeRight: new THREE.Group(),
+                    leftShoulder: new THREE.Group(),
+                    leftArm: new THREE.Group(),
+                    rightShoulder: new THREE.Group(),
+                    rightArm: new THREE.Group(),
+                    leftPad: new THREE.Group(),
+                    rightPad: new THREE.Group(),
+                    leftLeg: new THREE.Group(),
+                    rightLeg: new THREE.Group()
+                };
+
+                // 1. Pelvis / Belt & Hips
+                rig.hips.position.set(0, 0, 0);
+                const beltMesh = createGroupMesh(groups.beltHips, 'belt');
+                rig.hips.add(beltMesh);
+                marshalGroup.add(rig.hips);
+
+                // 2. Legs attached to Hips
+                const lLegP = groups.leftLeg.pivot;
+                rig.leftLeg.position.set(lLegP[0], lLegP[1], lLegP[2]);
+                const lLegMesh = createGroupMesh(groups.leftLeg, 'leg');
+                lLegMesh.position.set(-lLegP[0], -lLegP[1], -lLegP[2]);
+                rig.leftLeg.add(lLegMesh);
+                rig.hips.add(rig.leftLeg);
+
+                const rLegP = groups.rightLeg.pivot;
+                rig.rightLeg.position.set(rLegP[0], rLegP[1], rLegP[2]);
+                const rLegMesh = createGroupMesh(groups.rightLeg, 'leg');
+                rLegMesh.position.set(-rLegP[0], -rLegP[1], -rLegP[2]);
+                rig.rightLeg.add(rLegMesh);
+                rig.hips.add(rig.rightLeg);
+
+                // 3. Chest attached to Hips
+                const chestP = groups.chest.pivot;
+                rig.chest.position.set(chestP[0], chestP[1], chestP[2]);
+                const chestMesh = createGroupMesh(groups.chest, 'chest');
+                chestMesh.position.set(-chestP[0], -chestP[1], -chestP[2]);
+                rig.chest.add(chestMesh);
+                rig.hips.add(rig.chest);
+
+                // 4. Head attached to Chest
+                const headP = groups.head.pivot;
+                rig.head.position.set(headP[0] - chestP[0], headP[1] - chestP[1], headP[2] - chestP[2]);
+                // A gola é uma ilha da malha head e chega a y=0,8679, sobrepondo a altura
+                // do capacete. Separar pela conectividade evita pintar o tecido com as faixas.
+                const headData = groups.head;
+                const neighbors = new Map();
+                let lowestVertex = headData.f[0];
+                for (let i = 0; i < headData.f.length; i += 3) {
+                    const face = headData.f.slice(i, i + 3);
+                    for (const vertex of face) {
+                        if (!neighbors.has(vertex)) neighbors.set(vertex, new Set());
+                        for (const other of face) neighbors.get(vertex).add(other);
+                        if (headData.v[vertex * 3 + 1] < headData.v[lowestVertex * 3 + 1]) lowestVertex = vertex;
+                    }
+                }
+                const collarVertices = new Set([lowestVertex]);
+                const pending = [lowestVertex];
+                while (pending.length) {
+                    for (const vertex of neighbors.get(pending.pop())) {
+                        if (collarVertices.has(vertex)) continue;
+                        collarVertices.add(vertex);
+                        pending.push(vertex);
+                    }
+                }
+                const headFaces = [], collarFaces = [];
+                for (let i = 0; i < headData.f.length; i += 3) {
+                    const target = collarVertices.has(headData.f[i]) ? collarFaces : headFaces;
+                    target.push(...headData.f.slice(i, i + 3));
+                }
+                for (const [part, f] of [['head', headFaces], ['collar', collarFaces]]) {
+                    const mesh = createGroupMesh({ ...headData, f }, part);
+                    mesh.position.set(-headP[0], -headP[1], -headP[2]);
+                    rig.head.add(mesh);
+                }
+                rig.chest.add(rig.head);
+
+                // 5. Cape Left & Right attached to Chest
+                const capeLP = groups.capeLeft.pivot;
+                rig.capeLeft.position.set(capeLP[0] - chestP[0], capeLP[1] - chestP[1], capeLP[2] - chestP[2]);
+                const capeLMesh = createGroupMesh(groups.capeLeft, 'cape');
+                capeLMesh.position.set(-capeLP[0], -capeLP[1], -capeLP[2]);
+                rig.capeLeft.add(capeLMesh);
+                rig.chest.add(rig.capeLeft);
+
+                const capeRP = groups.capeRight.pivot;
+                rig.capeRight.position.set(capeRP[0] - chestP[0], capeRP[1] - chestP[1], capeRP[2] - chestP[2]);
+                const capeRMesh = createGroupMesh(groups.capeRight, 'cape');
+                capeRMesh.position.set(-capeRP[0], -capeRP[1], -capeRP[2]);
+                rig.capeRight.add(capeRMesh);
+                rig.chest.add(rig.capeRight);
+
+                // 6. Left Arm (Raygun Arm) attached to Chest
+                const lShP = groups.leftShoulder.pivot;
+                rig.leftShoulder.position.set(lShP[0] - chestP[0], lShP[1] - chestP[1], lShP[2] - chestP[2]);
+                const lShMesh = createGroupMesh(splitFaces(groups.leftShoulder, y => y < PAD_Y), 'shoulder');
+                lShMesh.position.set(-lShP[0], -lShP[1], -lShP[2]);
+                rig.leftShoulder.add(lShMesh);
+                rig.leftPad.position.copy(rig.leftShoulder.position);
+                const lPadMesh = createGroupMesh(splitFaces(groups.leftShoulder, y => y >= PAD_Y), 'shoulder');
+                lPadMesh.position.copy(lShMesh.position);
+                rig.leftPad.add(lPadMesh);
+                rig.chest.add(rig.leftPad);
+
+                const lArmP = groups.leftArm.pivot;
+                rig.leftArm.position.set(lArmP[0] - lShP[0], lArmP[1] - lShP[1], lArmP[2] - lShP[2]);
+                const lArmMesh = createGroupMesh(groups.leftArm, 'arm');
+                lArmMesh.position.set(-lArmP[0], -lArmP[1], -lArmP[2]);
+                rig.leftArm.add(lArmMesh);
+                rig.leftShoulder.add(rig.leftArm);
+                rig.chest.add(rig.leftShoulder);
+
+                // 7. Right Arm (Wrist Scanner Arm) attached to Chest
+                const rShP = groups.rightShoulder.pivot;
+                rig.rightShoulder.position.set(rShP[0] - chestP[0], rShP[1] - chestP[1], rShP[2] - chestP[2]);
+                const rShMesh = createGroupMesh(splitFaces(groups.rightShoulder, y => y < PAD_Y), 'shoulder');
+                rShMesh.position.set(-rShP[0], -rShP[1], -rShP[2]);
+                rig.rightShoulder.add(rShMesh);
+                rig.rightPad.position.copy(rig.rightShoulder.position);
+                const rPadMesh = createGroupMesh(splitFaces(groups.rightShoulder, y => y >= PAD_Y), 'shoulder');
+                rPadMesh.position.copy(rShMesh.position);
+                rig.rightPad.add(rPadMesh);
+                rig.chest.add(rig.rightPad);
+
+                const rArmP = groups.rightArm.pivot;
+                rig.rightArm.position.set(rArmP[0] - rShP[0], rArmP[1] - rShP[1], rArmP[2] - rShP[2]);
+                const rArmMesh = createGroupMesh(groups.rightArm, 'arm');
+                rArmMesh.position.set(-rArmP[0], -rArmP[1], -rArmP[2]);
+                rig.rightArm.add(rArmMesh);
+                rig.rightShoulder.add(rig.rightArm);
+                rig.chest.add(rig.rightShoulder);
+
+                // 8. Attach diegetic equipment directly to arm & chest bones
+                // A. Solar Federation Chest Emblem (from reference board)
+                const emblemTex = createStarMarshalEmblemTexture();
+                const emblemGeo = new THREE.CylinderGeometry(0.036, 0.036, 0.008, 32);
+                emblemGeo.rotateX(Math.PI / 2); // Orient towards front chest
+                const emblemMat = new THREE.MeshStandardMaterial({
+                    map: emblemTex,
+                    roughness: 0.35,
+                    metalness: 0.7
+                });
+                const emblemMesh = new THREE.Mesh(emblemGeo, emblemMat);
+                // No alto do peito, sobre o painel creme (o tórax chega a z = 0,16 nessa altura).
+                emblemMesh.position.set(BODY_AXIS_X - chestP[0], 0.688 - chestP[1], 0.163 - chestP[2]);
+                rig.chest.add(emblemMesh);
+
+                // B. Diegetic Wrist Scanner MK-II on Right Arm
+                const scannerTex = createWristScannerTexture();
+                const wristMount = new THREE.Group();
+
+                const bracerGeo = new THREE.CylinderGeometry(0.035, 0.037, 0.07, 16, 1, true, -Math.PI * 0.6, Math.PI * 1.2);
+                const bracerMat = new THREE.MeshStandardMaterial({
+                    color: 0xD4A017,
+                    metalness: 0.85,
+                    roughness: 0.35,
+                    side: THREE.DoubleSide
+                });
+                wristMount.add(new THREE.Mesh(bracerGeo, bracerMat));
+
+                const crtGeo = new THREE.BoxGeometry(0.045, 0.045, 0.012);
+                const crtMat = new THREE.MeshBasicMaterial({ map: scannerTex });
+                const crtMesh = new THREE.Mesh(crtGeo, crtMat);
+                crtMesh.position.set(0, 0, 0.036);
+                wristMount.add(crtMesh);
+
+                const ledGeo = new THREE.SphereGeometry(0.008, 12, 12);
+                const ledMat = new THREE.MeshBasicMaterial({ color: 0x5FB5AE });
+                const ledMesh = new THREE.Mesh(ledGeo, ledMat);
+                ledMesh.position.set(0.016, 0.018, 0.04);
+                wristMount.add(ledMesh);
+
+                // Abraça a manopla esquerda (centro medido: x 0,252 · y 0,525 · z 0,097), com a tela na face interna.
+                wristMount.position.set(0.252 - rArmP[0], 0.525 - rArmP[1], 0.097 - rArmP[2]);
+                wristMount.rotation.y = -Math.PI * 0.35;
+                rig.rightArm.add(wristMount);
+                wristScanner3DMesh = ledMesh;
+                // Projeção presa ao bracelete, com profundidade e oclusão pela cena.
+                const hologramMaterial = new THREE.MeshBasicMaterial({
+                    map: createScannerSelector(), transparent: true, opacity: .92,
+                    depthWrite: false, side: THREE.DoubleSide, toneMapped: false
+                });
+                scannerProjection = new THREE.Mesh(new THREE.PlaneGeometry(1.25, .76), hologramMaterial);
+                scannerProjection.position.set(0, 0.29, 0.07);
+                scannerProjection.rotation.x = -0.35;
+                scannerProjection.userData.pulpSkip = true;
+                scannerProjection.userData.noShadow = true;
+                scannerProjection.visible = false;
+                scannerAnchor = wristMount;
+                scene.add(scannerProjection);
+
+                // C. Pistola de Raios MK-II empunhada: o cabo fica dentro do punho fechado e o cano segue o eixo
+                // ombro → mão. Montada em "espaço de mira" (cano em +z, cabo para baixo) e depois alinhada ao braço.
+                const raygunGroup = new THREE.Group();
+                raygunVisual = raygunGroup;
+                const gunMat = (color, roughness = 0.4, metalness = 0.3) => new THREE.MeshStandardMaterial({ color, roughness, metalness });
+                const brass = gunMat(0xE8A934, 0.25, 0.9);
+                const gunPart = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); raygunGroup.add(m); return m; };
+
+                gunPart(new THREE.BoxGeometry(0.024, 0.064, 0.03), gunMat(0x6E4529, 0.8, 0), 0, 0, -0.004).rotation.x = -0.22; // cabo
+                gunPart(new THREE.BoxGeometry(0.032, 0.042, 0.1), gunMat(0xEBD9AE, 0.35, 0.25), 0, 0.048, 0.022); // corpo
+                gunPart(new THREE.BoxGeometry(0.012, 0.03, 0.074), gunMat(0xDA4429), 0, 0.08, 0.012); // aleta
+                gunPart(new THREE.SphereGeometry(0.024, 16, 12), brass, 0, 0.048, -0.03); // bulbo de energia
+                const barrelGeo = new THREE.CylinderGeometry(0.011, 0.015, 0.085, 16);
+                barrelGeo.rotateX(Math.PI / 2);
+                gunPart(barrelGeo, brass, 0, 0.05, 0.11);
+                for (let i = 0; i < 3; i++) gunPart(new THREE.TorusGeometry(0.019, 0.005, 8, 16), brass, 0, 0.05, 0.09 + i * 0.022);
+
+                raygunMuzzle3D = gunPart(new THREE.SphereGeometry(0.014, 12, 12), new THREE.MeshBasicMaterial({ color: 0xF94524 }), 0, 0.05, 0.158);
+
+                // Punho fechado da luva (centro medido no modelo) e eixo do braço estendido.
+                const FIST = new THREE.Vector3(-0.205, 0.452, 0.102);
+                const SHOULDER = new THREE.Vector3(...lShP);
+                rig.gunArmAxis = FIST.clone().sub(SHOULDER).normalize();
+                raygunGroup.position.set(FIST.x - lArmP[0], FIST.y - lArmP[1], FIST.z - lArmP[2]);
+                raygunGroup.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), rig.gunArmAxis);
+                rig.leftArm.add(raygunGroup);
+
+                marshalRig = rig;
+            } else {
+                // Fallback to monolithic model
+                const charData = window.STAR_MARSHAL_MODELS.marshal;
+                const charGeo = new THREE.BufferGeometry();
+                const charPos = [];
+                const charCol = [];
+                for (let i = 0; i < charData.f.length; i++) {
+                    const vi = charData.f[i] * 3;
+                    charPos.push(charData.v[vi], charData.v[vi + 1], charData.v[vi + 2]);
+                    charCol.push(charData.c[vi], charData.c[vi + 1], charData.c[vi + 2]);
+                }
+                charGeo.setAttribute('position', new THREE.Float32BufferAttribute(charPos, 3));
+                charGeo.setAttribute('color', new THREE.Float32BufferAttribute(charCol, 3));
+                charGeo.computeVertexNormals();
+                const charMat = new THREE.MeshToonMaterial({ vertexColors: true });
+                const charMesh = new THREE.Mesh(charGeo, charMat);
+                marshalGroup.add(charMesh);
+
+                // Chest emblem on monolithic mesh
+                const emblemTex = createStarMarshalEmblemTexture();
+                const emblemGeo = new THREE.CylinderGeometry(0.055, 0.055, 0.008, 32);
+                emblemGeo.rotateX(Math.PI / 2);
+                const emblemMat = new THREE.MeshStandardMaterial({
+                    map: emblemTex,
+                    roughness: 0.35,
+                    metalness: 0.7
+                });
+                const emblemMesh = new THREE.Mesh(emblemGeo, emblemMat);
+                emblemMesh.position.set(0.015, 0.52, 0.072);
+                marshalGroup.add(emblemMesh);
+
+                wristScanner3DMesh = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.032, 0.032, 0.06, 16),
+                    new THREE.MeshBasicMaterial({ color: 0x5FB5AE })
+                );
+                wristScanner3DMesh.position.set(0.22, 0.52, 0.05);
+                marshalGroup.add(wristScanner3DMesh);
+
+                raygunMuzzle3D = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.025, 12, 12),
+                    new THREE.MeshBasicMaterial({ color: 0xF94524 })
+                );
+                raygunMuzzle3D.position.set(-0.24, 0.52, 0.18);
+                marshalGroup.add(raygunMuzzle3D);
+            }
+
+            scene.add(marshalGroup);
+
+            // Ground contact shadow under Star Marshal for natural scene integration
+            playerContactShadow = createContactShadowMesh(0.72, 0.52);
+            playerContactShadow.userData.noShadow = true;
+            playerContactShadow.position.set(0.68, 0.005, 0.02);
+            scene.add(playerContactShadow);
+        }
+
+        function buildHostileRobotAndSaucers() {
+            // Saucers and other extra characters removed — only player and enemy remain
+            saucerGroup = new THREE.Group();
+
+            robotHostileGroup = new THREE.Group();
+            const enemyPos = new THREE.Vector3(-0.20, 0, 5.2);
+            robotHostileGroup.position.copy(enemyPos);
+            robotHostileGroup.scale.setScalar(1.68);
+            // Face the player in a dramatic 3/4 standoff combat pose
+            robotHostileGroup.rotation.y = Math.PI * 0.85;
+
+            if (window.STAR_MARSHAL_MODELS && window.STAR_MARSHAL_MODELS.enemy) {
+                const eData = window.STAR_MARSHAL_MODELS.enemy;
+                // O antagonista tem uma paleta própria: preservar o roxo e o verde do OBJ.
+                // A paleta do Marshal convertia essas regiões em marinho e couro.
+                const enemyColors = new Float32Array(eData.c.length);
+                const enemyColor = new THREE.Color();
+                const enemyHsl = {};
+                const enemyInks = {
+                    purple: new THREE.Color(0x503052),
+                    skin: new THREE.Color(0x909443),
+                    cream: new THREE.Color(0xF1D99A)
+                };
+                for (let i = 0; i < eData.c.length; i += 3) {
+                    enemyColor.setRGB(eData.c[i], eData.c[i + 1], eData.c[i + 2]);
+                    enemyColor.getHSL(enemyHsl);
+                    const hue = enemyHsl.h * 360;
+                    const value = Math.max(enemyColor.r, enemyColor.g, enemyColor.b);
+                    // Recupera as tintas da referência sem apagar os desenhos pintados no OBJ.
+                    // Sombras muito escuras continuam como nanquim; as demais deixam de ser
+                    // multiplicadas duas vezes (sombra pintada + iluminação da cena).
+                    let ink = null;
+                    if (enemyHsl.s > 0.2 && value > 0.08) {
+                        if (hue >= 270 && hue < 330) ink = enemyInks.purple;
+                        else if (hue >= 55 && hue < 105) ink = enemyInks.skin;
+                        else if (hue >= 30 && hue < 55 && value > 0.4) ink = enemyInks.cream;
+                    }
+                    if (ink) enemyColor.copy(ink).multiplyScalar(0.78 + 0.22 * value);
+                    enemyColor.convertSRGBToLinear();
+                    enemyColors[i] = enemyColor.r;
+                    enemyColors[i + 1] = enemyColor.g;
+                    enemyColors[i + 2] = enemyColor.b;
+                }
+                const geo = pulpIndexedGeometry(eData.v, eData.f, enemyColors);
+                enemyMesh = new THREE.Mesh(geo, new THREE.MeshToonMaterial({ vertexColors: true }));
+                enemyMesh.userData.rim = 0.10;
+                enemyMesh.userData.dotContrast = 1.65;
+                addInkOutline(enemyMesh, 0.0035);
+                robotHostileGroup.add(enemyMesh);
+            }
+
+            // Ground contact shadow directly under enemy feet
+            const enemyContactShadow = createContactShadowMesh(1.15, 0.95);
+            enemyContactShadow.userData.noShadow = true;
+            enemyContactShadow.position.set(0, 0.005, 0);
+            robotHostileGroup.add(enemyContactShadow);
+
+            scene.add(robotHostileGroup);
+
+            // Fixed target anchor for HUD reticle/waypoint
+            anchors3D.hostile.set(enemyPos.x, enemyPos.y + 1.25, enemyPos.z);
+        }
+
+        /*********************************************************************
+         * 5. CONTEXTUAL HUD STATE MACHINE (EXPLORATION / COMBAT / CRITICAL)
+         *********************************************************************/
+        function setHudState(state) {
+            STATE.hudState = state;
+            document.body.dataset.hudState = state;
+            STATE.health = state === 'critical' ? 12 : (state === 'combat' ? 82 : 100);
+            document.getElementById('combat-bottom-hud').inert = state === 'exploration';
+            playPulpAudio(state === 'critical' ? 'alarm' : 'click');
+
+            if (state === 'exploration') {
+                STATE.shield = 100;
+                SPECTRA_WEAPONS[STATE.equippedIdx].ammo = SPECTRA_WEAPONS[STATE.equippedIdx].maxAmmo;
+                STATE.heat = 10;
+            } else if (state === 'combat') {
+                STATE.shield = 78;
+                SPECTRA_WEAPONS[0].ammo = 24;
+                STATE.heat = 22;
+            } else if (state === 'critical') {
+                STATE.shield = 12;
+                SPECTRA_WEAPONS[0].ammo = 6;
+                STATE.heat = 88;
+            }
+
+            const map = {
+                exploration: document.getElementById('btn-st-exploration'),
+                combat: document.getElementById('btn-st-combat'),
+                critical: document.getElementById('btn-st-critical')
+            };
+            Object.keys(map).forEach(k => map[k].setAttribute('aria-pressed', k === state));
+            if (!STATE.wheelOpen) setStateCaption(STATE_CAPTIONS[state]);
+
+            const bottomHud = document.getElementById('combat-bottom-hud');
+            const topRadar = document.getElementById('combat-top-radar');
+            const reticle = document.getElementById('combat-center-reticle');
+            const critAlert = document.getElementById('critical-top-alert');
+            const critVig = document.getElementById('critical-vignette');
+            const shieldPanel = document.getElementById('shield-hud-panel');
+            const weaponPanel = document.getElementById('weapon-hud-panel');
+            const wpHostile = document.getElementById('wp-hostile');
+            const sub = document.getElementById('hud-mode-subtitle');
+
+            if (state === 'exploration') {
+                bottomHud.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                topRadar.classList.add('opacity-0', 'scale-90');
+                reticle.classList.add('opacity-0');
+                critAlert.classList.add('opacity-0', '-translate-y-4');
+                critVig.classList.remove('critical-vignette-pulse');
+                critVig.style.opacity = '0';
+                wpHostile.style.opacity = '0';
+                sub.textContent = 'PORTO DOS CONDENADOS / PATRULHA';
+            } else if (state === 'combat') {
+                bottomHud.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                topRadar.classList.remove('opacity-0', 'scale-90');
+                reticle.classList.remove('opacity-0');
+                critAlert.classList.add('opacity-0', '-translate-y-4');
+                critVig.classList.remove('critical-vignette-pulse');
+                critVig.style.opacity = '0';
+                shieldPanel.className = 'pulp-panel hud-card pointer-events-auto';
+                weaponPanel.className = 'pulp-panel hud-card pointer-events-auto';
+                wpHostile.style.opacity = '1';
+                sub.textContent = 'SETOR 07 / CONTATO HOSTIL';
+            } else if (state === 'critical') {
+                bottomHud.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                topRadar.classList.remove('opacity-0', 'scale-90');
+                reticle.classList.remove('opacity-0');
+                critAlert.classList.remove('opacity-0', '-translate-y-4');
+                critVig.classList.add('critical-vignette-pulse');
+                shieldPanel.className = 'pulp-panel-critical hud-card pointer-events-auto';
+                weaponPanel.className = 'pulp-panel-critical hud-card pointer-events-auto';
+                wpHostile.style.opacity = '1';
+                sub.textContent = 'SETOR 07 / TRAJE DANIFICADO';
+            }
+
+            updateHudCounters();
+        }
+
+        function updateHudCounters() {
+            const wpn = SPECTRA_WEAPONS[STATE.equippedIdx];
+            document.getElementById('crit-health').textContent = STATE.health + '%';
+            const palettes = {
+                health: ['#FA4027','#FA4027','#F45D28','#F45D28','#F77E30','#F77E30','#F7A53C','#F7A53C','#F5CE66','#F5CE66'],
+                shield: ['#398BCC','#398BCC','#48A8DA','#48A8DA','#55C5DE','#55C5DE','#7EE0E5','#7EE0E5','#B5F3F0','#B5F3F0']
+            };
+            for (const type of ['health', 'shield']) {
+                const value = Math.max(0, Math.min(100, STATE[type]));
+                document.getElementById(type + '-meter').setAttribute('aria-valuenow', value);
+                document.querySelectorAll('[data-meter="' + type + '"]').forEach((segment, i) => {
+                    const fill = Math.max(0, Math.min(1, value / 10 - i)) * 100;
+                    const color = palettes[type][i];
+                    segment.style.background = `linear-gradient(90deg, ${color} ${fill}%, #263C40 ${fill}%)`;
+                });
+            }
+            document.getElementById('weapon-hud-panel').setAttribute('aria-label', `${wpn.name} · ${wpn.ammo} cargas`);
+            document.getElementById('hud-weapon-svg').innerHTML = wpn.svg;
+            document.getElementById('heat-meter').setAttribute('aria-valuenow', STATE.heat);
+            document.getElementById('hud-heat-bar').style.width = `${STATE.heat}%`;
+            const heatEl = document.getElementById('hud-heat-pct');
+            heatEl.textContent = `${STATE.heat}%`;
+            heatEl.style.color = STATE.heat > 75 ? '#F94524' : '';
+        }
+
+        /*********************************************************************
+         * 6. DYNAMIC GAMEPAD GLYPHS (AUTO-SWITCH PS / XBOX / PC)
+         *********************************************************************/
+        function setPlatformGlyphs(plat, manual = false) {
+            const changed = STATE.platform !== plat;
+            STATE.platform = plat;
+            if (changed && manual) playPulpAudio('click');
+
+            ['ps', 'xbox', 'pc'].forEach(p => document.getElementById(`btn-plat-${p}`).setAttribute('aria-pressed', p === plat));
+            document.body.dataset.platform = plat;
+
+            const g = PLATFORM_GLYPHS[plat];
+            document.getElementById('input-device').textContent = g.name;
+            document.getElementById('glyph-interact').innerHTML = g.interact;
+            document.getElementById('glyph-heal-alert').innerHTML = g.heal;
+            document.getElementById('wheel-bumper-left').textContent = g.lb;
+            document.getElementById('wheel-bumper-right').textContent = g.rb;
+            document.getElementById('wheel-confirm').textContent = 'EQUIPAR & VOLTAR [' + (plat === 'pc' ? 'ENTER' : plat === 'ps' ? '✕' : 'A') + ']';
+
+            if (changed) showPulpToast(`GLYPHS ATIVOS: ${g.name}`);
+        }
+
+        /*********************************************************************
+         * 7. COMBAT, DIEGETIC SCANNER & WEAPON WHEEL ACTIONS
+         *********************************************************************/
+        function fireRaygun(e) {
+            if (STATE.wheelOpen || STATE.scannerOpen || reloadTime > 0) return;
+            if (STATE.heat >= 100) { showPulpToast('ARMA SUPERAQUECIDA · R PARA RESFRIAR'); return; }
+            if (STATE.hudState === 'exploration') setHudState('combat');
+
+            const wpn = SPECTRA_WEAPONS[STATE.equippedIdx];
+            if (wpn.ammo <= 0) {
+                reloadRaygun(e);
+                return;
+            }
+
+            wpn.ammo--;
+            STATE.heat = Math.min(100, STATE.heat + 7);
+            STATE.fireHold = 0.6;
+            // O raio, o clarão e o recuo saem no quadro em que a mão chega à linha de mira (ver animateLoop).
+            STATE.shotPending = true;
+            if (!marshalRig) emitShot();
+            playPulpAudio('raygun');
+            updateHudCounters();
+
+            const hit = document.getElementById('reticle-hit-flash');
+            hit.style.opacity = '1';
+            setTimeout(() => hit.style.opacity = '0', 110);
+
+            const x = e && e.clientX ? e.clientX - document.getElementById('game-viewport').getBoundingClientRect().left : document.getElementById('game-viewport').clientWidth * 0.5;
+            const y = e && e.clientY ? e.clientY - document.getElementById('game-viewport').getBoundingClientRect().top : document.getElementById('game-viewport').clientHeight * 0.45;
+            const floater = document.createElement('div');
+            const word = wpn.words[Math.floor(Math.random() * wpn.words.length)];
+            floater.className = 'pulp-floater text-2xl sm:text-3xl text-[#FAB02D] drop-shadow-[0_2px_8px_rgba(249, 69, 36,0.9)]';
+            floater.style.left = `${x}px`;
+            floater.style.top = `${y}px`;
+            floater.textContent = `★ ${word}`;
+            document.getElementById('game-viewport').appendChild(floater);
+            setTimeout(() => floater.remove(), 900);
+        }
+
+        // Efeito visual do disparo: recuo, clarão no cano e raio do cano até o ponto mirado.
+        function emitShot() {
+            const wpn = SPECTRA_WEAPONS[STATE.equippedIdx];
+            STATE.recoil = Math.min(18, STATE.recoil + 9);
+            STATE.enemyHit = PLAYER.lockOn || !marshalRig ? 1 : 0;
+            STATE.flashSpin = Math.random() * Math.PI;
+            if (!raygunMuzzle3D) return;
+            if (muzzleFlash) {
+                muzzleFlash.material.color.setHex(wpn.beamColor);
+                muzzleFlash.scale.setScalar(0.11);
+            }
+            if (!shotBeam) {
+                const geo = new THREE.CylinderGeometry(0.6, 1, 1, 8, 1, true);
+                geo.rotateX(Math.PI / 2);
+                geo.translate(0, 0, 0.5); // vai de z = 0 (cano) a z = 1 (alvo); lookAt + escala em z fazem o resto
+                shotBeam = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ fog: false, side: THREE.DoubleSide }));
+                // Miolo creme, como os raios desenhados da prancha.
+                const core = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ fog: false, color: new THREE.Color(0xFCE8B5).convertSRGBToLinear() }));
+                core.scale.set(0.4, 0.4, 1);
+                shotBeam.add(core);
+                shotBeam.traverse(o => { o.userData.pulpSkip = o.userData.noShadow = true; });
+                scene.add(shotBeam);
+            }
+            shotBeam.material.color.setHex(wpn.beamColor).convertSRGBToLinear();
+            AIM.shotEnd.copy(AIM.target);
+            AIM.shotEnd.x += (Math.random() - 0.5) * 0.12;
+            AIM.shotEnd.y += (Math.random() - 0.5) * 0.12;
+            STATE.beamLife = 1;
+        }
+
+        let reloadTime = 0, reloadHeat = 0, reloadWeapon = 0;
+        let gunThermalMaterials, smokeTexture, smokeClock = 0;
+        const smokePuffs = [];
+        const hotGunColor = new THREE.Color(0xFF321C).convertSRGBToLinear();
+        function updateWeaponTemperature(dt) {
+            if (reloadTime > 0) {
+                reloadTime = Math.max(0, reloadTime - dt);
+                STATE.heat = Math.round(reloadHeat * (reloadTime / 1.4));
+                if (reloadTime === 0) {
+                    const weapon = SPECTRA_WEAPONS[reloadWeapon];
+                    weapon.ammo = weapon.maxAmmo;
+                    STATE.heat = 0;
+                    playPulpAudio('click');
+                }
+                updateHudCounters();
+            }
+            if (raygunVisual && !gunThermalMaterials) {
+                gunThermalMaterials = [];
+                raygunVisual.traverse(o => {
+                    if (o.isMesh && !o.userData.pulpSkip && o.material.color) {
+                        gunThermalMaterials.push({material:o.material, color:o.material.color.clone(), emissive:o.material.emissive?.clone()});
+                    }
+                });
+            }
+            const heat = THREE.MathUtils.smoothstep(STATE.heat, 45, 100);
+            for (const saved of gunThermalMaterials || []) {
+                saved.material.color.copy(saved.color).lerp(hotGunColor, heat * .92);
+                if (saved.emissive) saved.material.emissive.copy(saved.emissive).lerp(hotGunColor, heat * .35);
+            }
+            if (!raygunMuzzle3D) return;
+            if (!smokeTexture && heat > 0) {
+                const canvas=document.createElement('canvas');canvas.width=canvas.height=64;
+                const c=canvas.getContext('2d'),g=c.createRadialGradient(32,32,2,32,32,30);
+                g.addColorStop(0,'rgba(190,202,201,.65)');g.addColorStop(.45,'rgba(135,154,158,.4)');g.addColorStop(1,'rgba(135,154,158,0)');
+                c.fillStyle=g;c.fillRect(0,0,64,64);smokeTexture=new THREE.CanvasTexture(canvas);
+                for(let i=0;i<12;i++) {
+                    const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:smokeTexture,transparent:true,depthWrite:false,opacity:0}));
+                    sprite.userData.pulpSkip=sprite.userData.noShadow=true;sprite.visible=false;
+                    scene.add(sprite);smokePuffs.push({sprite,life:0,drift:(i%3-1)*.035});
+                }
+            }
+            smokeClock += dt;
+            if (heat > .2 && smokeClock > .13) {
+                smokeClock=0;
+                const puff=smokePuffs.find(p=>p.life<=0);
+                if(puff){puff.life=1.2;raygunMuzzle3D.getWorldPosition(puff.sprite.position);puff.sprite.visible=true;}
+            }
+            for(const puff of smokePuffs) {
+                if(puff.life<=0)continue;
+                puff.life=Math.max(0,puff.life-dt);
+                const age=1-puff.life/1.2;
+                if(!reducedMotion.matches){puff.sprite.position.y+=dt*.22;puff.sprite.position.x+=puff.drift*dt;}
+                puff.sprite.scale.setScalar(.05+age*.19);
+                puff.sprite.material.opacity=Math.sin(age*Math.PI)*.45;
+                puff.sprite.visible=puff.life>0;
+            }
+        }
+
+        function reloadRaygun(e) {
+            if (e) e.stopPropagation();
+            if (reloadTime > 0) return;
+            if (STATE.scannerOpen) toggleWristScanner();
+            reloadTime = 1.4; reloadHeat = STATE.heat; reloadWeapon = STATE.equippedIdx;
+            STATE.triggerHeld = false; STATE.shotPending = false; STATE.fireHold = 0;
+            playPulpAudio('scanner');
+        }
+
+        function restoreShieldFull(e) {
+            if (e) e.stopPropagation();
+            setHudState('combat');
+            STATE.shield = 100;
+            STATE.health = 100;
+            STATE.heat = 10;
+            updateHudCounters();
+            playPulpAudio('scanner');
+            showPulpToast('VIDA E ESCUDO RESTAURADOS EM 100%');
+        }
+
+        function toggleWristScanner(e) {
+            if (e) e.stopPropagation();
+            STATE.scannerOpen = !STATE.scannerOpen;
+            // Restaurar os materiais antes do próximo quadro evita a casca escura
+            // sobrepor o corpo durante a saída suave da câmera.
+            if (!STATE.scannerOpen && marshalGroup) updateMarshalOpacity(0);
+            document.body.dataset.scanner = STATE.scannerOpen ? 'open' : '';
+            playPulpAudio('scanner');
+            const el = document.getElementById('diegetic-wrist-scanner');
+            STATE.triggerHeld = false;
+            STATE.shotPending = false; STATE.fireHold = 0;
+            el.classList.add('opacity-0');
+            if (STATE.scannerOpen) { PLAYER.keys.clear(); PLAYER.pad.x = PLAYER.pad.z = 0; toggleWeaponWheel(false); drawScannerSelector(); }
+        }
+
+        function investigateEvidence(e) {
+            if (e) e.stopPropagation();
+            if (!STATE.scannerOpen) toggleWristScanner();
+            document.getElementById('diegetic-wrist-scanner').classList.remove('opacity-0', 'translate-y-8');
+            playPulpAudio('scanner');
+            const lbl = document.getElementById('evidence-label');
+            lbl.textContent = 'ANALISANDO ISÓTOPOS DE VESPERA-9...';
+            setTimeout(() => {
+                lbl.textContent = 'CONTRABANDO CONFIRMADO — EMBOSCADA!';
+                setTimeout(() => {
+                    lbl.textContent = 'INVESTIGAR RASTRO DE RADIAÇÃO';
+                    setHudState('combat');
+                }, 900);
+            }, 600);
+        }
+
+        /*********************************************************************
+         * 8. 6-SECTOR 1960s PULP WEAPON WHEEL (RODA DE ARMAS · SPECTRA-7)
+         *********************************************************************/
+        function polarToXY(cx, cy, r, deg) {
+            const rad = (deg - 90) * Math.PI / 180;
+            return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+        }
+
+        function sectorPath(cx, cy, rIn, rOut, startDeg, endDeg) {
+            const p1 = polarToXY(cx, cy, rOut, endDeg);
+            const p2 = polarToXY(cx, cy, rOut, startDeg);
+            const p3 = polarToXY(cx, cy, rIn, startDeg);
+            const p4 = polarToXY(cx, cy, rIn, endDeg);
+            return `M ${p1.x} ${p1.y} A ${rOut} ${rOut} 0 0 0 ${p2.x} ${p2.y} L ${p3.x} ${p3.y} A ${rIn} ${rIn} 0 0 1 ${p4.x} ${p4.y} Z`;
+        }
+
+        function renderWeaponWheel() {
+            const g = document.getElementById('wheel-sectors-group');
+            const cx = 230, cy = 230, rIn = 84, rOut = 184;
+            let html = '';
+
+            SPECTRA_WEAPONS.forEach((wpn, idx) => {
+                const startA = idx * 60 - 30;
+                const endA = (idx + 1) * 60 - 30;
+                const midA = idx * 60;
+                const isHov = idx === STATE.hoveredIdx;
+                const d = sectorPath(cx, cy, rIn, rOut, startA, endA);
+                const pos = polarToXY(cx, cy, 134, midA);
+
+                const fill = isHov ? '#FAB02D' : '#12313A';
+                const ink = isHov ? '#0C2229' : '#FCE8B5';
+
+                html += `
+                    <g class="wheel-wedge${isHov ? ' is-active' : ''}"
+                       onmouseenter="hoverWheelSector(${idx})"
+                       onclick="selectWheelWeapon(${idx}, event)">
+                        <path d="${d}" fill="${fill}" stroke="#FCE8B5" stroke-width="2"/>
+                        <g transform="translate(${pos.x - 40}, ${pos.y - 18})" style="color: ${ink}">
+                            <svg width="80" height="36" viewBox="0 0 110 48">${wpn.svg}</svg>
+                        </g>
+                    </g>
+                `;
+            });
+
+            g.innerHTML = html;
+            const activeWpn = SPECTRA_WEAPONS[STATE.hoveredIdx];
+            document.getElementById('wheel-center-title').textContent = activeWpn.fullName;
+            document.getElementById('wheel-center-ammo').textContent = activeWpn.ammo;
+            document.getElementById('wheel-brief-name').textContent = activeWpn.fullName;
+            document.getElementById('wheel-brief-sub').textContent = activeWpn.sub;
+        }
+
+        function hoverWheelSector(idx) {
+            if (STATE.hoveredIdx !== idx) {
+                STATE.hoveredIdx = idx;
+                playPulpAudio('click');
+                renderWeaponWheel();
+            }
+        }
+
+        function cycleWheelSector(dir) {
+            STATE.hoveredIdx = (STATE.hoveredIdx + dir + SPECTRA_WEAPONS.length) % SPECTRA_WEAPONS.length;
+            playPulpAudio('click');
+            renderWeaponWheel();
+        }
+
+        function selectWheelWeapon(idx, e) {
+            if (e) e.stopPropagation();
+            STATE.equippedIdx = idx;
+            STATE.hoveredIdx = idx;
+            updateHudCounters();
+            toggleWeaponWheel(false);
+            if (STATE.hudState === 'exploration') setHudState('combat');
+            showPulpToast(`EQUIPADO: ${SPECTRA_WEAPONS[idx].fullName}`);
+        }
+
+        function toggleWeaponWheel(force) {
+            if (force !== false) return; // Seleção de armas agora acontece somente no pulso (V).
+            const next = typeof force === 'boolean' ? force : !STATE.wheelOpen;
+            if (next === STATE.wheelOpen && typeof force === 'boolean') return;
+            STATE.wheelOpen = next;
+            document.getElementById('weapon-wheel-modal').inert = !next;
+
+            const modal = document.getElementById('weapon-wheel-modal');
+            const inner = document.getElementById('wheel-modal-inner');
+            const webgl = document.getElementById('webgl-container');
+
+            document.body.dataset.wheel = next ? 'open' : '';
+            if (next) {
+                STATE.hoveredIdx = STATE.equippedIdx;
+                STATE.targetTimeScale = 0.10;
+                renderWeaponWheel();
+                playPulpAudio('bullet_time');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                inner.classList.replace('scale-90', 'scale-100');
+                webgl.classList.add('bullet-time-active');
+                setStateCaption(STATE_CAPTIONS.wheel);
+            } else {
+                STATE.targetTimeScale = 1.0;
+                playPulpAudio('click');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                inner.classList.replace('scale-100', 'scale-90');
+                webgl.classList.remove('bullet-time-active');
+                setStateCaption(STATE_CAPTIONS[STATE.hudState]);
+            }
+        }
+
+        function toggleUxZones() {
+            STATE.uxOpen = !STATE.uxOpen;
+            playPulpAudio('click');
+            document.getElementById('ux-zones-overlay').style.opacity = STATE.uxOpen ? '1' : '0';
+        }
+
+        // Legendas da prancha: cada estado diz em uma linha o que o HUD faz.
+        const STATE_CAPTIONS = {
+            exploration: 'Exploração · HUD 90% invisível para valorizar o mundo.',
+            combat: 'Combate · Barras de vida, mira dinâmica, contadores e ameaças direcionais.',
+            critical: 'Estado crítico · Vinheta vermelha, distorção cromática e alertas de baixa vida.',
+            wheel: 'Roda de armas · Seleção radial com desaceleração de tempo.'
+        };
+        function setStateCaption(text) {
+            document.getElementById('state-caption').textContent = text;
+        }
+
+        let toastTimer = null;
+        function showPulpToast(msg) {
+            const t = document.getElementById('pulp-toast');
+            t.textContent = msg;
+            t.classList.remove('opacity-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.add('opacity-0'), 2200);
+        }
+
+        /*********************************************************************
+         * 9. REALTIME 60 FPS RENDER LOOP & 3D WAYPOINT PROJECTION
+         *********************************************************************/
+        function project3DToScreen(vec3) {
+            const v = vec3.clone().project(camera);
+            return {
+                x: (v.x * 0.5 + 0.5) * document.getElementById('game-viewport').clientWidth,
+                y: -(v.y * 0.5 - 0.5) * document.getElementById('game-viewport').clientHeight
+            };
+        }
+
+        const scannerPanel = document.getElementById('diegetic-wrist-scanner');
+        const scannerPanelAnchor = new THREE.Vector3();
+        function positionScannerPanel() {
+            if (!STATE.scannerOpen || !marshalGroup) return;
+            // A ficha acompanha o tronco projetado, nunca a borda da janela.
+            if (marshalRig) marshalRig.chest.getWorldPosition(scannerPanelAnchor);
+            else marshalGroup.getWorldPosition(scannerPanelAnchor).add(new THREE.Vector3(0, 0.9, 0));
+            const point = project3DToScreen(scannerPanelAnchor);
+            const viewport = document.getElementById('game-viewport');
+            const width = scannerPanel.offsetWidth * 0.7;
+            const height = scannerPanel.offsetHeight * 0.7;
+            const left = Math.max(12, Math.min(viewport.clientWidth - width - 12, point.x - width - 100));
+            const top = Math.max(100, Math.min(viewport.clientHeight - height - 120, point.y - height * 0.45));
+            scannerPanel.style.setProperty('--scanner-left', left + 'px');
+            scannerPanel.style.setProperty('--scanner-top', top + 'px');
+        }
+
+        /*********************************************************************
+         * 9a. CONTROLE DO STAR MARSHAL: ANDAR, STRAFE, GIRAR NO EIXO, ATIRAR CORRENDO
+         *********************************************************************/
+        const UP_AXIS = new THREE.Vector3(0, 1, 0);
+        const PLAYER = {
+            pos: new THREE.Vector3(0.68, 0, 0.02), vel: new THREE.Vector3(),
+            aimYaw: 0, bodyYaw: 0, torsoYaw: 0, camYaw: 0, turnRate: 0,
+            stride: 0, gait: 0, localX: 0, localZ: 0,
+            keys: new Set(), pad: { x: 0, z: 0 }
+        };
+        // Mira do braço da pistola (vetores reaproveitados a cada quadro).
+        const AIM = {
+            target: new THREE.Vector3(), point: new THREE.Vector3(0, 1, 6), from: new THREE.Vector3(),
+            dir: new THREE.Vector3(), tmp: new THREE.Vector3(), shotEnd: new THREE.Vector3(),
+            q: new THREE.Quaternion(), aimQ: new THREE.Quaternion(), armQ: new THREE.Quaternion(),
+            euler: new THREE.Euler(), xAxis: new THREE.Vector3(1, 0, 0),
+            enemyChest: new THREE.Vector3(0, 1.0, 0) // inimigo tem 1,65 de altura na escala da cena
+        };
+        const pointerRay = new THREE.Raycaster();
+        const pointerNdc = new THREE.Vector2();
+        function updatePointerAim() {
+            pointerNdc.set(STATE.mouseX, -STATE.mouseY);
+            camera.updateMatrixWorld();
+            pointerRay.setFromCamera(pointerNdc, camera);
+            if (enemyMesh) enemyMesh.updateWorldMatrix(true, false);
+            const hit = enemyMesh ? pointerRay.intersectObject(enemyMesh, false)[0] : null;
+            PLAYER.lockOn = !!hit;
+            if (hit) AIM.target.copy(hit.point);
+            else pointerRay.ray.at(12, AIM.target);
+            const reticle = document.getElementById('combat-center-reticle');
+            reticle.style.left = ((STATE.mouseX + 1) * 50) + '%';
+            reticle.style.top = ((STATE.mouseY + 1) * 50) + '%';
+        }
+        let scannerViewBlend = 0;
+        let marshalFadeMaterials;
+        function updateMarshalOpacity(blend) {
+            if (!marshalFadeMaterials) {
+                const materials = new Set();
+                marshalGroup.traverse(o => { if (o.isMesh) for (const m of (Array.isArray(o.material) ? o.material : [o.material])) materials.add(m); });
+                marshalFadeMaterials = [...materials].map(material => ({ material, opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite }));
+            }
+            const faded = blend > .001;
+            for (const original of marshalFadeMaterials) {
+                const m = original.material;
+                const transparent = faded || original.transparent;
+                if (m.transparent !== transparent) { m.transparent = transparent; m.needsUpdate = true; }
+                m.opacity = original.opacity * (1 - .78 * blend);
+                m.depthWrite = faded ? false : original.depthWrite;
+            }
+        }
+        let shotBeam = null;
+        const PLAYER_BOUNDS ={ minX: -2.6, maxX: 3.2, minZ: -1.2, maxZ: 3.9 }; // minX: a nave estacionada fica em x ≈ -3,8
+        const rawDeltaClamped = d => Math.min(Math.max(d, 0), 0.05);
+        const angleDelta = (a, b) => Math.atan2(Math.sin(b - a), Math.cos(b - a));
+
+        function updatePlayer(dt) {
+            const P = PLAYER;
+            // Mouse/analógico direito definem o ponto do mundo para onde o personagem olha.
+            updatePointerAim();
+            P.aimYaw = STATE.scannerOpen ? 0 : Math.atan2(AIM.target.x - P.pos.x, AIM.target.z - P.pos.z);
+            STATE.fireHold = Math.max(0, (STATE.fireHold || 0) - dt);
+
+            // Gatilho segurado (mouse) dispara em cadência, como o R2/RT.
+            if (STATE.triggerHeld && !STATE.wheelOpen && performance.now() - lastFire > 180) { fireRaygun(); lastFire = performance.now(); }
+
+            // Direção relativa à mira: W/S avançam, A/D fazem strafe.
+            let mx = (P.keys.has('a') ? 1 : 0) - (P.keys.has('d') ? 1 : 0) + P.pad.x;
+            let mz = (P.keys.has('w') ? 1 : 0) - (P.keys.has('s') ? 1 : 0) + P.pad.z;
+            const len = Math.hypot(mx, mz);
+            if (len > 1) { mx /= len; mz /= len; }
+            const sinA = Math.sin(P.aimYaw), cosA = Math.cos(P.aimYaw);
+            const target = new THREE.Vector3(sinA * mz + cosA * mx, 0, cosA * mz - sinA * mx).multiplyScalar(STATE.hudState === 'critical' ? 0.9 : 1.5);
+            P.vel.lerp(target, 1 - Math.exp(-10 * dt));
+            P.pos.addScaledVector(P.vel, dt);
+            P.pos.x = THREE.MathUtils.clamp(P.pos.x, PLAYER_BOUNDS.minX, PLAYER_BOUNDS.maxX);
+            P.pos.z = THREE.MathUtils.clamp(P.pos.z, PLAYER_BOUNDS.minZ, PLAYER_BOUNDS.maxZ);
+            if (robotHostileGroup) {
+                const away = P.pos.clone().sub(robotHostileGroup.position).setY(0);
+                if (away.length() < 1.1) P.pos.copy(robotHostileGroup.position).add(away.setLength(1.1)).setY(0);
+            }
+
+            // O tronco segue o ponto sob o cursor, sem assistência que desloque o alvo.
+            const torsoTarget = P.aimYaw;
+            P.torsoYaw += angleDelta(P.torsoYaw, torsoTarget) * (1 - Math.exp(-14 * dt));
+
+            // Corpo gira no próprio eixo: rápido correndo ou atirando, em passos curtos parado.
+            const speed = P.vel.length();
+            const turnK = speed > 0.2 || STATE.fireHold > 0 ? 10 : (Math.abs(angleDelta(P.bodyYaw, P.torsoYaw)) > 0.45 ? 6 : 0.8);
+            const prevYaw = P.bodyYaw;
+            P.bodyYaw += angleDelta(P.bodyYaw, P.torsoYaw) * (1 - Math.exp(-turnK * dt));
+            P.turnRate = dt > 0 ? angleDelta(prevYaw, P.bodyYaw) / dt : 0;
+
+            // Passada: velocidade + giro no lugar alimentam o mesmo ciclo de pernas.
+            const sinB = Math.sin(P.bodyYaw), cosB = Math.cos(P.bodyYaw);
+            const vz = P.vel.x * sinB + P.vel.z * cosB, vx = P.vel.x * cosB - P.vel.z * sinB;
+            P.localZ = THREE.MathUtils.clamp(vz / 1.5, -1, 1);
+            P.localX = THREE.MathUtils.clamp(vx / 1.5, -1, 1);
+            const gaitTarget = THREE.MathUtils.clamp(speed / 1.2 + Math.abs(P.turnRate) * 0.35, 0, 1);
+            P.gait += (gaitTarget - P.gait) * (1 - Math.exp(-8 * dt));
+            P.stride += dt * (speed * 7.5 + Math.abs(P.turnRate) * 3);
+        }
+
+        function buildMuzzleFlash() {
+            const shape = new THREE.Shape();
+            for (let i = 0; i < 8; i++) {
+                const r = i % 2 === 0 ? 1 : 0.22, a = i * Math.PI / 4;
+                shape[i ? 'lineTo' : 'moveTo'](Math.cos(a) * r, Math.sin(a) * r);
+            }
+            const mesh = new THREE.Mesh(new THREE.ShapeGeometry(shape), new THREE.MeshBasicMaterial({ color: 0xFAB02D, depthTest: false, transparent: true, fog: false }));
+            mesh.userData.pulpSkip = mesh.userData.noShadow = true;
+            mesh.renderOrder = 20;
+            mesh.scale.setScalar(0.001);
+            mesh.visible = false;
+            return mesh;
+        }
+
+        function animateLoop() {
+            requestAnimationFrame(animateLoop);
+            const rawDelta = clock.getDelta();
+            if (document.hidden || !sceneVisible) return;
+            pollController();
+            if (!muzzleFlash && raygunMuzzle3D) { muzzleFlash = buildMuzzleFlash(); scene.add(muzzleFlash); }
+            const step = MarshalInput.advance(rawDelta, STATE.timeScale, STATE.targetTimeScale, worldTime);
+            STATE.timeScale = step.scale;
+            worldTime = step.time;
+            const dt = reducedMotion.matches ? 0 : step.dt;
+            const elapsed = reducedMotion.matches ? 0 : worldTime;
+
+            STATE.smoothX += (STATE.mouseX - STATE.smoothX) * 0.08;
+            STATE.smoothY += (STATE.mouseY - STATE.smoothY) * 0.08;
+
+            // Movimento é comando do jogador: roda mesmo com movimento reduzido (só os loops ociosos param).
+            const mdt = step.dt;
+            updatePlayer(mdt);
+            updateEnemyAttack(mdt);
+            updateWeaponTemperature(mdt);
+            const P = PLAYER;
+
+            // Câmera de ombro: acompanha a posição do personagem, mantendo a orientação.
+            // Câmera estável: mover o cursor não arrasta o cenário.
+            P.camYaw = 0;
+            const breath = Math.sin(elapsed * 2.1) * 0.008;
+            // Ombro direito, perto como na cena do Godot: personagem à esquerda, inimigo junto da mira.
+            scannerViewBlend += ((STATE.scannerOpen ? 1 : 0) - scannerViewBlend) * (reducedMotion.matches ? 1 : 1 - Math.exp(-7 * mdt));
+            if (!STATE.scannerOpen && scannerViewBlend < .001) scannerViewBlend = 0;
+            updateMarshalOpacity(STATE.scannerOpen ? scannerViewBlend : 0);
+            const shoulder = camera.aspect < 1 ? -0.2 : -0.42;
+            const camOffset = new THREE.Vector3(THREE.MathUtils.lerp(shoulder, -.5, scannerViewBlend), 1.0 + breath * (1 - scannerViewBlend), THREE.MathUtils.lerp(-1.9, -1.6, scannerViewBlend)).applyAxisAngle(UP_AXIS, P.camYaw);
+            const camLook = new THREE.Vector3(THREE.MathUtils.lerp(shoulder - .33, -.5, scannerViewBlend), 0.95, THREE.MathUtils.lerp(4.2, .2, scannerViewBlend)).applyAxisAngle(UP_AXIS, P.camYaw);
+            camera.position.copy(P.pos).add(camOffset);
+            camera.lookAt(camLook.add(P.pos));
+            const baseFov = camera.aspect < 1 ? 74 : 52;
+            camera.fov = THREE.MathUtils.lerp(baseFov, camera.aspect < 1 ? 60 : 38, scannerViewBlend);
+            camera.updateProjectionMatrix();
+            if (sky) sky.position.copy(camera.position);
+            if (scannerProjection) {
+                scannerProjection.visible = STATE.scannerOpen;
+                scannerAnchor.getWorldPosition(scannerProjection.position);
+                scannerProjection.position.add(new THREE.Vector3(0.85, 0.28, 0.12).applyQuaternion(camera.quaternion));
+                scannerProjection.quaternion.copy(camera.quaternion);
+                scannerProjection.rotateZ(-0.12);
+            }
+
+            if (marshalRig) {
+                const isCritical = STATE.hudState === 'critical';
+                const isCombat = STATE.hudState !== 'exploration';
+                const isScanner = STATE.scannerOpen;
+                const aiming = !isScanner && (isCombat || STATE.fireHold > 0 || reloadTime > 0);
+
+                // Breathing frequency and amplitude
+                const breathFreq = isCritical ? 5.2 : 2.1;
+                const breathAmp = isCritical ? 0.038 : 0.016;
+                const breathCycle = Math.sin(elapsed * breathFreq);
+
+                // Corpo inteiro: posição no mundo, giro no próprio eixo e quique da passada.
+                const gait = P.gait, phase = P.stride;
+                marshalGroup.position.set(P.pos.x, breathCycle * 0.005 + Math.abs(Math.sin(phase)) * 0.028 * gait - (isCombat ? 0.02 : 0), P.pos.z);
+                marshalGroup.rotation.y = P.bodyYaw;
+                if (playerContactShadow) playerContactShadow.position.set(P.pos.x, 0.005, P.pos.z);
+
+                // 1. Hips: inclina na direção do passo e transfere peso
+                const weightCycle = Math.sin(elapsed * 0.65) * (1 - gait);
+                marshalRig.hips.position.x = weightCycle * 0.006;
+                marshalRig.hips.rotation.x = THREE.MathUtils.lerp(marshalRig.hips.rotation.x, P.localZ * 0.1 * gait, mdt * 8);
+                marshalRig.hips.rotation.z = THREE.MathUtils.lerp(marshalRig.hips.rotation.z, weightCycle * 0.012 - P.localX * 0.08 * gait, mdt * 8);
+                marshalRig.hips.rotation.y = Math.sin(phase) * 0.06 * gait + scannerViewBlend * .22;
+
+                // 2. Legs: passada para frente/trás e passo lateral no strafe; agachamento leve em combate
+                const swing = Math.sin(phase) * 0.6 * gait;
+                const fwd = P.localZ < -0.2 ? -1 : 1;
+                const crouchL = isCombat ? -0.06 : 0, crouchR = isCombat ? 0.04 : 0;
+                marshalRig.leftLeg.rotation.x = THREE.MathUtils.lerp(marshalRig.leftLeg.rotation.x, crouchL * (1 - gait) + swing * fwd, mdt * 14);
+                marshalRig.rightLeg.rotation.x = THREE.MathUtils.lerp(marshalRig.rightLeg.rotation.x, crouchR * (1 - gait) - swing * fwd, mdt * 14);
+                marshalRig.leftLeg.rotation.z = -weightCycle * 0.012 + Math.max(0, Math.sin(phase)) * P.localX * 0.3 * gait;
+                marshalRig.rightLeg.rotation.z = -weightCycle * 0.012 - Math.max(0, -Math.sin(phase)) * P.localX * 0.3 * gait;
+
+                // 3. Chest / Spine: o tronco lidera o giro e trava no alvo enquanto as pernas seguem o caminho
+                const twist = THREE.MathUtils.clamp(P.torsoYaw - P.bodyYaw, -0.7, 0.7) - Math.sin(phase) * 0.06 * gait;
+                const targetChestPitch = (aiming ? 0.08 : 0.02) + breathCycle * breathAmp + P.localZ * 0.05 * gait;
+                const targetChestRoll = (isCritical ? (Math.random() - 0.5) * 0.02 : 0) - P.turnRate * 0.04;
+                marshalRig.chest.rotation.x = THREE.MathUtils.lerp(marshalRig.chest.rotation.x, targetChestPitch, mdt * 8);
+                marshalRig.chest.rotation.y = THREE.MathUtils.lerp(marshalRig.chest.rotation.y, twist, mdt * 12);
+                marshalRig.chest.rotation.z = THREE.MathUtils.lerp(marshalRig.chest.rotation.z, targetChestRoll, mdt * 8);
+
+                // 4. Head: olha para a mira um pouco antes do tronco
+                const targetHeadYaw = THREE.MathUtils.clamp(P.aimYaw - P.torsoYaw, -0.5, 0.5) * 0.8;
+                const targetHeadPitch = -STATE.smoothY * 0.22 - breathCycle * 0.008;
+                marshalRig.head.rotation.y = THREE.MathUtils.lerp(marshalRig.head.rotation.y, targetHeadYaw, mdt * 10);
+                marshalRig.head.rotation.x = THREE.MathUtils.lerp(marshalRig.head.rotation.x, targetHeadPitch, mdt * 8);
+                marshalRig.head.rotation.z = THREE.MathUtils.lerp(marshalRig.head.rotation.z, -P.turnRate * 0.05, mdt * 6);
+
+                // 5. Cape: vento + arrasto da corrida + chicote do giro
+                const windA = Math.sin(elapsed * 2.4) * 0.05 + Math.cos(elapsed * 4.1) * 0.02;
+                const windB = Math.sin(elapsed * 2.4 + 0.9) * 0.05 + Math.cos(elapsed * 3.7) * 0.02;
+                const drag = P.localZ * 0.35 * gait + Math.abs(Math.sin(phase)) * 0.06 * gait;
+                const whip = THREE.MathUtils.clamp(P.turnRate * 0.18, -0.3, 0.3);
+                marshalRig.capeLeft.rotation.x = 0.06 + windA + drag - (STATE.smoothY * 0.08);
+                marshalRig.capeLeft.rotation.z = 0.03 + whip + P.localX * 0.15 * gait + Math.sin(elapsed * 1.6) * 0.025;
+                marshalRig.capeRight.rotation.x = 0.06 + windB + drag - (STATE.smoothY * 0.08);
+                marshalRig.capeRight.rotation.z = -0.03 + whip + P.localX * 0.15 * gait - Math.sin(elapsed * 1.6 + 0.7) * 0.025;
+
+                // 6. Braço da pistola: em combate o eixo ombro → punho aponta para o alvo, com o braço estendido
+                //    e o tronco já girado; na exploração ele balança baixo, junto da passada.
+                //    Alvo: interseção do cursor com o inimigo, ou um ponto adiante no mesmo raio.
+                STATE.aimBlend += ((aiming ? 1 : 0) - STATE.aimBlend) * (1 - Math.exp(-(aiming ? 16 : 6) * mdt));
+                updatePointerAim();
+                AIM.point.lerp(AIM.target, 1 - Math.exp(-18 * mdt));
+                marshalGroup.updateMatrixWorld(true);
+                marshalRig.leftShoulder.getWorldPosition(AIM.from);
+                AIM.dir.subVectors(AIM.point, AIM.from).normalize().applyQuaternion(marshalRig.chest.getWorldQuaternion(AIM.q).invert());
+                if (reloadTime > 0) AIM.dir.set(0, .96, .28).normalize().applyQuaternion(marshalRig.chest.getWorldQuaternion(AIM.q).invert());
+                AIM.aimQ.setFromUnitVectors(marshalRig.gunArmAxis, AIM.dir);
+                AIM.armQ.setFromEuler(AIM.euler.set(0.04 + swing * 0.4, 0.02, 0)).slerp(AIM.aimQ, STATE.aimBlend);
+                // Recuo: o ombro sobe o cano e o cotovelo dobra um pouco, depois tudo volta à linha de mira.
+                const recoil = (STATE.recoil || 0) * 0.012;
+                marshalRig.leftShoulder.quaternion.setFromAxisAngle(AIM.xAxis, -recoil).multiply(AIM.armQ);
+                marshalRig.leftArm.rotation.x = THREE.MathUtils.lerp(marshalRig.leftArm.rotation.x, STATE.aimBlend > 0.5 ? -recoil * 1.6 : -0.1, mdt * 14);
+                marshalRig.leftPad.quaternion.identity().slerp(marshalRig.leftShoulder.quaternion, 0.3);
+                // O tiro só sai quando a mão chega à linha de mira (sacar leva ~0,1 s a partir da exploração).
+                if (STATE.shotPending && STATE.aimBlend > 0.8) { STATE.shotPending = false; emitShot(); }
+
+                // 7. Right Arm (Wrist Scanner): balança em contra-fase ou ergue o scanner
+                let targetRShoulderX = 0.03 - swing * 0.5;
+                let targetRShoulderZ = 0.0;
+                let targetRArmX = 0.08 - Math.max(0, swing) * 0.3;
+                let targetRArmY = 0.0;
+                if (isScanner) {
+                    targetRShoulderX = -0.65;
+                    targetRShoulderZ = -0.28;
+                    targetRArmX = -1.05;
+                    targetRArmY = 0.65;
+                }
+                marshalRig.rightShoulder.rotation.x = THREE.MathUtils.lerp(marshalRig.rightShoulder.rotation.x, targetRShoulderX, mdt * 9);
+                marshalRig.rightShoulder.rotation.z = THREE.MathUtils.lerp(marshalRig.rightShoulder.rotation.z, targetRShoulderZ, mdt * 7);
+                marshalRig.rightArm.rotation.x = THREE.MathUtils.lerp(marshalRig.rightArm.rotation.x, targetRArmX, mdt * 9);
+                marshalRig.rightArm.rotation.y = THREE.MathUtils.lerp(marshalRig.rightArm.rotation.y, targetRArmY, mdt * 8);
+                marshalRig.rightPad.quaternion.identity().slerp(marshalRig.rightShoulder.quaternion, 0.3);
+            } else if (marshalGroup) {
+                marshalGroup.position.set(P.pos.x, Math.sin(elapsed * 2.1) * 0.005, P.pos.z);
+                marshalGroup.rotation.y = P.bodyYaw;
+            }
+
+            // Clarão de disparo (estrela de 4 pontas) e reação do inimigo ao acerto.
+            if (muzzleFlash) {
+                muzzleFlash.scale.multiplyScalar(Math.exp(-16 * rawDeltaClamped(rawDelta)));
+                muzzleFlash.visible = muzzleFlash.scale.x > 0.05;
+                if (muzzleFlash.visible) {
+                    raygunMuzzle3D.getWorldPosition(muzzleFlash.position);
+                    muzzleFlash.quaternion.copy(camera.quaternion);
+                    muzzleFlash.rotateZ(STATE.flashSpin);
+                }
+            }
+            // O raio acompanha o cano enquanto dura (~0,12 s), para nunca descolar da mão.
+            if (shotBeam) {
+                STATE.beamLife = Math.max(0, STATE.beamLife - rawDeltaClamped(rawDelta) * 8);
+                shotBeam.visible = STATE.beamLife > 0;
+                if (shotBeam.visible) {
+                    raygunMuzzle3D.getWorldPosition(shotBeam.position);
+                    shotBeam.lookAt(AIM.shotEnd);
+                    const w = 0.034 * STATE.beamLife;
+                    shotBeam.scale.set(w, w, shotBeam.position.distanceTo(AIM.shotEnd));
+                }
+            }
+            if (enemyMesh) {
+                STATE.enemyHit *= Math.exp(-10 * rawDeltaClamped(rawDelta));
+                enemyMesh.material.emissive.setRGB(0.5 * STATE.enemyHit, 0.1 * STATE.enemyHit, 0.02 * STATE.enemyHit);
+                robotHostileGroup.rotation.z = Math.sin(STATE.enemyHit * 18) * 0.05 * STATE.enemyHit;
+            }
+            PULP_SHARED.uTime.value = reducedMotion.matches ? 0 : performance.now() / 1000;
+
+            // Enemy remains stationary — no swaying movement
+            if (robotHostileGroup) {
+                anchors3D.hostile.set(robotHostileGroup.position.x, robotHostileGroup.position.y + 1.25, robotHostileGroup.position.z);
+            }
+
+            const pSpire = project3DToScreen(anchors3D.spire);
+            document.getElementById('wp-spire').style.transform = `translate3d(${pSpire.x}px, ${pSpire.y}px, 0)`;
+
+            const pEv = project3DToScreen(anchors3D.evidence);
+            document.getElementById('wp-evidence').style.transform = `translate3d(${pEv.x}px, ${pEv.y}px, 0)`;
+
+            const pHost = project3DToScreen(anchors3D.hostile);
+
+            document.getElementById('wp-hostile').style.transform = `translate3d(${pHost.x}px, ${pHost.y}px, 0)`;
+            const threatAngle = Math.atan2(pHost.x - document.getElementById('game-viewport').clientWidth / 2, document.getElementById('game-viewport').clientHeight / 2 - pHost.y) * 180 / Math.PI;
+            document.getElementById('threat-arc-top').setAttribute('transform', `rotate(${threatAngle} 120 120)`);
+            document.getElementById('threat-arc-right').style.opacity = '0';
+
+            if (STATE.recoil > 0.1) {
+                STATE.recoil *= 0.84;
+                const r = STATE.recoil;
+                document.getElementById('reticle-outer-ring').setAttribute('r', 20 + r);
+            }
+
+            const scaleText = STATE.timeScale.toFixed(2).replace('.', ',') + '×';
+            if (scaleText !== lastScaleText) {
+                lastScaleText = scaleText;
+                document.getElementById('time-scale').textContent = 'TEMPO · ' + scaleText;
+                document.getElementById('wheel-time-value').textContent = scaleText;
+                document.getElementById('wheel-time-bar').style.width = (STATE.timeScale * 100).toFixed(1) + '%';
+            }
+
+            // Pulso real do relógio (não da simulação), para o efeito não congelar no bullet time.
+            renderFrame(performance.now() / 1000, rawDelta);
+        }
+
+        /*********************************************************************
+         * 10. INPUT LISTENERS (MOUSE, KEYBOARD & GAMEPAD AUTO-DETECTION)
+         *********************************************************************/
+        // Em tela vertical o FOV abre para o personagem e o inimigo continuarem no quadro.
+        function fitCameraFov() {
+            camera.fov = camera.aspect < 1 ? 74 : 52;
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = document.getElementById('game-viewport').clientWidth / document.getElementById('game-viewport').clientHeight;
+            fitCameraFov();
+            camera.updateProjectionMatrix();
+            renderer.setSize(document.getElementById('game-viewport').clientWidth, document.getElementById('game-viewport').clientHeight);
+            renderer.getDrawingBufferSize(PULP_SHARED.uViewport.value);
+            if (post) {
+                renderer.getDrawingBufferSize(post.material.uniforms.uResolution.value);
+                post.target.setSize(post.material.uniforms.uResolution.value.x, post.material.uniforms.uResolution.value.y);
+            }
+        });
+
+        window.addEventListener('mousemove', e => {
+            if (!e.target.closest('#game-viewport')) return;
+            if (Math.abs(e.movementX) + Math.abs(e.movementY) > 2 && STATE.platform !== 'pc') setPlatformGlyphs('pc');
+            STATE.mouseX = ((e.clientX - document.getElementById('game-viewport').getBoundingClientRect().left) / document.getElementById('game-viewport').clientWidth) * 2 - 1;
+            STATE.mouseY = ((e.clientY - document.getElementById('game-viewport').getBoundingClientRect().top) / document.getElementById('game-viewport').clientHeight) * 2 - 1;
+        });
+
+        document.getElementById('game-viewport').addEventListener('mousedown', e => {
+            if (e.target.closest('button') || e.target.closest('#wp-evidence') || STATE.wheelOpen) return;
+            if (e.button !== 0) return;
+            setPlatformGlyphs('pc');
+            fireRaygun(e);
+            STATE.triggerHeld = true;
+            lastFire = performance.now();
+        });
+        window.addEventListener('mouseup', () => { STATE.triggerHeld = false; });
+
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let worldTime = 0;
+        let lastScaleText = '';
+        let sceneVisible = true;
+        const controllerButtons = new Map();
+        let lastFire = 0;
+        function pollController() {
+            const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+            for (const pad of pads) {
+                if (!pad || pad.mapping !== 'standard') continue;
+                const previous = controllerButtons.get(pad.index) || [];
+                const pressed = i => MarshalInput.pressed(pad.buttons, previous, i);
+                const active = pad.buttons.some(b => b.pressed) || pad.axes.some(a => Math.abs(a) > 0.25);
+                if (active) {
+                    const platform = MarshalInput.platform(pad.id);
+                    if (STATE.platform !== platform) setPlatformGlyphs(platform);
+                    if (STATE.scannerOpen) {
+                        if (pressed(6)) cycleScannerWeapon(-1);
+                        if (pressed(7)) cycleScannerWeapon(1);
+                        if (pressed(3) || pressed(1)) toggleWristScanner();
+                        PLAYER.pad.x = PLAYER.pad.z = 0;
+                    } else if (STATE.wheelOpen) {
+                        const sector = MarshalInput.sector(pad.axes[2] || 0, pad.axes[3] || 0);
+                        if (sector !== null) hoverWheelSector(sector);
+                        if (pressed(4) || pressed(14)) cycleWheelSector(-1);
+                        if (pressed(5) || pressed(15)) cycleWheelSector(1);
+                        if (pressed(0)) selectWheelWeapon(STATE.hoveredIdx);
+                        if (pressed(1)) toggleWeaponWheel(false);
+                    } else {
+
+                        if (pressed(0)) investigateEvidence();
+                        if (pressed(1)) restoreShieldFull();
+                        if (pressed(2)) reloadRaygun();
+                        if (pressed(3)) toggleWristScanner();
+                        if (pad.buttons[7]?.pressed && performance.now() - lastFire > 180) { fireRaygun(); lastFire = performance.now(); }
+                        const lx = pad.axes[0] || 0, ly = pad.axes[1] || 0;
+                        PLAYER.pad.x = Math.hypot(lx, ly) > 0.2 ? -lx : 0;
+                        PLAYER.pad.z = Math.hypot(lx, ly) > 0.2 ? -ly : 0;
+                        if (Math.abs(pad.axes[2] || 0) > .2) STATE.mouseX = Math.max(-1,Math.min(1, STATE.mouseX + pad.axes[2]*.025));
+                        if (Math.abs(pad.axes[3] || 0) > .2) STATE.mouseY = Math.max(-1,Math.min(1, STATE.mouseY + pad.axes[3]*.025));
+                    }
+                }
+                controllerButtons.set(pad.index, pad.buttons.map(b => b.pressed));
+            }
+        }
+        window.addEventListener('gamepaddisconnected', e => {
+            controllerButtons.delete(e.gamepad.index);
+            setPlatformGlyphs('pc');
+        });
+        window.addEventListener('blur', () => {
+            if(STATE.wheelOpen) toggleWeaponWheel(false);
+            PLAYER.keys.clear(); PLAYER.pad.x = PLAYER.pad.z = 0; STATE.triggerHeld = false;
+        });
+        const MOVE_KEYS = { w: 'w', a: 'a', s: 's', d: 'd', arrowup: 'w', arrowleft: 'a', arrowdown: 's', arrowright: 'd' };
+        window.addEventListener('keyup', e => { const m = MOVE_KEYS[e.key.toLowerCase()]; if (m) PLAYER.keys.delete(m); });
+        window.addEventListener('message', e => {
+            if(e.source === parent && e.origin === location.origin && e.data?.type === 'marshal-visibility') sceneVisible = !!e.data.visible;
+        });
+        window.addEventListener('keydown', e => {
+            if(e.ctrlKey || e.metaKey || e.altKey) return;
+            // Andar: WASD sempre; setas só fora da roda (lá elas trocam de arma).
+            if (STATE.scannerOpen && ['ArrowLeft','ArrowRight'].includes(e.key)) {
+                e.preventDefault(); if (!e.repeat) cycleScannerWeapon(e.key === 'ArrowLeft' ? -1 : 1); return;
+            }
+            const move = MOVE_KEYS[e.key.toLowerCase()];
+            if (move && !e.target.closest('button,a,input,select,summary') && !(STATE.wheelOpen && e.key.startsWith('Arrow'))) {
+                PLAYER.keys.add(move);
+                if (e.key.startsWith('Arrow')) e.preventDefault();
+                if (STATE.platform !== 'pc') setPlatformGlyphs('pc');
+                return;
+            }
+            if(e.repeat) return;
+            if (STATE.platform !== 'pc') setPlatformGlyphs('pc');
+            const k = e.key.toLowerCase();
+            if (k === 'escape') { if (STATE.scannerOpen) toggleWristScanner(); toggleWeaponWheel(false); return; }
+            // Tab remains a navigation key when a UI control owns focus.
+
+            if(STATE.wheelOpen) {
+                if(k === 'arrowleft' || k === 'q') { e.preventDefault(); cycleWheelSector(-1); }
+                if(k === 'arrowright' || k === 'e') { e.preventDefault(); cycleWheelSector(1); }
+                if(k === 'enter' && !e.target.closest('button')) { e.preventDefault(); selectWheelWeapon(STATE.hoveredIdx); }
+                return;
+            }
+            if (k === '1') setHudState('exploration');
+            else if (k === '2') setHudState('combat');
+            else if (k === '3') setHudState('critical');
+            else if (k === 'r') reloadRaygun();
+            else if (k === 'q') restoreShieldFull();
+            else if (k === 'v') toggleWristScanner();
+            else if (k === 'e') investigateEvidence();
+            else if (k === 'u') toggleUxZones();
+        });
+
+        window.onload = function () {
+            document.body.classList.toggle('embedded', new URLSearchParams(location.search).has('embedded'));
+            new ResizeObserver(() => {
+                window.dispatchEvent(new Event('resize'));
+                if (parent !== window) parent.postMessage({type:'marshal-size', height: document.getElementById('control-dock').offsetHeight + document.getElementById('game-viewport').offsetHeight}, location.origin === 'null' ? '*' : location.origin);
+            }).observe(document.getElementById('control-dock'));
+            initThreeScene();
+            setPlatformGlyphs('pc', false);
+            setHudState('exploration');
+            document.getElementById('weapon-wheel-modal').inert = true;
+            renderWeaponWheel();
+            animateLoop();
+        };
+    </script>
+</body>
+</html>

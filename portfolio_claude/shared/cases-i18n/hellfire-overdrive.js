@@ -80,7 +80,7 @@
       '#overdrive figcaption': '<b>Gameplay capture</b>, 33 seconds remaining, 30,400 points.',
 
       // Reward
-      '#brinde .eyebrow': '<b>05</b> · Activation & Loot Redemption',
+      '#brinde .eyebrow': '<b>03</b> · Activation & Loot Redemption',
       '#brinde h2': 'Rank A or S unlocks physical prizes at the booth.',
       '#brinde .lede': 'The engine tracks accuracy dynamically. Finishing with Rank A (&ge; 88%) or Rank S (&ge; 97%) reveals a cryptographic QR code voucher to claim metallic guitar picks and pins at CCXP.',
       '#brinde figcaption': '<b>Left: production screenshot; center: interactive prize proposal.</b> Cryptographic redemption codes verify legitimate high scores at the physical booth counter.',
@@ -91,7 +91,7 @@
       '#ia .lede': 'The game was prototyped with ChatGPT under my creative direction. My role centered on what models cannot invent alone: core game feel, balance, authentic brand tone, and queue ergonomics.',
 
       // Soundtrack
-      '#trilha .eyebrow': '<b>07</b> · Custom Soundtrack',
+      '#trilha .eyebrow': '<b>04</b> · Custom Soundtrack',
       '#trilha .lede': 'The music on this page is an original SNES-style chiptune theme composed for the case: galloping riff in E minor, square-wave bass and solo, and electronic drums.'
     },
 
@@ -167,7 +167,7 @@
       '#overdrive figcaption': '<b>Captura real</b> con multiplicador ×8 activado en Overdrive.',
 
       // Reward
-      '#brinde .eyebrow': '<b>05</b> · Activación y Entrega de Premios',
+      '#brinde .eyebrow': '<b>03</b> · Activación y Entrega de Premios',
       '#brinde h2': 'Rango A o S desbloquea el regalo físico en el stand.',
       '#brinde .lede': 'El motor calcula la precisión en tiempo real. Cerrar con Rango A (&ge; 88%) o Rango S (&ge; 97%) genera un código QR criptográfico para canjear regalos en la CCXP.',
       '#brinde figcaption': '<b>Captura de producción y propuesta interactiva.</b> Los códigos verifican la puntuación alcanzada.',
@@ -178,7 +178,7 @@
       '#ia .lede': 'El prototipo se aceleró con modelos de IA bajo mi dirección creativa, garantizando la diversión en eventos presenciales.',
 
       // Soundtrack
-      '#trilha .eyebrow': '<b>07</b> · Banda Sonora Original',
+      '#trilha .eyebrow': '<b>04</b> · Banda Sonora Original',
       '#trilha .lede': 'Banda sonora en chiptune estilo Super Nintendo compuesta para este proyecto: ritmo galopante en Mi menor con sintetizadores de 16 bits.'
     },
 
@@ -254,7 +254,7 @@
       '#overdrive figcaption': '<b>Capture en direct</b> avec multiplicateur ×8 sous Overdrive.',
 
       // Reward
-      '#brinde .eyebrow': '<b>05</b> · Dotations & Retrait des Cadeaux',
+      '#brinde .eyebrow': '<b>03</b> · Dotations & Retrait des Cadeaux',
       '#brinde h2': 'Le Rang A ou S débloque les objets collectors au stand.',
       '#brinde .lede': 'Le moteur calcule le taux de réussite en temps réel. Finir au Rang A (&ge; 88 %) ou Rang S (&ge; 97 %) génère un bon sécurisé avec QR code pour récupérer le lot au salon.',
       '#brinde figcaption': '<b>Interface de résultat et simulation.</b> Les QR codes authentifient la performance réalisée.',
@@ -265,7 +265,7 @@
       '#ia .lede': 'Le prototype a été conçu avec l’assistance de ChatGPT sous ma supervision créative pour répondre précisément aux contraintes d’une file d’attente.',
 
       // Soundtrack
-      '#trilha .eyebrow': '<b>07</b> · Bande-Son Originale',
+      '#trilha .eyebrow': '<b>04</b> · Bande-Son Originale',
       '#trilha .lede': 'Morceau chiptune Super Nintendo composé pour cette étude de cas : riff heavy metal en Mi mineur avec sonorités 16-bits authentiques.'
     }
   };

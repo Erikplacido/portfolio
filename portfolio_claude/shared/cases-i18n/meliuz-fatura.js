@@ -96,7 +96,7 @@
       '#ia > .wrap > p.rv': 'The portfolio client provides this reference response. It provides a helpful reminder: AI assistance accelerates design QA, but human oversight remains indispensable.',
 
       // Prototype
-      '#prototipo .eyebrow': 'Functional Prototype',
+      '#prototipo .eyebrow': '<b>05</b> · The Living Interactive Prototype',
       '#prototipo h2': 'Three synchronized viewports.',
       '#prototipo .lede': 'Adjusting credit limits, freezing cards, or simulating installment plans in one view synchronizes across all others. Loads on demand.',
       '#prototipo .go span': '▶ Launch interactive prototype',
@@ -109,7 +109,7 @@
       '#prototipo figcaption': '<b>Functional React prototype.</b> Interactive financial engine calculating APR convergence, multi-view state synchronization, and Central Bank regulatory compliance.',
 
       // Business Case
-      '#medir .eyebrow': '<b>07</b> · Business Case & Default Prevention',
+      '#medir .eyebrow': '<b>06</b> · Business Case & Default Prevention',
       '#medir h2': 'Projected impact on default rates (PCLD), APR, and LTV.',
       '#medir .lede': 'How transparent installment calculators reduce involuntary revolving credit by ~24%, protect cardholder credit scores, and safeguard card lifetime value.',
       '#medir .mz-kpi-card:nth-child(1) .mz-kpi-label': 'Default & Revolving Risk (PCLD)',
@@ -227,7 +227,7 @@
       '#ia > .wrap > p.rv': 'En el portafolio se incluye esta evaluación estática de muestra. Recuerda que la IA es una herramienta de apoyo que complementa pero no sustituye el juicio humano.',
 
       // Prototype
-      '#prototipo .eyebrow': 'Prototipo Funcional',
+      '#prototipo .eyebrow': '<b>05</b> · El Prototipo Interactivo Vivo',
       '#prototipo h2': 'Tres vistas completamente sincronizadas.',
       '#prototipo .lede': 'Modificar el límite, bloquear la tarjeta o calcular cuotas en una pantalla impacta de inmediato en las demás. Carga bajo demanda.',
       '#prototipo .go span': '▶ Cargar prototipo interactivo',
@@ -240,7 +240,7 @@
       '#prototipo figcaption': '<b>Prototipo funcional en React.</b> Motor financiero con cálculo de CET, sincronización de estado multidispositivo y cumplimiento con normativas bancarias.',
 
       // Business Case
-      '#medir .eyebrow': '<b>07</b> · Business Case y Prevención de Mora',
+      '#medir .eyebrow': '<b>06</b> · Business Case y Prevención de Mora',
       '#medir h2': 'Impacto proyectado en mora (PCLD), retención y LTV.',
       '#medir .lede': 'Cómo la transparencia en el simulador disminuye el impago involuntario un ~24%, protege la solvencia del usuario y blinda el valor de ciclo de vida de la tarjeta.',
       '#medir .mz-kpi-card:nth-child(1) .mz-kpi-label': 'Riesgo de Mora y Crédito Rotativo (PCLD)',
@@ -358,7 +358,7 @@
       '#ia > .wrap > p.rv': 'Cette évaluation est présentée ici à titre indicatif. L’IA constitue un excellent garde-fou pour le design, sans jamais se substituer à la vigilance humaine.',
 
       // Prototype
-      '#prototipo .eyebrow': 'Prototype Interactif',
+      '#prototipo .eyebrow': '<b>05</b> · Le Prototype Interactif',
       '#prototipo h2': 'Trois vues en synchronisation temps réel.',
       '#prototipo .lede': 'Ajuster un plafond, bloquer la carte ou échelonner un relevé sur un écran se propage instantanément sur les autres. Chargement à la demande.',
       '#prototipo .go span': '▶ Charger le prototype fonctionnel',
@@ -371,7 +371,7 @@
       '#prototipo figcaption': '<b>Prototype fonctionnel en React.</b> Moteur financier calculant la convergence du TAEG, synchronisation d’état omnicanale et respect des normes bancaires.',
 
       // Business Case
-      '#medir .eyebrow': '<b>07</b> · Business Case & Prévention des Impayés',
+      '#medir .eyebrow': '<b>06</b> · Business Case & Prévention des Impayés',
       '#medir h2': 'Impact projeté sur le risque de défaut (PCLD), la rétention et le LTV.',
       '#medir .lede': 'Comment la transparence dans le simulateur réduit le basculement involontaire dans le crédit revolving de ~24 %, protège le profil financier de l’utilisateur et pérennise la valeur client.',
       '#medir .mz-kpi-card:nth-child(1) .mz-kpi-label': 'Risque d’Impayé & Crédit Revolving (PCLD)',

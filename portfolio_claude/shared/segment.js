@@ -65,8 +65,12 @@
       var title = c.displayTitle || c.title;
       var blurb = c.displayBlurb || c.blurb;
       var tags = (c.displayTags || c.tags || []).slice(0,3).map(esc).join('</span><span>');
-      return '<a class="seg-case" data-seg-case href="' + root + c.slug + '/index.html" aria-label="' + esc(title) + ': ' + esc(label) + '">' +
-        '<img class="seg-case-bg" src="' + root + esc(c.cover) + '" alt="" loading="' + (i===0?'eager':'lazy') + '">' +
+      var mobCover = c.coverMobile ? (root + esc(c.coverMobile)) : null;
+      return '<a class="seg-case" data-seg-case="' + esc(c.slug) + '" href="' + root + c.slug + '/index.html" aria-label="' + esc(title) + ': ' + esc(label) + '">' +
+        '<picture class="seg-case-pic">' +
+          (mobCover ? '<source media="(max-width: 768px)" srcset="' + mobCover + '">' : '') +
+          '<img class="seg-case-bg" src="' + root + esc(c.cover) + '" alt="" loading="' + (i===0?'eager':'lazy') + '">' +
+        '</picture>' +
         '<div class="seg-case-scrim" aria-hidden="true"></div>' +
         '<div class="seg-case-content">' +
           '<div class="seg-case-index">' + String(i+1).padStart(2,'0') + ' / ' + String(cases.length).padStart(2,'0') + '</div>' +
@@ -83,6 +87,25 @@
     } else if (io) {
       sections.forEach(function(s){ io.observe(s) });
     }
+
+    // Auto-probe cases where capa_mobile.png might be added later
+    cases.forEach(function(c){
+      if (!c.coverMobile) {
+        var testUrl = root + c.slug + '/assets/capa_mobile.png';
+        var probe = new Image();
+        probe.onload = function(){
+          c.coverMobile = c.slug + '/assets/capa_mobile.png';
+          var pic = track.querySelector('[data-seg-case="' + c.slug + '"] .seg-case-pic');
+          if (pic && !pic.querySelector('source')) {
+            var src = document.createElement('source');
+            src.media = '(max-width: 768px)';
+            src.srcset = testUrl;
+            pic.insertBefore(src, pic.firstChild);
+          }
+        };
+        probe.src = testUrl;
+      }
+    });
   }
   renderTrack();
 

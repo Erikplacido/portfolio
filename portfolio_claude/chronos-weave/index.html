@@ -29,16 +29,18 @@
 .chronos-cover {
   position: relative;
   width: 100%;
-  height: clamp(480px, 58vw, 860px);
+  height: auto;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #060911;
 }
-.chronos-cover img {
+.chronos-cover img:not(.pf-cover-mobile) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   filter: brightness(0.96) contrast(1.05);
+  display: block;
 }
 .chronos-cover-overlay {
   position: absolute;
@@ -105,14 +107,11 @@
   margin-bottom: 14px;
 }
 .chronos-card-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 0 0 1px currentColor inset, 0 0 18px -6px currentColor;
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5));
 }
 
 /* 4 States Matrix Table & Card */
@@ -391,7 +390,8 @@
       <div><dt>Conformidade</dt><dd>Sony TRC R4017, Microsoft TCR XR-014, 10-Foot Console UI</dd></div>
     </dl>
   </div>
-  <div class="chronos-cover">
+  <div class="chronos-cover has-mobile-cover">
+    <img class="pf-cover-mobile" src="assets/capa_mobile.png" alt="Interface Interativa da Árvore de Habilidades e HUD de Chronos Weave" loading="eager" fetchpriority="high">
     <img src="assets/chronos_hero_ui.png" alt="Interface Interativa da Árvore de Habilidades e HUD de Chronos Weave">
     <div class="chronos-cover-overlay"></div>
     <div class="chronos-cover-tag">
@@ -420,7 +420,7 @@
     <div class="chronos-grid-3 rv">
       <div class="chronos-card">
         <div>
-          <div class="chronos-card-icon" style="background:rgba(0,240,255,0.12); color:#00F0FF;"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <img class="chronos-card-icon" src="assets/ui/emblema-constelacao-1.png" width="72" height="72" alt="" loading="lazy">
           <span style="font-family:'JetBrains Mono'; font-size:11px; font-weight:700; color:#00F0FF; text-transform:uppercase;">Constelação I</span>
           <h3 style="margin-top:10px; font-size:20px;">Tecelão do Éter</h3>
           <p style="font-size:14px; margin-top:8px;">Especialistas na distorção do continuum espaço-temporal. Canalizam pulsos gravitacionais que amplificam o dano arcano, criam fendas de ressonância astral e reduzem drasticamente o tempo de recarga de habilidades de campo.</p>
@@ -429,7 +429,7 @@
 
       <div class="chronos-card">
         <div>
-          <div class="chronos-card-icon" style="background:rgba(251,191,36,0.12); color:#FBBF24;"><i class="fa-solid fa-shield-halved"></i></div>
+          <img class="chronos-card-icon" src="assets/ui/emblema-constelacao-2.png" width="72" height="72" alt="" loading="lazy">
           <span style="font-family:'JetBrains Mono'; font-size:11px; font-weight:700; color:#FBBF24; text-transform:uppercase;">Constelação II</span>
           <h3 style="margin-top:10px; font-size:20px;">Bastião Cinético</h3>
           <p style="font-size:14px; margin-top:8px;">Muralhas vivas blindadas em titânio e ouro primordial. Convertem a energia cinética de impactos recebidos em sobrecarga solar, regenerando escudos defletores e acionando o colossal Protocolo Juggernaut.</p>
@@ -438,7 +438,7 @@
 
       <div class="chronos-card" style="border-color:#10B981; box-shadow:0 8px 24px -10px rgba(16,185,129,0.25);">
         <div>
-          <div class="chronos-card-icon" style="background:rgba(16,185,129,0.12); color:#10B981;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <img class="chronos-card-icon" src="assets/ui/emblema-constelacao-3.png" width="72" height="72" alt="" loading="lazy">
           <span style="font-family:'JetBrains Mono'; font-size:11px; font-weight:700; color:#10B981; text-transform:uppercase;">Constelação III</span>
           <h3 style="margin-top:10px; font-size:20px;">Lâmina Fantasma</h3>
           <p style="font-size:14px; margin-top:8px;">Assassinos dimensionais que se movem a velocidades relativísticas. Seus ataques desencadeiam a Execução da Estrela Cadente e a Dança das Mil Lâminas Fantasmas, desferindo golpes críticos antes mesmo da silhueta inimiga reagir.</p>

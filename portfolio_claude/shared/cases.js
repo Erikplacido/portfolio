@@ -57,6 +57,7 @@ window.PORTFOLIO_CASES_ALL = [
     title: 'Blue Services',
     color: '#11284B',                      // mesma cor do --accent da página
     cover: 'blue-services/assets/home_cleaning_banner-1024x683.webp',
+    coverMobile: 'blue-services/assets/capa_mobile.png',
     tags: ['Product design', 'Web e mobile', 'Design system'],
     blurb: 'Reserva com cálculo de diária ao vivo, rastreio de prestadores por GPS e console operacional para marketplace.'
   },
@@ -67,6 +68,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Cobra Kai',                    // opcional: nome curto para o seletor
     color: '#E3120B',
     cover: 'cobra-kai/assets/keyart.jpg',
+    coverMobile: 'cobra-kai/assets/capa_mobile.png',
     tags: ['Conceito', 'Game UI', 'Pixel art'],
     blurb: 'Advergame de luta em pixel art para ativação de estreia: pontuação arcade que desbloqueia brindes por faixas de score.'
   },
@@ -76,6 +78,7 @@ window.PORTFOLIO_CASES_ALL = [
     title: 'Loony Races',
     color: '#17803A',                      // mesma cor do --accent da página
     cover: 'loony-races/assets/card.jpg',
+    coverMobile: 'loony-races/assets/capa_mobile.png',
     tags: ['Board game', 'Identidade visual', 'Ilustração'],
     blurb: 'Marca, 10 pilotos de países distintos, cartas com linguagem 100% visual e pista modular montada durante a corrida.'
   },
@@ -116,6 +119,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Editorial',
     color: '#B44A17',                      // mesma cor do --accent da página
     cover: 'editorial/assets/card.jpg',
+    coverMobile: 'editorial/assets/capa_mobile.png',
     tags: ['Design editorial', 'Capas', 'Restauração'],
     blurb: 'Projetos de capa para a WMF Martins Fontes e restauração minuciosa dos 3 primeiros livros históricos de Mauricio de Sousa.'
   },
@@ -137,6 +141,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Vistorias',
     color: '#0369A1',                      // mesma cor do --accent da página
     cover: 'vistorias-risco/assets/card.jpg',
+    coverMobile: 'vistorias-risco/assets/capa_mobile.png',
     tags: ['Product design', 'UI', 'Desenvolvimento'],
     blurb: 'Sistema de vistoria securitária: coleta fotográfica geolocalizada, laudo técnico estruturado e fluxo web sem fricção para o cliente remoto.'
   },
@@ -147,6 +152,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Caju',
     color: '#D42D28',                      // mesma cor do --accent da página
     cover: 'caju-cartao/assets/card.jpg',
+    coverMobile: 'caju-cartao/assets/capa_mobile.png',
     tags: ['Conceito', 'UI mobile', 'Motion'],
     blurb: 'Do envelope à carteira digital: ativação por NFC, QR ou código manual, validação de regras de senha em tempo real e 5 edge cases.'
   },
@@ -157,6 +163,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Méliuz',
     color: '#D10043',                      // mesma cor do --accent da página
     cover: 'meliuz-fatura/assets/card.jpg',
+    coverMobile: 'meliuz-fatura/assets/capa_mobile.png',
     tags: ['Conceito', 'UI', 'Mobile e desktop'],
     blurb: 'Simulador de parcelamento de fatura: cálculo instantâneo de juros, IOF e CET sem surpresas, reduzindo a armadilha do crédito rotativo.'
   },
@@ -191,22 +198,22 @@ window.PORTFOLIO_CASES_ALL = [
     blurb: 'Advergame de ritmo musical em pixel art para ativações de evento: compensação de latência na Web Audio API e liberação de brindes no estande.'
   },
   {
-    slug: 'aether-protocol',
+    slug: 'star-marshal',
     group: 'games',
     title: 'Star Marshal — A Lei não termina na última estrela',
     short: 'Star Marshal',
     color: '#E63926',
-    cover: 'aether-protocol/assets/card.jpg',
+    cover: 'star-marshal/assets/card.jpg',
     tags: ['Game UI/UX', 'HUD contextual', 'UI diegética', 'Protótipo 3D jogável'],
     blurb: 'HUD contextual para combate espacial: alternância instantânea de glifos de controle (PlayStation/Xbox/PC) e protótipo 3D jogável.'
   },
   {
-    slug: 'sanctum-armory',
+    slug: 'musanga',
     group: 'games',
     title: 'Musanga · Inventário & Loot',
     short: 'Musanga · Inventário',
     color: '#905D31',                      // mesma cor do --accent da página
-    cover: 'sanctum-armory/assets/card.jpg',
+    cover: 'musanga/assets/card.jpg',
     tags: ['Game UI/UX', 'Inventário', 'Tooltip comparativo', 'Acessibilidade'],
     blurb: 'Inventário para RPG de ação: comparação direta de atributos no tooltip, grade com drag-and-drop e codificação de raridade acessível para daltônicos.'
   },
@@ -217,6 +224,7 @@ window.PORTFOLIO_CASES_ALL = [
     short: 'Chronos Weave',
     color: '#D4AF37',
     cover: 'chronos-weave/assets/card.jpg',
+    coverMobile: 'chronos-weave/assets/capa_mobile.png',
     tags: ['Game UI/UX', 'Skill Tree', 'Unreal Engine UMG', 'Sony TRC / L10n'],
     blurb: 'Árvore de habilidades em astrolábio celestial: arquitetura em Unreal UMG, docking responsivo e conformidade estrita com Sony TRC e expansão de texto.'
   },
@@ -229,6 +237,16 @@ window.PORTFOLIO_CASES_ALL = [
     cover: 'super-batalha/assets/card.jpg',
     tags: ['Board game', 'Identidade visual', 'Design gráfico'],
     blurb: 'Logo, caixa, cartas, biombos e standees de uma arena de super-heróis brasileiros com 33 convidados.'
+  },
+  {
+    slug: 'editora-terceiro-nome',
+    group: 'uxui',
+    title: 'Editora Terceiro Nome',
+    short: 'Terceiro Nome',
+    color: '#C92219',                      // mesma cor do --accent da página
+    cover: 'editora-terceiro-nome/assets/card.jpg',
+    tags: ['Direção de arte', 'UI', 'Desenvolvimento'],
+    blurb: 'Catálogo de 178 livros tirado do Adobe Muse: direção editorial, busca sem acento e migração auditada, sem inventar dados.'
   }
 ];
 
@@ -244,6 +262,15 @@ window.PORTFOLIO_CASES_ALL = [
    navegador marcado no admin ("ver o site como admin"). ?simulate-live=1
    desliga o localhost e a marca do admin, pra testar como um visitante. */
 (function(){
+  /* /chronos-weave (sem barra) é servido como a pasta, mas aí os caminhos
+     relativos (assets/, simulator.html) resolvem a partir da raiz e quebram.
+     Põe a barra antes da página carregar o resto. */
+  var path = location.pathname;
+  if (location.protocol !== 'file:' && !/\/$/.test(path) && !/\.[^\/]*$/.test(path)) {
+    location.replace(path + '/' + location.search + location.hash);
+    return;
+  }
+
   var ALL = window.PORTFOLIO_CASES_ALL;
   var site = window.PORTFOLIO_SITE || {};
   var hidden = site.hidden || {};

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editora Terceiro Nome · Case</title>
+<meta name="description" content="Reconstrução do site da Editora Terceiro Nome: 178 livros tirados de uma exportação do Adobe Muse para um catálogo estático com direção editorial, busca acessível e migração auditada.">
+<meta property="og:title" content="Editora Terceiro Nome — um catálogo de 178 livros reconstruído para durar">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Everything below is the case's own language: the paper, Georgia serif and red of the publisher's new site. */
+:root{
+  --accent:#C92219; --hl:#F2D04B;
+  --tn-paper:#F8F5EF; --tn-ink:#25231F; --tn-muted:#6B655E; --tn-line:#D8D0C6; --tn-brand:#E52319;
+  --tn-serif:Georgia,'Times New Roman',serif; --tn-sans:Arial,Helvetica,sans-serif;
+}
+
+.tn-cover{background:var(--tn-paper)}
+
+/* context counters */
+.tn-count{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,22px);margin-top:clamp(28px,4.5vw,44px)}
+@media(max-width:860px){.tn-count{grid-template-columns:repeat(2,1fr)}}
+.tn-count b{display:block;font:400 clamp(40px,4.6vw,58px)/1 var(--pf-serif);color:var(--accent);font-variant-numeric:tabular-nums}
+.tn-count .pf-card{padding:22px}
+.tn-count .pf-card p{font-size:14px;margin-top:8px}
+.tn-cards .pf-card p{font-size:15px}
+.tn-cards h3{font-size:clamp(24px,2.4vw,28px);margin-bottom:10px}
+
+/* stage shared by the site mockups */
+.st-papel{background:linear-gradient(180deg,#F3EEE5,#E9E1D4)}
+.st-papel .pill{background:rgba(255,255,255,.75);color:var(--tn-ink)}
+.st-papel .pill.y{background:var(--hl)}
+.tn-stage-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:clamp(18px,3vw,28px)}
+
+/* ===== 01 record ↔ card ===== */
+.tn-rec{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,3.6vw,44px);align-items:center}
+@media(max-width:860px){.tn-rec{grid-template-columns:minmax(0,1fr)}}
+.tn-json{margin:0;background:#1F1D1A;color:#D9D2C6;border-radius:14px;padding:18px 8px;font:400 13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;box-shadow:0 30px 50px -30px rgba(37,35,31,.55)}
+.tn-json span{display:block;padding:0 12px;border-radius:6px;white-space:pre;transition:background .25s,color .25s}
+.tn-json span[data-f]{cursor:default}
+.tn-json span[data-f]:focus{outline:2px solid var(--hl);outline-offset:-2px}
+.tn-json span.on{background:rgba(242,208,75,.18);color:#fff}
+.tn-json i{font-style:normal;color:#9B9488}
+.tn-json em{font-style:normal;color:#F2B8A8}
+.tn-json u{text-decoration:none;color:#A8C99B}
+.tn-book{background:var(--tn-paper);border-radius:6px;padding:clamp(16px,2.4vw,24px);font-family:var(--tn-sans);color:var(--tn-ink);box-shadow:0 2px 0 rgba(37,35,31,.06),0 30px 50px -32px rgba(37,35,31,.6)}
+.tn-book>*{border-radius:4px;transition:background .25s,box-shadow .25s}
+.tn-book .on{background:rgba(242,208,75,.45);box-shadow:0 0 0 5px rgba(242,208,75,.45)}
+.tn-book-img{display:block;aspect-ratio:7/9;background:var(--tn-brand)}
+.tn-book-img img{width:100%;height:100%;object-fit:cover;display:block}
+.tn-book-tag{display:block;margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.tn-book-t{display:block;margin-top:6px;font:400 24px/1.15 var(--tn-serif)}
+.tn-book-a{display:block;margin-top:4px;font-size:13px;color:var(--tn-muted)}
+.tn-book-dl{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin:14px 0 0;padding-top:12px;border-top:1px solid var(--tn-line);font-size:12px}
+.tn-book-dl div{border-radius:4px;transition:background .25s,box-shadow .25s}
+.tn-book-dl dt{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tn-muted)}
+.tn-book-dl dd{margin:2px 0 0}
+.tn-book-buy{display:block;margin-top:14px;padding:10px 12px;background:var(--accent);color:#fff;font-size:12px;text-align:center}
+
+/* ===== 02 ISBN checker ===== */
+.tn-isbn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3.6vw,44px);align-items:start}
+@media(max-width:860px){.tn-isbn{grid-template-columns:minmax(0,1fr)}}
+.tn-isbn label{display:block;font:600 12px/1.3 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--tn-muted);margin-bottom:8px}
+.tn-isbn input{width:100%;padding:14px 16px;border:1px solid var(--tn-line);border-radius:10px;background:#fff;font:500 20px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tn-ink);letter-spacing:.04em}
+.tn-isbn input:focus{outline:2px solid var(--accent);outline-offset:2px}
+.tn-ex{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tn-ex button{border:0;padding:9px 13px;border-radius:99px;background:rgba(255,255,255,.75);font:600 13px/1 var(--pf-sans);color:var(--tn-ink);cursor:pointer;transition:background .25s,color .25s}
+.tn-ex button:hover{background:#fff}
+.tn-ex button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.tn-out{background:#fff;border-radius:14px;padding:22px 24px;min-height:100%;box-shadow:0 30px 50px -34px rgba(37,35,31,.5)}
+.tn-out .st{display:inline-block;font:600 11px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border-radius:99px}
+.tn-out .st.ok{background:#DCEFD9;color:#1E5A24}
+.tn-out .st.rev{background:#FBEFC4;color:#6A4D00}
+.tn-out .st.no{background:#F8D9D5;color:#8E1A12}
+.tn-out .st.idle{background:#EEE9E0;color:var(--tn-muted)}
+.tn-out b{display:block;margin-top:14px;font:400 26px/1.15 var(--pf-serif);color:var(--pf-ink)}
+.tn-out .d{font-size:15px;margin-top:8px}
+.tn-out .site{margin-top:16px;padding-top:14px;border-top:1px solid var(--tn-line);font-size:14px;color:var(--pf-ink-2)}
+.tn-out .site strong{color:var(--pf-ink);font-weight:600}
+.tn-shot{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 2px 0 rgba(37,35,31,.06),0 30px 50px -32px rgba(37,35,31,.6)}
+
+/* ===== 03 signature band in the publisher's red ===== */
+.tn-band{background:var(--accent)}
+.tn-band .eyebrow{color:#FBD9D4}.tn-band .eyebrow b{color:var(--hl)}
+.tn-band h2,.tn-band .lede{color:#fff}
+.tn-band figcaption{color:#FBD9D4}.tn-band figcaption b{color:#fff}
+.st-red{background:#A51A12}
+.st-red .pill{background:rgba(255,255,255,.14);color:#fff}
+.st-red .pill.y{background:var(--hl);color:var(--pf-ink)}
+.tn-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:clamp(16px,2.6vw,24px)}
+.tn-tabs button{position:relative;overflow:hidden;border:0;padding:10px 14px;border-radius:99px;background:rgba(255,255,255,.12);color:#fff;font:600 13px/1 var(--pf-sans);cursor:pointer;transition:background .25s,color .25s}
+.tn-tabs button span{opacity:.7;margin-right:6px}
+.tn-tabs button:hover{background:rgba(255,255,255,.22)}
+.tn-tabs button[aria-selected="true"]{background:#fff;color:var(--accent)}
+.tn-tabs .bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.tn-dirs.auto .tn-tabs button[aria-selected="true"] .bar{animation:tn-fill 4.2s linear forwards}
+.tn-dirs.offscreen .tn-tabs .bar{animation-play-state:paused}
+@keyframes tn-fill{to{transform:scaleX(1)}}
+.tn-dir-view{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:center}
+@media(max-width:860px){.tn-dir-view{grid-template-columns:minmax(0,1fr)}}
+.tn-dir-img{position:relative;aspect-ratio:1265/1180;border-radius:10px;overflow:hidden;background:var(--tn-paper);box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.tn-dir-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .45s var(--pf-ease)}
+.tn-dir-img img.on{opacity:1}
+.tn-dir-txt{color:#fff}
+.tn-dir-txt .k{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--hl)}
+.tn-dir-txt b{display:block;margin-top:10px;font:400 clamp(28px,3vw,36px)/1.08 var(--pf-serif)}
+.tn-dir-txt .d{margin-top:12px;font-size:16px;line-height:1.6;color:#FBE4E0}
+.tn-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.4vw,28px)}
+@media(max-width:560px){.tn-pair{grid-template-columns:1fr}}
+.tn-pair figure{margin:0}
+.tn-pair img{display:block;width:100%;height:auto;border-radius:8px;box-shadow:0 24px 44px -28px rgba(0,0,0,.65)}
+.tn-pair .k{display:flex;align-items:center;gap:8px;margin-bottom:10px;font:600 12px/1.2 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.tn-pair .k::before{content:"";width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4)}
+.tn-pair .k.yes::before{background:var(--hl)}
+
+/* ===== 04 live catalog in a browser frame ===== */
+.tn-browser{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 2px 0 rgba(37,35,31,.06),0 40px 70px -40px rgba(37,35,31,.7)}
+.tn-browser-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#EDE8DF;border-bottom:1px solid var(--tn-line)}
+.tn-browser-bar i{width:10px;height:10px;border-radius:50%;background:#D3CABD;flex:none}
+.tn-browser-bar code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:5px 12px;border-radius:99px;background:#fff;font:400 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tn-muted)}
+.tn-browser iframe{display:block;width:100%;height:clamp(520px,62vh,680px);border:0;background:var(--tn-paper)}
+.tn-open{font:600 13px/1 var(--pf-sans);color:var(--tn-ink);white-space:nowrap}
+
+@media(prefers-reduced-motion:reduce){
+  .tn-dir-img img,.tn-json span,.tn-book>*,.tn-book-dl div{transition:none}
+}
+</style>
+</head>
+<body data-case="editora-terceiro-nome">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Terceiro Nome</span></a>
+    <ul class="pf-links">
+      <li><a href="#contexto">Contexto</a></li>
+      <li><a href="#dados">Dados</a></li>
+      <li><a href="#isbn">ISBN</a></li>
+      <li><a href="#direcao">Direção visual</a></li>
+      <li><a href="#catalogo">Busca</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 19</b> · Direção de arte · UI · Arquitetura de catálogo · Desenvolvimento</p>
+    <h1>Um catálogo de 178 livros preso no Adobe Muse, <em>reconstruído para durar.</em></h1>
+    <p class="lede">A Editora Terceiro Nome publica literatura, arte e antropologia sobre o Brasil. O site antigo era uma exportação do Adobe Muse, com preços parados no HTML, imagens sem descrição e até botão de compra levando ao livro errado. Refiz o catálogo como site estático: direção visual, dados e busca.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Direção de arte, UI, arquitetura do catálogo e desenvolvimento</dd></div>
+      <div><dt>Tipo</dt><dd>Trabalho para a Editora Terceiro Nome · 2026 · em revisão com a editora</dd></div>
+      <div><dt>Entregas</dt><dd>Direção visual, 194 páginas estáticas, busca e filtros, auditoria da migração</dd></div>
+      <div><dt>Ferramentas</dt><dd>HTML, CSS e JavaScript puro · Python sem dependências · SQLite</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover tn-cover">
+    <img src="assets/cover.jpg" alt="Página inicial da nova versão do site: o título “Ler o Brasil. Rever o mundo.” em serifa grande, ao lado da capa do livro Zoé sobre fundo vermelho">
+  </div>
+</header>
+
+<section id="contexto" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">O problema</p>
+      <h2>O site mostrava os livros, mas não sabia nada sobre eles.</h2>
+      <p class="lede">Cada livro era uma página desenhada no Muse. Título, ISBN, preço e link de compra estavam colados no layout, repetidos página a página. Ninguém conseguia conferir o catálogo inteiro, e um erro copiado continuava lá.</p>
+    </div>
+    <div class="grid-3 tn-cards">
+      <div class="pf-card rv"><span class="tag">Compra</span><h3>O botão levava ao livro errado</h3><p>A página de <i>Nunca o nome do menino</i> tinha botões para <i>A Guerra</i> na livraria. O ISBN dela tinha 12 dígitos.</p></div>
+      <div class="pf-card rv"><span class="tag">Contato</span><h3>O formulário não existia</h3><p>A página de contato trazia um shortcode PHP do Contact Form 7 dentro do HTML exportado. Fora do WordPress, ele não fazia nada.</p></div>
+      <div class="pf-card rv"><span class="tag">Manutenção</span><h3>Preços congelados e páginas em dobro</h3><p>Preços escritos à mão no HTML, páginas de catálogo duplicadas, uma página de Pix avulsa e a apresentação presa aos scripts do Muse e ao jQuery 1.8.3.</p></div>
+    </div>
+    <div class="callout rv"><b>Brief:</b> trocar o site sem perder nenhum livro e sem inventar dado que a fonte não tem.</div>
+  </div>
+</section>
+
+<section id="dados" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Catálogo como dado</p>
+      <h2>Um arquivo para 178 livros: o layout parou de guardar informação.</h2>
+      <p class="lede">Cada página do Muse virou um registro num único <code>catalog.json</code>, com título, autoria, coleção, ficha técnica, sinopse, capa e configuração de compra. O build em Python lê esse arquivo e gera as 194 páginas. Corrigir um título é editar uma linha, não reabrir o Muse.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-papel">
+        <div class="tn-stage-top"><span class="pill y">Interativo</span><span class="pill">Registro real · card recriado</span></div>
+        <div class="tn-rec" id="rec">
+          <pre class="tn-json" aria-label="Registro do livro Zoé em catalog.json"><span><i>{</i></span><span data-f="id" tabindex="0">  <em>"id"</em>: <u>"zoe"</u>,</span><span data-f="title" tabindex="0">  <em>"title"</em>: <u>"Zoé"</u>,</span><span data-f="author" tabindex="0">  <em>"author"</em>: <u>"Rogério Assis"</u>,</span><span data-f="collection" tabindex="0">  <em>"collection"</em>: <u>""</u>,</span><span data-f="cover" tabindex="0">  <em>"cover"</em>: <u>"images/zoe.jpg"</u>,</span><span data-f="isbn" tabindex="0">  <em>"isbn"</em>: <u>"9788578161149"</u>,</span><span data-f="pages" tabindex="0">  <em>"pages"</em>: <u>"128"</u>,</span><span data-f="format" tabindex="0">  <em>"format"</em>: <u>"25 x 25 cm"</u>,</span><span data-f="binding" tabindex="0">  <em>"binding"</em>: <u>"capa dura"</u>,</span><span data-f="commerce" tabindex="0">  <em>"commerce"</em>: <i>{</i> <em>"mode"</em>: <u>"external"</u>,</span><span data-f="commerce">    <em>"externalProductVerified"</em>: <u>false</u>,</span><span data-f="commerce">    <em>"priceCents"</em>: <u>null</u>, <em>"sku"</em>: <u>null</u> <i>…}</i></span><span><i>}</i></span></pre>
+          <div class="tn-book" aria-hidden="true">
+            <span class="tn-book-img" data-f="cover"><img src="site/dist/images/zoe.jpg" alt="" loading="lazy" width="700" height="900"></span>
+            <span class="tn-book-tag" data-f="collection">Terceiro Nome</span>
+            <span class="tn-book-t" data-f="title">Zoé</span>
+            <span class="tn-book-a" data-f="author">Rogério Assis</span>
+            <dl class="tn-book-dl">
+              <div data-f="isbn"><dt>ISBN</dt><dd>9788578161149</dd></div>
+              <div data-f="pages"><dt>Páginas</dt><dd>128</dd></div>
+              <div data-f="format"><dt>Formato</dt><dd>25 x 25 cm</dd></div>
+              <div data-f="binding"><dt>Acabamento</dt><dd>capa dura</dd></div>
+            </dl>
+            <span class="tn-book-buy" data-f="commerce">Visitar Martins Fontes Paulista ↗</span>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>De onde vem cada pedaço da página.</b> À esquerda, trecho real do registro de <i>Zoé</i>, com os campos comerciais resumidos. À direita, uma recriação do card que o build monta. Passe o mouse ou o foco do teclado numa linha para ver onde ela aparece. Coleção vazia vira “Terceiro Nome”, e <code>id</code> vira o endereço da página.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="isbn" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Honestidade da migração</p>
+      <h2>Melhor não mostrar um ISBN do que mostrar um errado.</h2>
+      <p class="lede">A importação confere o tamanho e o dígito verificador de cada ISBN. O que não passa sai da página do livro e entra num relatório de revisão. Com os links de compra é igual: até cada um ser conferido, o botão abre a página inicial da livraria e diz ao leitor o que procurar.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-papel">
+        <div class="tn-stage-top"><span class="pill y">Interativo</span><span class="pill">Exemplos do catálogo real</span></div>
+        <div class="tn-isbn" id="isbnBox">
+          <div>
+            <label for="isbnIn">Digite ou escolha um ISBN</label>
+            <input id="isbnIn" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="9788578161149">
+            <div class="tn-ex" role="group" aria-label="Exemplos do catálogo">
+              <button type="button" data-v="9788578161149" aria-pressed="true">Zoé</button>
+              <button type="button" data-v="978857816289" aria-pressed="false">Nunca o nome do menino</button>
+              <button type="button" data-v="8587556355" aria-pressed="false">1932</button>
+              <button type="button" data-v="8587556134" aria-pressed="false">Um número, três livros</button>
+            </div>
+          </div>
+          <div class="tn-out" id="isbnOut" aria-live="polite"></div>
+        </div>
+      </div>
+      <figcaption><b>Interativo, com os dados reais.</b> A conferência roda no seu navegador com a mesma regra de dígito verificador. Os quatro exemplos são números que estavam no site antigo.</figcaption>
+    </figure>
+    <div class="tn-count">
+      <div class="pf-card rv"><b>41</b><p>registros sem ISBN-13 válido. 29 deles trazem um ISBN-10 antigo.</p></div>
+      <div class="pf-card rv"><b>51</b><p>links de compra antigos marcados como suspeitos ou ausentes</p></div>
+      <div class="pf-card rv"><b>2</b><p>páginas duplicadas fundidas, com mapa de redirecionamento 301</p></div>
+      <div class="pf-card rv"><b>4</b><p>livros sem sinopse identificada na importação</p></div>
+    </div>
+    <figure class="rv" style="margin-top:clamp(36px,6vw,64px)">
+      <div class="pf-stage st-papel">
+        <div class="tn-stage-top"><span class="pill">Real · página do livro</span></div>
+        <img class="tn-shot" src="assets/pagina-livro.webp" alt="Página do livro Zoé na nova versão: capa à esquerda e, à direita, título, autoria, botão “Visitar Martins Fontes Paulista”, aviso de compra externa e ficha com ISBN, páginas, formato e acabamento" loading="lazy" width="1440" height="1000">
+      </div>
+      <figcaption><b>A compra continua na livraria, e a página diz isso.</b> Captura da versão de revisão. O botão abre a Martins Fontes Paulista numa nova aba, e o aviso pede para procurar pelo título ou pelo ISBN. Os preços antigos não aparecem.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 03 · signature band -->
+<section id="direcao" class="pf-sec tn-band">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Direção visual</p>
+      <h2>Três rodadas até o vermelho da marca encontrar o seu lugar.</h2>
+      <p class="lede">A marca é vermelha, e a maioria das capas foi fotografada sobre fundo vermelho. A direção final deixa o papel claro e as serifas fazerem a hierarquia. O vermelho fica para a marca, os destaques e as próprias capas.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-red tn-dirs" id="dirs" data-loop>
+        <div class="tn-stage-top"><span class="pill y">Real · telas da versão de revisão</span></div>
+        <div class="tn-tabs" role="tablist" aria-label="Rodadas da direção visual">
+          <button type="button" role="tab" id="dt1" aria-controls="dirView" aria-selected="true" data-i="0"><span>1</span>Neutra<i class="bar" aria-hidden="true"></i></button>
+          <button type="button" role="tab" id="dt2" aria-controls="dirView" aria-selected="false" tabindex="-1" data-i="1"><span>2</span>Vermelha<i class="bar" aria-hidden="true"></i></button>
+          <button type="button" role="tab" id="dt3" aria-controls="dirView" aria-selected="false" tabindex="-1" data-i="2"><span>3</span>Editorial<i class="bar" aria-hidden="true"></i></button>
+        </div>
+        <div class="tn-dir-view" id="dirView" role="tabpanel" aria-labelledby="dt1">
+          <div class="tn-dir-img">
+            <img class="on" src="assets/dir-1-neutra.webp" alt="Primeira rodada: página inicial com fundo creme, faixa preta no topo, painel verde-acinzentado atrás das capas de Zoé e A flecha do ciúme" width="1265" height="1180">
+            <img src="assets/dir-2-vermelha.webp" alt="Segunda rodada: a mesma página com faixa vermelha no topo, botão de catálogo vermelho, painel vermelho atrás das capas e cards rosados" width="1265" height="1180" loading="lazy">
+            <img src="assets/dir-3-editorial.webp" alt="Direção final: título “Ler o Brasil. Rever o mundo.” em serifa grande, linha vermelha fina no topo e a capa de Zoé sozinha, sem painel" width="1265" height="1180" loading="lazy">
+          </div>
+          <div class="tn-dir-txt">
+            <span class="k" id="dirK">Rodada 1</span>
+            <b id="dirT">Organizada, mas sem a cara da editora.</b>
+            <p class="d" id="dirD">Fundo creme, faixa preta e um painel verde-acinzentado atrás das capas. A estrutura de navegação, catálogo e coleções já estava aqui. O vermelho aparecia só em detalhes: logo, botão e alguns títulos.</p>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Três estados da mesma página inicial.</b> Capturas reais das rodadas de revisão, recortadas no topo da página. A rodada 3 é a que está no ar na versão de revisão. A troca é automática até você tocar numa aba.</figcaption>
+    </figure>
+    <figure class="rv" style="margin-top:clamp(36px,6vw,64px)">
+      <div class="pf-stage st-red">
+        <div class="tn-pair">
+          <figure><span class="k">Com painel extra</span><img src="assets/livro-painel-extra.webp" alt="Página do livro Zoé com um painel vermelho atrás da capa, que já tem fundo vermelho, criando uma moldura dupla" loading="lazy" width="972" height="827"></figure>
+          <figure><span class="k yes">Imagem como veio</span><img src="assets/livro-capa-original.webp" alt="Página do livro Zoé com a imagem da capa sozinha, sem painel atrás" loading="lazy" width="972" height="827"></figure>
+        </div>
+      </div>
+      <figcaption><b>Nenhum painel atrás das capas.</b> Capturas reais. As imagens da editora já trazem fundo vermelho, e um painel por trás criava uma moldura dupla. A versão final mostra cada imagem como a editora forneceu. Trocar por capas limpas, sem a foto de produto, fica para quando a editora tiver os arquivos.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="catalogo" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>04</b> · Busca</p>
+      <h2>A busca aceita “estevao” sem acento, e o catálogo funciona sem JavaScript.</h2>
+      <p class="lede">Os 178 livros estão no HTML da página. Sem script, a lista inteira continua navegável. Com script, a busca filtra por título, autoria e ISBN sem exigir acento. Coleção, ordenação e termo vão para a URL, e os resultados entram de 24 em 24.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-papel">
+        <div class="tn-stage-top">
+          <div class="tn-ex" role="group" aria-label="Buscas de exemplo" id="catEx" style="margin:0">
+            <button type="button" data-q="?q=estevao" aria-pressed="true">“estevao”</button>
+            <button type="button" data-q="?collection=Antropologia+Hoje" aria-pressed="false">Antropologia Hoje</button>
+            <button type="button" data-q="?sort=author" aria-pressed="false">Por autoria</button>
+            <button type="button" data-q="?q=nenhum+livro+assim" aria-pressed="false">Sem resultado</button>
+          </div>
+          <a class="tn-open" id="catOpen" href="site/dist/catalogo.html?q=estevao" target="_blank" rel="noopener">Abrir em nova aba ↗</a>
+        </div>
+        <div class="tn-browser">
+          <div class="tn-browser-bar" aria-hidden="true"><i></i><i></i><i></i><code id="catUrl">catalogo.html?q=estevao</code></div>
+          <iframe id="catFrame" src="site/dist/catalogo.html?q=estevao" title="Catálogo da Editora Terceiro Nome, versão de revisão" loading="lazy"></iframe>
+        </div>
+      </div>
+      <figcaption><b>Site real, rodando aqui dentro.</b> É a versão de revisão, a mesma entregue à editora, fora dos buscadores (noindex). Use os botões ou digite na busca do próprio catálogo.</figcaption>
+    </figure>
+    <div class="grid-3 tn-cards">
+      <div class="pf-card rv"><span class="tag">Sem script</span><h3>Links que são links</h3><p>Catálogo e páginas de livro são HTML estático. A busca é uma camada a mais: sem ela, nada some.</p></div>
+      <div class="pf-card rv"><span class="tag">Teclado</span><h3>Foco onde a pessoa está</h3><p>Foco visível, link para pular ao conteúdo, um título principal por página e texto alternativo em todas as capas. “Mostrar mais” leva o foco ao primeiro livro novo.</p></div>
+      <div class="pf-card rv"><span class="tag">Busca na web</span><h3>Pronto para ser encontrado</h3><p>Metadados por página e dados estruturados <code>Book</code>. Canonical e sitemap saem do build assim que o domínio for definido.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Tem um site antigo que guarda mais do que mostra? Posso ajudar a tirar o conteúdo de lá.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Editora Terceiro Nome</span></div>
+  </div>
+</footer>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  var $ = function(s,c){ return (c||document).querySelector(s) };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)) };
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Reveal .rv on scroll */
+  var els = $$('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}) }
+  else {
+    var rio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target) } }) },{threshold:.15});
+    els.forEach(function(e){ rio.observe(e) });
+  }
+
+  /* ===== 01 record ↔ card: a JSON line lights up the field it fills ===== */
+  var rec = $('#rec');
+  if(rec){
+    var mark = function(f){ $$('[data-f]', rec).forEach(function(x){ x.classList.toggle('on', !!f && x.dataset.f===f) }) };
+    $$('.tn-json span[data-f], .tn-book [data-f]', rec).forEach(function(x){
+      x.addEventListener('mouseenter', function(){ mark(x.dataset.f) });
+      x.addEventListener('focus', function(){ mark(x.dataset.f) });
+    });
+    rec.addEventListener('mouseleave', function(){ mark(null) });
+    rec.addEventListener('focusout', function(e){ if(!rec.contains(e.relatedTarget)) mark(null) });
+  }
+
+  /* ===== 02 ISBN checker: same check-digit rule as the importer, plus ISBN-10 ===== */
+  var box = $('#isbnBox');
+  if(box){
+    var input = $('#isbnIn'), out = $('#isbnOut'), exBtns = $$('.tn-ex button', box);
+    var SHARED = { '8587556134': 'A Guerra (1914–1918), Antropologia da cidade e Cultura Surda' };
+    function ok13(s){ var t=0; for(var i=0;i<13;i++) t += +s[i] * (i%2 ? 3 : 1); return t % 10 === 0 }
+    function ok10(s){ var t=0; for(var i=0;i<10;i++){ var c = s[i]; t += (10-i) * (c==='X' ? 10 : +c) } return t % 11 === 0 }
+    function to13(s){ var b = '978' + s.slice(0,9), t = 0; for(var i=0;i<12;i++) t += +b[i] * (i%2 ? 3 : 1); return b + ((10 - t % 10) % 10) }
+    function render(){
+      var raw = input.value.toUpperCase().replace(/[^0-9X]/g,''), st, cls, t, d, site;
+      exBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.v===raw ? 'true' : 'false') });
+      if(!raw){ cls='idle'; st='Aguardando'; t='Digite um ISBN.'; d='Hifens e espaços são ignorados.'; site='' }
+      else if(raw.length===13 && /^\d+$/.test(raw)){
+        if(ok13(raw)){ cls='ok'; st='ISBN-13 válido'; t='Comprimento e dígito conferem.'; d='Tamanho certo, prefixo e dígito verificador batem.'; site='<strong>No site:</strong> aparece na ficha do livro e entra na busca.' }
+        else { cls='no'; st='Inválido'; t='O dígito verificador não confere.'; d='Treze dígitos, mas a soma ponderada não fecha. Provavelmente um erro de digitação.'; site='<strong>No site:</strong> fica fora da ficha e entra no relatório de revisão.' }
+      }
+      else if(raw.length===10 && /^\d{9}[\dX]$/.test(raw)){
+        if(ok10(raw)){
+          cls='rev'; st='ISBN-10 antigo'; t='O dígito confere, mas é o formato antigo.'; d='Pode ser convertido para '+to13(raw)+'. A importação atual só aceita ISBN-13, então esse número caiu na revisão junto com os quebrados.';
+          site = SHARED[raw] ? '<strong>Atenção:</strong> o mesmo número aparece em três livros diferentes ('+SHARED[raw]+'). Dígito correto não prova que o número é daquele livro.' : '<strong>No site:</strong> fora da ficha até a editora confirmar.';
+        }
+        else { cls='no'; st='Inválido'; t='O dígito verificador não confere.'; d='Dez caracteres, mas a soma ponderada não fecha.'; site='<strong>No site:</strong> fica fora da ficha e entra no relatório de revisão.' }
+      }
+      else { cls='no'; st='Inválido'; t=raw.length+(raw.length===1?' dígito':' dígitos')+': não é um ISBN.'; d='ISBN tem 10 ou 13 caracteres. '+(raw.length===12?'Este tem 12, como o da página de Nunca o nome do menino no site antigo.':''); site='<strong>No site:</strong> fica fora da ficha e entra no relatório de revisão.' }
+      out.innerHTML = '<span class="st '+cls+'">'+st+'</span><b>'+t+'</b><p class="d">'+d+'</p>'+(site ? '<p class="site">'+site+'</p>' : '');
+    }
+    input.addEventListener('input', render);
+    exBtns.forEach(function(b){ b.addEventListener('click', function(){ input.value = b.dataset.v; render() }) });
+    render();
+  }
+
+  /* ===== 03 directions: tabs that advance when the bar fills; the first touch takes over ===== */
+  var dirs = $('#dirs');
+  if(dirs){
+    var DIRS = [
+      { k:'Rodada 1', t:'Organizada, mas sem a cara da editora.', d:'Fundo creme, faixa preta e um painel verde-acinzentado atrás das capas. A estrutura de navegação, catálogo e coleções já estava aqui. O vermelho aparecia só em detalhes: logo, botão e alguns títulos.' },
+      { k:'Rodada 2', t:'O vermelho em tudo.', d:'Faixa, botão, painéis e cards ganham o vermelho da marca. A página fica reconhecível, mas o painel vermelho atrás de capas que já são vermelhas cria moldura sobre moldura.' },
+      { k:'Rodada 3 · final', t:'Papel claro, serifa grande, vermelho nos lugares certos.', d:'Títulos em Georgia de corpo grande, seções numeradas como capítulos e uma linha vermelha fina no topo. A capa aparece sozinha, e o vermelho dela vira o destaque da página.' }
+    ];
+    var tabs = $$('[role="tab"]', dirs), imgs = $$('.tn-dir-img img', dirs), panel = $('#dirView'), cur = 0, auto = !RM;
+    function show(i, focus){
+      cur = i;
+      tabs.forEach(function(b,k){ var on = k===i; b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1 });
+      imgs.forEach(function(im,k){ im.classList.toggle('on', k===i) });
+      panel.setAttribute('aria-labelledby', tabs[i].id);
+      $('#dirK').textContent = DIRS[i].k; $('#dirT').textContent = DIRS[i].t; $('#dirD').textContent = DIRS[i].d;
+      if(focus) tabs[i].focus();
+    }
+    function stop(){ auto = false; dirs.classList.remove('auto') }
+    if(auto) dirs.classList.add('auto');
+    ['pointerdown','keydown'].forEach(function(ev){ dirs.addEventListener(ev, stop, {capture:true, passive:true}) });
+    tabs.forEach(function(b,k){
+      b.addEventListener('click', function(){ show(k) });
+      b.addEventListener('keydown', function(e){
+        var n = e.key==='ArrowRight' ? 1 : e.key==='ArrowLeft' ? -1 : 0;
+        if(e.key==='Home'){ e.preventDefault(); show(0,true) }
+        else if(e.key==='End'){ e.preventDefault(); show(tabs.length-1,true) }
+        else if(n){ e.preventDefault(); show((cur + n + tabs.length) % tabs.length, true) }
+      });
+    });
+    dirs.addEventListener('animationend', function(e){ if(auto && e.target.classList.contains('bar')) show((cur + 1) % tabs.length) });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ dirs.classList.toggle('offscreen', !e.isIntersecting) }) }).observe(dirs);
+    }
+  }
+
+  /* ===== 04 live catalog: example searches reload the real page ===== */
+  var frame = $('#catFrame');
+  if(frame){
+    var cBtns = $$('#catEx button'), base = 'site/dist/catalogo.html';
+    cBtns.forEach(function(b){ b.addEventListener('click', function(){
+      cBtns.forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true' : 'false') });
+      frame.src = base + b.dataset.q;
+      $('#catOpen').href = base + b.dataset.q;
+      $('#catUrl').textContent = 'catalogo.html' + b.dataset.q;
+    }) });
+  }
+})();
+</script>
+</body>
+</html>

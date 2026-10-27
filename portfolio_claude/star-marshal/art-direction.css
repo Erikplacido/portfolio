@@ -1,0 +1,304 @@
+/* Star Marshal · acabamento da prancha de direção de arte.
+   HUD do jogo: tinta petróleo, contorno creme e sombra deslocada de impressão.
+   Camada de apresentação (doca e legenda): papel creme com tinta, como as calhas da prancha.
+   Cores em :root no simulator.html, amostradas da faixa "Paleta de cores". */
+
+body { font-family: var(--font-hud); background: var(--pulp-ink); }
+.font-mono { font-family: var(--font-mono) !important; }
+.font-sans { font-family: var(--font-hud) !important; }
+.clip-pulp-box { clip-path: none !important; }
+
+/* Papel envelhecido + retícula de meio-tom, estáticos. */
+.pulp-grain-overlay {
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .05 0 0 0 0 .13 0 0 0 0 .16 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+        radial-gradient(circle at center, rgba(12, 34, 41, .28) 1.1px, transparent 1.3px) !important;
+    background-size: 160px 160px, 5px 5px !important;
+    opacity: .12;
+    mix-blend-mode: multiply;
+}
+#game-viewport:after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 11; background: radial-gradient(ellipse at 50% 42%, transparent 45%, rgba(12, 34, 41, .45) 100%); }
+#webgl-container, #webgl-container.bullet-time-active { filter: none; transform: none; }
+#critical-vignette { z-index: 15; }
+#combat-center-reticle { z-index: 25; }
+
+/* ---------- Painéis do HUD ---------- */
+.pulp-panel, .pulp-panel-gold {
+    background: rgba(18, 49, 58, .94) !important;
+    border: 2px solid var(--pulp-cream) !important;
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 rgba(12, 34, 41, .85) !important;
+}
+.pulp-panel-gold { border-color: var(--pulp-gold) !important; }
+.pulp-panel-critical {
+    background: rgba(74, 20, 14, .95) !important;
+    border: 2px solid var(--pulp-red) !important;
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 rgba(30, 6, 4, .9) !important;
+}
+/* Distorção cromática estática no HUD: o texto não se move, só ganha franjas. */
+body[data-hud-state="critical"] .pulp-panel-critical { filter: drop-shadow(-1.5px 0 0 rgba(249, 69, 36, .55)) drop-shadow(1.5px 0 0 rgba(95, 181, 174, .45)); }
+
+.hud-card { width: 272px; padding: 12px 14px 10px; color: var(--pulp-cream); }
+.hud-card .font-mono { font-size: 11px !important; letter-spacing: .04em !important; }
+.hud-card .font-\[\'Bebas_Neue\'\] { letter-spacing: .08em !important; }
+.hud-card button { color: var(--pulp-cream) !important; font-family: var(--font-hud); font-weight: 600; letter-spacing: .06em; }
+.hud-card button:hover, .hud-card button:focus-visible { color: var(--pulp-gold) !important; }
+.hud-card button:focus-visible { outline: 2px solid var(--pulp-gold); outline-offset: 2px; }
+
+#combat-bottom-hud { left: 28px !important; right: 28px !important; bottom: 104px !important; }
+#shield-hud-panel > div:nth-child(3) { padding: 3px !important; gap: 3px !important; background: var(--pulp-ink) !important; border: 1.5px solid rgba(252, 232, 181, .55) !important; }
+#shield-hud-panel > div:nth-child(3) > div { height: 12px !important; }
+#health-meter { height: 6px !important; background: rgba(252, 232, 181, .16) !important; }
+#critical-ecg-row { border: 0 !important; margin-bottom: 8px !important; }
+#critical-ecg-row svg { width: 150px; }
+#hud-weapon-sub { display: none; }
+#hud-weapon-badge { clip-path: none !important; border: 1.5px solid var(--pulp-cream); font-family: var(--font-hud); letter-spacing: .1em; }
+#hud-ammo-count { font-size: 52px !important; color: var(--pulp-cream); text-shadow: 2px 2px 0 var(--pulp-ink); }
+#hud-weapon-title { font-size: 20px !important; }
+
+/* ---------- Abertura: logotipo e setor ---------- */
+#mission-heading { background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 8px 2px !important; }
+#mission-heading > div:first-child { width: 36px; height: 36px; background: var(--pulp-ink) !important; border: 2px solid var(--pulp-gold) !important; }
+#mission-heading .font-\[\'Bebas_Neue\'\] {
+    font-size: 30px !important; font-style: italic; letter-spacing: .04em !important;
+    transform: skewX(-8deg); display: inline-block; color: var(--pulp-gold) !important;
+    text-shadow: 2px 2px 0 var(--pulp-red), 4px 4px 0 var(--pulp-ink);
+}
+#mission-heading .bg-\[\#F94524\], #combat-top-radar > div { white-space: nowrap; }
+#mission-heading .bg-\[\#F94524\] { font-family: var(--font-hud); letter-spacing: .1em; border: 1.5px solid var(--pulp-cream); }
+#hud-mode-subtitle { font-size: 11px !important; letter-spacing: .14em !important; color: var(--pulp-cream) !important; text-shadow: 1px 1px 0 var(--pulp-ink); }
+
+/* ---------- Radar ---------- */
+#combat-top-radar { width: 112px !important; height: 112px !important; margin-top: 6px; background: var(--pulp-ink) !important; border: 2px solid var(--pulp-cream) !important; box-shadow: 4px 4px 0 rgba(12, 34, 41, .85) !important; }
+#combat-top-radar > div { border-width: 1.5px !important; border-color: var(--pulp-cream) !important; color: var(--pulp-cream) !important; background: var(--pulp-ink) !important; font-size: 9px !important; padding: 1px 6px !important; }
+
+/* ---------- Estado crítico ---------- */
+#critical-top-alert { position: absolute; left: 50%; top: 64px; transform: translateX(-50%); min-width: 260px; padding: 8px 22px 9px !important; background: var(--pulp-red) !important; border: 2px solid var(--pulp-cream) !important; animation: none !important; }
+#critical-top-alert.opacity-0 { transform: translate(-50%, -12px); }
+#critical-top-alert .crit-title { font-family: var(--font-pulp); font-size: 30px; letter-spacing: .1em; line-height: 1; color: var(--pulp-cream); text-shadow: 2px 2px 0 var(--pulp-crit); }
+#critical-top-alert .crit-prompt { margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 8px; font: 700 12px var(--font-mono); letter-spacing: .06em; color: var(--pulp-cream); }
+#critical-top-alert .crit-glyph { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; }
+@keyframes art-critical-pulse { 0%, 100% { opacity: .5; box-shadow: inset 0 0 110px 26px rgba(181, 40, 22, .55); } 50% { opacity: .85; box-shadow: inset 0 0 160px 44px rgba(214, 48, 26, .7); } }
+.critical-vignette-pulse { animation: art-critical-pulse 1.8s ease-in-out infinite !important; }
+.critical-rgb-glitch { animation: none !important; }
+
+/* ---------- Marcadores no mundo ---------- */
+#wp-spire { display: none; }
+#wp-evidence > div:first-child { transform: scale(.85); transform-origin: bottom center; border-color: var(--pulp-cyan) !important; }
+#wp-hostile > div:first-child { clip-path: none !important; background: var(--pulp-red) !important; border: 1.5px solid var(--pulp-cream) !important; box-shadow: 3px 3px 0 rgba(12, 34, 41, .85); }
+#wp-hostile span { font-family: var(--font-hud) !important; letter-spacing: .1em !important; }
+body[data-hud-state="exploration"] #mission-heading { opacity: .55; }
+body[data-hud-state="exploration"] #wp-evidence { opacity: .85 !important; }
+/* Contexto: a pista de investigação só existe fora do combate. */
+body[data-hud-state="combat"] #wp-evidence, body[data-hud-state="critical"] #wp-evidence { opacity: 0 !important; pointer-events: none !important; }
+/* Roda aberta: o HUD de combate recua para a roda ser a única leitura. */
+/* filter: opacity() multiplica a opacidade do estado; nada oculto reaparece. */
+body[data-wheel="open"] #combat-bottom-hud, body[data-wheel="open"] #combat-center-reticle, body[data-wheel="open"] #wp-hostile, body[data-wheel="open"] #wp-evidence, body[data-wheel="open"] #critical-top-alert { filter: opacity(.15); }
+
+/* ---------- UI diegética: scanner de pulso em latão ---------- */
+#diegetic-wrist-scanner { left: 28px !important; bottom: 300px !important; }
+#diegetic-wrist-scanner > div { width: 340px; background: linear-gradient(160deg, #3b2a12, #1e1608) !important; border: 3px solid var(--pulp-gold) !important; box-shadow: inset 0 0 0 2px #7a4a10, 4px 4px 0 rgba(12, 34, 41, .85) !important; }
+#diegetic-wrist-scanner .rounded-full.border-4 { border: 6px solid transparent !important; background: radial-gradient(#0C2229 62%, transparent 63%), conic-gradient(#f6c45a, #a8661a, #f6c45a, #8a5410, #f6c45a) border-box !important; box-shadow: 0 0 0 2px #5a3608, inset 0 0 14px rgba(95, 181, 174, .35) !important; }
+#diegetic-wrist-scanner .font-\[\'Bebas_Neue\'\] { letter-spacing: .06em !important; }
+
+/* ---------- Roda de armas ---------- */
+#weapon-wheel-modal { background: radial-gradient(circle at center, rgba(12, 34, 41, .2) 1.2px, transparent 1.4px) 0 0 / 6px 6px, rgba(12, 34, 41, .5); }
+#wheel-modal-inner { gap: 40px; }
+.wheel-wedge.is-active { filter: none; }
+.wheel-bumper { padding: 6px 12px; font: 22px/1 var(--font-pulp); letter-spacing: .08em; color: var(--pulp-cream); background: var(--pulp-ink); border: 2px solid var(--pulp-cream); border-radius: 3px; box-shadow: 3px 3px 0 rgba(12, 34, 41, .85); }
+.wheel-bumper:hover, .wheel-bumper:focus-visible { color: var(--pulp-ink); background: var(--pulp-gold); }
+#wheel-hub { width: 124px; }
+#wheel-center-title { font-size: 18px !important; line-height: 1.05 !important; letter-spacing: .04em !important; }
+#wheel-center-ammo { font-size: 46px !important; }
+#wheel-center-type { font-size: 10px !important; letter-spacing: .12em !important; }
+#wheel-brief { padding: 16px 18px 18px; background: rgba(18, 49, 58, .94); border: 2px solid var(--pulp-cream); box-shadow: 4px 4px 0 rgba(12, 34, 41, .85); min-width: 280px; }
+.pulp-tab { display: inline-block; padding: 3px 9px; font: 600 13px var(--font-hud); letter-spacing: .14em; color: var(--pulp-ink); background: var(--pulp-cream); }
+#wheel-brief h2 { margin: 10px 0 0; font: 34px/1 var(--font-pulp); letter-spacing: .05em; color: var(--pulp-cream); }
+.wheel-brief-sub { margin: 4px 0 0; font: 700 12px var(--font-mono); letter-spacing: .05em; color: var(--pulp-gold); }
+.time-gauge { margin-top: 16px; }
+.time-gauge-head, .time-gauge-scale { display: flex; justify-content: space-between; font: 700 11px var(--font-mono); letter-spacing: .06em; color: rgba(252, 232, 181, .8); }
+.time-gauge-head b { font: 22px/1 var(--font-pulp); color: var(--pulp-gold); letter-spacing: .04em; }
+.time-gauge-track { height: 12px; margin: 5px 0 3px; padding: 2px; background: var(--pulp-ink); border: 1.5px solid var(--pulp-cream); }
+#wheel-time-bar { height: 100%; width: 100%; background: linear-gradient(90deg, var(--pulp-cyan), var(--pulp-gold)); }
+.pulp-caption { margin: 14px 0 0; font: 400 13px/1.35 var(--font-mono); color: rgba(252, 232, 181, .85); }
+.wheel-confirm { padding: 7px 16px; font: 20px/1 var(--font-pulp); letter-spacing: .1em; color: var(--pulp-cream); background: var(--pulp-red); border: 2px solid var(--pulp-cream); box-shadow: 3px 3px 0 rgba(12, 34, 41, .85); }
+.wheel-confirm:hover, .wheel-confirm:focus-visible { background: #FF6A45; }
+
+/* ---------- Glyphs dinâmicos ---------- */
+#device-status { position: absolute; right: 16px; bottom: 16px; z-index: 60; display: grid; grid-template-columns: repeat(3, auto); align-items: center; gap: 6px 10px; padding: 7px 10px; pointer-events: none; background: rgba(12, 34, 41, .92); border: 2px solid rgba(252, 232, 181, .8); box-shadow: 3px 3px 0 rgba(12, 34, 41, .7); font: 700 10px var(--font-mono); letter-spacing: .06em; color: rgba(252, 232, 181, .8); }
+#device-status .ds-title { grid-column: 1 / 3; color: var(--pulp-cream); }
+#time-scale { grid-column: 3; justify-self: end; }
+#device-status .ds-set { display: flex; gap: 3px; opacity: .3; transition: opacity .25s; }
+body[data-platform="ps"] .ds-set[data-plat="ps"], body[data-platform="xbox"] .ds-set[data-plat="xbox"], body[data-platform="pc"] .ds-set[data-plat="pc"] { opacity: 1; }
+#device-status b { display: inline-flex; min-width: 18px; height: 18px; padding: 0 3px; align-items: center; justify-content: center; border: 1.5px solid currentColor; border-radius: 50%; font: 600 10px var(--font-hud); }
+#device-status b.g-key { border-radius: 3px; color: var(--pulp-cream); }
+.g-cross { color: var(--pulp-cyan); } .g-circle { color: var(--pulp-red); } .g-square { color: #E46A97; } .g-tri { color: #8DBF5A; }
+.g-a { color: #8DBF5A; } .g-b { color: var(--pulp-red); } .g-x { color: var(--pulp-cyan); } .g-y { color: var(--pulp-gold); }
+#input-device { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+#time-scale { color: var(--pulp-gold); }
+#pulp-toast { clip-path: none !important; background: var(--pulp-ink) !important; border: 2px solid var(--pulp-gold) !important; box-shadow: 3px 3px 0 rgba(12, 34, 41, .8) !important; font-family: var(--font-mono) !important; font-weight: 700; font-size: 12px !important; }
+
+/* ---------- Camada de apresentação: doca em papel ---------- */
+#control-dock { bottom: 16px !important; width: min(720px, calc(100vw - 32px)); max-width: calc(100vw - 32px) !important; padding: 8px 12px 9px !important; gap: 6px 10px !important; background: #F3E2B8; color: var(--pulp-ink); border: 2px solid var(--pulp-ink); border-radius: 2px; box-shadow: 4px 4px 0 rgba(12, 34, 41, .7); }
+#state-caption { flex: 1 0 100%; margin: 0 0 2px; padding-bottom: 6px; border-bottom: 1.5px dashed rgba(12, 34, 41, .35); font: 700 13px/1.3 var(--font-mono); text-align: center; color: var(--pulp-ink); }
+.dock-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+.dock-btn { padding: 4px 9px; font: 600 12px var(--font-hud); letter-spacing: .08em; text-transform: uppercase; color: var(--pulp-ink); background: transparent; border: 1.5px solid transparent; border-radius: 2px; }
+.dock-btn:hover { border-color: var(--pulp-ink); }
+.dock-btn[aria-pressed="true"] { color: var(--pulp-cream); background: var(--pulp-ink); }
+#btn-st-critical[aria-pressed="true"] { background: var(--pulp-red); color: var(--pulp-cream); }
+.dock-btn:focus-visible, #tools-toggle:focus-visible { outline: 2px solid var(--pulp-red); outline-offset: 2px; }
+#tools-toggle { padding: 4px 0 4px 12px; font: 600 12px var(--font-hud); letter-spacing: .06em; color: var(--pulp-ink); background: transparent; border: 0; border-left: 1.5px solid rgba(12, 34, 41, .35); }
+#control-dock > .control-extra { display: none; }
+.dock-hint { flex: 1 0 100%; margin: 2px 0 0; font: 700 11px/1.35 var(--font-mono); text-align: center; color: rgba(12, 34, 41, .75); }
+body[data-tools="open"] #control-dock > .control-extra { display: flex; }
+body[data-tools="open"] #control-dock > .dock-hint { display: block; }
+
+/* ---------- Telas estreitas ---------- */
+@media (max-width: 1240px) {
+    #device-status { bottom: auto; top: 150px; }
+}
+@media (max-width: 700px) {
+    #combat-bottom-hud { left: 12px !important; right: 12px !important; bottom: 190px !important; gap: 10px; }
+    .hud-card { width: calc(50vw - 18px); padding: 9px; }
+    .hud-card .font-mono { font-size: 10px !important; }
+    #hud-ammo-count { font-size: 38px !important; }
+    #hud-weapon-svg { display: none; }
+    #combat-top-radar { width: 76px !important; height: 76px !important; }
+    #mission-heading { max-width: 240px; }
+    #mission-heading .font-\[\'Bebas_Neue\'\] { font-size: 24px !important; }
+    #critical-top-alert { top: 96px; min-width: 0; width: calc(100vw - 32px); }
+    #diegetic-wrist-scanner { left: 12px !important; bottom: 400px !important; }
+    #diegetic-wrist-scanner > div { width: calc(100vw - 24px); }
+    #wheel-brief { display: none; }
+    #device-status { top: 104px; right: 12px; }
+    .dock-btn { padding: 4px 6px; font-size: 11px; }
+    #device-status .ds-title { display: none; }
+    #state-caption { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .critical-vignette-pulse { animation: none !important; opacity: .7 !important; box-shadow: inset 0 0 120px 32px rgba(181, 40, 22, .6); }
+}
+
+/* Scanner: projeção 3D em destaque e ficha de leitura discreta. */
+#diegetic-wrist-scanner { transform: scale(.7); transform-origin: left bottom; opacity: .85; }
+#diegetic-wrist-scanner.opacity-0 { opacity: 0; }
+
+/* Barra de demonstração fora da cena; estados e dispositivos como abas. */
+body { display:flex; flex-direction:column; height:100dvh; overflow:hidden; }
+#control-dock { position:relative!important; inset:auto!important; transform:none!important; flex:0 0 auto; order:-1; width:100%!important; max-width:none!important; margin:0; padding:10px 18px!important; border:0; border-bottom:1px solid #b98b43; border-radius:0; box-shadow:none; background:#061d28; color:#fce8b5; justify-content:flex-start; }
+#control-dock .dock-group { justify-content:flex-start; }
+#control-dock .platform-tabs { margin-left:auto; border-left:1px solid #49606a; padding-left:12px; }
+#control-dock .dock-btn { padding:10px 14px; color:#c6d6d6; border:1px solid transparent; border-radius:0; }
+#control-dock .dock-btn:hover { background:#153945; border-color:#a58048; }
+#control-dock .dock-btn[aria-pressed="true"] { background:#173b47; color:#ffd478; border-color:#e8ab47; box-shadow:inset 0 -3px #e8ab47; }
+#control-dock #btn-st-combat[aria-pressed="true"], #control-dock #btn-st-critical[aria-pressed="true"] { background:#59251e; border-color:#f45c35; box-shadow:inset 0 -3px #f45c35; color:#fff0d4; }
+#control-dock #state-caption { order:5; color:#aabfc3; border:0; padding:4px 0 0; margin:0; text-align:left; font-size:11px; }
+#control-dock #time-scale { order:3; font:700 11px var(--font-mono); margin-left:12px; }
+#control-dock #tools-toggle { order:4; color:#fce8b5; border-left:1px solid #49606a; padding:8px 12px; }
+#control-dock .dock-hint { color:#aabfc3; }
+#game-viewport { flex:1 1 auto; width:100%!important; height:auto!important; min-height:0; }
+body.embedded { height:auto; }
+body.embedded #game-viewport { flex:none; height:800px!important; width:100%!important; }
+/* Painéis de combate: tinta escura, filetes dourados e leitura ciano/creme. */
+#game-viewport .pulp-panel, #game-viewport .pulp-panel-gold { background:linear-gradient(125deg,rgba(2,19,30,.97),rgba(5,36,46,.94))!important; border-color:#e8b85f!important; box-shadow:inset 0 0 0 3px #092d38,0 3px 0 #07151d!important; border-radius:10px 2px 10px 2px; }
+#combat-bottom-hud { bottom:24px!important; }
+.hud-card { width:300px; padding:16px 18px 12px; }
+#health-meter { height:10px!important; }
+#hud-ammo-count { font-size:64px!important; }
+#hud-weapon-title { font-size:24px!important; }
+body[data-hud-state="exploration"] #mission-heading { opacity:1; }
+#mission-heading { border-bottom:1px solid #c49b52!important; padding:10px 14px!important; background:linear-gradient(90deg,rgba(3,26,38,.92),rgba(3,26,38,.1))!important; }
+@media(max-width:700px) {
+ #control-dock { padding:6px 8px!important; gap:4px!important; }
+ #control-dock .dock-btn { padding:7px 8px; font-size:10px; }
+ #control-dock .platform-tabs { margin-left:0; }
+ #control-dock #state-caption { display:none; }
+ #combat-bottom-hud { bottom:12px!important; left:12px!important; right:12px!important; }
+ .hud-card { width:220px; padding:8px; }
+ body.embedded .hud-card { transform:scale(.65); transform-origin:bottom left; }
+ body.embedded #weapon-hud-panel { transform-origin:bottom right; }
+}
+
+/* Cena em toda a largura; a barra superior fica fora da área jogável. */
+body { height:auto; min-height:100dvh; overflow-x:hidden; overflow-y:auto; align-items:center; }
+#control-dock { max-width:none!important; }
+#game-viewport, body.embedded #game-viewport { flex:none; width:100%!important; max-width:none; height:800px!important; aspect-ratio:auto; }
+
+/* Alinhamento com a coluna do case: 1120 px, incluindo suas margens internas. */
+#control-dock{padding-inline:max(clamp(20px,5vw,48px),calc((100% - 1120px)/2 + clamp(20px,5vw,48px)))!important}
+
+/* Instrumentos compactos da referência: segmentos e símbolos, sem títulos extras. */
+#combat-bottom-hud { gap:24px; }
+#combat-bottom-hud .hud-card { width:clamp(280px,34vw,680px); height:116px; padding:13px 20px; border:2px solid #e8b85f!important; border-radius:20px 0 20px 0; background:linear-gradient(110deg,rgba(5,24,29,.97),rgba(12,31,34,.95))!important; box-shadow:none!important; }
+#shield-hud-panel .vital-meters { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+#shield-hud-panel .vital-segments { display:grid; grid-template-columns:repeat(10,1fr); gap:6px; height:44px!important; margin:0; background:none!important; }
+.vital-segments i { display:block; min-width:0; }
+.vital-symbols { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:9px; }
+.vital-symbols span { display:flex; align-items:center; gap:32px; }
+.vital-symbols span::before,.vital-symbols span::after { content:''; flex:1; height:10px; border-bottom:2px solid #ced7d6; }
+.vital-symbols span::before { border-left:2px solid #ced7d6; }
+.vital-symbols span::after { border-right:2px solid #ced7d6; }
+.vital-symbols svg { width:30px; height:30px; fill:#ced7d6; flex-shrink:0; }
+#weapon-hud-panel { display:flex; align-items:center; gap:18px; }
+#weapon-hud-panel #hud-weapon-svg { flex:0 0 22%; width:22%; height:84px; color:#ffb43d; }
+#hud-weapon-svg svg { width:100%; height:100%; }
+.thermal-meter { flex:1; min-width:0; }
+.thermal-label { display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; font:400 clamp(15px,1.65vw,30px)/1.15 var(--font-hud); color:#fa482e; white-space:nowrap; }
+#heat-meter { height:12px; background:#34464a; }
+#hud-heat-bar { height:100%; background:linear-gradient(90deg,#8b9694,#ffb13e,#fa4027); transition:width .15s; }
+@media(max-width:700px) {
+ #combat-bottom-hud { gap:10px; }
+ #combat-bottom-hud .hud-card { width:calc(50% - 5px); height:76px; padding:8px; border-radius:12px 0; transform:none!important; }
+ #shield-hud-panel .vital-segments { gap:3px; height:28px!important; }
+ #shield-hud-panel .vital-meters { gap:3px; }
+ .vital-symbols { margin-top:5px; }
+ .vital-symbols span { gap:8px; }
+ .vital-symbols svg { width:20px; height:20px; }
+ #weapon-hud-panel { gap:6px; }
+ #weapon-hud-panel #hud-weapon-svg { height:48px; flex-basis:20%; }
+ .thermal-label { font-size:clamp(8px,1.8vw,12px); gap:4px; }
+ #heat-meter { height:8px; }
+}
+
+/* HUD recolhido na área central, com fundo translúcido. */
+#combat-bottom-hud { left:max(24px,calc((100% - 1120px)/2))!important; right:max(24px,calc((100% - 1120px)/2))!important; bottom:28px!important; }
+#combat-bottom-hud .hud-card { width:clamp(240px,29vw,390px); height:86px; padding:10px 14px; background:linear-gradient(110deg,rgba(5,24,29,.76),rgba(12,31,34,.7))!important; border-color:rgba(232,184,95,.8)!important; border-radius:14px 0; }
+#shield-hud-panel .vital-segments { height:30px!important; gap:4px; }
+.vital-symbols { margin-top:7px; }
+.vital-symbols svg { width:22px; height:22px; }
+.vital-symbols span { gap:20px; }
+#weapon-hud-panel { gap:12px; }
+#weapon-hud-panel #hud-weapon-svg { height:58px; flex-basis:21%; }
+.thermal-label { font-size:clamp(12px,1.2vw,19px); gap:8px; }
+#heat-meter { height:9px; }
+#combat-center-reticle { right:auto!important; bottom:auto!important; left:50%; top:50%; width:0; height:0; overflow:visible; transition:opacity .25s; }
+#combat-center-reticle > svg { flex-shrink:0; }
+#mission-heading { opacity:.9; }
+#combat-top-radar { background:rgba(5,24,29,.76)!important; }
+@media(max-width:700px) {
+ #combat-bottom-hud { left:12px!important; right:12px!important; gap:10px; }
+ #combat-bottom-hud .hud-card { width:calc(50% - 5px); height:70px; padding:7px; }
+ #shield-hud-panel .vital-segments { height:24px!important; gap:2px; }
+ .vital-symbols span { gap:7px; }
+ .vital-symbols svg { width:18px; height:18px; }
+ .thermal-label { font-size:clamp(8px,1.8vw,12px); }
+ #weapon-hud-panel { gap:6px; }
+}
+
+#hud-header{left:max(24px,calc((100% - 1120px)/2))!important;right:max(24px,calc((100% - 1120px)/2))!important}
+
+/* Ficha do scanner ancorada ao personagem em coordenadas da cena. */
+#diegetic-wrist-scanner { position:absolute!important; left:var(--scanner-left,50%)!important; top:var(--scanner-top,40%)!important; bottom:auto!important; right:auto!important; transform:scale(.7)!important; transform-origin:top left; transition:opacity .25s; }
+#diegetic-wrist-scanner > div { width:min(340px,calc((100vw - 24px)/.7)); }
+/* Scanner substituído pelo seletor holográfico; radar e alvo sem legendas. */
+#diegetic-wrist-scanner,#wp-hostile,#combat-top-radar > div { display:none!important; }
+#shield-hud-panel .vital-meters { gap:12px; }
+#shield-meter { border-left:1px solid rgba(182,231,235,.55); padding-left:6px; }
+
+body[data-scanner="open"] #combat-center-reticle{opacity:0!important}
+/* Radar com o mesmo fundo translúcido dos instrumentos inferiores. */
+#game-viewport #combat-top-radar { background:linear-gradient(110deg,rgba(5,24,29,.76),rgba(12,31,34,.7))!important; border-color:rgba(232,184,95,.8)!important; box-shadow:none!important; }
+#combat-top-radar svg circle:first-child { fill:transparent; }
+#weapon-wheel-modal { display:none!important; }

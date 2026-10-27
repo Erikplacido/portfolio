@@ -124,6 +124,7 @@
   renderCasesSwitcher();
   renderNextCase();
   renderHomeGrid();
+  initCaseMobileCover();
 
   // Load i18n, inject picker, and load case-specific translations if on a case page
   ensureI18n(function(){
@@ -131,6 +132,7 @@
     renderCasesSwitcher();
     renderNextCase();
     renderHomeGrid();
+    initCaseMobileCover();
     injectChatWidget();
 
     if (current) {
@@ -139,6 +141,43 @@
       document.head.appendChild(cs);
     }
   });
+
+  // Mobile cover for case hero
+  function initCaseMobileCover() {
+    if (!current) return;
+    var cover = $('.pf-hero > .pf-cover, .chronos-cover');
+    if (!cover) return;
+
+    var mobImg = cover.querySelector('.pf-cover-mobile');
+    var all = (window.PORTFOLIO_CASES_ALL || []).concat(window.PORTFOLIO_CASES || []);
+    var caseObj = all.find(function(c){ return c.slug === current });
+    var mobUrl = (caseObj && caseObj.coverMobile) ? (ROOT + caseObj.coverMobile) : 'assets/capa_mobile.png';
+
+    function activateMobileCover(src) {
+      cover.classList.add('has-mobile-cover');
+      if (!mobImg) {
+        mobImg = document.createElement('img');
+        mobImg.className = 'pf-cover-mobile';
+        mobImg.alt = '';
+        mobImg.loading = 'eager';
+        mobImg.src = src;
+        cover.insertBefore(mobImg, cover.firstChild);
+      } else if (!mobImg.getAttribute('src')) {
+        mobImg.src = src;
+      }
+    }
+
+    if (caseObj && caseObj.coverMobile) {
+      activateMobileCover(mobUrl);
+    } else {
+      var probe = new Image();
+      probe.onload = function() {
+        if (caseObj) caseObj.coverMobile = current + '/assets/capa_mobile.png';
+        activateMobileCover(mobUrl);
+      };
+      probe.src = mobUrl;
+    }
+  }
 
   // 3. Chat do site: avatar flutuante com mini-chat (shared/chat-widget.*)
   function injectChatWidget(){

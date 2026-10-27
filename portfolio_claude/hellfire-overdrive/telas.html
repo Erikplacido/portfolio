@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hellfire Overdrive · Bancada de Análise Visual das 3 Telas (PSD)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Jersey+10&family=JetBrains+Mono:wght@500;700&family=Pixelify+Sans:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Silkscreen:wght@400;700&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ho-night:#0B040A;
+  --ho-deep:#24101F;
+  --ho-coral:#E9574B;
+  --ho-cream:#F2E6D8;
+  --ho-gold:#F2C46D;
+  --ho-mono:'Silkscreen','JetBrains Mono',monospace;
+  --ho-num:'Jersey 10','Teko',monospace;
+  --ho-sans:'Plus Jakarta Sans',sans-serif;
+  --ho-serif:'Cinzel',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  min-height:100%;
+  background:#070308 radial-gradient(circle at 50% 0%,#280816 0%,#09030a 75%);
+  color:var(--ho-cream);
+  font-family:var(--ho-sans);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Header & Controls */
+.wb-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(11,4,10,.92);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(242,196,109,.2);
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.wb-brand{display:flex;align-items:center;gap:14px}
+.wb-back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--ho-gold);
+  font:700 12px/1 var(--ho-mono);
+  text-decoration:none;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(242,196,109,.1);
+  border:1px solid rgba(242,196,109,.25);
+  transition:all .2s;
+}
+.wb-back:hover{background:rgba(242,196,109,.22);color:#fff}
+.wb-title{font:900 15px/1.2 var(--ho-serif);color:#ff4a3d;letter-spacing:.04em}
+.wb-title small{display:block;font:600 11px/1 var(--ho-mono);color:#b9a3b3;letter-spacing:.08em;margin-top:3px}
+
+.wb-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wb-btn-group{display:inline-flex;align-items:center;padding:3px;border-radius:999px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1)}
+.wb-btn{
+  background:none;
+  border:0;
+  padding:6px 12px;
+  font:700 11px/1 var(--ho-mono);
+  color:#bda7b5;
+  border-radius:999px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.wb-btn:hover{color:#fff}
+.wb-btn.active{background:var(--ho-coral);color:#fff;box-shadow:0 0 10px rgba(233,87,75,.6)}
+
+.wb-tool-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 14px;
+  border-radius:999px;
+  border:1px solid rgba(242,196,109,.3);
+  background:rgba(242,196,109,.12);
+  color:var(--ho-gold);
+  font:700 11.5px/1 var(--ho-mono);
+  cursor:pointer;
+  transition:all .2s;
+}
+.wb-tool-btn:hover{background:rgba(242,196,109,.25);color:#fff}
+.wb-tool-btn.active{background:var(--ho-gold);color:#10060e;box-shadow:0 0 12px rgba(242,196,109,.6)}
+
+/* Main Canvas Area */
+.wb-main{
+  padding:32px 24px 64px;
+  max-width:1600px;
+  margin:0 auto;
+}
+.wb-intro{
+  margin-bottom:28px;
+  text-align:center;
+}
+.wb-intro h1{font:900 24px/1.2 var(--ho-serif);color:#ff5143;margin-bottom:8px}
+.wb-intro p{font:500 13.5px/1.5 var(--ho-sans);color:#c7b1be;max-width:780px;margin:0 auto}
+.wb-intro code{font:600 12px var(--ho-mono);color:var(--ho-gold);background:rgba(242,196,109,.12);padding:2px 6px;border-radius:4px}
+
+/* Grid of 3 screens */
+.wb-trio{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:28px;
+  align-items:start;
+  transition:transform .2s ease;
+  transform-origin:top center;
+}
+@media(max-width:1100px){.wb-trio{grid-template-columns:1fr;max-width:480px;margin:0 auto}}
+
+.wb-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  width:100%;
+}
+.wb-col-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  max-width:440px;
+  padding:6px 14px;
+  background:rgba(18,7,16,.8);
+  border:1px solid rgba(242,196,109,.25);
+  border-radius:999px;
+  font:700 12px/1 var(--ho-mono);
+  color:var(--ho-gold);
+}
+.wb-col-header b{color:var(--ho-coral)}
+.wb-col-meta{font:600 10.5px/1 var(--ho-mono);color:#a892a0}
+.wb-rank-switcher{display:inline-flex;gap:3px;background:rgba(0,0,0,.6);padding:2px 4px;border-radius:999px;border:1px solid rgba(255,255,255,.15)}
+.wb-rank-btn{background:none;border:0;color:#c7b1be;font:700 11px/1 var(--ho-mono);padding:3px 7px;border-radius:999px;cursor:pointer;transition:all .2s}
+.wb-rank-btn:hover{color:#fff}
+.wb-rank-btn.active{background:var(--ho-coral);color:#fff;box-shadow:0 0 8px rgba(233,87,75,.7)}
+
+/* The Frame */
+.hg{
+  width:100%;
+  max-width:440px;
+  aspect-ratio:858/1632;
+  position:relative;
+  border-radius:24px;
+  overflow:hidden;
+  background:#08090c url(assets/ui/stage-background.png) center/100% 100% no-repeat;
+  box-shadow:0 35px 70px -25px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.08);
+  container-type:inline-size;
+  font-family:var(--ho-mono);
+  color:var(--ho-cream);
+  user-select:none;
+}
+.hg-ui{
+  position:absolute;
+  inset:0;
+  display:grid;
+  align-content:end;
+  justify-items:center;
+  padding:0 4.5cqw 5cqw;
+  background:linear-gradient(to bottom,rgba(14,6,12,0) 15%,rgba(14,6,12,.82) 55%);
+  z-index:2;
+}
+.hg-scr{
+  width:100%;
+  display:grid;
+  justify-items:center;
+  gap:max(8px,2.4cqw);
+  text-align:center;
+  padding:max(16px,5cqw) max(14px,4.5cqw);
+  border-radius:max(14px,4cqw);
+  background:rgba(23,10,21,.94);
+  border:2px solid rgba(242,196,109,.35);
+  box-shadow:0 20px 40px -20px #000;
+}
+
+.hg.is-menu{background:#08090c url(assets/ui/stage-background2.png) center/100% 100% no-repeat}
+.hg-btn{position:absolute;width:11cqw;height:11cqw;max-width:52px;max-height:52px;border:none;border-radius:0;background:transparent center/contain no-repeat;box-shadow:none;cursor:pointer;z-index:30;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));transition:transform .15s,filter .15s}
+.hg-btn:hover{transform:translateY(-2px);filter:drop-shadow(0 0 12px rgba(255,59,48,.85)) drop-shadow(0 4px 8px rgba(0,0,0,.7))}
+.hg-btn:active{transform:translateY(0) scale(.95)}
+.hg-settings{top:4.5cqw;right:4.5cqw;background-image:url(assets/ui/icon-gear.png)}
+.hg-sound{top:4.5cqw;right:18cqw;background-image:url(assets/ui/icon-speaker.png)}
+.hg-pause{top:4.5cqw;right:4.5cqw;background-image:url(assets/ui/icon-pause.png)}
+.hg-menu-panel{width:100%;padding:3cqw 4cqw;border:1.5px solid rgba(242,196,109,.3);border-radius:12px;background:linear-gradient(125deg,#0d0d11f5,#07080bf5);box-shadow:0 0 18px #000;text-align:left}
+.hg-session{display:flex;justify-content:space-between;font:700 2.2cqw/1 var(--ho-mono);color:#927d75;letter-spacing:.08em;margin-bottom:2cqw}
+.hg-track{display:flex;gap:3cqw;align-items:center;margin-bottom:3cqw;padding:2cqw;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.05)}
+.hg-track-cover{width:18cqw;height:18cqw;border-radius:4px;object-fit:cover;border:1px solid #5a423a}
+.hg-track-title{font:700 3.8cqw/1.1 var(--ho-mono);color:#fff}
+.hg-track-meta{font:600 2.2cqw/1 var(--ho-mono);color:#e27867;margin-top:1cqw}
+.hg-wave{height:2cqw;background:repeating-linear-gradient(90deg,#ff493f 0,#ff493f 2px,transparent 2px,transparent 5px);margin-top:1.5cqw;opacity:.7}
+.hg-difficulty-label{font:700 2cqw/1 var(--ho-mono);color:#927d75;letter-spacing:.08em;margin-bottom:1.5cqw}
+.hg-modes{display:flex;gap:1.5cqw;width:100%}
+.hg-modes button{flex:1;padding:2cqw 1cqw;font:700 2.3cqw/1 var(--ho-mono);color:#d0b5a6;background:#151216;border:1px solid #4a3630;cursor:pointer}
+.hg-modes button[aria-pressed="true"]{background:#8c1d24;color:#fff;border-color:#ff493f;box-shadow:0 0 8px #ff493f}
+.hg-cta.hg-go{width:100%;height:14cqw;background:transparent url(assets/ui/btn-tocar.png) center/100% 100% no-repeat;border:0;color:transparent;font-size:0;cursor:pointer;margin-top:2cqw}
+.hg-menu-nav{display:flex;justify-content:center;gap:3cqw;margin-top:1cqw}
+.hg-menu-link{background:none;border:0;cursor:pointer;padding:0}
+.hg-menu-link img{width:auto;height:6.5cqw;display:block}
+
+/* Tela 2: Gameplay Layers */
+.hg-layer-throne{position:absolute;left:11.1%;top:19.3%;width:78.1%;height:auto;z-index:1;pointer-events:none}
+.hg-layer-character{position:absolute;left:50%;transform:translateX(-50%);top:19.9%;width:74%;height:auto;z-index:2;pointer-events:none}
+.hg-layer-neck{position:absolute;left:2.9%;top:49.6%;width:94.2%;height:auto;z-index:3;pointer-events:none}
+.hg-layer-highway-glow{position:absolute;left:13%;top:49.6%;width:74%;height:33%;background:linear-gradient(180deg,rgba(242,196,109,.04) 0%,rgba(242,196,109,.26) 100%);clip-path:polygon(32% 0%,68% 0%,94% 100%,6% 100%);z-index:4;pointer-events:none;opacity:0.5}
+.hg-layer-battery{position:absolute;left:1.4%;top:37.7%;width:16.3%;z-index:6;pointer-events:none;text-align:center}
+.hg-battery-lbl{display:block;font:700 1.9cqw/1 var(--ho-mono);color:#F2C46D;text-shadow:0 0 6px #000;margin-bottom:0.4cqw}
+.hg-battery-meter-box{position:relative;width:100%;aspect-ratio:140/351}
+.hg-battery-frame{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.hg-battery-fill{position:absolute;left:38.6%;width:22.9%;top:37%;height:46.2%;background:linear-gradient(0deg,#ff493f,#ffb771);box-shadow:inset 0 0 6px #ff493f,0 0 8px #ff493f;z-index:1}
+.hg-layer-overdrive{position:absolute;left:18%;bottom:1.5%;width:64%;aspect-ratio:423/93;z-index:7;pointer-events:none}
+.hg-layer-overdrive img{width:100%;height:100%;display:block}
+.hg-od-txt{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font:700 3.2cqw/1 var(--ho-mono);color:#ffb771;letter-spacing:.08em;display:flex;gap:.8cqw;text-shadow:0 2px 4px rgba(0,0,0,.9);white-space:nowrap}
+.hg-od-txt b{color:#F2E6D8}
+.hg-layer-notes{position:absolute;inset:0;z-index:5;pointer-events:none}
+.hg-d20{position:absolute;height:auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,.7))}
+.d20-1{left:14.2%;top:73.5%;width:13.8%}
+.d20-2{left:30.8%;top:63.8%;width:11.4%}
+.d20-3{left:43.6%;top:77.2%;width:15%;filter:drop-shadow(0 6px 14px rgba(242,196,109,.6))}
+.d20-4{left:57.2%;top:57.5%;width:9.6%}
+.d20-5{left:71.8%;top:68%;width:12.2%}
+.hg-layer-pads{position:absolute;left:2.5%;bottom:7.2%;width:95%;display:flex;justify-content:space-between;z-index:6;pointer-events:none}
+.hg-pad{position:relative;width:18.4%;aspect-ratio:1;display:grid;place-items:center}
+.hg-pad img{width:100%;height:100%;object-fit:contain}
+.hg-pad span{position:absolute;font:700 5cqw/1 var(--ho-mono);text-shadow:0 0 6px #000}
+.hg-pad.pad-1 span{color:#5FD068}
+.hg-pad.pad-2 span{color:#E8455A}
+.hg-pad.pad-3 span{color:#F2C230}
+.hg-pad.pad-4 span{color:#fff}
+.hg-pad.pad-5 span{color:#F28A2E}
+.hg-pad.on .hg-pad-burst{position:absolute;inset:-25%;border-radius:50%;background:radial-gradient(circle,rgba(255,233,168,.9) 0%,rgba(255,140,40,0) 70%)}
+.hg-layer-feedback{position:absolute;left:50%;top:63.5%;transform:translate(-50%,-50%);text-align:center;z-index:7;pointer-events:none}
+.hg-fb-text{font:700 6.8cqw/1 var(--ho-mono);color:#F2C46D;text-shadow:0 0 16px rgba(242,196,109,.8),0 3px 0 #120810;letter-spacing:.08em}
+.hg-fb-sub{font:700 3.2cqw/1 var(--ho-mono);color:#F2E6D8;text-shadow:0 0 8px rgba(0,0,0,.8);margin-top:.8cqw}
+.hg-pause{right:3cqw;top:8cqw;background-image:url(assets/ui/icon-pause.png)}
+.hg-hud-top{display:flex;justify-content:space-between;align-items:flex-end}
+.hg-hud-lbl{display:block;font:700 2.2cqw/1 'Silkscreen',var(--ho-mono);color:#ff493f;letter-spacing:.08em;margin-bottom:0.4cqw}
+.hg-hud-val{font:700 7.4cqw/1 'Jersey 10',var(--ho-mono);color:#FF4538;text-shadow:0 0 14px #fa2925}
+.hg-hud-combo-group{text-align:left}
+.hg-hud-combo-wrap{display:flex;align-items:center;gap:1.2cqw}
+.hg-hud-div{color:#69352e;font:400 4.8cqw/1 'Jersey 10',monospace;opacity:0.8}
+.hg-hud-mult{color:#FF9A42;font:700 3.8cqw/1 'Silkscreen',var(--ho-mono);text-shadow:0 0 10px rgba(255,154,66,0.85),0 0 20px rgba(255,69,56,0.6);letter-spacing:0.04em}
+.hg-hud-prog{margin-top:1.5cqw;height:2.2cqw;background:#17080a;border:1.5px solid #69352e;border-radius:2px;overflow:hidden}
+.hg-hud-bar{height:100%;background:#ff332d}
+.hg-hud-song{display:flex;justify-content:space-between;align-items:baseline;margin-top:1.5cqw;font:700 2.4cqw/1 var(--ho-mono);color:#ef7867}
+.hg-hud-song small{color:#d5b8af;font-size:2cqw}
+.hg-hud-time{color:#fff;font-size:2.3cqw}
+
+/* Tela 3: Resultados */
+.hg.is-result .hg-ui{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0;background:none !important}
+.hg-result-brand{display:none !important}
+
+/* Placa de Resultados: proporção nativa 401x642 da placa gótica */
+.hg-scr.hg-end{
+  position:relative;
+  width:92cqw;
+  max-width:396px;
+  aspect-ratio:401/642;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:0 !important;
+  padding:24.5cqw 7cqw 7.5cqw;
+  margin:auto;
+  border:0 !important;
+  border-image:none !important;
+  border-radius:0 !important;
+  background:transparent url(assets/ui/plaque.png) center/100% 100% no-repeat !important;
+  box-shadow:0 16px 36px -8px rgba(0,0,0,.9) !important;
+  z-index:2;
+}
+.hg-end-header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  margin:0;
+}
+.hg-end .hg-rank-img{
+  width:auto;
+  height:18cqw;
+  margin:0 auto;
+  filter:drop-shadow(0 0 16px rgba(255,45,25,.85)) drop-shadow(0 0 28px rgba(220,30,15,.5));
+  display:block;
+}
+.hg-end .hg-rank{font:italic 18cqw/.95 'Cinzel',Georgia,serif;color:#ff4435;text-shadow:0 0 20px #cb2115}
+.hg-end .hg-title{
+  font:900 3.6cqw/1.12 'Cinzel',Georgia,serif;
+  color:#e9574b;
+  text-shadow:0 0 12px rgba(233,87,75,.75),0 0 24px rgba(180,30,20,.5);
+  margin:1cqw 0 0;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  text-align:center;
+}
+.hg-end-score-block{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  margin:0;
+}
+.hg-end .hg-stars{
+  display:flex;
+  justify-content:center;
+  gap:1.4cqw;
+  height:4.8cqw;
+  margin:0 0 .8cqw;
+}
+.hg-end .hg-stars img{height:100%;width:auto;filter:drop-shadow(0 0 8px #ee281b)}
+.hg-end .hg-stars img.empty{opacity:.18;filter:grayscale(1)}
+.hg-end .hg-result-points{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.2cqw;
+  width:100%;
+  margin:0;
+  text-align:center;
+}
+.hg-result-label{
+  display:block;
+  color:#d65a4e;
+  font:700 2.8cqw/1 var(--ho-mono);
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  text-shadow:0 0 10px rgba(255,74,61,.6);
+  margin-bottom:.3cqw;
+}
+.hg-score-wrap{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto;
+}
+.hg-end .hg-score{
+  font:700 11.5cqw/.9 'Teko',var(--ho-mono);
+  letter-spacing:.04em;
+  color:#ff453a;
+  text-shadow:0 0 16px rgba(255,69,58,.8),0 0 32px rgba(255,40,25,.45);
+}
+.hg-record-stamp{
+  position:absolute;
+  left:calc(100% + 1.2cqw);
+  top:50%;
+  transform:translateY(-50%);
+  border:1.5px solid #ff3b30;
+  border-radius:4px;
+  padding:.2cqw .5cqw;
+  font:700 1.5cqw/1.05 var(--ho-mono);
+  letter-spacing:.08em;
+  color:#ff453a;
+  text-shadow:0 0 6px rgba(255,69,58,.8);
+  box-shadow:0 0 6px rgba(255,59,48,.4),inset 0 0 4px rgba(255,59,48,.2);
+  white-space:nowrap;
+  text-align:center;
+}
+.hg-end-stats-block{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  margin:0;
+}
+.hg-end .hg-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  width:100%;
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
+  border-left:0;
+  border-right:0;
+  background:transparent;
+  padding:.7cqw 0;
+  margin:0 0 .5cqw;
+  text-align:center;
+}
+.hg-end .hg-stats div{padding:0 .5cqw;border:0;border-radius:0}
+.hg-end .hg-stats div+div{border-left:1px solid rgba(255,255,255,.12)}
+.hg-end .hg-stats b{
+  font:700 5.4cqw/1 'Teko',var(--ho-mono);
+  letter-spacing:.02em;
+  color:#ffffff;
+  display:block;
+  text-shadow:0 1px 3px rgba(0,0,0,.9);
+}
+.hg-end .hg-stats span{
+  font:700 1.6cqw/1 var(--ho-mono);
+  letter-spacing:.12em;
+  color:#8c7368;
+  text-transform:uppercase;
+  display:block;
+  margin-top:.2cqw;
+}
+.hg-breakdown{
+  font:500 1.5cqw/1.2 var(--ho-mono);
+  color:#8c7368;
+  letter-spacing:.04em;
+  text-align:center;
+  margin:0;
+}
+.hg-end .hg-prize{display:none !important}
+.hg-end .ho-prize{
+  width:100%;
+  box-sizing:border-box;
+  margin:0;
+  padding:1.4cqw 2cqw 1.6cqw;
+  border-radius:8px;
+  border:1px dashed rgba(242,196,109,.55);
+  background:linear-gradient(180deg, rgba(242,196,109,.12), rgba(20,5,15,.7));
+  text-align:center;
+  box-shadow:inset 0 0 10px rgba(242,196,109,.08);
+}
+.hg-end .ho-prize b{
+  display:block;
+  font:700 2.2cqw/1 var(--ho-mono);
+  letter-spacing:.12em;
+  color:var(--ho-gold);
+  text-shadow:0 0 8px rgba(242,196,109,.5);
+  margin-bottom:.6cqw;
+  text-transform:uppercase;
+}
+.hg-end .ho-prize .code{
+  display:inline-block;
+  font:700 3cqw/1 var(--ho-mono);
+  letter-spacing:.14em;
+  padding:.5cqw 1.6cqw;
+  border-radius:4px;
+  background:#F2E6D8;
+  color:#0B040A;
+  box-shadow:0 2px 8px rgba(0,0,0,.6);
+}
+.hg-end .ho-prize .ho-qr{
+  display:grid;
+  grid-template-columns:repeat(9, 1fr);
+  gap:1.5px;
+  width:10cqw;
+  max-width:44px;
+  margin:.8cqw auto .6cqw;
+  padding:3px;
+  background:#FFFFFF;
+  border-radius:4px;
+  box-shadow:0 2px 8px rgba(0,0,0,.6);
+}
+.hg-end .ho-prize .ho-qr i{
+  aspect-ratio:1;
+  background:transparent;
+}
+.hg-end .ho-prize .ho-qr i.on{
+  background:#0B040A;
+}
+.hg-end .ho-prize p{
+  font:500 1.6cqw/1.2 var(--ho-mono);
+  color:#d8c2c8;
+  margin:.5cqw 0 0;
+  letter-spacing:.02em;
+}
+.hg-end .hg-again{
+  position:relative;
+  width:84%;
+  max-width:270px;
+  aspect-ratio:619/111;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent url(assets/ui/btn-tocar.png) center/100% 100% no-repeat !important;
+  border:0 !important;
+  border-radius:0 !important;
+  color:#fff !important;
+  font:700 5.6cqw/1 'Teko',var(--ho-mono) !important;
+  letter-spacing:.14em !important;
+  text-transform:uppercase !important;
+  text-shadow:0 0 10px rgba(255,69,58,.85),0 0 20px rgba(230,30,20,.6) !important;
+  cursor:pointer;
+  box-shadow:none !important;
+  padding:0 0 .4cqw 0;
+  margin:0 auto;
+  transition:transform .15s ease,filter .15s ease;
+}
+.hg-end .hg-again:hover{
+  transform:scale(1.03);
+  filter:brightness(1.15) drop-shadow(0 0 14px rgba(255,59,48,.75));
+}
+.hg-end .hg-home{display:none !important}
+
+/* Layer Inspector / Guiding Outlines Mode */
+body.show-guides .hg [class*="hg-layer-"],
+body.show-guides .hg .hg-menu-panel,
+body.show-guides .hg .hg-scr.hg-end,
+body.show-guides .hg .hg-pad,
+body.show-guides .hg .hg-d20{
+  outline:1.5px dashed rgba(242,196,109,.85);
+  outline-offset:-1px;
+}
+
+/* Asset cards beneath screens */
+.wb-asset-list{
+  width:100%;
+  max-width:440px;
+  background:rgba(18,7,16,.6);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  padding:14px;
+  font:500 11.5px/1.4 var(--ho-mono);
+  color:#bfa8b6;
+}
+.wb-asset-list h4{font:700 11px/1 var(--ho-mono);color:var(--ho-gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.wb-asset-list ul{list-style:none;display:grid;gap:4px}
+.wb-asset-list li{display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:3px}
+.wb-asset-list li span{color:#fff}
+.wb-asset-list li code{color:var(--ho-coral)}
+</style>
+</head>
+<body>
+
+<header class="wb-header">
+  <div class="wb-brand">
+    <a href="index.html#jogo" class="wb-back">← Voltar ao Case</a>
+    <div class="wb-title">
+      HELLFIRE OVERDRIVE
+      <small>BANCADA DE ANÁLISE VISUAL · ELEMENTOS DO PSD</small>
+    </div>
+  </div>
+
+  <div class="wb-actions">
+    <div class="wb-btn-group" role="group" aria-label="Escala de visualização">
+      <button type="button" class="wb-btn" data-scale="1">100%</button>
+      <button type="button" class="wb-btn" data-scale="0.85">85%</button>
+      <button type="button" class="wb-btn active" data-scale="fit">Ajustar</button>
+    </div>
+
+    <button type="button" class="wb-tool-btn" id="wb-reload" title="Força a recarga imediata de todas as imagens sem cache">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+      Recarregar Assets
+    </button>
+
+    <button type="button" class="wb-tool-btn" id="wb-guides" title="Exibe contornos e nomes das camadas do PSD">
+      Guias de Camadas
+    </button>
+  </div>
+</header>
+
+<main class="wb-main">
+  <div class="wb-intro">
+    <h1>Inspeção Simultânea das 3 Telas do Jogo</h1>
+    <p>Os 3 estados abaixo usam <strong>recortes HTML/CSS puros</strong> diretamente vinculados aos arquivos PNG e JPG em <code>hellfire-overdrive/assets/ui/</code> e <code>hellfire-overdrive/assets/</code>. Ao salvar edições no Photoshop ou substituir qualquer arquivo na pasta, clique em <strong>Recarregar Assets</strong> ou aperte <kbd>F5</kbd> para conferir a renderização exata em tempo real.</p>
+  </div>
+
+  <div class="wb-trio" id="wb-trio">
+    <!-- COLUNA 1: MENU INICIAL -->
+    <div class="wb-col">
+      <div class="wb-col-header">
+        <span><b>01</b> MENU INICIAL</span>
+        <span class="wb-col-meta">858 × 1632 px</span>
+      </div>
+
+      <div class="hg is-menu">
+        <button type="button" class="hg-btn hg-sound" aria-label="Som"></button>
+        <button type="button" class="hg-btn hg-settings" aria-label="Ajustes"></button>
+        <div class="hg-ui">
+          <div class="hg-scr hg-start">
+            <div class="hg-menu-panel">
+              <div class="hg-session"><span>SESSÃO 01</span><span>ARCADE RÍTMICO</span></div>
+              <div class="hg-track">
+                <img src="assets/hero-menu.jpg" alt="" class="hg-track-cover">
+                <div class="hg-track-info">
+                  <div class="hg-track-title">Master of Puppets</div>
+                  <div class="hg-track-meta">METALLICA · 220 BPM · 00:56</div>
+                  <div class="hg-wave" aria-hidden="true"></div>
+                </div>
+              </div>
+              <div class="hg-difficulty-label">DIFICULDADE</div>
+              <div class="hg-modes" role="group" aria-label="Dificuldade">
+                <button type="button" aria-pressed="false">Aprendiz</button>
+                <button type="button" aria-pressed="true">Guitarrista</button>
+                <button type="button" aria-pressed="false">Lenda</button>
+              </div>
+            </div>
+            <button type="button" class="hg-cta hg-go" aria-label="Tocar agora">Tocar agora</button>
+            <div class="hg-menu-nav">
+              <button type="button" class="hg-menu-link" aria-label="Como jogar"><img src="assets/ui/nav-como-jogar.png" alt=""></button>
+              <button type="button" class="hg-menu-link" aria-label="Ver demonstração"><img src="assets/ui/nav-demonstracao.png" alt=""></button>
+              <button type="button" class="hg-menu-link" aria-label="Placares"><img src="assets/ui/nav-placares.png" alt=""></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-asset-list">
+        <h4>Assets de UI Utilizados</h4>
+        <ul>
+          <li><span>Cenário</span><code>assets/ui/stage-background2.png</code></li>
+          <li><span>Capa da Música</span><code>assets/hero-menu.jpg</code></li>
+          <li><span>Destaque Dificuldade</span><code>assets/ui/diff-highlight.png</code></li>
+          <li><span>Botão Tocar</span><code>assets/ui/btn-tocar.png</code></li>
+          <li><span>Ícone Ajustes</span><code>assets/ui/icon-gear.png</code></li>
+          <li><span>Navegação</span><code>assets/ui/nav-*.png</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COLUNA 2: PARTIDA COM OVERDRIVE -->
+    <div class="wb-col">
+      <div class="wb-col-header">
+        <span><b>02</b> PARTIDA · OVERDRIVE</span>
+        <span class="wb-col-meta">858 × 1632 px</span>
+      </div>
+
+      <div class="hg">
+        <img class="hg-layer-throne" src="assets/ui/trono.png" alt="Trono">
+        <img class="hg-layer-character" src="assets/ui/eddie_rock.png" alt="Eddie tocando">
+        <img class="hg-layer-neck" src="assets/ui/stage-fretboard.png" alt="Braço da guitarra">
+        <div class="hg-layer-highway-glow"></div>
+        <div class="hg-layer-battery">
+          <span class="hg-battery-lbl">BAT</span>
+          <div class="hg-battery-meter-box">
+            <div class="hg-battery-fill"></div>
+            <img class="hg-battery-frame" src="assets/ui/battery-meter.png" alt="Medidor de bateria (Aberta - Notas Altas)">
+          </div>
+        </div>
+        <div class="hg-layer-overdrive">
+          <img src="assets/ui/overdrive-bar.png" alt="Overdrive ativo">
+          <div class="hg-od-txt">OVERDRIVE ATIVO · <b>×8 PTS</b></div>
+        </div>
+        <div class="hg-layer-notes">
+          <img class="hg-d20 d20-1" src="assets/ui/notas_1.png" alt="Nota D20 pista 1">
+          <img class="hg-d20 d20-2" src="assets/ui/notas_2.png" alt="Nota D20 pista 2">
+          <img class="hg-d20 d20-3" src="assets/ui/notas_3.png" alt="Nota D20 pista 3">
+          <img class="hg-d20 d20-4" src="assets/ui/notas_4.png" alt="Nota D20 pista 4">
+          <img class="hg-d20 d20-5" src="assets/ui/notas_5.png" alt="Nota D20 pista 5">
+        </div>
+        <div class="hg-layer-pads">
+          <div class="hg-pad pad-1"><img src="assets/ui/pad-1.png" alt="Pad 1"><span>1</span></div>
+          <div class="hg-pad pad-2"><img src="assets/ui/pad-2.png" alt="Pad 2"><span>2</span></div>
+          <div class="hg-pad pad-3 on"><div class="hg-pad-burst"></div><img src="assets/ui/pad-3.png" alt="Pad 3"><span>3</span></div>
+          <div class="hg-pad pad-4"><img src="assets/ui/pad-4.png" alt="Pad 4"><span>4</span></div>
+          <div class="hg-pad pad-5"><img src="assets/ui/pad-5.png" alt="Pad 5"><span>5</span></div>
+        </div>
+        <div class="hg-layer-feedback">
+          <div class="hg-fb-text">PERFEITO!</div>
+          <div class="hg-fb-sub">61 EM SEQUÊNCIA</div>
+        </div>
+        <button type="button" class="hg-btn hg-pause" aria-label="Pausa">❚❚</button>
+        <div class="hg-layer-hud">
+          <div class="hg-hud-top">
+            <div>
+              <span class="hg-hud-lbl">PONTOS</span>
+              <div class="hg-hud-val">030400</div>
+            </div>
+            <div class="hg-hud-combo-group">
+              <span class="hg-hud-lbl">COMBO</span>
+              <div class="hg-hud-combo-wrap">
+                <span class="hg-hud-val">61</span>
+                <span class="hg-hud-div">|</span>
+                <span class="hg-hud-mult">×8</span>
+              </div>
+            </div>
+          </div>
+          <div class="hg-hud-prog">
+            <div class="hg-hud-bar" style="width:64%;"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="wb-asset-list">
+        <h4>Assets de UI Utilizados</h4>
+        <ul>
+          <li><span>Trono</span><code>assets/ui/trono.png</code></li>
+          <li><span>Pose Solo</span><code>assets/ui/eddie_rock.png</code></li>
+          <li><span>Braço/Fretboard</span><code>assets/ui/stage-fretboard.png</code></li>
+          <li><span>Bateria (Fechada - Normal)</span><code>assets/ui/battery-meter2.png</code></li>
+          <li><span>Bateria (Aberta - Notas Altas)</span><code>assets/ui/battery-meter.png</code></li>
+          <li><span>Barra Overdrive</span><code>assets/ui/overdrive-bar.png</code></li>
+          <li><span>Dados D20 (5 pistas)</span><code>assets/ui/notas_1.png a 5</code></li>
+          <li><span>5 Pads Coloridos</span><code>assets/ui/pad-1.png a 5</code></li>
+          <li><span>Ícone Pausa</span><code>assets/ui/icon-pause.png</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COLUNA 3: RESULTADOS & RANK -->
+    <div class="wb-col">
+      <div class="wb-col-header">
+        <span><b>03</b> RESULTADOS</span>
+        <div class="wb-rank-switcher">
+          <button type="button" class="wb-rank-btn" data-rank="S">S</button>
+          <button type="button" class="wb-rank-btn" data-rank="A">A</button>
+          <button type="button" class="wb-rank-btn" data-rank="B">B</button>
+          <button type="button" class="wb-rank-btn" data-rank="C">C</button>
+          <button type="button" class="wb-rank-btn active" data-rank="D">D</button>
+        </div>
+        <span class="wb-col-meta">858 × 1632 px</span>
+      </div>
+
+      <div class="hg is-result">
+        <div class="hg-ui">
+          <div class="hg-scr hg-end">
+            <div class="hg-end-header">
+              <img class="hg-rank-img" src="assets/ui/rank-d.png" alt="Rank D">
+              <div class="hg-rank" hidden>D</div>
+              <div class="hg-title">O ritual pede bis.</div>
+            </div>
+            <div class="hg-end-score-block">
+              <div class="hg-stars" role="img" aria-label="1 de 5 estrelas">
+                <img src="assets/ui/star-filled.png" alt="">
+                <img src="assets/ui/star-filled.png" alt="" class="empty">
+                <img src="assets/ui/star-filled.png" alt="" class="empty">
+                <img src="assets/ui/star-filled.png" alt="" class="empty">
+                <img src="assets/ui/star-filled.png" alt="" class="empty">
+              </div>
+              <div class="hg-result-points">
+                <span class="hg-result-label">Pontuação</span>
+                <div class="hg-score-wrap">
+                  <div class="hg-score">002012</div>
+                  <div class="hg-record-stamp" hidden>NOVO<br>RECORDE</div>
+                </div>
+              </div>
+            </div>
+            <div class="hg-end-stats-block">
+              <div class="hg-stats">
+                <div><b>12,1%</b><span>precisão</span></div>
+                <div><b>7</b><span>maior combo</span></div>
+                <div><b>28/165</b><span>notas</span></div>
+              </div>
+              <div class="hg-breakdown">12 perfeitas · 16 boas · 137 perdidas</div>
+            </div>
+            <div class="ho-prize" id="act-prize"><b>BRINDE DESBLOQUEADO</b><span class="code">HF-0500-D</span><div class="ho-qr" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i></div><p>Mostre o código no estande para retirar.</p></div>
+            <button type="button" class="hg-cta hg-again">Mais um solo</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-asset-list">
+        <h4>Assets de UI Utilizados</h4>
+        <ul>
+          <li><span>Placa Gótica (401×642)</span><code>assets/ui/plaque.png</code></li>
+          <li><span>Insígnia Rank S</span><code>assets/ui/rank-s.png</code></li>
+          <li><span>Estrela Dourada</span><code>assets/ui/star-filled.png</code></li>
+          <li><span>Rank A, B, C, D</span><code>assets/ui/rank-*.png</code></li>
+          <li><span>Fundo Placa</span><code>assets/ui/stage-background.png</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var trio = document.getElementById('wb-trio');
+  var scaleBtns = document.querySelectorAll('[data-scale]');
+  var reloadBtn = document.getElementById('wb-reload');
+  var guidesBtn = document.getElementById('wb-guides');
+
+  // Scale switcher
+  scaleBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      scaleBtns.forEach(function(x){ x.classList.remove('active') });
+      b.classList.add('active');
+      var s = b.getAttribute('data-scale');
+      if(s === 'fit'){
+        trio.style.transform = '';
+      } else {
+        trio.style.transform = 'scale(' + s + ')';
+      }
+    });
+  });
+
+  // Layer guides outline toggle
+  guidesBtn.addEventListener('click', function(){
+    document.body.classList.toggle('show-guides');
+    guidesBtn.classList.toggle('active', document.body.classList.contains('show-guides'));
+  });
+
+  // Live image reloader (appends timestamp query to bypass browser cache)
+  reloadBtn.addEventListener('click', function(){
+    var now = Date.now();
+    var imgs = document.querySelectorAll('.hg img');
+    imgs.forEach(function(img){
+      var base = img.src.split('?')[0];
+      img.src = base + '?t=' + now;
+    });
+    var bgs = document.querySelectorAll('.hg, .hg-scr.hg-end, .hg-menu-panel, .hg-cta.hg-go');
+    bgs.forEach(function(el){
+      var style = window.getComputedStyle(el);
+      // force repaint
+      el.style.display = 'none';
+      el.offsetHeight; // trigger reflow
+      el.style.display = '';
+    });
+    reloadBtn.textContent = '✓ Recarregado!';
+    setTimeout(function(){
+      reloadBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Recarregar Assets';
+    }, 1200);
+  });
+
+  // Rank preview switcher for Column 3
+  var rankData = {
+    S: { img: 'assets/ui/rank-s.png', title: 'Seu solo<br>estremeceu<br>o Mundo Invertido!', stars: 5, score: '099186', acc: '100,0%', combo: '188', notes: '188/188', breakdown: '188 perfeitas · 0 boas · 0 perdidas', code: 'HF-4700-S' },
+    A: { img: 'assets/ui/rank-a.png', title: 'O palco te ouviu.', stars: 4, score: '085400', acc: '91,5%', combo: '142', notes: '172/188', breakdown: '156 perfeitas · 16 boas · 16 perdidas', code: 'HF-3200-A' },
+    B: { img: 'assets/ui/rank-b.png', title: 'Quase lá.', stars: 3, score: '062100', acc: '78,2%', combo: '94', notes: '147/188', breakdown: '120 perfeitas · 27 boas · 41 perdidas', code: 'HF-2100-B' },
+    C: { img: 'assets/ui/rank-c.png', title: 'Afine e volte.', stars: 2, score: '038900', acc: '58,4%', combo: '42', notes: '110/188', breakdown: '82 perfeitas · 28 boas · 78 perdidas', code: 'HF-1400-C' },
+    D: { img: 'assets/ui/rank-d.png', title: 'O ritual pede bis.', stars: 1, score: '002012', acc: '12,1%', combo: '7', notes: '28/165', breakdown: '12 perfeitas · 16 boas · 137 perdidas', code: 'HF-0500-D' }
+  };
+  var rankBtns = document.querySelectorAll('[data-rank]');
+  rankBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var rKey = b.getAttribute('data-rank');
+      var d = rankData[rKey];
+      if(!d) return;
+      rankBtns.forEach(function(x){ x.classList.remove('active') });
+      b.classList.add('active');
+      var rImg = document.querySelector('.hg.is-result .hg-rank-img');
+      var rTxt = document.querySelector('.hg.is-result .hg-rank');
+      if(rImg){ rImg.src = d.img; rImg.alt = 'Rank ' + rKey; rImg.hidden = false; }
+      if(rTxt){ rTxt.hidden = true; }
+      var ttl = document.querySelector('.hg.is-result .hg-title');
+      if(ttl) ttl.innerHTML = d.title;
+      var starsEl = document.querySelector('.hg.is-result .hg-stars');
+      if(starsEl){
+        starsEl.setAttribute('aria-label', d.stars + ' de 5 estrelas');
+        starsEl.innerHTML = [0,1,2,3,4].map(function(i){
+          return '<img src="assets/ui/star-filled.png" alt=""' + (i >= d.stars ? ' class="empty"' : '') + '>';
+        }).join('');
+      }
+      var sc = document.querySelector('.hg.is-result .hg-score');
+      if(sc) sc.textContent = d.score;
+      var stats = document.querySelector('.hg.is-result .hg-stats');
+      if(stats){
+        stats.innerHTML = '<div><b>' + d.acc + '</b><span>precisão</span></div><div><b>' + d.combo + '</b><span>maior combo</span></div><div><b>' + d.notes + '</b><span>notas</span></div>';
+      }
+      var bd = document.querySelector('.hg.is-result .hg-breakdown');
+      if(bd) bd.textContent = d.breakdown;
+      var cd = document.querySelector('.hg.is-result .ho-prize .code');
+      if(cd) cd.textContent = d.code;
+    });
+  });
+})();
+</script>
+</body>
+</html>

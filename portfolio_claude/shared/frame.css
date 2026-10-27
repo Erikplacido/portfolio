@@ -102,6 +102,46 @@ figcaption b{color:var(--pf-ink)}
 .pf-hero>.pf-cover{width:100%;border-radius:0;aspect-ratio:auto;height:clamp(420px,50vw,820px)}
 .pf-hero>.pf-cover>img:only-child{width:100%;height:100%;object-fit:cover}
 
+/* Mobile cover for case hero */
+.pf-cover-mobile{display:none}
+@media(max-width:768px){
+  .pf-hero > .pf-cover.has-mobile-cover,
+  .chronos-cover.has-mobile-cover{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:88vh !important;
+    aspect-ratio:941/1672 !important;
+    overflow:hidden !important;
+    position:relative !important;
+    border-radius:0 !important;
+  }
+  .pf-hero > .pf-cover:not(.has-mobile-cover){
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:var(--pf-cover-ar, 2/1);
+  }
+  .pf-hero > .pf-cover:not(.has-mobile-cover) > img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+  .pf-cover.has-mobile-cover > *:not(.pf-cover-mobile),
+  .chronos-cover.has-mobile-cover > *:not(.pf-cover-mobile){
+    display:none !important;
+  }
+  .pf-cover.has-mobile-cover .pf-cover-mobile,
+  .chronos-cover.has-mobile-cover .pf-cover-mobile{
+    display:block !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center top !important;
+    transform:none !important;
+    animation:none !important;
+  }
+}
+
 /* home: work grid (filled from shared/cases.js) */
 .pf-works{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,4vw,40px);margin-top:48px}
 @media(max-width:760px){.pf-works{grid-template-columns:1fr}}
@@ -191,6 +231,7 @@ figcaption b{color:var(--pf-ink)}
 .home.dark .pf-lang-picker,
 .st-dark .pf-lang-picker,
 [data-case="chronos-weave"] .pf-lang-picker,
+[data-case="star-marshal"] .pf-lang-picker,
 [data-case="aether-protocol"] .pf-lang-picker,
 [data-case="forca-br"] .pf-lang-picker,
 [data-case="hellfire-overdrive"] .pf-lang-picker {
@@ -200,6 +241,7 @@ figcaption b{color:var(--pf-ink)}
 .home.dark .pf-lang-btn,
 .st-dark .pf-lang-btn,
 [data-case="chronos-weave"] .pf-lang-btn,
+[data-case="star-marshal"] .pf-lang-btn,
 [data-case="aether-protocol"] .pf-lang-btn,
 [data-case="forca-br"] .pf-lang-btn,
 [data-case="hellfire-overdrive"] .pf-lang-btn {
@@ -208,6 +250,7 @@ figcaption b{color:var(--pf-ink)}
 .home.dark .pf-lang-btn.active,
 .st-dark .pf-lang-btn.active,
 [data-case="chronos-weave"] .pf-lang-btn.active,
+[data-case="star-marshal"] .pf-lang-btn.active,
 [data-case="aether-protocol"] .pf-lang-btn.active,
 [data-case="forca-br"] .pf-lang-btn.active,
 [data-case="hellfire-overdrive"] .pf-lang-btn.active {

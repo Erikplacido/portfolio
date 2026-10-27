@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Star Marshal — HUD contextual e UI diegética · Erik Placido</title>
+<meta name="description" content="Game UI para ação em terceira pessoa: HUD que muda com o contexto, prompts que acompanham o controle, seletor de armas projetado do pulso e um protótipo 3D jogável no navegador.">
+<meta property="og:title" content="Star Marshal — HUD contextual e UI diegética"><meta property="og:image" content="assets/card.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Bebas+Neue&family=Oswald:wght@500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<link rel="stylesheet" href="case.css?v=20261027c">
+</head>
+<body data-case="star-marshal">
+<nav class="pf-nav" aria-label="Portfólio"><div class="wrap"><a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Star Marshal</span></a><ul class="pf-links"><li><a href="#estados">Estados</a></li><li><a href="#controle">Controle</a></li><li><a href="#roda">Seletor</a></li><li><a href="#simulador">Protótipo ↗</a></li></ul><div class="pf-cases" role="group" aria-label="Cases" data-auto></div></div><i class="pf-prog" aria-hidden="true"></i></nav>
+<main>
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 15</b> · Game UI / UX · Direção de arte · Protótipo jogável</p>
+    <h1>Star Marshal.<br><em>O HUD sabe a hora de sair.</em></h1>
+    <p class="lede">Um sistema de HUD para ação em terceira pessoa que muda de prioridade com a situação: some na patrulha, entra no combate e toma as bordas da tela quando a vida acaba. Os prompts acompanham o controle em uso e as armas se projetam do pulso do personagem, dentro da cena. Tudo jogável no navegador.</p>
+    <a class="pf-btn" href="#simulador">Jogar o protótipo <span aria-hidden="true">↗</span></a>
+    <dl class="pf-meta"><div><dt>Disciplina</dt><dd>Game UI / UX · Direção de arte · Protótipo técnico</dd></div><div><dt>Gênero</dt><dd>Ação e aventura em terceira pessoa · Space opera pulp dos anos 1960</dd></div><div><dt>Entregas</dt><dd>HUD contextual · UI diegética e espacial · Glyphs dinâmicos · Seletor holográfico de pulso · Protótipo WebGL</dd></div><div><dt>Formato</dt><dd>Projeto autoral e conceitual</dd></div></dl>
+  </div>
+  <div class="pf-cover sm-cover">
+    <img src="assets/cap_hero.webp" width="4124" height="1350" alt="Arte conceitual: o Star Marshal, de perfil, estende o braço e o bracelete projeta um leque holográfico ciano de armas, com a arma ativa em âmbar, diante da cidade retrofuturista de Vespera-9 e de um planeta vermelho">
+  </div>
+  <div class="wrap"><p class="sm-cover-note">Arte conceitual do seletor de pulso, não uma captura do protótipo. Vespera-9 e o Star Marshal são um universo fictício.</p></div>
+</header>
+
+<section id="intencao" class="pf-sec alt"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>01</b> · A intenção</p><h2>Informar sem cobrir o mundo.</h2><p class="lede">Em jogos de ação, o HUD disputa a tela com tudo o que o estúdio construiu. A proposta aqui é mostrar cada informação só quando ela muda uma decisão do jogador, e colocar o resto dentro do mundo.</p></div>
+  <div class="sm-intent">
+    <div class="sm-principles">
+      <article class="rv"><span class="sm-number">01 / CONTEXTO</span><h3>Mostrar quando importa.</h3><p>Na patrulha, a cidade ocupa a tela. Sob ameaça, vida, escudo, mira e calor da arma entram juntos. Na beira da morte, o alarme toma as bordas e deixa o centro livre para mirar.</p></article>
+      <article class="rv"><span class="sm-number">02 / MUNDO</span><h3>Informação com lugar.</h3><p>O seletor pertence ao traje, o campo de força pertence ao corpo, o prompt pertence à evidência. Cada indicador fica perto do objeto a que se refere.</p></article>
+      <article class="rv"><span class="sm-number">03 / MÃO</span><h3>O prompt certo para o controle certo.</h3><p>O jogador não escolhe a família de ícones num menu: o último dispositivo tocado decide. O seletor de armas abre no próprio braço, sem tela de seleção por cima do jogo.</p></article>
+    </div>
+    <aside class="sm-proof rv" aria-labelledby="proof-title">
+      <p class="sm-proof-title" id="proof-title">O que este case demonstra</p>
+      <ul>
+        <li><a href="#estados">Três estados de HUD: exploração, combate e crítico</a></li>
+        <li><a href="#estados">Vida, escudo, superaquecimento, mira livre e ameaça direcional que entram em 450 ms</a></li>
+        <li><a href="#estados">Vinheta vermelha pulsante, distorção cromática e alerta de baixa vida</a></li>
+        <li><a href="#controle">Glyphs que trocam sozinhos entre PlayStation, Xbox e teclado</a></li>
+        <li><a href="#roda">Seletor de armas projetado do pulso, trocado com L2 e R2</a></li>
+        <li><a href="#diegetica">UI diegética e espacial: holograma, campo de força e prompt no mundo 3D</a></li>
+        <li><a href="#simulador">Tudo isso num protótipo jogável com teclado, mouse ou controle</a></li>
+      </ul>
+    </aside>
+  </div>
+  <div class="callout rv"><b>Referências de mercado para este tipo de HUD:</b> a interface no traje de <i>Dead Space</i>, o HUD espacial de <i>The Division</i>, o HUD mínimo de <i>God of War</i> (2018) e a UI no mundo de <i>Cyberpunk 2077</i>. Star Marshal leva essas ideias para uma estética de pôster pulp dos anos 1960.</div>
+</div></section>
+
+<section id="estados" class="pf-sec"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>02</b> · HUD contextual</p><h2>A mesma cena.<br>Três prioridades.</h2><p class="lede">Compare o que aparece, o que some e o que ganha destaque. As imagens são capturas do protótipo; os números vêm de medições feitas nele.</p></div>
+  <figure class="rv"><div class="pf-stage st-pulp sm-states">
+    <div class="sm-bar"><span class="sm-label">Sistema de HUD contextual</span><span class="sm-label sm-dim">Capturas do protótipo · 1600×800</span></div>
+    <div class="sm-tabs" role="tablist" aria-label="Estados do HUD">
+      <button id="tab-explore" role="tab" aria-selected="true" aria-controls="panel-explore" data-state="explore"><i>01</i><span>Exploração</span><b>3,4%</b></button>
+      <button id="tab-combat" role="tab" aria-selected="false" aria-controls="panel-combat" tabindex="-1" data-state="combat"><i>02</i><span>Combate</span><b>9,1%</b></button>
+      <button id="tab-critical" role="tab" aria-selected="false" aria-controls="panel-critical" tabindex="-1" data-state="critical"><i>03</i><span>Crítico</span><b>10,9%</b></button>
+    </div>
+    <div class="sm-viewer">
+      <div class="sm-shot" data-shot>
+        <img data-for="explore" class="on" src="assets/cap_explore.webp" width="2400" height="1200" alt="Exploração: só o cabeçalho da missão, no canto, e o prompt da evidência aparecem; o inimigo está ao fundo, sem marcação">
+        <img data-for="combat" src="assets/cap_combat.webp" width="2400" height="1200" loading="lazy" alt="Combate: o personagem mira com o braço estendido e o raio sai do cano até o inimigo; cabeçalho, radar, mira com arco de ameaça, vida e escudo em segmentos e o painel de superaquecimento estão na tela">
+        <img data-for="critical" src="assets/cap_critical.webp" width="2400" height="1200" loading="lazy" alt="Crítico: a cena fica em duotone vermelho com as bordas distorcidas, o alerta Integridade crítica mostra 12% de vida no topo e vida e escudo caem para um segmento">
+        <div class="sm-pins" data-for="explore" aria-hidden="true"><i style="left:14%;top:2%">1</i><i style="left:67%;top:72%">2</i></div>
+        <div class="sm-pins" data-for="combat" aria-hidden="true" hidden><i style="left:52%;top:47%">1</i><i style="left:49%;top:28%">2</i><i style="left:14%;top:85%">3</i><i style="left:60%;top:85%">4</i><i style="left:77%;top:2%">5</i><i style="left:14%;top:2%">6</i></div>
+        <div class="sm-pins" data-for="critical" aria-hidden="true" hidden><i style="left:3%;top:40%">1</i><i style="left:94%;top:30%">2</i><i style="left:40%;top:9%">3</i><i style="left:14%;top:85%">4</i><i style="left:60%;top:85%">5</i></div>
+      </div>
+      <div class="sm-info">
+        <div id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" tabindex="0" data-panel="explore">
+          <span class="sm-label sm-tag">Exploração · baixa densidade</span>
+          <p class="sm-display">A paisagem é a protagonista.</p>
+          <div class="sm-metric"><b>3,4%</b><span>da tela com HUD.<br>Meta do estado: deixar pelo menos 90% livre.</span></div>
+          <ol class="sm-list"><li>Cabeçalho da missão no canto: Star Marshal, Vespera-9 e o setor.</li><li>Prompt ancorado na evidência, com o botão do controle em uso.</li></ol>
+          <p class="sm-small"><b>Projetado para</b> quando não há hostis por perto; no protótipo, dura até o primeiro tiro, o primeiro ataque inimigo ou o atalho 1. Vida, escudo, arma, radar e mira saem de cena e deixam de receber foco do teclado.</p>
+        </div>
+        <div id="panel-combat" role="tabpanel" aria-labelledby="tab-combat" tabindex="0" data-panel="combat" hidden>
+          <span class="sm-label sm-tag">Combate · foco tático</span>
+          <p class="sm-display">A informação acompanha a ameaça.</p>
+          <div class="sm-metric"><b>9,1%</b><span>da tela com HUD.<br>Os painéis entram em 450 ms, com opacidade e deslize.</span></div>
+          <ol class="sm-list"><li>Mira livre: segue o cursor ou o analógico direito; o anel abre com o recuo e fecha em cerca de 0,2 s.</li><li>Arco de ameaça que gira em volta da mira na direção do inimigo.</li><li>Vida e escudo em dez segmentos cada, com símbolos no lugar de rótulos.</li><li>Ícone da arma e superaquecimento: a 100% a arma trava até resfriar com R.</li><li>Radar orbital.</li><li>Cabeçalho com o setor e a situação.</li></ol>
+          <p class="sm-small"><b>Entra quando</b> o jogador atira ou leva o primeiro tiro (ou pelo atalho 2). Os instrumentos ficam nas bordas, numa faixa central de 1120 px, e o meio da tela fica para a mira e o alvo.</p>
+        </div>
+        <div id="panel-critical" role="tabpanel" aria-labelledby="tab-critical" tabindex="0" data-panel="critical" hidden>
+          <span class="sm-label sm-tag">Crítico · alerta periférico</span>
+          <p class="sm-display">A urgência ocupa as bordas.</p>
+          <div class="sm-metric"><b>10,9%</b><span>da tela com HUD.<br>O alerta cresce nas bordas; a mira continua nítida.</span></div>
+          <ol class="sm-list"><li>Vinheta vermelha pulsando a cada 1,05 s.</li><li>Cena em duotone vermelho, com distorção cromática que aumenta do centro para as bordas.</li><li>Alerta "Integridade crítica" com a vida restante e o botão de restaurar o traje.</li><li>Vida e escudo quase vazios; os painéis ganham contorno vermelho e ciano.</li><li>Superaquecimento alto: neste cenário, a arma começa a 88%.</li></ol>
+          <p class="sm-small"><b>Entra quando</b> um ataque deixa a vida abaixo de 15% (ou pelo atalho 3). A cor nunca é o único sinal: o alerta tem texto. Com "reduzir movimento", a vinheta fica fixa.</p>
+        </div>
+      </div>
+    </div>
+  </div><figcaption>Capturas reais do protótipo WebGL, com a área de jogo a 1600×800. A área de HUD é a soma das caixas dos elementos visíveis, medida na própria página; na mira e no arco de ameaça conta só o desenho. A barra de estados e dispositivos acima da cena não entra na conta.</figcaption></figure>
+
+</div></section>
+
+<section id="controle" class="pf-sec alt"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>03</b> · Ergonomia de controle</p><h2>O mesmo gesto.<br>O ícone certo.</h2><p class="lede">O último dispositivo usado decide os ícones. Pegue um controle ou mexa no teclado e no mouse: os prompts abaixo trocam sozinhos. Também dá para escolher a família manualmente.</p></div>
+  <figure class="rv"><div class="pf-stage st-pulp sm-input" data-input-demo>
+    <div class="sm-bar"><span class="sm-label">Button glyphs dinâmicos</span><span class="sm-label sm-dim" id="input-detected" aria-live="polite">Automático · teclado e mouse</span></div>
+    <div class="sm-platforms" role="group" aria-label="Família de ícones">
+      <button type="button" data-platform="auto" aria-pressed="true">Automático</button>
+      <button type="button" data-platform="ps" aria-pressed="false">PlayStation</button>
+      <button type="button" data-platform="xbox" aria-pressed="false">Xbox</button>
+      <button type="button" data-platform="pc" aria-pressed="false">Teclado</button>
+    </div>
+    <div class="sm-prompts">
+      <div class="sm-prompt"><span class="sm-glyph" data-action="interact"></span><span>Investigar rastro</span></div>
+      <div class="sm-prompt"><span class="sm-glyph" data-action="reload"></span><span>Resfriar e recarregar</span></div>
+      <div class="sm-prompt"><span class="sm-glyph" data-action="scanner"></span><span>Seletor de pulso</span></div>
+      <div class="sm-prompt"><span class="sm-glyph" data-action="heal"></span><span>Restaurar traje</span></div>
+      <div class="sm-prompt"><span class="sm-glyph" data-action="cycle"></span><span>Trocar arma</span></div>
+      <div class="sm-prompt"><span class="sm-glyph" data-action="fire"></span><span>Atirar</span></div>
+    </div>
+    <div class="sm-table-wrap"><table class="sm-map">
+      <caption class="sm-label">Mapa de comandos do protótipo</caption>
+      <thead><tr><th scope="col">Ação</th><th scope="col" data-col="ps">PlayStation</th><th scope="col" data-col="xbox">Xbox</th><th scope="col" data-col="pc">Teclado e mouse</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Investigar</th><td data-col="ps">✕</td><td data-col="xbox">A</td><td data-col="pc">E</td></tr>
+        <tr><th scope="row">Resfriar e recarregar</th><td data-col="ps">▢</td><td data-col="xbox">X</td><td data-col="pc">R</td></tr>
+        <tr><th scope="row">Abrir / fechar o seletor de pulso</th><td data-col="ps">△</td><td data-col="xbox">Y</td><td data-col="pc">V</td></tr>
+        <tr><th scope="row">Restaurar traje / fechar o seletor</th><td data-col="ps">◯</td><td data-col="xbox">B</td><td data-col="pc">Q · Esc</td></tr>
+        <tr><th scope="row">Trocar e equipar no seletor</th><td data-col="ps">L2 / R2</td><td data-col="xbox">LT / RT</td><td data-col="pc">← / →</td></tr>
+        <tr><th scope="row">Atirar (seletor fechado)</th><td data-col="ps">R2</td><td data-col="xbox">RT</td><td data-col="pc">Clique</td></tr>
+        <tr><th scope="row">Andar / mirar</th><td data-col="ps">Analógicos</td><td data-col="xbox">Analógicos</td><td data-col="pc">WASD · mouse</td></tr>
+      </tbody>
+    </table></div>
+  </div><figcaption>Demonstração em HTML com os mesmos glyphs e o mesmo mapa do protótipo. No modo automático, a página lê a Gamepad API: controles reconhecidos como Sony usam PlayStation; outros com mapeamento padrão usam Xbox.</figcaption></figure>
+  <div class="callout rv"><b>Regra de troca:</b> o ícone muda no primeiro toque do novo dispositivo, sem menu e sem recarregar a tela. Só o glyph troca; o texto do prompt fica no mesmo lugar, para não reorganizar o HUD no meio da ação. Com o seletor aberto, os gatilhos mudam de função: L2 e R2 trocam de arma e não disparam.</div>
+</div></section>
+
+<section id="roda" class="pf-sec"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>04</b> · Escolha sob pressão</p><h2>O arsenal sai do pulso.<br>A cena continua na tela.</h2><p class="lede">A preocupação aqui foi integrar o design de forma diegética: em vez de um menu sobreposto ao jogo, o seletor é um holograma projetado do bracelete no pulso do personagem. V, △ ou Y ergue o antebraço e abre as seis armas num semicírculo; L2 e R2 trocam e equipam na hora, e o inimigo continua visível através da projeção.</p></div>
+  <figure class="rv"><div class="pf-stage st-pulp sm-wheel">
+    <img src="assets/cap_wrist.webp" width="2400" height="1200" loading="lazy" alt="Captura do protótipo com o seletor de pulso aberto: semicírculo holográfico ciano com seis armas, a arma ativa em âmbar no topo, teclas L2 e R2 nas pontas e o personagem translúcido à esquerda, com o inimigo visível através da projeção">
+    <div class="sm-wheel-data">
+      <dl class="sm-stats"><div><dt>Armas</dt><dd>06</dd></div><div><dt>Arco</dt><dd>180°</dd></div><div><dt>Opacidade do herói</dt><dd>22%</dd></div><div><dt>Giro da cintura</dt><dd>13°</dd></div></dl>
+      <ul class="sm-list sm-bullets"><li><b>Câmera</b>: avança e enquadra o painel; ao fechar, câmera, postura e materiais voltam ao normal.</li><li><b>Corpo</b>: o braço da arma relaxa e a cintura gira para o pulso. O herói fica translúcido e não esconde o holograma.</li><li><b>Leitura</b>: a arma equipada fica em âmbar; as vizinhas, em ciano. Cada troca já equipa, sem confirmação.</li><li><b>Gatilhos</b>: enquanto o seletor está aberto, nenhum tiro sai por engano.</li></ul>
+      <p class="sm-keys"><kbd data-glyph-text="scanner">△</kbd> <span>abre</span> · <kbd data-glyph-text="cycle">L2 / R2</kbd> <span>troca e equipa</span> · <kbd data-glyph-text="close">△ / ◯</kbd> <span>fecha</span></p>
+    </div>
+  </div><figcaption>Captura do protótipo a 1600×800 com o seletor aberto. A projeção é um plano 3D preso ao bracelete, com transparência e teste de profundidade; com "reduzir movimento", câmera e postura mudam sem transição.</figcaption></figure>
+  <div class="callout rv"><b>O que mudou:</b> na versão anterior, Tab abria uma roda em tela cheia e o mundo desacelerava para 0,10×. O seletor de pulso troca esse modal por uma interface diegética: ela existe dentro da cena e sai do equipamento do próprio personagem.</div>
+</div></section>
+
+<section id="diegetica" class="pf-sec alt"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>05</b> · UI diegética e espacial</p><h2>O equipamento também comunica.</h2><p class="lede">Latão, mostradores e luz de tubo dão à tecnologia uma linguagem própria. O seletor sai do bracelete, a defesa aparece em volta do corpo e o prompt de evidência fica preso a um ponto do mundo 3D.</p></div>
+  <figure class="rv"><div class="pf-stage st-pulp sm-wheel">
+    <img src="assets/cap_forcefield.webp" width="2400" height="1200" loading="lazy" alt="Captura do protótipo no momento em que o tiro inimigo chega: uma esfera de malha translúcida ciano envolve o Star Marshal enquanto ele mira; os segmentos de escudo no painel inferior esquerdo estão parcialmente vazios">
+    <div class="sm-wheel-data sm-diegetic-side">
+      <dl class="sm-stats"><div><dt>Ataque inimigo</dt><dd>10 s</dd></div><div><dt>Dano no escudo</dt><dd>16</dd></div><div><dt>Campo de força</dt><dd>0,9 s</dd></div><div><dt>Voo do projétil</dt><dd>0,45 s</dd></div></dl>
+      <ul class="sm-list sm-bullets"><li><b>Seletor de pulso</b>: o antebraço sobe e o bracelete projeta as armas em 3D.</li><li><b>Campo de força</b>: a cada ataque, uma malha luminosa envolve o corpo por 0,9 s e o escudo perde 16 pontos; o excedente atinge a vida.</li><li><b>Prompt de evidência</b>: projetado de um ponto 3D a cada quadro, com o botão do controle em uso.</li><li><b>Mira livre</b>: segue o cursor, e o braço aponta para o ponto correspondente no mundo.</li></ul>
+    </div>
+  </div><figcaption>Captura do protótipo a 1600×800, 0,3 s depois do impacto. O inimigo ataca a cada 10 s de jogo ativo; o campo de força respeita "reduzir movimento".</figcaption></figure>
+</div></section>
+
+<section id="simulador" class="pf-sec sm-band"><div class="wrap">
+  <div class="pf-head rv"><p class="eyebrow"><b>06</b> · Protótipo jogável</p><h2>Agora, assuma a patrulha.</h2><p class="lede">Ande, mire, atire, resfrie a arma e troque de arma pelo pulso enquanto o inimigo dispara a cada 10 segundos. Os estados mudam pelo jogo ou pelos atalhos 1, 2 e 3. Funciona com teclado e mouse ou com um controle.</p></div>
+  <div class="sm-launch" id="demo-shell">
+    <div class="sm-launch-top"><span class="sm-label">Star Marshal · laboratório de HUD</span><a href="simulator.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a></div>
+    <div id="demo-container"><iframe title="Protótipo 3D interativo de Star Marshal" src="simulator.html?embedded=1" allow="fullscreen; gamepad"></iframe></div>
+  </div>
+  <ul class="sm-controls-guide"><li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Andar</li><li><kbd>Clique</kbd> Atirar</li><li><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> Estados</li><li><kbd>V</kbd> Seletor de pulso</li><li><kbd>←</kbd><kbd>→</kbd> / L2–R2 Trocar arma no pulso</li><li><kbd>R</kbd> Resfriar e recarregar</li><li><kbd>E</kbd> Investigar</li><li><kbd>Q</kbd> Restaurar traje</li></ul>
+  <p class="sm-demo-footnote">Three.js com modelos OBJ e pintura procedural. Clique na cena antes de usar o teclado; V ou Esc fecha o seletor de pulso. Fora da tela, a cena pausa.</p>
+</div></section>
+
+</main>
+<footer class="pf-footer"><div class="wrap"><div class="pf-fgrid"><div><p class="eyebrow">Próximo case</p><a class="pf-next" data-auto href="../index.html"></a></div><div><h2>Vamos conversar?</h2><p>Direção de arte, sistemas de interface e experiências que fazem sentido para quem joga.</p><a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></div></div><div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Star Marshal · Game UI / UX</span></div></div></footer>
+<script src="../shared/cases.js"></script><script src="../shared/frame.js"></script><script src="case.js?v=20261027a"></script>
+</body></html>

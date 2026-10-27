@@ -12,3 +12,10 @@ node_modules/
 # pacotes de trabalho (pesados)
 /Untaforma_600ml_15092022_Pasta/
 /Super_Batalha_Pasta/
+
+# Terceiro Nome: só o site gerado (dist/) vai pro ar; código, dados e docs do projeto ficam no repositório
+/editora-terceiro-nome/site/data/
+/editora-terceiro-nome/site/src/
+/editora-terceiro-nome/site/tools/
+/editora-terceiro-nome/site/docs/
+/editora-terceiro-nome/site/README.md

@@ -70,11 +70,19 @@ body.seg-body .pf-nav .pf-cases a{ color:#fff }
 .seg-case{
   position:relative; height:100dvh; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always;
   display:flex; align-items:flex-end; isolation:isolate; text-decoration:none; cursor:pointer;
+  background:var(--pf-night);
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+.seg-case-pic{
+  position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; overflow:hidden;
 }
 .seg-case-bg{
-  position:absolute; inset:-8% -8%; width:116%; height:116%; object-fit:cover;
+  position:absolute; inset:-8% -8%; width:116%; height:116%; max-width:none; object-fit:cover;
   opacity:0; transform:scale(1.1) translateY(0); transition:opacity 1s var(--pf-ease), transform 1.1s var(--pf-ease);
   will-change:transform,opacity;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
 }
 .seg-case.in-view .seg-case-bg{ opacity:1; transform:scale(1.02) translateY(var(--seg-py,0px)) }
 .seg-case-scrim{
@@ -102,9 +110,10 @@ body.seg-body .pf-nav .pf-cases a{ color:#fff }
    trocar de case, agora também como feedback de que o cartão é clicável. */
 .seg-case:hover .seg-case-bg,.seg-case:focus-visible .seg-case-bg{ transform:scale(1.07) translateY(var(--seg-py,0px)) }
 
-@media (max-width:720px){
+@media (max-width:768px){
   .seg-case{ align-items:flex-end }
   .seg-case-content{ padding-bottom:64px }
+  .seg-case-bg{ inset:-8% 0; width:100%; height:116%; max-width:none }
 }
 
 @media (prefers-reduced-motion:reduce){

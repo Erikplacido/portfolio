@@ -76,7 +76,7 @@
       '#falhas .lede': 'Every error features a title identifying the root cause, reassuring explanation copy, and two clear resolution actions. All can be triggered in the prototype panel.',
 
       // Prototipo
-      '#prototipo .eyebrow': 'Prototype',
+      '#prototipo .eyebrow': '<b>05.1</b> · The Living Interactive Prototype',
       '#prototipo h2': 'Experience the entire flow.',
       '#prototipo .lede': 'The React prototype runs directly inside this page on demand. On mobile devices, it opens seamlessly in a dedicated viewport.',
       '#prototipo .go span': '▶ Load interactive prototype',
@@ -170,7 +170,7 @@
       '#falhas .lede': 'Cada error cuenta con un título que identifica el problema, texto tranquilizador y dos opciones de resolución accesibles desde el panel del prototipo.',
 
       // Prototipo
-      '#prototipo .eyebrow': 'Prototipo',
+      '#prototipo .eyebrow': '<b>05.1</b> · El Prototipo Interactivo Vivo',
       '#prototipo h2': 'Experimente el flujo completo.',
       '#prototipo .lede': 'El prototipo en React corre directamente en esta página bajo demanda. En dispositivos móviles se abre en una pestaña adaptada.',
       '#prototipo .go span': '▶ Cargar prototipo interactivo',
@@ -264,7 +264,7 @@
       '#falhas .lede': 'Chaque incident présente un intitulé clair, une formulation rassurante et deux solutions de déblocage testables dans le panneau du prototype.',
 
       // Prototipo
-      '#prototipo .eyebrow': 'Prototype',
+      '#prototipo .eyebrow': '<b>05.1</b> · The Living Interactive Prototype',
       '#prototipo h2': 'Testez l’intégralité du parcours.',
       '#prototipo .lede': 'Le prototype React s’exécute directement sur cette page à la demande. Sur mobile, il s’ouvre dans un onglet dédié.',
       '#prototipo .go span': '▶ Charger le prototype interactif',

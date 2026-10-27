@@ -1,5 +1,9 @@
 {
   "framework": null,
   "buildCommand": null,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/sanctum-armory", "destination": "/musanga", "permanent": true },
+    { "source": "/sanctum-armory/:path*", "destination": "/musanga/:path*", "permanent": true }
+  ]
 }

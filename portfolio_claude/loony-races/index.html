@@ -24,8 +24,8 @@
 }
 
 /* ===== cover: banner de pista e troféu Loony Races ===== */
-.pf-hero > .pf-cover.lr-cover{height:clamp(220px,26.27vw,460px);background:#6FC0EC}
-.pf-cover.lr-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.pf-hero > .pf-cover.lr-cover{width:100%;height:auto;aspect-ratio:1024/269;background:#6FC0EC;overflow:hidden;position:relative}
+.pf-cover.lr-cover img:not(.pf-cover-mobile){width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 
 /* ===== stages ===== */
 .st-sky{background:linear-gradient(180deg,#8ACDF0,#D8EEF9 70%,#EEF7FC)}
@@ -300,8 +300,9 @@
       <div><dt>Ferramentas</dt><dd>Illustrator, Photoshop, InDesign, XD, Muse <span class="pf-tools" aria-hidden="true"><i style="color:#FF9A00;border-color:#FF9A00;background:#330000">Ai</i><i style="color:#31A8FF;border-color:#31A8FF;background:#001E36">Ps</i><i style="color:#FF3366;border-color:#FF3366;background:#49021F">Id</i><i style="color:#FF61F6;border-color:#FF61F6;background:#2E001E">Xd</i><i style="color:#8BD33B;border-color:#8BD33B;background:#132000">Mu</i></span></dd></div>
     </dl>
   </div>
-  <div class="pf-cover lr-cover">
-    <img src="assets/banner.png" alt="Logo Loony Races sobre circuito de corrida com troféu dourado, arquibancadas com público e bandeiras quadriculadas">
+  <div class="pf-cover lr-cover has-mobile-cover">
+    <img class="pf-cover-mobile" src="assets/capa_mobile.png" alt="Logo Loony Races sobre circuito de corrida" loading="eager" fetchpriority="high">
+    <img src="assets/banner.png" alt="Logo Loony Races sobre circuito de corrida com troféu dourado, arquibancadas com público e bandeiras quadriculadas" loading="eager" fetchpriority="high">
   </div>
 </header>
 

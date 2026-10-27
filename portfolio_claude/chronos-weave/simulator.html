@@ -296,7 +296,7 @@
             transition: opacity .7s ease, transform .7s ease; }
         .cw-node-label.is-on { opacity: 1; transform: none; transition: opacity .22s ease-out, transform .22s cubic-bezier(.2,.8,.2,1); }
         @media (prefers-reduced-motion: reduce) { .cw-node-label, .cw-node-label.is-on { transform: none; } }
-        .cw-lore h3 { font-family: var(--font-serif); font-weight: 700; font-size: 13px; letter-spacing: .14em; color: #F3E3B5; }
+        .cw-lore h3, .cw-dialog-head h3 { font-family: var(--font-serif); font-weight: 700; font-size: 13px; letter-spacing: .14em; color: #F3E3B5; }
         .cw-lore p { font-size: 11.5px; line-height: 1.5; color: #94A3B8; }
         .cw-lore .row { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid rgba(148,163,184,.1); }
         .cw-lore .row b { display: block; font-family: var(--font-display); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
@@ -329,6 +329,85 @@
         .cw-divider { height: 8px; background: url('assets/ui/divisor-ornamento.png') center / contain no-repeat; opacity: .9; }
         .cw-radar { border: 8px solid transparent; border-image: url('assets/ui/radar-moldura.png') 16 fill / 8px stretch; padding: 2px; }
         .cw-node-frame { background: url('assets/ui/icone-no-moldura.png') center / contain no-repeat; border: 0 !important; }
+
+        /* ===== Inspetor: mesma linguagem das constelações (Cinzel, moldura, ouro) ===== */
+        .cw-insp { display: flex; flex-direction: column; background: linear-gradient(180deg, #0A0F1C 0%, #070B15 40%); border-left: 1px solid rgba(201,160,74,.28); box-shadow: -18px 0 40px rgba(0,0,0,.45); }
+        .cw-insp-body { padding: 14px 16px 6px; display: flex; flex-direction: column; gap: 8px; }
+        .cw-kicker { font-family: var(--font-serif); font-weight: 700; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: #C9A04A; line-height: 1.4; }
+        .cw-insp-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .cw-insp-head .cw-kicker { flex: 1; min-width: 0; }
+        .cw-state { --s: #64748B; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; font-family: var(--font-serif); font-weight: 700; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--s); }
+        .cw-state::before { content: ""; width: 7px; height: 7px; transform: rotate(45deg); background: var(--s); box-shadow: 0 0 8px var(--s); }
+        .cw-state[data-state="available"] { --s: #38E1FF; }
+        .cw-state[data-state="acquired"] { --s: #E2E8F0; }
+        .cw-state[data-state="mastered"] { --s: #FBBF24; }
+
+        .cw-insp-card { position: relative; padding: 0 12px 12px; text-align: center; }
+        /* A arte encolhe em telas baixas e no modo TV pra o inspetor caber sem rolagem */
+        .cw-insp .cw-art { height: clamp(36px, calc(100vh - 690px), 96px); }
+        body.ten-foot-mode .cw-insp .cw-art { height: 22px; }
+        body.ten-foot-mode .cw-insp-card .cw-divider { display: none; }
+        .cw-insp-icon { width: 68px; height: 68px; margin: -40px auto 4px; position: relative; display: grid; place-items: center;
+            background: url('assets/ui/icone-no-moldura.png') center / contain no-repeat; filter: drop-shadow(0 0 12px color-mix(in srgb, var(--c) 45%, transparent)); }
+        .cw-insp-icon svg { width: 40px; height: 40px; }
+        .cw-insp-tier { font-family: var(--font-serif); font-weight: 700; font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--c); opacity: .9; }
+        .cw-insp-name { font-family: var(--font-serif); font-weight: 700; font-size: calc(17px * var(--ui-scale)); line-height: 1.25; letter-spacing: .03em; color: #F3E3B5; margin-top: 4px; overflow-wrap: anywhere; text-shadow: 0 0 16px rgba(251,191,36,.18); }
+        .cw-pips { display: flex; justify-content: center; gap: 7px; margin: 8px 0 8px; }
+        .cw-pips i { width: 8px; height: 8px; transform: rotate(45deg); border: 1px solid color-mix(in srgb, var(--c) 70%, #000); background: #070B14; }
+        .cw-pips i.on { background: var(--c); border-color: var(--c); box-shadow: 0 0 8px var(--c); }
+        .cw-insp-desc { font-size: calc(13.5px * var(--ui-scale)); line-height: 1.5; color: #CBD5E1; text-align: left; margin-top: 8px; overflow-wrap: anywhere; }
+        .cw-mastery { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; text-align: left; margin-top: 10px; padding: 8px 0 0; border-top: 1px solid rgba(148,163,184,.12); color: #94A3B8; font-size: calc(12.5px * var(--ui-scale)); line-height: 1.45; overflow-wrap: anywhere; }
+        .cw-mastery.is-on { color: #FDE9B0; }
+        .cw-ico { display: inline-block; width: 16px; height: 16px; background: currentColor; -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; }
+        .cw-ico-lock { --m: url('assets/ui/icone-cadeado.svg'); }
+        .cw-ico-star { --m: url('assets/ui/icone-estrela.svg'); }
+        .cw-ico-clock { --m: url('assets/ui/icone-relogio.svg'); width: 18px; height: 18px; }
+        .cw-mastery .cw-ico { margin-top: 2px; }
+
+        .cw-cost img, .cw-route img { width: 18px; height: 18px; }
+        .cw-route { display: flex; align-items: center; gap: 8px; border-left: 2px solid #C9A04A; padding: 3px 0 3px 10px; font-size: calc(12.5px * var(--ui-scale)); color: #CBD5E1; }
+        .cw-route .cw-kicker { margin-right: 2px; }
+        .cw-route b { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-display); font-size: 15px; color: #FDE9B0; }
+        #inspector-ranks-box:empty { display: none; }
+        .cw-route i { width: 4px; height: 4px; border-radius: 50%; background: #475569; }
+
+        .cw-l10n { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(148,163,184,.12); }
+        .cw-l10n-row { display: flex; justify-content: space-between; font-size: 11.5px; color: #7C8597; }
+        .cw-l10n-row b { font-family: var(--font-display); font-weight: 700; font-size: 12.5px; color: #94A3B8; }
+        .cw-l10n.is-over .cw-l10n-row b { color: #FF7A93; }
+        .cw-l10n-track { position: relative; height: 2px; margin-top: 6px; background: rgba(148,163,184,.16); }
+        .cw-l10n-track i { position: absolute; inset: 0 auto 0 0; background: #38E1FF; transition: width .3s ease; }
+        .cw-l10n.is-over .cw-l10n-track i { background: #FF3366; }
+        .cw-l10n-track u { position: absolute; left: 90%; top: -3px; width: 1px; height: 8px; background: #C9A04A; }
+
+        .cw-insp-foot { margin-top: auto; padding: 10px 16px 12px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(201,160,74,.22); }
+        #btn-hold-allocate { font-size: calc(13px * var(--ui-scale)); color: #FDE9B0; transition: filter .2s; }
+        #btn-hold-allocate[data-state="locked"] { color: #7C8597; filter: grayscale(.85) brightness(.75); }
+        #btn-hold-allocate[data-state="mastered"] { color: #FBBF24; }
+        #btn-hold-allocate:not([data-state="locked"]):hover { filter: brightness(1.15); }
+        .cw-cost { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-display); font-size: 14px; color: #FDE9B0; }
+        .cw-insp-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+        .cw-tools { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+        .cw-iconbtn { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: 6px; border: 1px solid #263248; background: #0A1120; color: #94A3B8; transition: color .2s, border-color .2s; }
+        .cw-iconbtn:hover, .cw-iconbtn:focus-visible { color: #FDE9B0; border-color: #C9A04A; }
+        .cw-iconbtn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+        .cw-iconbtn b { font-family: var(--font-display); font-size: 13px; }
+        .cw-iconbtn[aria-pressed="true"] { color: #38E1FF; border-color: #38E1FF; }
+        .cw-insp-head .cw-alloc { margin-left: auto; }
+        .cw-textbtn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: #CBD5E1; }
+        .cw-textbtn:hover { color: #fff; }
+        .cw-alloc { font-size: 11.5px; color: #7C8597; white-space: nowrap; }
+        .cw-alloc b { font-family: var(--font-display); font-size: 15px; color: #FDE9B0; }
+
+        /* Pop-up de lore */
+        .cw-dialog { width: min(440px, calc(100vw - 32px)); max-height: 85vh; overflow-y: auto; padding: 16px 18px 18px; color: #E2E8F0;
+            background: #0A0F1C; border: 8px solid transparent; border-image: url('assets/ui/painel-moldura.png') 24 fill / 8px stretch; }
+        .cw-dialog::backdrop { background: rgba(3,5,10,.72); backdrop-filter: blur(3px); }
+        .cw-dialog[open] { animation: cw-pop .2s ease-out; }
+        @keyframes cw-pop { from { opacity: 0; transform: translateY(6px) scale(.98); } }
+        @media (prefers-reduced-motion: reduce) { .cw-dialog[open] { animation: none; } }
+        .cw-dialog-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .cw-dialog-head h3 { flex: 1; }
 
         #skill-tree-viewport.has-3d {
             background-image: radial-gradient(circle at 50% 50%, rgba(10, 16, 32, 0.6) 0%, rgba(5, 8, 17, 0.98) 100%);
@@ -595,112 +674,96 @@
             </div>
 
             <!-- RIGHT 4 COLUMNS: UMG NODE INSPECTOR & HOLD-TO-CONFIRM PANEL -->
-            <aside class="lg:col-span-4 xl:col-span-3 bg-[#070B15] border-l border-amber-500/20 p-4 flex flex-col justify-between gap-3 z-20 shadow-2xl overflow-y-auto">
+            <aside class="cw-insp lg:col-span-4 xl:col-span-3 z-20 overflow-y-auto">
 
-                <div class="space-y-3.5">
-                    <!-- Inspector Top Telemetry Header -->
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                        <div>
-                            <span class="text-[10px] font-mono-tech uppercase tracking-widest text-cyan-400 block">
-                                WBP_SkillNode_Inspector
-                            </span>
-                            <h2 class="font-display font-bold uppercase tracking-wider text-slate-200 scale-text-sm" data-i18n="inspectorHeader">
-                                INSPEÇÃO DE TALENTO ASTRAL
-                            </h2>
-                        </div>
-                        <span id="inspector-state-badge" class="px-2.5 py-1 rounded text-[11px] font-mono-tech font-bold uppercase border">
-                            DISPONÍVEL
-                        </span>
+                <div class="cw-insp-body">
+                    <div class="cw-insp-head">
+                        <h2 class="sr-only" data-i18n="inspectorHeader">INSPEÇÃO DE TALENTO ASTRAL</h2>
+                        <span id="inspector-state-badge" class="cw-state" data-state="available">Disponível</span>
+                        <span class="cw-alloc" title="Pontos alocados na árvore"><b id="allocated-points-readout">0</b> alocados</span>
+                        <button class="cw-iconbtn" onclick="openLoreDialog()" aria-haspopup="dialog" title="Sobre o Astrolábio" aria-label="Sobre o Astrolábio de Chronos">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5M12 6.5C14 5 17 4.5 20.5 5v13c-3.5-.5-6.5 0-8.5 1.5M12 6.5v13"/></svg>
+                        </button>
                     </div>
 
                     <!-- Arte do talento + card do nó -->
                     <div class="cw-panel">
-                    <div class="cw-art"><img src="assets/inspector-art.jpg" alt="" onerror="this.onerror=null;this.src='assets/astrolabe_bg.jpg'"></div>
-                    <div id="inspector-node-card" class="p-3.5 space-y-3 relative overflow-hidden">
-                        <!-- Populated dynamically by JS -->
-                    </div>
-                    </div>
-
-                    <!-- Progression Ranks Breakdown (Rank 1 vs Mastery Synergy) -->
-                    <div id="inspector-ranks-box" class="space-y-2">
-                        <!-- Populated dynamically by JS -->
-                    </div>
-
-                    <!-- Telemetry & Localization Expansion Meter for the Inspected Node -->
-                    <div class="bg-slate-950/80 border border-slate-800/90 rounded-lg p-2.5 space-y-1.5">
-                        <div class="flex items-center justify-between text-[10px] font-mono-tech text-slate-400">
-                            <span>TELEMETRIA L10N (EXPANSÃO DE STRING):</span>
-                            <span id="inspector-l10n-pct" class="text-cyan-300 font-bold">100% (PT-BR)</span>
-                        </div>
-                        <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
-                            <div id="inspector-l10n-bar" class="h-full bg-gradient-to-r from-cyan-400 via-amber-400 to-rose-500 transition-all duration-300" style="width: 65%"></div>
+                        <div class="cw-art"><img src="assets/inspector-art.jpg" alt="" onerror="this.onerror=null;this.src='assets/astrolabe_bg.jpg'"></div>
+                        <div id="inspector-node-card" class="cw-insp-card">
+                            <!-- Populated dynamically by JS -->
                         </div>
                     </div>
 
-                    <div class="cw-divider" aria-hidden="true"></div>
-
-                    <!-- Lore: O Astrolábio de Chronos -->
-                    <section class="cw-panel cw-lore p-3.5" aria-labelledby="lore-title">
-                        <div class="flex items-start gap-3">
-                            <div class="flex-1">
-                                <h3 id="lore-title">▮ O ASTROLÁBIO DE CHRONOS</h3>
-                                <p class="mt-2">A mente humana é incapaz de absorver todo o poder do Éter de uma só vez sem enlouquecer. Por isso, os operativos utilizam o Astrolábio de Chronos: uma <span class="text-cyan-300">esfera armilar cósmica</span> e mecânica que mapeia a evolução das habilidades através de três constelações ancestrais.</p>
-                            </div>
-                            <img class="w-16 h-16 shrink-0" src="assets/ui/lore-astrolabio.png" alt="">
-                        </div>
-                        <div class="row mt-2"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-1.png" alt="">
-                            <div><b class="text-cyan-300">Constelação I // Tecelão do Éter</b><span>Manipulação de anomalias dimensionais, raios crono-cinéticos e tempo de recarga acelerado.</span></div></div>
-                        <div class="row"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-2.png" alt="">
-                            <div><b class="text-amber-300">Constelação II // Bastião Cinético</b><span>Blindagem densa de titânio, regeneração de campo defletor e resistência a impactos monumentais.</span></div></div>
-                        <div class="row"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-3.png" alt="">
-                            <div><b class="text-emerald-300">Constelação III // Lâmina Fantasma</b><span>Penetração de armadura por lâminas de obsidiana, precisão crítica e aceleração de esquiva (Bullet Time).</span></div></div>
-                        <p class="pt-2 border-t border-slate-800/80">Para evitar o colapso neural do operador, a árvore exige que os canais de energia estejam sempre conectados ao Núcleo Primordial (Core Zero), justificando na lore por que não é possível reembolsar um nó intermediário se ele deixar ramificações órfãs ativas.</p>
-                    </section>
+                    <!-- Rota até o nó, só quando ele está bloqueado -->
+                    <div id="inspector-ranks-box"></div>
                 </div>
 
-                <!-- Interactive Hold-to-Confirm Button & Refund Controls -->
-                <div class="space-y-2.5 pt-3 pb-1 border-t border-slate-800 sticky bottom-0 bg-[#070B15] shadow-[0_-16px_24px_#070B15]">
-
-                    <!-- Hold-to-Confirm Allocation Button (With Radial / Linear Shader Fill) -->
-                    <button id="btn-hold-allocate"
+                <!-- Segurar para confirmar, reembolso e ferramentas de teste -->
+                <div class="cw-insp-foot">
+                    <button id="btn-hold-allocate" data-state="available"
                             onmousedown="startHoldAllocate()"
                             onmouseup="cancelHoldAllocate()"
                             onmouseleave="cancelHoldAllocate()"
                             ontouchstart="startHoldAllocate(event)"
                             ontouchend="cancelHoldAllocate()"
-                            class="relative w-full py-3 px-4 rounded-xl font-display font-bold uppercase tracking-wider text-sm overflow-hidden border border-amber-400/70 bg-amber-500/20 hover:bg-amber-500/25 text-amber-100 shadow-lg transition-all flex items-center justify-between">
-                        <!-- Hold Progress Fill Bar -->
-                        <div id="hold-progress-fill" class="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-500/60 to-cyan-400/60 w-0 pointer-events-none"></div>
+                            class="relative w-full font-display font-bold uppercase tracking-wider overflow-hidden flex items-center justify-between">
+                        <div id="hold-progress-fill" class="absolute pointer-events-none"></div>
 
                         <div class="relative z-10 flex items-center gap-2">
                             <span id="inspector-glyph-confirm"></span>
                             <span id="btn-allocate-label" class="scale-text-sm">SEGURE P/ ADQUIRIR TALENTO</span>
                         </div>
-                        <span id="btn-allocate-cost" class="relative z-10 font-mono-tech text-xs px-2 py-0.5 rounded bg-slate-950/90 text-amber-300 border border-amber-400/40">
-                            1 PT
-                        </span>
+                        <span id="btn-allocate-cost" class="cw-cost relative z-10"></span>
                     </button>
 
-                    <!-- Secondary Actions: Refund Node & Instant-Click Toggle -->
-                    <div class="flex items-center justify-between gap-1.5 [&>button]:whitespace-nowrap">
-                        <button onclick="refundSelectedNode()"
-                                class="flex-1 py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-display font-semibold text-slate-300 flex items-center justify-center gap-1.5">
+                    <div class="cw-insp-actions">
+                        <button onclick="refundSelectedNode()" class="cw-textbtn">
                             <span id="inspector-glyph-refund"></span>
                             <span data-i18n="refundNodeBtn">Reembolsar Nó</span>
                         </button>
-
-                        <button onclick="addBonusSkillPoints()" class="py-2 px-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-emerald-500/30 text-[11px] font-mono-tech text-emerald-300" title="Cheat de QA">+5 PTS</button>
-                        <button onclick="resetSkillTree()" class="py-2 px-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-rose-500/30 text-[11px] font-mono-tech text-rose-300" title="Resetar árvore">Reset</button>
-                        <button id="btn-toggle-instant" onclick="toggleInstantAllocation()"
-                                class="py-2 px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-[11px] font-mono-tech text-cyan-300"
-                                title="Alterna entre Segurar por 0.4s (Hold-to-Confirm) ou Clique Instantâneo">
-                            Modo: Hold 0.4s
-                        </button>
+                        <div class="cw-tools" role="group" aria-label="Ferramentas de teste">
+                            <button class="cw-iconbtn" onclick="addBonusSkillPoints()" title="Teste: +5 pontos" aria-label="Teste: adicionar 5 pontos"><b>+5</b></button>
+                            <button class="cw-iconbtn" onclick="resetSkillTree()" title="Teste: reiniciar a árvore" aria-label="Teste: reiniciar a árvore">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v3.8h3.8"/></svg>
+                            </button>
+                            <button id="btn-toggle-instant" class="cw-iconbtn" onclick="toggleInstantAllocation()" aria-pressed="false" title="Confirmação: segurar 0,4 s. Clique para usar clique rápido" aria-label="Alternar entre segurar 0,4 s e clique rápido">
+                                <span class="cw-ico cw-ico-clock" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="text-[10px] font-mono-tech text-slate-500 text-right">ALOCADOS: <strong id="allocated-points-readout" class="text-cyan-300">0 PTS</strong></div>
                 </div>
 
             </aside>
+
+            <!-- Pop-up: lore e localização, fora do inspetor pra ele caber sem rolagem -->
+            <dialog id="lore-dialog" class="cw-dialog" aria-labelledby="lore-title" onclick="if (event.target === this) this.close()">
+                <div class="cw-dialog-head">
+                    <img class="w-12 h-12 shrink-0" src="assets/ui/lore-astrolabio.png" alt="">
+                    <h3 id="lore-title">O ASTROLÁBIO DE CHRONOS</h3>
+                    <button class="cw-iconbtn" onclick="document.getElementById('lore-dialog').close()" aria-label="Fechar">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                    </button>
+                </div>
+                <div class="cw-lore">
+                    <p>A mente humana é incapaz de absorver todo o poder do Éter de uma só vez sem enlouquecer. Por isso, os operativos utilizam o Astrolábio de Chronos: uma <span class="text-cyan-300">esfera armilar cósmica</span> e mecânica que mapeia a evolução das habilidades através de três constelações ancestrais.</p>
+                    <div class="row mt-2"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-1.png" alt="">
+                        <div><b class="text-cyan-300">Constelação I // Tecelão do Éter</b><span>Manipulação de anomalias dimensionais, raios crono-cinéticos e tempo de recarga acelerado.</span></div></div>
+                    <div class="row"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-2.png" alt="">
+                        <div><b class="text-amber-300">Constelação II // Bastião Cinético</b><span>Blindagem densa de titânio, regeneração de campo defletor e resistência a impactos monumentais.</span></div></div>
+                    <div class="row"><img class="w-11 h-11" src="assets/ui/emblema-constelacao-3.png" alt="">
+                        <div><b class="text-emerald-300">Constelação III // Lâmina Fantasma</b><span>Penetração de armadura por lâminas de obsidiana, precisão crítica e aceleração de esquiva (Bullet Time).</span></div></div>
+                    <p class="pt-2 border-t border-slate-800/80">Para evitar o colapso neural do operador, a árvore exige que os canais de energia estejam sempre conectados ao Núcleo Primordial (Core Zero), justificando na lore por que não é possível reembolsar um nó intermediário se ele deixar ramificações órfãs ativas.</p>
+                </div>
+
+                <!-- Quanto o texto do nó em foco cresce no idioma ativo; o layout aguenta até +35% -->
+                <div class="cw-l10n" title="Tamanho do nome e da descrição do nó em foco no idioma ativo, comparado ao PT-BR. O painel foi desenhado para aguentar até +35%.">
+                    <div class="cw-l10n-row">
+                        <span>Expansão de texto do nó em foco</span>
+                        <b id="inspector-l10n-pct">100% do PT-BR</b>
+                    </div>
+                    <div class="cw-l10n-track"><i id="inspector-l10n-bar"></i><u aria-hidden="true"></u></div>
+                </div>
+            </dialog>
 
         </main>
 
@@ -1404,13 +1467,13 @@
                 allocatedLabel: 'Alocados:',
                 inspectorHeader: 'INSPEÇÃO DE TALENTO ASTRAL',
                 refundNodeBtn: 'Reembolsar Nó',
-                stateLocked: '1. Bloqueado',
-                stateAvailable: '2. Disponível',
-                stateAcquired: '3. Adquirido',
-                stateMastered: '4. Masterizado ✦',
+                stateLocked: 'Bloqueado',
+                stateAvailable: 'Disponível',
+                stateAcquired: 'Adquirido',
+                stateMastered: 'Masterizado',
                 holdToAcquire: 'SEGURE P/ ADQUIRIR TALENTO',
                 holdToMaster: 'SEGURE P/ MASTERIZAR (NV. MAX)',
-                alreadyMastered: 'TALENTO MASTERIZADO ✦',
+                alreadyMastered: 'TALENTO MASTERIZADO',
                 lockedRouteBtn: 'BLOQUEADO (VER ROTA)',
                 expansionTag: '100% Base (PT-BR)'
             },
@@ -1419,13 +1482,13 @@
                 allocatedLabel: 'Allocated:',
                 inspectorHeader: 'ASTRAL TALENT INSPECTOR',
                 refundNodeBtn: 'Refund Node',
-                stateLocked: '1. Locked',
-                stateAvailable: '2. Available',
-                stateAcquired: '3. Acquired',
-                stateMastered: '4. Mastered ✦',
+                stateLocked: 'Locked',
+                stateAvailable: 'Available',
+                stateAcquired: 'Acquired',
+                stateMastered: 'Mastered',
                 holdToAcquire: 'HOLD TO ACQUIRE TALENT',
                 holdToMaster: 'HOLD TO MASTER (MAX RANK)',
-                alreadyMastered: 'TALENT MASTERED ✦',
+                alreadyMastered: 'TALENT MASTERED',
                 lockedRouteBtn: 'LOCKED (SEE PATH)',
                 expansionTag: '82% Compact (EN-US)'
             },
@@ -1434,13 +1497,13 @@
                 allocatedLabel: 'Zugewiesen:',
                 inspectorHeader: 'ASTRALBEGABUNGS-INSPEKTIONSMODUL',
                 refundNodeBtn: 'Knotenpunkt zurückerstatten',
-                stateLocked: '1. Gesperrt',
-                stateAvailable: '2. Verfügbar',
-                stateAcquired: '3. Erworben',
-                stateMastered: '4. Gemeistert ✦',
+                stateLocked: 'Gesperrt',
+                stateAvailable: 'Verfügbar',
+                stateAcquired: 'Erworben',
+                stateMastered: 'Gemeistert',
                 holdToAcquire: 'HALTEN: BEGABUNG FREISCHALTEN',
                 holdToMaster: 'HALTEN: MEISTERSCHAFTSVOLLENDUNG',
-                alreadyMastered: 'VOLLSTÄNDIG GEMEISTERT ✦',
+                alreadyMastered: 'VOLLSTÄNDIG GEMEISTERT',
                 lockedRouteBtn: 'VORAUSSETZUNGSPFAHL GESPERRT',
                 expansionTag: '136% Expansão Crítica! (DE-DE)'
             },
@@ -1449,13 +1512,13 @@
                 allocatedLabel: '習得済み:',
                 inspectorHeader: 'アストラル・タレント詳細解析',
                 refundNodeBtn: 'スキルポイントをリセット',
-                stateLocked: '1. 未解放ロック',
-                stateAvailable: '2. 習得可能',
-                stateAcquired: '3. 習得済み',
-                stateMastered: '4. 極意マスター ✦',
+                stateLocked: '未解放ロック',
+                stateAvailable: '習得可能',
+                stateAcquired: '習得済み',
+                stateMastered: '極意マスター',
                 holdToAcquire: '長押しでタレントを習得する',
                 holdToMaster: '長押しで極意マスタリー解放',
-                alreadyMastered: '極意マスター完了 ✦',
+                alreadyMastered: '極意マスター完了',
                 lockedRouteBtn: '前提ルート未解放',
                 expansionTag: '95% CJK Glifos Densos (JA-JP)'
             },
@@ -1464,13 +1527,13 @@
                 allocatedLabel: '[Älöçädös:]:',
                 inspectorHeader: '[!! ÏNSPËÇÃÖ DË TÄLËNTÖ ÄSTRÄL ÜMG !!]',
                 refundNodeBtn: '[!! Rëëmbölsär Nó Ätüäl !!]',
-                stateLocked: '[1. Blöqüëädö]',
-                stateAvailable: '[2. Dïspönívël]',
-                stateAcquired: '[3. Ädqüïrïdö]',
-                stateMastered: '[4. Mästërïzädö ✦]',
+                stateLocked: '[Blöqüëädö]',
+                stateAvailable: '[Dïspönívël]',
+                stateAcquired: '[Ädqüïrïdö]',
+                stateMastered: '[Mästërïzädö]',
                 holdToAcquire: '[!! SËGÜRË P/ ÄDQÜÏRÏR TÄLËNTÖ ___ !!]',
                 holdToMaster: '[!! SËGÜRË P/ MÄSTËRÏZÄR MÁX ___ !!]',
-                alreadyMastered: '[!! TÄLËNTÖ MÄSTËRÏZÄDÖ ✦ !!]',
+                alreadyMastered: '[!! TÄLËNTÖ MÄSTËRÏZÄDÖ !!]',
                 lockedRouteBtn: '[!! BLÖQÜËÄDÖ (RÖTÄ) !!]',
                 expansionTag: '138% QA Stress Padding (PSEUDO)'
             }
@@ -2467,7 +2530,7 @@
             // Update Top Points Counter
             const totalAllocated = SKILL_NODES.reduce((acc, n) => acc + (n.id === 'core_0' ? 0 : n.rank * n.cost), 0);
             document.getElementById('skill-points-counter').textContent = STATE.availablePoints;
-            document.getElementById('allocated-points-readout').textContent = `${totalAllocated} PTS`;
+            document.getElementById('allocated-points-readout').textContent = `${totalAllocated}`;
         }
 
         /*********************************************************************
@@ -2480,107 +2543,80 @@
             const loc = STATE.locale;
             const ui = UI_STRINGS[loc];
 
-            // 1. State Badge Styling
+            // 1. Estado do nó
             const stateBadge = document.getElementById('inspector-state-badge');
-            const stateConfig = {
-                locked: { label: ui.stateLocked, cls: 'bg-slate-900 text-slate-400 border-slate-700' },
-                available: { label: ui.stateAvailable, cls: 'bg-cyan-950 text-cyan-300 border-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.3)]' },
-                acquired: { label: ui.stateAcquired, cls: 'bg-blue-950 text-white border-blue-400' },
-                mastered: { label: ui.stateMastered, cls: 'bg-amber-950 text-amber-300 border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.4)]' }
-            }[state];
-            stateBadge.textContent = stateConfig.label;
-            stateBadge.className = `px-2.5 py-1 rounded text-[11px] font-mono-tech font-bold uppercase border ${stateConfig.cls}`;
+            stateBadge.textContent = { locked: ui.stateLocked, available: ui.stateAvailable, acquired: ui.stateAcquired, mastered: ui.stateMastered }[state];
+            stateBadge.dataset.state = state;
 
-            // 2. Node Card Content
-            const tierLabel = {
-                minor: 'NÓ MENOR // ATRIBUTO',
-                notable: 'NÓ NOTÁVEL // PASSIVA COMPOSTA',
-                keystone: 'KEYSTONE // TALENTO ÁPICE'
-            }[node.tier];
+            // 2. Card do nó: moldura, constelação, nome, ranks em losangos, descrição, maestria
+            const tierLabel = { minor: 'Nó menor', notable: 'Nó notável', keystone: 'Keystone' }[node.tier];
+            const branchLabel = { core: 'Núcleo Primordial', aether: 'Tecelão do Éter', bastion: 'Bastião Cinético', phantom: 'Lâmina Fantasma' }[node.branch];
+            const accent = state === 'mastered' ? '#FBBF24' : node.color;
+            const pips = Array.from({ length: node.maxRank }, (_, i) => `<i class="${i < node.rank ? 'on' : ''}"></i>`).join('');
+            const isMastered = state === 'mastered';
 
-            document.getElementById('inspector-node-card').innerHTML = `
-                <div class="flex items-start gap-3">
-                    <div class="cw-node-frame w-14 h-14 flex items-center justify-center shrink-0 relative overflow-hidden bg-[#070B14] rounded-lg"
-                         style="border: 1.5px solid ${state === 'mastered' ? '#FBBF24' : node.color}; box-shadow: inset 0 0 16px ${state === 'mastered' ? 'rgba(251,191,36,0.3)' : 'rgba(0,240,255,0.22)'}, 0 0 14px ${state === 'mastered' ? 'rgba(251,191,36,0.15)' : 'rgba(0,240,255,0.15)'};">
-                        <svg viewBox="-64 -64 128 128" class="w-9 h-9">
-                            <image href="assets/ui/icone-${ICON_FILES[node.icon] || 'faisca'}.svg" x="-64" y="-64" width="128" height="128" filter="url(#${tintFilterId(state === 'mastered' ? '#FBBF24' : node.color)})"/>
-                        </svg>
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center justify-between gap-1">
-                            <span class="text-[10px] font-mono-tech uppercase tracking-wider" style="color:${node.color}">${tierLabel}</span>
-                            <span class="text-[11px] font-mono-tech font-bold text-slate-300">RANK ${node.rank}/${node.maxRank}</span>
-                        </div>
-                        <h3 class="font-display font-bold text-white scale-text-lg break-words mt-0.5">${node.names[loc]}</h3>
-                    </div>
+            const card = document.getElementById('inspector-node-card');
+            card.style.setProperty('--c', accent);
+            card.innerHTML = `
+                <div class="cw-insp-icon">
+                    <svg viewBox="-64 -64 128 128" aria-hidden="true">
+                        <image href="assets/ui/icone-${ICON_FILES[node.icon] || 'faisca'}.svg" x="-64" y="-64" width="128" height="128" filter="url(#${tintFilterId(accent)})"/>
+                    </svg>
                 </div>
-
-                <p class="scale-text-sm text-slate-300 leading-relaxed break-words border-t border-slate-800/80 pt-2.5">
-                    ${node.descs[loc]}
-                </p>
-
-                <div class="p-2.5 rounded-lg border ${state === 'mastered' ? 'bg-amber-500/15 border-amber-400/60 text-amber-200' : 'bg-slate-900/70 border-slate-800 text-slate-400'} scale-text-xs break-words">
-                    <div class="font-mono-tech text-[10px] uppercase font-bold ${state === 'mastered' ? 'text-amber-300' : 'text-slate-500'}">
-                        ${state === 'mastered' ? '✦ BÔNUS DE MAESTRIA ATIVO:' : '🔒 BÔNUS DE MAESTRIA (RANK MÁXIMO):'}
-                    </div>
-                    <div class="mt-0.5">${node.masteryBonus[loc]}</div>
+                <p class="cw-insp-tier">${branchLabel ? branchLabel + ' · ' : ''}${tierLabel}</p>
+                <h3 class="cw-insp-name">${node.names[loc]}</h3>
+                <div class="cw-pips" role="img" aria-label="Rank ${node.rank} de ${node.maxRank}">${pips}</div>
+                <div class="cw-divider" aria-hidden="true"></div>
+                <p class="cw-insp-desc">${node.descs[loc]}</p>
+                <div class="cw-mastery${isMastered ? ' is-on' : ''}" title="${isMastered ? 'Bônus de maestria ativo' : 'Bônus de maestria: libera no rank máximo'}">
+                    <span class="cw-ico ${isMastered ? 'cw-ico-star' : 'cw-ico-lock'}" role="img" aria-label="${isMastered ? 'Maestria ativa' : 'Maestria, libera no rank máximo'}"></span>
+                    <div>${node.masteryBonus[loc]}</div>
                 </div>
             `;
 
-            // 3. Ranks & Route Requirements Breakdown
+            // 3. Rota até o nó quando ele está bloqueado (o custo já aparece no botão)
             const route = computeShortestUnlockPath(node.id);
             const ranksBox = document.getElementById('inspector-ranks-box');
+            const coin = '<img src="assets/ui/moeda-pontos.png" alt="">';
             if (state === 'locked' && route.length > 1) {
+                const steps = route.length - 1;
                 const neededPts = route.slice(1).reduce((s, id) => s + getNodeById(id).cost, 0);
                 ranksBox.innerHTML = `
-                    <div class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/50 text-xs space-y-1">
-                        <div class="font-mono-tech font-bold text-amber-300">⟡ ROTA AUTOMÁTICA DE DESBLOQUEIO:</div>
-                        <div class="text-slate-300">Este nó está bloqueado. Alocar <strong>${route.length - 1} nós</strong> conectados (${neededPts} PTS) na linha tracejada amarela para habilitar.</div>
+                    <div class="cw-route" title="Ative ${steps} ${steps === 1 ? 'nó conectado' : 'nós conectados'} pela trilha tracejada dourada (${neededPts} ${neededPts === 1 ? 'ponto' : 'pontos'} no total)">
+                        <span class="cw-kicker">Rota</span>
+                        <b>${steps}</b> ${steps === 1 ? 'nó' : 'nós'} <i aria-hidden="true"></i> <b>${coin}${neededPts}</b>
                     </div>
                 `;
             } else {
-                ranksBox.innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 text-xs font-mono-tech">
-                        <div class="p-2.5 rounded-lg bg-slate-950/90 border border-slate-800">
-                            <div class="text-[10px] text-slate-400">CUSTO DE ALOCAÇÃO</div>
-                            <div class="text-sm font-bold text-amber-300 mt-0.5">${node.cost} Ponto(s)</div>
-                        </div>
-                        <div class="p-2.5 rounded-lg bg-slate-950/90 border border-slate-800">
-                            <div class="text-[10px] text-slate-400">TOKEN ENGINE ID</div>
-                            <div class="text-sm font-bold text-cyan-300 mt-0.5">NODE_${node.id.toUpperCase()}</div>
-                        </div>
-                    </div>
-                `;
+                ranksBox.innerHTML = '';
             }
 
-            // 4. L10n String Expansion Telemetry Bar
+            // 4. Expansão de texto do idioma ativo contra o PT-BR (escala até 150%, marca em 135%)
             const ptLen = node.names.pt.length + node.descs.pt.length;
             const curLen = node.names[loc].length + node.descs[loc].length;
             const ratioPct = Math.round((curLen / ptLen) * 100);
-            document.getElementById('inspector-l10n-pct').textContent = `${ratioPct}% vs Base (${loc.toUpperCase()})`;
-            document.getElementById('inspector-l10n-bar').style.width = `${Math.min(100, Math.round(ratioPct * 0.65))}%`;
+            document.getElementById('inspector-l10n-pct').textContent = loc === 'pt' ? '100% do PT-BR' : `${ratioPct}% do PT-BR`;
+            document.getElementById('inspector-l10n-bar').style.width = `${Math.min(100, ratioPct / 1.5)}%`;
+            document.querySelector('.cw-l10n').classList.toggle('is-over', ratioPct > 135);
 
-            // 5. Update Action Button Label & State
+            // 5. Botão de segurar: texto, custo e estado
             const btnLabel = document.getElementById('btn-allocate-label');
             const btnCost = document.getElementById('btn-allocate-cost');
             const btnAlloc = document.getElementById('btn-hold-allocate');
+            btnAlloc.dataset.state = state;
 
             if (state === 'mastered') {
                 btnLabel.textContent = ui.alreadyMastered;
-                btnCost.textContent = 'MAX';
-                btnAlloc.className = 'relative w-full py-3 px-4 rounded-xl font-display font-bold uppercase tracking-wider text-sm overflow-hidden border border-amber-400 bg-amber-500/25 text-amber-200 shadow-lg flex items-center justify-between';
+                btnCost.innerHTML = '<span class="cw-ico cw-ico-star" aria-hidden="true"></span>';
             } else if (state === 'acquired') {
                 btnLabel.textContent = ui.holdToMaster;
-                btnCost.textContent = `${node.cost} PT`;
-                btnAlloc.className = 'relative w-full py-3 px-4 rounded-xl font-display font-bold uppercase tracking-wider text-sm overflow-hidden border border-cyan-400 bg-cyan-500/20 hover:bg-cyan-500/30 text-white shadow-lg flex items-center justify-between';
+                btnCost.innerHTML = `${coin}${node.cost}`;
             } else if (state === 'available') {
                 btnLabel.textContent = ui.holdToAcquire;
-                btnCost.textContent = `${node.cost} PT`;
-                btnAlloc.className = 'relative w-full py-3 px-4 rounded-xl font-display font-bold uppercase tracking-wider text-sm overflow-hidden border border-amber-400/80 bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 shadow-lg flex items-center justify-between';
+                btnCost.innerHTML = `${coin}${node.cost}`;
             } else {
                 btnLabel.textContent = ui.lockedRouteBtn;
-                btnCost.textContent = '🔒';
-                btnAlloc.className = 'relative w-full py-3 px-4 rounded-xl font-display font-bold uppercase tracking-wider text-sm overflow-hidden border border-slate-700 bg-slate-900 text-slate-400 flex items-center justify-between';
+                btnCost.innerHTML = '<span class="cw-ico cw-ico-lock" aria-hidden="true"></span>';
             }
         }
 
@@ -2792,8 +2828,14 @@
         function toggleInstantAllocation() {
             STATE.instantAllocate = !STATE.instantAllocate;
             const btn = document.getElementById('btn-toggle-instant');
-            btn.textContent = STATE.instantAllocate ? 'Modo: Clique Rápido' : 'Modo: Hold 0.4s';
+            btn.setAttribute('aria-pressed', STATE.instantAllocate);
+            btn.title = STATE.instantAllocate ? 'Confirmação: clique rápido. Clique para voltar a segurar 0,4 s' : 'Confirmação: segurar 0,4 s. Clique para usar clique rápido';
             showToast(STATE.instantAllocate ? 'Alocação por Clique Rápido ativada' : 'Hold-to-Confirm (0.4s) ativado');
+        }
+
+        function openLoreDialog() {
+            renderNodeInspector();
+            document.getElementById('lore-dialog').showModal();
         }
 
         function addBonusSkillPoints() {

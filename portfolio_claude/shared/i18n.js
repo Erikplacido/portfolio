@@ -462,6 +462,21 @@
         fr: 'Ligne d’extrait de compte documentée jusqu’au code : anatomie, états, tokens et handoff assisté par IA.'
       }
     },
+    'editora-terceiro-nome': {
+      title: { pt: 'Editora Terceiro Nome', en: 'Terceiro Nome Publishing', es: 'Editorial Terceiro Nome', fr: 'Éditions Terceiro Nome' },
+      tags: {
+        pt: ['Direção de arte', 'UI', 'Desenvolvimento'],
+        en: ['Art direction', 'UI', 'Web development'],
+        es: ['Dirección de arte', 'UI', 'Desarrollo web'],
+        fr: ['Direction artistique', 'UI', 'Développement web']
+      },
+      blurb: {
+        pt: 'Catálogo de 178 livros tirado do Adobe Muse: direção editorial, busca sem acento e migração auditada, sem inventar dados.',
+        en: 'A 178-book catalog rescued from Adobe Muse: editorial art direction, accent-insensitive search and an audited migration that invents no data.',
+        es: 'Catálogo de 178 libros rescatado de Adobe Muse: dirección editorial, búsqueda sin tildes y migración auditada, sin inventar datos.',
+        fr: 'Catalogue de 178 livres sorti d’Adobe Muse : direction éditoriale, recherche sans accents et migration auditée, sans inventer de données.'
+      }
+    },
     'itaiquara-untaforma': {
       title: { pt: 'Itaiquara · Untaforma', en: 'Itaiquara · Untaforma', es: 'Itaiquara · Untaforma', fr: 'Itaiquara · Untaforma' },
       tags: {
@@ -492,6 +507,21 @@
         fr: 'Jeu de rythme guitare en pixel art pour salon geek : obtenir le rang A ou S débloque un cadeau sur le stand.'
       }
     },
+    'star-marshal': {
+      title: { pt: 'Star Marshal — A Lei no Espaço', en: 'Star Marshal — Law in Space', es: 'Star Marshal — Ley Espacial', fr: 'Star Marshal — La Loi Spatiale' },
+      tags: {
+        pt: ['Game UI/UX', 'HUD contextual', 'UI diegética', 'Protótipo 3D jogável'],
+        en: ['Game UI/UX', 'Contextual HUD', 'Diegetic UI', 'Playable 3D prototype'],
+        es: ['Game UI/UX', 'HUD contextual', 'UI diegética', 'Prototipo 3D jugable'],
+        fr: ['Game UI/UX', 'HUD contextuel', 'UI diégétique', 'Prototype 3D jouable']
+      },
+      blurb: {
+        pt: 'HUD que muda com o contexto, glyphs automáticos PS/Xbox/teclado e roda com bullet time num protótipo 3D jogável.',
+        en: 'A HUD that adapts to context, automatic PS/Xbox/keyboard glyphs and a bullet-time wheel in a playable 3D prototype.',
+        es: 'HUD que cambia con el contexto, glyphs automáticos PS/Xbox/teclado y rueda con bullet time en un prototipo 3D jugable.',
+        fr: 'HUD qui s’adapte au contexte, glyphes PS/Xbox/clavier automatiques et roue en bullet time dans un prototype 3D jouable.'
+      }
+    },
     'aether-protocol': {
       title: { pt: 'Star Marshal — A Lei no Espaço', en: 'Star Marshal — Law in Space', es: 'Star Marshal — Ley Espacial', fr: 'Star Marshal — La Loi Spatiale' },
       tags: {
@@ -507,7 +537,7 @@
         fr: 'HUD qui s’adapte au contexte, glyphes PS/Xbox/clavier automatiques et roue en bullet time dans un prototype 3D jouable.'
       }
     },
-    'sanctum-armory': {
+    'musanga': {
       title: { pt: 'Musanga · Inventário & Loot', en: 'Musanga · Inventory & Loot', es: 'Musanga · Inventario y Loot', fr: 'Musanga · Inventaire & Butin' },
       tags: {
         pt: ['Game UI/UX', 'Inventário', 'Tooltip comparativo', 'Acessibilidade'],
