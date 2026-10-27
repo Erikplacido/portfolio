@@ -119,6 +119,11 @@
     }
   };
   frame.addEventListener('load', observeFrame);
+  /* Tela cheia no celular (moldura): a cena ocupa a altura que sobra embaixo da barra. */
+  let fit = false;
+  const sendFit = () => frame.contentWindow?.postMessage({ type: 'marshal-fit', fit }, targetOrigin);
+  frame.parentElement.addEventListener('pf-immersive', e => { fit = e.detail.open; sendFit(); });
+  frame.addEventListener('load', sendFit);
   observeFrame();
   addEventListener('message', e => {
     if (e.source !== frame.contentWindow || e.origin !== location.origin || e.data?.type !== 'marshal-size') return;

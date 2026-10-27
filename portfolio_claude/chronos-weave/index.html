@@ -319,6 +319,8 @@
   transition: all .2s ease;
   white-space: nowrap;
 }
+/* no celular, o botão de tela cheia da moldura substitui a aba nova */
+@media(max-width:900px) { .sim-open-btn { display: none; } }
 .sim-open-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
@@ -643,7 +645,7 @@
     </div>
 
     <figure class="rv sim-wide">
-      <div class="sim-embed-stage">
+      <div class="sim-embed-stage" data-immersive="any">
         <iframe src="simulator.html" title="Chronos Weave Skill Tree Engine &amp; Design System Suite"></iframe>
       </div>
       <figcaption>

@@ -233,6 +233,12 @@
     'turn.step4_title': { pt: 'Mesa & Resolução', en: 'Board & Resolution', es: 'Mesa y Resolución', fr: 'Plateau & Résolution' },
     'turn.step4_sub': { pt: 'Gasto e Contenção', en: 'Cost & Containment', es: 'Gasto y Contención', fr: 'Dépense et Confinement' },
     'turn.loop': { pt: 'Ciclo Contínuo ↻', en: 'Continuous Loop ↻', es: 'Ciclo Continuo ↻', fr: 'Boucle Continue ↻' },
+    'home.scroll_cue': {
+      pt: 'Rolar para ver todos os cases',
+      en: 'Scroll to see all cases',
+      es: 'Desplazar para ver todos los casos',
+      fr: 'Faire défiler pour voir tous les projets'
+    },
     'home.video.pause': {
       pt: 'Pausar vídeo',
       en: 'Pause video',
@@ -244,6 +250,66 @@
       en: 'Play video',
       es: 'Reproducir video',
       fr: 'Lire la vidéo'
+    },
+    'cv.close': {
+      pt: 'Fechar currículo',
+      en: 'Close resume',
+      es: 'Cerrar currículum',
+      fr: 'Fermer le CV'
+    },
+    'cv.full_page': {
+      pt: 'Página cheia',
+      en: 'Full page',
+      es: 'Página completa',
+      fr: 'Plein écran'
+    },
+    'cv.tabletop_hub': {
+      pt: 'Vitrine Tabletop UI/UX',
+      en: 'Tabletop UI/UX Showcase',
+      es: 'Vitrina Tabletop UI/UX',
+      fr: 'Vitrine Tabletop UI/UX'
+    },
+    'cv.track_label': {
+      pt: 'Selecione o foco de atuação (Trilha Profissional):',
+      en: 'Select focus area (Career Track):',
+      es: 'Seleccione enfoque (Ruta Profesional):',
+      fr: 'Sélectionnez votre profil (Parcours) :'
+    },
+    'cv.track_all': {
+      pt: 'Visão Geral Completa',
+      en: 'Complete Overview',
+      es: 'Visión General Completa',
+      fr: 'Vue d’ensemble'
+    },
+    'cv.track_uiux': {
+      pt: 'UI / UX & AX (Fintech / Mobile)',
+      en: 'UI / UX & AX (Fintech / Mobile)',
+      es: 'UI / UX & AX (Fintech / Mobile)',
+      fr: 'UI / UX & AX (Fintech / Mobile)'
+    },
+    'cv.track_branding': {
+      pt: 'Direção de Arte & Branding',
+      en: 'Art Direction & Branding',
+      es: 'Dirección de Arte & Branding',
+      fr: 'Direction Artistique & Branding'
+    },
+    'cv.track_audiovisual': {
+      pt: 'Audiovisual & Cenografia',
+      en: 'Audiovisual & Scenography',
+      es: 'Audiovisual y Escenografía',
+      fr: 'Audiovisuel & Scénographie'
+    },
+    'cv.track_editorial': {
+      pt: 'Editorial, Embalagens & Games',
+      en: 'Editorial, Packaging & Games',
+      es: 'Editorial, Empaques y Games',
+      fr: 'Édition, Packaging & Jeux'
+    },
+    'cv.exp_heading': {
+      pt: 'Experiência Profissional & Histórico Completo',
+      en: 'Professional Experience & History',
+      es: 'Experiencia Profesional e Historial',
+      fr: 'Expérience Professionnelle & Historique'
     },
 
     // Groups on Home
@@ -749,6 +815,16 @@
     registerCase: registerCase,
     applyCase: applyCase
   };
+
+  // Delegated click handler for language picker buttons across the entire document
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.pf-lang-btn');
+    if (!btn) return;
+    var lang = btn.getAttribute('data-lang');
+    if (lang && LANGS.indexOf(lang) > -1) {
+      setLang(lang);
+    }
+  });
 
   // Run on DOM ready
   if (document.readyState === 'loading') {

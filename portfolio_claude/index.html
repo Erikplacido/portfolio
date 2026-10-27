@@ -39,7 +39,7 @@
   }
 
   /* stage */
-  .home-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,4vh,36px);padding:8px var(--pf-gut) 24px;text-align:center}
+  .home-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 72px);min-height:calc(100dvh - 72px);box-sizing:border-box;gap:clamp(16px,3.5vh,36px);padding:8px var(--pf-gut) 24px;text-align:center}
 
   /* logo: the video only shows through the mask */
   .home-logo{position:relative;width:min(100%,1040px,calc(44vh * 2.1954));width:min(100%,1040px,calc(44svh * 2.1954));aspect-ratio:2000/911;margin:0;animation:home-in 1.2s var(--pf-ease) both}
@@ -791,10 +791,10 @@
           <i class="fa-brands fa-behance"></i> Behance
         </a>
         <a href="curriculo.html" class="modal-link-pill" title="Abrir página dedicada">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Página cheia
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> <span data-i18n="cv.full_page">Página cheia</span>
         </a>
         <a href="tabletop.html" class="modal-link-pill" style="border-color:#FDE68A; background:#FEF3C7; color:#92400E; font-weight:700;">
-          <i class="fa-solid fa-dice-d20"></i> Vitrine Tabletop UI/UX
+          <i class="fa-solid fa-dice-d20"></i> <span data-i18n="cv.tabletop_hub">Vitrine Tabletop UI/UX</span>
         </a>
       </div>
     </div>
@@ -802,23 +802,23 @@
     <!-- Segmented Track Control -->
     <div class="modal-tracks-box">
       <div class="modal-tracks-label">
-        <i class="fa-solid fa-sliders"></i> Selecione o foco de atuação (Trilha Profissional):
+        <i class="fa-solid fa-sliders"></i> <span data-i18n="cv.track_label">Selecione o foco de atuação (Trilha Profissional):</span>
       </div>
       <div class="modal-tracks-pills" role="tablist">
         <button class="modal-track-btn active" data-track="all" role="tab" aria-selected="true">
-          <i class="fa-solid fa-border-all"></i> Visão Geral Completa
+          <i class="fa-solid fa-border-all"></i> <span data-i18n="cv.track_all">Visão Geral Completa</span>
         </button>
         <button class="modal-track-btn" data-track="ui-ux" role="tab" aria-selected="false">
-          <i class="fa-solid fa-mobile-screen-button"></i> UI / UX & AX (Fintech / Mobile)
+          <i class="fa-solid fa-mobile-screen-button"></i> <span data-i18n="cv.track_uiux">UI / UX & AX (Fintech / Mobile)</span>
         </button>
         <button class="modal-track-btn" data-track="branding" role="tab" aria-selected="false">
-          <i class="fa-solid fa-palette"></i> Direção de Arte & Branding
+          <i class="fa-solid fa-palette"></i> <span data-i18n="cv.track_branding">Direção de Arte & Branding</span>
         </button>
         <button class="modal-track-btn" data-track="audiovisual" role="tab" aria-selected="false">
-          <i class="fa-solid fa-clapperboard"></i> Audiovisual & Cenografia
+          <i class="fa-solid fa-clapperboard"></i> <span data-i18n="cv.track_audiovisual">Audiovisual & Cenografia</span>
         </button>
         <button class="modal-track-btn" data-track="editorial" role="tab" aria-selected="false">
-          <i class="fa-solid fa-book-open"></i> Editorial, Embalagens & Games
+          <i class="fa-solid fa-book-open"></i> <span data-i18n="cv.track_editorial">Editorial, Embalagens & Games</span>
         </button>
       </div>
     </div>
@@ -842,7 +842,7 @@
 
     <!-- Experience Section (15 Cards) -->
     <div class="modal-cv-heading">
-      <i class="fa-solid fa-briefcase"></i> Experiência Profissional & Histórico Completo
+      <i class="fa-solid fa-briefcase"></i> <span data-i18n="cv.exp_heading">Experiência Profissional & Histórico Completo</span>
     </div>
 
     <div class="modal-exp-list">
@@ -1189,6 +1189,7 @@
 
 <script src="api/site/config"></script>
 <script src="shared/cases.js"></script>
+<script src="shared/i18n.js"></script>
 <script src="shared/frame.js"></script>
 <script src="shared/segment.js?v=4"></script>
 <script>
@@ -1199,34 +1200,57 @@
     if (!row) return;
     var esc = function(t){ return String(t).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]}) };
 
-    /* Em manutenção (admin): todos os segmentos aparecem, apagados e sem link. */
-    if (window.PORTFOLIO_MAINTENANCE) {
-      row.innerHTML = groups.map(function(g){
-        return '<span class="home-seg-btn is-off" aria-disabled="true">' +
+    var GROUP_NAMES = {
+      'uxui': { pt: 'UX/UI', en: 'UX/UI', es: 'UX/UI', fr: 'UX/UI' },
+      'tabletop': { pt: 'Tabletop', en: 'Tabletop', es: 'Tabletop', fr: 'Tabletop' },
+      'games': { pt: 'Games Digitais', en: 'Digital Games', es: 'Juegos Digitales', fr: 'Jeux Vidéo' },
+      'design-grafico': { pt: 'Design Gráfico', en: 'Graphic Design', es: 'Diseño Gráfico', fr: 'Design Graphique' },
+      'audiovisual': { pt: 'Áudio Visual', en: 'Audiovisual', es: 'Audiovisual', fr: 'Audiovisuel' }
+    };
+
+    function renderSegRow(lang){
+      lang = lang || (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.getLang ? window.PORTFOLIO_I18N.getLang() : 'pt');
+
+      /* Em manutenção (admin): todos os segmentos aparecem, apagados e sem link. */
+      if (window.PORTFOLIO_MAINTENANCE) {
+        row.innerHTML = groups.map(function(g){
+          var name = (GROUP_NAMES[g.id] && GROUP_NAMES[g.id][lang]) || g.label;
+          return '<span class="home-seg-btn is-off" aria-disabled="true">' +
+            '<span class="home-seg-ic" style="--c:'+g.color+'" aria-hidden="true"><i class="fa-solid '+esc(g.icon)+'"></i></span>' +
+            '<span class="home-seg-name">'+esc(name)+'</span>' +
+            '<span class="home-seg-count" data-i18n="home.seg_soon">em breve</span>' +
+          '</span>';
+        }).join('');
+        var note = document.querySelector('.home-maint');
+        if (!note) {
+          note = document.createElement('p');
+          note.className = 'home-maint';
+          note.setAttribute('data-i18n', 'home.maintenance');
+          row.parentNode.insertBefore(note, row);
+        }
+        note.textContent = (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.t) ? window.PORTFOLIO_I18N.t('home.maintenance', lang) : 'O portfólio está em manutenção. Os cases voltam em breve. Enquanto isso, o currículo e o contato continuam aqui.';
+        var cue = document.getElementById('home-scroll-cue');
+        if (cue) cue.hidden = true;
+        return;
+      }
+
+      var filtered = groups.filter(function(g){ return cases.some(function(c){ return c.group===g.id }) });
+      row.innerHTML = filtered.map(function(g){
+        var n = cases.filter(function(c){ return c.group===g.id }).length;
+        var name = (GROUP_NAMES[g.id] && GROUP_NAMES[g.id][lang]) || g.label;
+        var countText = n + ' ' + (n > 1 ? (lang === 'es' ? 'casos' : (lang === 'fr' ? 'projets' : 'cases')) : (lang === 'es' ? 'caso' : (lang === 'fr' ? 'projet' : 'case')));
+        return '<a class="home-seg-btn" href="segmentos/'+g.id+'.html">' +
           '<span class="home-seg-ic" style="--c:'+g.color+'" aria-hidden="true"><i class="fa-solid '+esc(g.icon)+'"></i></span>' +
-          '<span class="home-seg-name">'+esc(g.label)+'</span>' +
-          '<span class="home-seg-count" data-i18n="home.seg_soon">em breve</span>' +
-        '</span>';
+          '<span class="home-seg-name">'+esc(name)+'</span>' +
+          '<span class="home-seg-count">'+countText+'</span>' +
+        '</a>';
       }).join('');
-      var note = document.createElement('p');
-      note.className = 'home-maint';
-      note.setAttribute('data-i18n', 'home.maintenance');
-      note.textContent = 'O portfólio está em manutenção. Os cases voltam em breve. Enquanto isso, o currículo e o contato continuam aqui.';
-      row.parentNode.insertBefore(note, row);
-      var cue = document.getElementById('home-scroll-cue');
-      if (cue) cue.hidden = true;
-      return;
     }
 
-    groups = groups.filter(function(g){ return cases.some(function(c){ return c.group===g.id }) });
-    row.innerHTML = groups.map(function(g){
-      var n = cases.filter(function(c){ return c.group===g.id }).length;
-      return '<a class="home-seg-btn" href="segmentos/'+g.id+'.html">' +
-        '<span class="home-seg-ic" style="--c:'+g.color+'" aria-hidden="true"><i class="fa-solid '+esc(g.icon)+'"></i></span>' +
-        '<span class="home-seg-name">'+esc(g.label)+'</span>' +
-        '<span class="home-seg-count">'+n+(n>1?' cases':' case')+'</span>' +
-      '</a>';
-    }).join('');
+    renderSegRow();
+    window.addEventListener('portfolio-lang-change', function(e){
+      renderSegRow(e.detail ? e.detail.lang : null);
+    });
   })();
 
   /* Botão de seta: rola pra sequência de TODOS os cases (shared/segment.js) */
@@ -1237,6 +1261,15 @@
     cue.addEventListener('click', function(){
       var first = track.querySelector('[data-seg-case]');
       if (first) window.scrollTo({ top: scrollY + first.getBoundingClientRect().top, behavior:'smooth' });
+    });
+    function updateCue(lang){
+      lang = lang || (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.getLang ? window.PORTFOLIO_I18N.getLang() : 'pt');
+      var label = (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.t) ? window.PORTFOLIO_I18N.t('home.scroll_cue', lang) : 'Rolar para ver todos os cases';
+      cue.setAttribute('aria-label', label);
+    }
+    updateCue();
+    window.addEventListener('portfolio-lang-change', function(e){
+      updateCue(e.detail ? e.detail.lang : null);
     });
   })();
 
@@ -1254,9 +1287,12 @@
     function render(){
       var paused = video.paused;
       btn.querySelector('i').className = 'fa-solid ' + (paused ? 'fa-play' : 'fa-pause');
-      btn.querySelector('span').textContent = paused ? 'Reproduzir vídeo' : 'Pausar vídeo';
+      var key = paused ? 'home.video.play' : 'home.video.pause';
+      var text = (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.t) ? window.PORTFOLIO_I18N.t(key) : (paused ? 'Reproduzir vídeo' : 'Pausar vídeo');
+      btn.querySelector('span').textContent = text;
       btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
     }
+    window.addEventListener('portfolio-lang-change', render);
     function sync(){
       if(!userPaused && visible && !document.hidden){
         [video, cueVideo].forEach(function(v){

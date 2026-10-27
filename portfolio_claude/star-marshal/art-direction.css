@@ -226,6 +226,18 @@ body { height:auto; min-height:100dvh; overflow-x:hidden; overflow-y:auto; align
 #control-dock { max-width:none!important; }
 #game-viewport, body.embedded #game-viewport { flex:none; width:100%!important; max-width:none; height:800px!important; aspect-ratio:auto; }
 
+/* Tela cheia no celular (body.fit, pedido pela página do case): a cena ocupa o que sobra embaixo da barra, numa linha só. */
+body.embedded.fit { height:100dvh; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+body.embedded.fit #game-viewport { flex:1 1 auto; height:auto!important; min-height:0; }
+body.embedded.fit #control-dock { flex-wrap:nowrap; overflow-x:auto; gap:4px!important; padding:4px 8px!important; scrollbar-width:none; }
+body.embedded.fit #control-dock > * { flex:none; }
+body.embedded.fit #control-dock .dock-btn { padding:6px 8px; font-size:10px; }
+body.embedded.fit #state-caption, body.embedded.fit #time-scale { display:none; }
+@media(max-height:520px) {
+ body.embedded.fit .hud-card { transform:scale(.6); transform-origin:bottom left; }
+ body.embedded.fit #weapon-hud-panel { transform-origin:bottom right; }
+}
+
 /* Alinhamento com a coluna do case: 1120 px, incluindo suas margens internas. */
 #control-dock{padding-inline:max(clamp(20px,5vw,48px),calc((100% - 1120px)/2 + clamp(20px,5vw,48px)))!important}
 

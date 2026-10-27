@@ -86,6 +86,10 @@
 .lphone::before{content:"";position:absolute;right:20%;top:-1.1%;width:9%;height:1.6%;border-radius:4px 4px 0 0;background:#2a2a2a}
 .lscr{container-type:size;width:100%;height:100%;border-radius:5.6% / 12.5%;overflow:hidden;position:relative;background:#000;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 .lscr .notch{position:absolute;left:0;top:50%;width:4.5cqh;height:30cqh;transform:translateY(-50%);background:#050505;border-radius:0 3cqh 3cqh 0;z-index:30}
+/* em tela cheia o celular de verdade é a moldura: sai o aparelho desenhado */
+.lphone.is-immersed{padding:0;background:#000}
+.lphone.is-immersed::before,.lphone.is-immersed .notch{display:none}
+.lphone.is-immersed .lscr{border-radius:0}
 
 /* ===== 01 start screen ===== */
 .start{position:absolute;inset:0;background:linear-gradient(180deg,#FF6A00 0%,#FF9800 45%,#FFC400 80%,#FFE04D 100%)}
@@ -479,7 +483,7 @@
       <p class="lede">HUD de arcade: retratos com moldura, placas de nome inclinadas, barras de vida segmentadas e o selo K.O. com o punho no centro. Os controles na tela foram pensados para o polegar.</p>
     </div>
     <figure class="rv">
-      <div class="lphone">
+      <div class="lphone" data-immersive="landscape" data-immersive-ratio="2.17">
         <div class="lscr" id="fightScr" aria-label="Demonstração da luta. Use os botões Chute e Soco, ou as teclas K e J">
           <div class="fight" id="fight">
             <i class="shadow" style="left:calc(50% - 30cqh)"></i><i class="shadow" style="left:calc(50% + 2cqh)"></i>

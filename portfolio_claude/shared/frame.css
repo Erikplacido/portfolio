@@ -549,3 +549,35 @@ figcaption b{color:var(--pf-ink)}
 /* Aviso do admin: aparece só pra quem vê o site em modo de edição durante a manutenção */
 .pf-admin-badge{position:fixed;left:16px;bottom:16px;z-index:60;padding:8px 14px;border-radius:999px;background:#1d1d1f;color:#fff;font:600 12px/1.3 var(--pf-sans);text-decoration:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
 .pf-admin-badge::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:#F5A524;vertical-align:1px}
+
+/* Tela cheia no celular (frame.js): todo [data-immersive] ganha um botão que abre a
+   experiência ocupando a tela, com a orientação e a proporção que o case pedir.
+   Retrato: barra no topo. Paisagem: trilho à esquerda, para não roubar altura. */
+.pf-imm-open{display:none}
+@media (max-width:900px),(pointer:coarse) and (max-height:600px){
+  .pf-imm-open{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:440px;min-height:48px;margin:0 auto 14px;padding:0 20px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:var(--pf-night);color:#fff;font:600 15px var(--pf-sans);box-shadow:0 12px 26px -16px rgba(0,0,0,.7)}
+}
+.pf-imm-open svg,.pf-imm-close svg{flex:none;width:18px;height:18px}
+html.pf-imm-active,html.pf-imm-active body{overflow:hidden;scroll-behavior:auto}
+/* ancestrais do palco aberto: nada que prenda o position:fixed ou o esconda atrás da página */
+.pf-imm-anc{transform:none!important;filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;contain:none!important;container-type:normal!important;content-visibility:visible!important;z-index:auto!important;opacity:1!important;isolation:auto!important;mix-blend-mode:normal!important;will-change:auto!important;perspective:none!important;clip-path:none!important;-webkit-mask:none!important;mask:none!important;animation:none!important;transition:none!important}
+.is-immersed{position:fixed!important;z-index:9991!important;margin:0!important;max-width:none!important;max-height:none!important;min-width:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:none!important;overscroll-behavior:contain}
+.is-immersed > iframe{width:100%!important;height:100%!important}
+.pf-imm-back{position:fixed;inset:0;z-index:9990;background:#000}
+.pf-imm-area{position:fixed;top:calc(60px + env(safe-area-inset-top));right:env(safe-area-inset-right);bottom:env(safe-area-inset-bottom);left:env(safe-area-inset-left);visibility:hidden;pointer-events:none}
+.pf-imm-bar{position:fixed;z-index:9992;top:0;left:0;right:0;height:calc(60px + env(safe-area-inset-top));padding:env(safe-area-inset-top) max(10px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;gap:12px;background:#000;color:#fff}
+.pf-imm-title{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font:600 12px/1 var(--pf-sans);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.pf-imm-close{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;min-width:44px;padding:0 16px;border:1px solid rgba(255,255,255,.32);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font:600 14px var(--pf-sans)}
+.pf-imm-close:active{background:rgba(255,255,255,.22)}
+.pf-imm-hint{position:fixed;z-index:9992;width:min(240px,80vw);display:none;flex-direction:column;align-items:center;gap:12px;text-align:center;color:rgba(255,255,255,.72);font:500 14px/1.4 var(--pf-sans);transform:translate(-50%,-50%);pointer-events:none}
+.pf-imm-hint.on{display:flex}
+.pf-imm-hint svg{width:44px;height:44px;color:#fff;animation:pf-imm-turn 2.8s var(--pf-ease) infinite}
+@keyframes pf-imm-turn{0%,25%{transform:rotate(0)}55%,80%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+@media (orientation:landscape){
+  .pf-imm-bar{right:auto;bottom:0;width:calc(60px + env(safe-area-inset-left));height:auto;padding:max(10px,env(safe-area-inset-top)) 0 0 env(safe-area-inset-left);flex-direction:column;justify-content:flex-start}
+  .pf-imm-title{display:none}
+  .pf-imm-close{width:44px;padding:0}
+  .pf-imm-close span{display:none}
+  .pf-imm-area{top:env(safe-area-inset-top);left:calc(60px + env(safe-area-inset-left))}
+}
+@media(prefers-reduced-motion:reduce){.pf-imm-hint svg{animation:none;transform:rotate(-90deg)}}

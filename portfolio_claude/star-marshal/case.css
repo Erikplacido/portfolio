@@ -137,6 +137,8 @@ section[id]{scroll-margin-top:80px}
 .sm-launch-top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 22px;border-bottom:1px solid #49606a}
 .sm-launch-top .sm-label{color:var(--sm-mute)}
 .sm-launch-top a{font:600 13px var(--sm-hud);letter-spacing:.06em;text-transform:uppercase;color:#ffd478;text-underline-offset:4px}
+/* no celular, o botão de tela cheia da moldura substitui a aba nova */
+@media(max-width:900px){.sm-launch-top a{display:none}#demo-shell>.pf-imm-open{margin:14px auto}}
 #demo-container iframe{display:block;width:100%;height:900px;border:0;background:var(--sm-ink)}
 .sm-controls-guide{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:16px 32px;margin-top:30px;font:500 17px var(--sm-hud);letter-spacing:.04em}
 .sm-controls-guide li{display:flex;align-items:center;gap:8px}

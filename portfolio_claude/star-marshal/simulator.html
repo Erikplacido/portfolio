@@ -187,7 +187,7 @@
         body[data-hud-state="exploration"] #wp-evidence, body[data-hud-state="exploration"] #wp-spire{opacity:.45}
         @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important} .critical-vignette-pulse{opacity:.7!important;box-shadow:inset 0 0 100px 35px #e6392688}.critical-rgb-glitch{filter:none}}
     </style>
-<link rel="stylesheet" href="art-direction.css?v=20261026m">
+<link rel="stylesheet" href="art-direction.css?v=20261027a">
 <script src="art-world.js?v=20261026c"></script>
 <script src="pulp-render.js?v=20261026d"></script>
 </head>
@@ -2801,6 +2801,7 @@
         window.addEventListener('keyup', e => { const m = MOVE_KEYS[e.key.toLowerCase()]; if (m) PLAYER.keys.delete(m); });
         window.addEventListener('message', e => {
             if(e.source === parent && e.origin === location.origin && e.data?.type === 'marshal-visibility') sceneVisible = !!e.data.visible;
+            if(e.source === parent && e.origin === location.origin && e.data?.type === 'marshal-fit') { document.body.classList.toggle('fit', !!e.data.fit); window.dispatchEvent(new Event('resize')); }
         });
         window.addEventListener('keydown', e => {
             if(e.ctrlKey || e.metaKey || e.altKey) return;
