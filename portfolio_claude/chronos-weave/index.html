@@ -50,24 +50,6 @@
               radial-gradient(circle at 50% 50%, transparent 55%, rgba(6,9,17,0.25) 100%);
   pointer-events: none;
 }
-.chronos-cover-tag {
-  position: absolute;
-  bottom: 28px;
-  left: max(var(--pf-gut), calc((100% - var(--pf-max))/2 + var(--pf-gut)));
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 18px;
-  border-radius: 99px;
-  background: rgba(9,14,26,0.9);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(251,191,36,0.45);
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
 
 /* Triad & Bento Grid */
 .chronos-grid-3 {
@@ -131,82 +113,69 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  table-layout: fixed;
   font-family: var(--pf-sans, 'Inter', system-ui, sans-serif);
-  font-size: 14px;
-  line-height: 1.65;
   text-align: left;
 }
-@media(max-width: 840px) {
-  .states-table thead {
-    display: none;
-  }
-  .states-table, .states-table tbody, .states-table tr, .states-table td {
-    display: block;
-    width: 100%;
-  }
-  .states-table tbody tr {
-    padding: 20px;
-    border-bottom: 1px solid rgba(201, 160, 74, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .states-table td {
-    padding: 0;
-    border: none !important;
-    background: transparent !important;
-  }
-  .states-table td:first-child {
-    min-width: 0;
-    margin-bottom: 6px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  }
-}
+.states-table col.c-state { width: 23%; }
 .states-table th {
   background: rgba(12, 18, 30, 0.95);
   color: #FBBF24;
-  padding: 20px 26px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
+  padding: 18px 24px;
+  font: 700 11px/1.4 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   border-bottom: 1px solid rgba(201, 160, 74, 0.25);
-  white-space: nowrap;
+  vertical-align: bottom;
 }
 .states-table td {
-  padding: 24px 26px;
-  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
-  border-right: 1px solid rgba(30, 41, 59, 0.25);
+  padding: 24px;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.55);
   color: #CBD5E1;
   vertical-align: top;
-  font-size: 13.5px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.6;
+  text-wrap: pretty;
 }
-.states-table td:last-child {
-  border-right: none;
-}
-.states-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.states-table tbody tr {
-  transition: background-color 0.2s ease;
-}
-.states-table tbody tr:hover td {
-  background: rgba(251, 191, 36, 0.035);
-}
+.states-table td + td { border-left: 1px solid rgba(30, 41, 59, 0.3); }
+.states-table tbody tr:last-child td { border-bottom: none; }
+.states-table tbody tr { transition: background-color 0.2s ease; }
+.states-table tbody tr:hover td { background: rgba(251, 191, 36, 0.035); }
 .states-table td:first-child {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12.5px;
-  white-space: nowrap;
   background: rgba(8, 12, 22, 0.5);
-  border-right: 1px solid rgba(30, 41, 59, 0.6);
-  min-width: 220px;
+  border-left: 3px solid var(--st, rgba(100,116,139,.5));
 }
+.states-table tbody tr:nth-child(1) { --st: rgba(148,163,184,.55); }
+.states-table tbody tr:nth-child(2) { --st: #00F0FF; }
+.states-table tbody tr:nth-child(3) { --st: #FBBF24; }
+.states-table tbody tr:nth-child(4) { --st: #F5D27A; }
 .states-table td strong {
+  display: block;
+  margin-bottom: 4px;
   color: #FBBF24;
   font-weight: 600;
+}
+@media(max-width: 900px) {
+  .states-table, .states-table tbody, .states-table tr, .states-table td { display: block; width: 100%; }
+  .states-table colgroup, .states-table thead { display: none; }
+  .states-table tbody tr {
+    display: grid;
+    gap: 14px;
+    padding: 20px 20px 22px;
+    border-left: 3px solid var(--st);
+    border-bottom: 1px solid rgba(201, 160, 74, 0.2);
+  }
+  .states-table tbody tr:last-child { border-bottom: none; }
+  .states-table td, .states-table td:first-child, .states-table td + td { padding: 0; border: none; background: transparent; }
+  .states-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    font: 700 10.5px/1.4 'JetBrains Mono', monospace;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #8A7A55;
+  }
 }
 .state-pill {
   display: inline-flex;
@@ -217,7 +186,9 @@
   text-transform: uppercase;
   padding: 6px 12px;
   border-radius: 99px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  max-width: 100%;
+  white-space: normal;
 }
 .state-sub {
   display: block;
@@ -256,9 +227,11 @@
    1024px of its own viewport and clips the overflow; breaking out of .wrap keeps it
    above that breakpoint on virtually any desktop window. */
 .sim-wide {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  padding-inline: clamp(12px, 2.5vw, 40px);
+  --sim-pad: clamp(12px, 2.5vw, 40px);
+  /* 100vw counts the scrollbar; --sbw (set by the page script) takes it back out */
+  width: calc(100vw - var(--sbw, 0px));
+  margin-left: calc(50% - 50vw + var(--sbw, 0px) / 2);
+  padding-inline: var(--sim-pad);
 }
 .sim-embed-stage {
   position: relative;
@@ -282,11 +255,11 @@
 @media(max-width:1100px) { .sim-embed-stage iframe { height: 1900px; } }
 @media(max-width:640px) { .sim-embed-stage iframe { height: 2500px; } }
 
+/* the stage goes edge to edge; the caption goes back to the case's text column */
 .sim-wide figcaption {
-  width: 100%;
-  max-width: 1900px;
+  max-width: calc(var(--pf-max) - 2 * var(--sim-pad));
   margin: 18px auto 0;
-  padding: 0 4px;
+  padding: 0 calc(var(--pf-gut) - var(--sim-pad));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -300,8 +273,7 @@
   color: var(--pf-ink);
 }
 .sim-wide figcaption .sim-caption-text {
-  flex: 1 1 680px;
-  max-width: 1100px;
+  flex: 1 1 520px;
 }
 .sim-open-btn {
   display: inline-flex;
@@ -350,10 +322,13 @@
 
 /* Direção de arte: prancha de assets */
 .art-board { background: #070B15; border: 1px solid rgba(201,160,74,.35); border-radius: 20px; padding: clamp(18px,3vw,32px); margin-top: 28px; }
-.art-states { display: grid; grid-template-columns: 110px repeat(4, 1fr); gap: 10px 14px; align-items: center; text-align: center; }
+.art-states { display: grid; grid-template-columns: 110px repeat(4, minmax(0, 1fr)); gap: 10px 14px; align-items: center; text-align: center; }
 .art-states span { font: 600 11px/1.2 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #94A3B8; }
 .art-states img { width: 100%; max-width: 96px; margin: 0 auto; display: block; }
-@media (max-width: 640px) { .art-states { grid-template-columns: 70px repeat(4, 1fr); } }
+@media (max-width: 640px) {
+  .art-states { grid-template-columns: 56px repeat(4, minmax(0, 1fr)); gap: 8px 6px; }
+  .art-states span { font-size: 9px; letter-spacing: .02em; overflow-wrap: anywhere; }
+}
 .art-row { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: center; margin-top: 22px; }
 .art-row img { height: 64px; width: auto; }
 .art-row .icon { height: 40px; filter: drop-shadow(0 0 6px rgba(56,225,255,.5)); }
@@ -396,13 +371,6 @@
     <img class="pf-cover-mobile" src="assets/capa_mobile.png" alt="Interface Interativa da Árvore de Habilidades e HUD de Chronos Weave" loading="eager" fetchpriority="high">
     <img src="assets/chronos_hero_ui.png" alt="Interface Interativa da Árvore de Habilidades e HUD de Chronos Weave">
     <div class="chronos-cover-overlay"></div>
-    <div class="chronos-cover-tag">
-      <span style="width:10px; height:10px; border-radius:99px; background:#00F0FF; box-shadow:0 0 12px #00F0FF;"></span>
-      <span>CHRONOS // WEAVE · SKILL TREE ENGINE &amp; DESIGN SYSTEM TRC SUITE</span>
-      <a href="#simulador" style="margin-left:12px; padding:4px 10px; border-radius:6px; background:rgba(251,191,36,0.18); border:1px solid #FBBF24; color:#FDE68A; text-decoration:none; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:6px; transition:all .2s;">
-        <i class="fa-solid fa-play" style="font-size:9px;"></i> ABRIR SIMULADOR
-      </a>
-    </div>
   </div>
 </header>
 
@@ -463,6 +431,7 @@
     <div class="states-table-card rv">
       <div class="states-table-wrap">
         <table class="states-table">
+          <colgroup><col class="c-state"><col><col><col></colgroup>
           <thead>
             <tr>
               <th>Estado Canônico</th>
@@ -474,27 +443,27 @@
           <tbody>
             <tr>
               <td><span class="state-pill state-locked">1. BLOQUEADO</span><span class="state-sub">Locked</span></td>
-              <td>Opacidade 35%, silhueta escura, runa apagada e névoa etérea.</td>
-              <td><strong>Auto-Rota Sideral (A* / Dijkstra):</strong> Ilumina instantaneamente a trajetória estelar de menor custo em Éter.</td>
-              <td>Clique avança automaticamente o nó anterior se houver pontos de talento suficientes.</td>
+              <td data-label="Tratamento visual">Opacidade 35%, silhueta escura, runa apagada e névoa etérea.</td>
+              <td data-label="Hover / foco"><strong>Auto-Rota Sideral (A* / Dijkstra):</strong> Ilumina instantaneamente a trajetória estelar de menor custo em Éter.</td>
+              <td data-label="Interação e áudio">Clique avança automaticamente o nó anterior se houver pontos de talento suficientes.</td>
             </tr>
             <tr>
               <td><span class="state-pill state-available">2. DISPONÍVEL</span><span class="state-sub">Available</span></td>
-              <td>Anel ciano (#00F0FF) pulsante em 60 FPS com feixe de Éter ativo conectado à constelação.</td>
-              <td>Brilho intensificado, aura de foco e card de inspeção tático detalhando bônus de atributo.</td>
-              <td><strong>Hold-to-Confirm:</strong> Shader circular de canalização gradual com pulso sonoro de confirmação.</td>
+              <td data-label="Tratamento visual">Anel ciano (#00F0FF) pulsante em 60 FPS com feixe de Éter ativo conectado à constelação.</td>
+              <td data-label="Hover / foco">Brilho intensificado, aura de foco e card de inspeção tático detalhando bônus de atributo.</td>
+              <td data-label="Interação e áudio"><strong>Hold-to-Confirm:</strong> Shader circular de canalização gradual com pulso sonoro de confirmação.</td>
             </tr>
             <tr>
               <td><span class="state-pill state-acquired">3. ADQUIRIDO</span><span class="state-sub">Acquired</span></td>
-              <td>Núcleo forjado em ouro solar (#FBBF24), com conduíte de energia viva fluindo continuamente.</td>
-              <td>Opção de reembolso via clique com botão direito do mouse ou botão de controle.</td>
-              <td><strong>Salvaguarda BFS:</strong> Impede devolução caso remova a conexão com nós filhos ativos.</td>
+              <td data-label="Tratamento visual">Núcleo forjado em ouro solar (#FBBF24), com conduíte de energia viva fluindo continuamente.</td>
+              <td data-label="Hover / foco">Opção de reembolso via clique com botão direito do mouse ou botão de controle.</td>
+              <td data-label="Interação e áudio"><strong>Salvaguarda BFS:</strong> Impede devolução caso remova a conexão com nós filhos ativos.</td>
             </tr>
             <tr>
               <td><span class="state-pill state-mastered">4. MASTERIZADO ✦</span><span class="state-sub">Mastered</span></td>
-              <td>Coroa ornamental rotativa externa, faíscas solares radiantes e status ápice.</td>
-              <td>Badge de Nível Máximo atingido; sinergias passivas liberadas para todo o ramo astral.</td>
-              <td>Acorde harmônico celestial ressonante disparado via osciladores WebAudio polifônicos.</td>
+              <td data-label="Tratamento visual">Coroa ornamental rotativa externa, faíscas solares radiantes e status ápice.</td>
+              <td data-label="Hover / foco">Badge de Nível Máximo atingido; sinergias passivas liberadas para todo o ramo astral.</td>
+              <td data-label="Interação e áudio">Acorde harmônico celestial ressonante disparado via osciladores WebAudio polifônicos.</td>
             </tr>
           </tbody>
         </table>
@@ -714,6 +683,16 @@
 </footer>
 
 <script src="../shared/cases.js"></script>
+<script>
+(function(){
+  /* width of a classic scrollbar (0 with overlay scrollbars, as on phones and default macOS) */
+  var d = document.createElement('div');
+  d.style.cssText = 'position:absolute;top:-99px;width:60px;height:60px;overflow:scroll;visibility:hidden';
+  document.documentElement.appendChild(d);
+  document.documentElement.style.setProperty('--sbw', (d.offsetWidth - d.clientWidth) + 'px');
+  d.remove();
+})();
+</script>
 <script src="../shared/frame.js"></script>
 <script>
 (function(){
