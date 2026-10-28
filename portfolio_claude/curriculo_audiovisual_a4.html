@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erik Plácido · Currículo Audiovisual (A4)</title>
+<meta name="description" content="Currículo de Erik Plácido para direção de arte e design gráfico de cena em cinema, TV e streaming, numa página A4.">
+<link rel="alternate" hreflang="en" href="curriculo_audiovisual_a4_en.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* One A4 sheet (210 × 297 mm). Everything is sized in mm so the screen view
+   and the PDF match. Generated with the other segment résumés; the layout
+   block is shared, the theme block below it is this segment's look. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:var(--desk);font-family:var(--sans);color:var(--ink);padding:0 0 10mm}
+@page{size:A4;margin:0}
+a{color:inherit}
+
+/* screen-only toolbar: back to the segment, PT/EN, PDF download */
+.cvbar{width:210mm;margin:0 auto;padding:4mm 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 13px/1 'Inter',system-ui,sans-serif}
+.cvbar a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;text-decoration:none;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.cvbar a:hover{background:rgba(255,255,255,.2)}
+.cvbar .sp{flex:1}
+.cvbar .lang{display:inline-flex;border-radius:99px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.cvbar .lang a{border:0;border-radius:0;background:transparent}
+.cvbar .lang a[aria-current]{background:#fff;color:#111}
+.cvbar a.dl{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (max-width:820px){.cvbar{width:auto;padding:12px 16px}}
+@media screen and (max-width:820px){body{overflow-x:auto}}
+
+.sheet{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;background:var(--paper);
+  box-shadow:0 20px 60px rgba(0,0,0,.45);padding:10mm 11mm 8mm;
+  display:grid;grid-template-rows:auto auto 1fr auto auto;gap:4.2mm}
+.sheet > *{position:relative}
+
+.top{display:grid;grid-template-columns:34mm 1fr 54mm;gap:5mm;align-items:stretch}
+.avatar{position:relative;display:flex;min-height:0}
+.avatar img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;object-position:50% 20%}
+.who{display:flex;flex-direction:column;justify-content:center;gap:2.2mm}
+.name{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:1.4mm}
+.chips span{white-space:nowrap}
+.contact{display:flex;flex-direction:column;gap:1.8mm;padding:3.2mm 3.6mm}
+.ct{display:grid;grid-template-columns:9mm 1fr;align-items:baseline;font-size:7.4pt;line-height:1.3}
+.ct span{font:700 5.8pt/1 var(--mono);letter-spacing:.12em;opacity:.6}
+.ct a{text-decoration:none;word-break:break-all}
+.status{margin-top:auto;font:600 6.4pt/1.35 var(--mono);letter-spacing:.03em}
+
+.sum{display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start}
+.sum p{font-size:8.5pt;line-height:1.47}
+.label{font:700 6.4pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.sum .label{padding-top:.9mm}
+
+.main{display:grid;grid-template-columns:1fr 80mm;gap:6mm;min-height:0}
+.exp{display:flex;flex-direction:column;min-height:0}
+.h{display:flex;align-items:baseline;gap:2.4mm;margin-bottom:2.8mm;text-transform:uppercase}
+.h small{margin-left:auto;font:500 6.2pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.job{position:relative;padding:0 0 3.4mm}
+.job:last-of-type{padding-bottom:0}
+.job .meta{display:flex;justify-content:space-between;gap:3mm;align-items:baseline}
+.job h3{font:700 9pt/1.25 var(--sans)}
+.job .yr{flex:none;font:700 6.4pt/1 var(--mono);letter-spacing:.06em}
+.job .org{font:600 7.2pt/1.3 var(--mono);margin:.8mm 0 1.5mm}
+.job ul{list-style:none;display:grid;gap:.9mm}
+.job li{position:relative;padding-left:3mm;font-size:7.5pt;line-height:1.4}
+.job li::before{position:absolute;left:0;top:0}
+.job li b{font-weight:600}
+.edu{margin-top:auto;padding-top:2.4mm;display:grid;grid-template-columns:repeat(var(--edu,2),1fr);gap:2.4mm}
+.edu div{padding:2.2mm 2.6mm}
+.edu b{display:block;font:700 7pt/1.3 var(--sans)}
+.edu span{display:block;margin-top:.7mm;font:500 6.2pt/1.35 var(--mono);opacity:.7}
+
+.works{display:flex;flex-direction:column;min-height:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;align-content:start}
+.slot{position:relative;display:grid;gap:1mm;padding:1.4mm 1.4mm 1.7mm}
+.slot .im{position:relative;aspect-ratio:var(--ar,1.8/1);overflow:hidden;background:#000}
+.slot .im img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .tag{position:absolute;left:1mm;top:1mm;font:700 5.2pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:.9mm 1.3mm}
+.slot b{font:700 7.3pt/1.2 var(--sans);padding:0 .4mm}
+.slot small{font-size:6pt;line-height:1.3;padding:0 .4mm;opacity:.75}
+
+.skills .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.col{padding:2.4mm 3mm 2.6mm}
+.col p{font:700 7.2pt/1 var(--sans);margin-bottom:2.2mm}
+.col ul{list-style:none;display:grid;gap:1.05mm}
+.col li{position:relative;padding-left:3mm;font-size:7pt;line-height:1.3}
+.col li::before{position:absolute;left:0}
+
+.foot{display:flex;align-items:center;justify-content:space-between;gap:4mm;padding-top:3mm}
+.foot .go{font-weight:700;white-space:nowrap}
+.foot a{text-decoration:none;font:700 7.4pt/1 var(--mono);white-space:nowrap}
+.foot p.note{font-size:5.8pt;line-height:1.35;max-width:64mm;text-align:right;opacity:.65}
+@media print{body{background:none;padding:0}.sheet{box-shadow:none;margin:0}.cvbar{display:none}}
+
+/* ===== theme: audiovisual ===== */
+:root{--desk:#08090D;--paper:#101219;--panel:#171B2A;--navy:#1E2A7A;--line:#2A3050;--ink:#EEF0F6;--muted:#9098B4;
+  --accent:#E8B04A;--red:#E5484D;--cond:'Oswald','Arial Narrow',sans-serif;--sans:'Inter',system-ui,sans-serif;
+  --mono:'Courier Prime','Courier New',monospace}
+.sheet{padding:10mm 14mm 8mm;background:
+  radial-gradient(120mm 90mm at 80% -10%,rgba(232,176,74,.16),transparent 70%),
+  radial-gradient(100mm 90mm at 0% 110%,rgba(30,42,122,.45),transparent 70%),var(--paper)}
+.sheet::before,.sheet::after{content:"";position:absolute;top:0;bottom:0;width:6mm;pointer-events:none;
+  background:linear-gradient(90deg,#000 0 1.9mm,transparent 1.9mm 4.1mm,#000 4.1mm),
+    repeating-linear-gradient(#000 0 1.4mm,#3A3E4C 1.4mm 3.4mm,#000 3.4mm 4.6mm)}
+.sheet::before{left:0}.sheet::after{right:0}
+.avatar{border:.4mm solid var(--line);padding:1.4mm;background:var(--panel)}
+.avatar img{filter:contrast(1.05) saturate(.9)}
+.avatar .rec{position:absolute;left:3mm;top:3mm;font:700 5.8pt/1 var(--sans);letter-spacing:.12em;color:#fff;background:rgba(0,0,0,.6);padding:1mm 1.4mm}
+.avatar .rec::before{content:"● ";color:var(--red)}
+.who .label{color:var(--accent);font-family:var(--mono);letter-spacing:.12em}
+.name{font:700 28pt/1.02 var(--cond);letter-spacing:.02em;text-transform:uppercase;color:#fff}
+.role{font:600 8.8pt/1.3 var(--sans);color:var(--ink)}
+.role em{font-style:normal;color:var(--accent)}
+.chips span{font:600 6.4pt/1 var(--sans);text-transform:uppercase;letter-spacing:.1em;padding:1.3mm 2mm;border:.3mm solid var(--line);color:var(--muted);background:var(--panel)}
+.contact{background:var(--navy);border:0;padding:0;overflow:hidden}
+.contact .slate{display:block;height:5mm;background:repeating-linear-gradient(-45deg,#fff 0 3mm,#111 3mm 6mm)}
+.contact .body{display:flex;flex-direction:column;gap:1.8mm;padding:2.8mm 3.4mm 3.2mm;height:calc(100% - 5mm)}
+.contact .hd{font:700 9pt/1 var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:.4mm}
+.contact .hd i{font-style:normal;color:var(--accent)}
+.ct{color:#fff}
+.ct span{font-family:var(--sans);color:#AEB6DD;opacity:1}
+.status{color:var(--accent);font-family:var(--mono)}
+.sum{padding:2.8mm 4mm;background:var(--panel);border-left:1mm solid var(--accent)}
+.sum .label{color:var(--accent);font-family:var(--mono)}
+.sum p{color:#D6DAE8}
+.sum b{color:#fff;font-weight:600}
+.h{font:700 11pt/1 var(--cond);letter-spacing:.08em;color:#fff;align-items:center}
+.h::before{content:attr(data-n);font:700 6pt/1 var(--mono);color:var(--paper);background:var(--accent);padding:1mm 1.4mm;letter-spacing:.06em}
+.h small{font-family:var(--mono);color:var(--muted);opacity:1}
+.job{padding-left:4mm;border-left:.4mm solid var(--line)}
+.job.on{border-left-color:var(--accent)}
+.job h3{color:#fff}
+.job .yr{color:var(--accent);font-family:var(--mono)}
+.job .org{color:#AEB6DD;font-family:var(--mono)}
+.job li{color:#C9CEE0}
+.job li::before{content:"›";color:var(--accent)}
+.job li b{color:#fff}
+.edu div{background:var(--panel);border:.3mm solid var(--line)}
+.edu b{color:#fff}
+.edu span{font-family:var(--mono)}
+.slot{background:var(--panel);border:.3mm solid var(--line)}
+.slot .im{border-top:1.2mm dashed #000;border-bottom:1.2mm dashed #000}
+.slot .tag{font-family:var(--sans);background:rgba(8,9,13,.85);color:var(--accent)}
+.slot b{color:#fff}
+.slot small{color:var(--muted);opacity:1}
+.col{background:var(--panel);border:.3mm solid var(--line);border-top:1mm solid var(--accent)}
+.col p{font:700 8.4pt/1 var(--cond);letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.col li{color:#C9CEE0}
+.col li::before{content:"■";font-size:4.6pt;top:.9mm;color:var(--accent)}
+.foot{border-top:.3mm solid var(--line)}
+.foot .go{font:700 10pt/1 var(--cond);letter-spacing:.12em;color:#fff}
+.foot .go i{font-style:normal;color:var(--accent)}
+.foot a{color:var(--accent);font-family:var(--mono)}
+.foot p.note{color:var(--muted)}
+.slot .im{--ar:1.7/1}
+</style>
+</head>
+<body>
+<nav class="cvbar" aria-label="Currículo"><a href="segmentos/audiovisual.html">← Voltar ao portfólio</a><span class="sp"></span><span class="lang"><a href="curriculo_audiovisual_a4.html" hreflang="pt-BR" aria-current="page">PT</a><a href="curriculo_audiovisual_a4_en.html" hreflang="en">EN</a></span><a class="dl" href="curriculo_audiovisual_a4.pdf" download>↓ Baixar PDF</a></nav>
+<main class="sheet">
+
+  <header class="top">
+    <div class="avatar">
+      <img src="assets/erik-placido-foto.png" alt="Foto de Erik Plácido">
+      <span class="rec">REC</span>
+    </div>
+    <div class="who">
+      <p class="label">Ordem do dia · departamento de arte</p>
+      <h1 class="name">Erik<br>Plácido</h1>
+      <p class="role">Diretor de Arte · <em>Design Gráfico de Cena</em></p>
+      <div class="chips"><span>Cinema</span><span>TV e streaming</span><span>Props gráficos</span></div>
+    </div>
+    <div class="contact"><span class="slate"></span><div class="body"><p class="hd">Contato <i>· set</i></p><p class="ct"><span>MAIL</span><a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></p><p class="ct"><span>TEL</span><a href="tel:+5511985768545">+55 11 98576-8545</a></p><p class="ct"><span>WEB</span><a href="https://erikplacido.com.br">erikplacido.com.br</a></p><p class="ct"><span>LOC</span>São Paulo, SP · Brasil</p><p class="status">Aberto a cinema, TV,<br>streaming e publicidade</p></div></div>
+  </header>
+
+  <section class="sum">
+    <p class="label" data-n="">Sinopse</p>
+    <p>Designer gráfico de cena e diretor de arte: <b>cartazes, rótulos, documentos, mapas e baralhos</b> que aguentam o close em 4K. Trabalhou em longa da <b>Globo Filmes</b>, programas do <b>GNT</b> e da <b>TV Globo</b>, realities do <b>Multishow</b>, da <b>MTV</b> e da <b>Amazon</b> e em filmes publicitários, sempre no ritmo do set.</p>
+  </section>
+
+  <div class="main">
+    <section class="exp">
+      <h2 class="h" data-n="CENA 01" data-token="">Créditos <small>experiência</small></h2>
+      <article class="job on" data-n="1"><div class="meta"><h3>Diretor de Arte &amp; Design Gráfico de Cena</h3><span class="yr">2026</span></div><p class="org">Coração da Selva Produções</p><ul><li><b>Peças de cena</b> realistas (cartazes, documentos, embalagens e placas) para longas e séries.</li><li><b>Prototipagem rápida</b> no cronograma do set, atendendo direto à direção.</li></ul></article><article class="job" data-n="2"><div class="meta"><h3>Diretor de Arte · Cenografia e Props</h3><span class="yr">2014 – 2020</span></div><p class="org">Moonshot Pictures / GNT</p><ul><li><b>TV por assinatura:</b> direção de arte das temporadas 1 e 2 de Que Seja Doce e de Desafio da Beleza.</li><li><b>Rótulos e adereços</b> de estúdio produzidos para close em rede nacional.</li></ul></article><article class="job" data-n="3"><div class="meta"><h3>Assistente de Arte · Objetos de Cena</h3><span class="yr">2019 – 2021</span></div><p class="org">Boutique Filmes</p><ul><li><b>Séries de ficção para streaming:</b> documentos de época, cartazes e crachás com rigor histórico.</li></ul></article><article class="job" data-n="4"><div class="meta"><h3>Designer de Key Visuals</h3><span class="yr">2018 – 2020</span></div><p class="org">Dogs Can Fly / Pink Flamingo Films</p><ul><li><b>Key visuals</b> e tratamento de imagem para aprovação de filmes publicitários.</li></ul></article>
+      <div class="edu" style="--edu:2"><div><b>Bacharelado em Design Gráfico</b><span>FMU / FIAM-FAAM · 2003 – 2006</span></div><div><b>Tipografia e Ilustração</b><span>Belas Artes de São Paulo</span></div></div>
+    </section>
+
+    <section class="works">
+      <h2 class="h" data-n="CENA 02" data-token="">Filmografia <small>8 produções</small></h2>
+      <div class="grid"><div class="slot"><div class="im"><img src="magal-e-os-formigas/assets/card.jpg" alt=""><span class="tag real">Globo Filmes</span></div><b>Magal e os Formigas</b><small>Pôster, disco e quadros do cenário</small></div><div class="slot"><div class="im"><img src="que-seja-doce/assets/card.jpg" alt=""><span class="tag real">GNT</span></div><b>Que Seja Doce</b><small>Abertura em teatro de sombras</small></div><div class="slot"><div class="im"><img src="credo-que-delicia/assets/card.jpg" alt=""><span class="tag real">GNT</span></div><b>Credo, que delícia!</b><small>Marca em néon do azulejo ao avental</small></div><div class="slot"><div class="im"><img src="invertidamente/assets/card.jpg" alt=""><span class="tag real">TV Globo</span></div><b>Invertidamente</b><small>Objetos impressos para um cômodo invertido</small></div><div class="slot"><div class="im"><img src="se-sobreviver-case/assets/card.jpg" alt=""><span class="tag real">Multishow</span></div><b>Se Sobreviver, Case</b><small>Mapa da ilha em 21 versões</small></div><div class="slot"><div class="im"><img src="rio-shore/assets/card.jpg" alt=""><span class="tag real">MTV</span></div><b>Rio Shore</b><small>Paredes de 13 m e baralho</small></div><div class="slot"><div class="im"><img src="match-nas-estrelas/assets/card.jpg" alt=""><span class="tag real">Amazon</span></div><b>Match nas Estrelas</b><small>Logo e baralho em constelações</small></div><div class="slot"><div class="im"><img src="ram-rotulos/assets/card.jpg" alt=""><span class="tag real">Publicidade</span></div><b>RAM · Rótulos</b><small>18 rótulos de bebidas fictícias</small></div></div>
+    </section>
+  </div>
+
+  <section class="skills">
+    <h2 class="h" data-n="CENA 03" data-token="">Departamento de arte <small>competências</small></h2>
+    <div class="cols"><div class="col"><p>Peças de cena</p><ul><li>Props gráficos</li><li>Peças de época</li><li>Documentos e cartazes</li><li>Mapas e baralhos</li></ul></div><div class="col"><p>Set</p><ul><li>Prazos de filmagem</li><li>Mockups físicos</li><li>Impressão com faca</li><li>Grandes formatos</li></ul></div><div class="col"><p>Marca na tela</p><ul><li>Logos de programa</li><li>Grafismos de tela</li><li>Identidade de cenário</li><li>Key visuals</li></ul></div><div class="col"><p>Ferramentas</p><ul><li>Photoshop</li><li>Illustrator</li><li>InDesign</li><li>Tratamento hiper-realista</li></ul></div></div>
+  </section>
+
+  <footer class="foot">
+    <p class="go"><i>FIM.</i> Veja os cases</p>
+    
+    <a href="https://erikplacido.com.br/segmentos/audiovisual.html">erikplacido.com.br/segmentos/audiovisual.html</a>
+    <p class="note">Os cases mostram as peças entregues e fotos de cena; cada legenda diz o que é real.</p>
+  </footer>
+</main>
+</body>
+</html>

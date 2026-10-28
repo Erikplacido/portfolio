@@ -49,6 +49,26 @@ body.seg-body .pf-nav .pf-cases a{ color:#fff }
 .seg-btn.ghost{ background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.22) }
 .seg-btn.ghost:hover{ background:rgba(255,255,255,.16) }
 
+/* currículo do segmento: menu PT/EN com ver e PDF */
+.seg-cv{ position:relative }
+.seg-cv summary{ list-style:none; cursor:pointer }
+.seg-cv summary::-webkit-details-marker{ display:none }
+.seg-cv-caret{ font-size:11px; transition:transform .3s var(--pf-ease) }
+.seg-cv[open] .seg-cv-caret{ transform:rotate(180deg) }
+.seg-cv-menu{
+  position:absolute; z-index:5; left:50%; top:calc(100% + 8px); transform:translateX(-50%);
+  min-width:260px; padding:6px; border-radius:16px; background:#14161C; border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 16px 40px rgba(0,0,0,.45); display:grid; gap:2px; text-align:left;
+}
+.seg-cv-row{ display:flex; align-items:center; gap:6px; padding:6px 6px 6px 12px; border-radius:11px; font:600 14px/1 var(--pf-sans); color:#fff }
+.seg-cv-row:hover{ background:rgba(255,255,255,.06) }
+.seg-cv-row span{ flex:1 }
+.seg-cv-row a{
+  display:inline-flex; align-items:center; gap:6px; padding:9px 12px; border-radius:99px; font-size:13px;
+  color:#fff; text-decoration:none; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+}
+.seg-cv-row a:hover{ background:var(--seg-color); border-color:var(--seg-color) }
+
 /* scroll cue: round mask, white arrow, dynamic bob + pulse */
 .seg-scroll-cue{
   position:absolute; left:50%; bottom:34px; transform:translateX(-50%);

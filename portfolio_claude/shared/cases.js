@@ -25,27 +25,29 @@
 /* Segmentos da página inicial (landing em tela cheia) e das páginas de
    segmento (segmentos/*.html). "icon" é uma classe do Font Awesome 6
    (fa-solid). Todo case precisa de um "group" com um destes ids.
-     - resume: currículo especializado que a página do segmento destaca.
+     - cv: caminho-base do currículo A4 do segmento, sem extensão. O botão
+       da página do segmento abre <cv>.html (PT) e <cv>_en.html (EN) e baixa
+       <cv>.pdf e <cv>_en.pdf; os quatro arquivos ficam na raiz.
      - desc / kpi: copy curta usada no topo da página do segmento. */
 window.PORTFOLIO_GROUPS = [
   { id: 'uxui',           label: 'UX/UI',            icon: 'fa-mobile-screen-button',
-    color: '#0F766E', resume: '../curriculo_product_design.html',
+    color: '#0F766E', cv: '../curriculo_uxui_a4',
     desc: 'Arquitetura de informação, fluxos de onboarding, Design Systems e redução de atrito transacional em fintechs.',
     kpi: 'Design Tokens em código · Acessibilidade WCAG · Protótipos funcionais em React' },
   { id: 'tabletop',       label: 'Tabletop',         icon: 'fa-meeple',
-    color: '#D97706', resume: '../tabletop.html',
+    color: '#D97706', cv: '../curriculo_tabletop_a4',
     desc: 'Ergonomia física de mesa, consoles dual-layer cortados a laser, card games e iconografia para leitura rápida.',
     kpi: 'Dual-Layer rígido 3mm · Splay de 18mm · Regras visuais sem texto' },
   { id: 'games',          label: 'Games Digitais',   icon: 'fa-gamepad',
-    color: '#E3120B', resume: '../curriculo_games.html',
+    color: '#E3120B', cv: '../curriculo_games_a4',
     desc: 'HUDs contextuais, interfaces diegéticas, renderização 3D WebGL em tempo real e conformidade TRC/TCR de console.',
     kpi: '60 FPS estáveis · Web Audio API · Adaptação para L10n +35%' },
   { id: 'design-grafico', label: 'Design Gráfico',   icon: 'fa-compass-drafting',
-    color: '#B44A17', resume: '../curriculo_editorial_embalagens.html',
+    color: '#B44A17', cv: '../curriculo_design_grafico_a4',
     desc: 'Design editorial, grid suíço, restauração histórica no traço digital e embalagens calibradas para impressão industrial.',
     kpi: 'Grid suíço de 6 colunas · Restauração Wacom · Calibração industrial' },
   { id: 'audiovisual',    label: 'Áudio Visual',     icon: 'fa-clapperboard',
-    color: '#1E2A7A', resume: '../curriculo_direcao_de_arte.html',
+    color: '#1E2A7A', cv: '../curriculo_audiovisual_a4',
     desc: 'Direção de arte para cinema e TV: cenografia, rótulos de época e peças gráficas de cena que aguentam o close em 4K.',
     kpi: 'Rótulos e paredes em 4K pro close · Épocas de 1950 e 1980 · Peças que resistem à câmera' }
 ];

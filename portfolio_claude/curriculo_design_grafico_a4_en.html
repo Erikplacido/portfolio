@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erik Plácido · Graphic Design Résumé (A4)</title>
+<meta name="description" content="Erik Plácido’s graphic design résumé: editorial, packaging, and pre-press on one A4 page.">
+<link rel="alternate" hreflang="pt-BR" href="curriculo_design_grafico_a4.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* One A4 sheet (210 × 297 mm). Everything is sized in mm so the screen view
+   and the PDF match. Generated with the other segment résumés; the layout
+   block is shared, the theme block below it is this segment's look. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:var(--desk);font-family:var(--sans);color:var(--ink);padding:0 0 10mm}
+@page{size:A4;margin:0}
+a{color:inherit}
+
+/* screen-only toolbar: back to the segment, PT/EN, PDF download */
+.cvbar{width:210mm;margin:0 auto;padding:4mm 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 13px/1 'Inter',system-ui,sans-serif}
+.cvbar a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;text-decoration:none;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.cvbar a:hover{background:rgba(255,255,255,.2)}
+.cvbar .sp{flex:1}
+.cvbar .lang{display:inline-flex;border-radius:99px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.cvbar .lang a{border:0;border-radius:0;background:transparent}
+.cvbar .lang a[aria-current]{background:#fff;color:#111}
+.cvbar a.dl{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (max-width:820px){.cvbar{width:auto;padding:12px 16px}}
+@media screen and (max-width:820px){body{overflow-x:auto}}
+
+.sheet{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;background:var(--paper);
+  box-shadow:0 20px 60px rgba(0,0,0,.45);padding:10mm 11mm 8mm;
+  display:grid;grid-template-rows:auto auto 1fr auto auto;gap:4.2mm}
+.sheet > *{position:relative}
+
+.top{display:grid;grid-template-columns:34mm 1fr 54mm;gap:5mm;align-items:stretch}
+.avatar{position:relative;display:flex;min-height:0}
+.avatar img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;object-position:50% 20%}
+.who{display:flex;flex-direction:column;justify-content:center;gap:2.2mm}
+.name{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:1.4mm}
+.chips span{white-space:nowrap}
+.contact{display:flex;flex-direction:column;gap:1.8mm;padding:3.2mm 3.6mm}
+.ct{display:grid;grid-template-columns:9mm 1fr;align-items:baseline;font-size:7.4pt;line-height:1.3}
+.ct span{font:700 5.8pt/1 var(--mono);letter-spacing:.12em;opacity:.6}
+.ct a{text-decoration:none;word-break:break-all}
+.status{margin-top:auto;font:600 6.4pt/1.35 var(--mono);letter-spacing:.03em}
+
+.sum{display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start}
+.sum p{font-size:8.5pt;line-height:1.47}
+.label{font:700 6.4pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.sum .label{padding-top:.9mm}
+
+.main{display:grid;grid-template-columns:1fr 80mm;gap:6mm;min-height:0}
+.exp{display:flex;flex-direction:column;min-height:0}
+.h{display:flex;align-items:baseline;gap:2.4mm;margin-bottom:2.8mm;text-transform:uppercase}
+.h small{margin-left:auto;font:500 6.2pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.job{position:relative;padding:0 0 3.4mm}
+.job:last-of-type{padding-bottom:0}
+.job .meta{display:flex;justify-content:space-between;gap:3mm;align-items:baseline}
+.job h3{font:700 9pt/1.25 var(--sans)}
+.job .yr{flex:none;font:700 6.4pt/1 var(--mono);letter-spacing:.06em}
+.job .org{font:600 7.2pt/1.3 var(--mono);margin:.8mm 0 1.5mm}
+.job ul{list-style:none;display:grid;gap:.9mm}
+.job li{position:relative;padding-left:3mm;font-size:7.5pt;line-height:1.4}
+.job li::before{position:absolute;left:0;top:0}
+.job li b{font-weight:600}
+.edu{margin-top:auto;padding-top:2.4mm;display:grid;grid-template-columns:repeat(var(--edu,2),1fr);gap:2.4mm}
+.edu div{padding:2.2mm 2.6mm}
+.edu b{display:block;font:700 7pt/1.3 var(--sans)}
+.edu span{display:block;margin-top:.7mm;font:500 6.2pt/1.35 var(--mono);opacity:.7}
+
+.works{display:flex;flex-direction:column;min-height:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;align-content:start}
+.slot{position:relative;display:grid;gap:1mm;padding:1.4mm 1.4mm 1.7mm}
+.slot .im{position:relative;aspect-ratio:var(--ar,1.8/1);overflow:hidden;background:#000}
+.slot .im img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .tag{position:absolute;left:1mm;top:1mm;font:700 5.2pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:.9mm 1.3mm}
+.slot b{font:700 7.3pt/1.2 var(--sans);padding:0 .4mm}
+.slot small{font-size:6pt;line-height:1.3;padding:0 .4mm;opacity:.75}
+
+.skills .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.col{padding:2.4mm 3mm 2.6mm}
+.col p{font:700 7.2pt/1 var(--sans);margin-bottom:2.2mm}
+.col ul{list-style:none;display:grid;gap:1.05mm}
+.col li{position:relative;padding-left:3mm;font-size:7pt;line-height:1.3}
+.col li::before{position:absolute;left:0}
+
+.foot{display:flex;align-items:center;justify-content:space-between;gap:4mm;padding-top:3mm}
+.foot .go{font-weight:700;white-space:nowrap}
+.foot a{text-decoration:none;font:700 7.4pt/1 var(--mono);white-space:nowrap}
+.foot p.note{font-size:5.8pt;line-height:1.35;max-width:64mm;text-align:right;opacity:.65}
+@media print{body{background:none;padding:0}.sheet{box-shadow:none;margin:0}.cvbar{display:none}}
+
+/* ===== theme: design-grafico ===== */
+:root{--desk:#2A2622;--paper:#FFFFFF;--line:#111111;--ink:#111111;--muted:#5E5A55;--accent:#B44A17;
+  --sans:'Inter Tight','Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+.sheet{padding:12mm 13mm 9mm}
+.sheet::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+   linear-gradient(var(--ink),var(--ink)) 3mm 7mm/5mm .2mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) 7mm 3mm/.2mm 5mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) calc(100% - 3mm) 7mm/5mm .2mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) calc(100% - 7mm) 3mm/.2mm 5mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) 3mm calc(100% - 7mm)/5mm .2mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) 7mm calc(100% - 3mm)/.2mm 5mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) calc(100% - 3mm) calc(100% - 7mm)/5mm .2mm no-repeat,
+   linear-gradient(var(--ink),var(--ink)) calc(100% - 7mm) calc(100% - 3mm)/.2mm 5mm no-repeat}
+.top{border-bottom:.6mm solid var(--ink);padding-bottom:4mm;grid-template-columns:30mm 1fr 52mm}
+.avatar img{filter:grayscale(1) contrast(1.1)}
+.avatar::after{content:"";position:absolute;right:-1.6mm;bottom:-1.6mm;width:8mm;height:8mm;background:var(--accent);mix-blend-mode:multiply}
+.who .label{color:var(--accent)}
+.name{font:900 30pt/.86 var(--sans);letter-spacing:-.045em;color:var(--ink)}
+.role{font:600 9pt/1.25 var(--sans);color:var(--ink)}
+.role em{font-style:normal;color:var(--accent)}
+.chips span{font:700 6.2pt/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:1.2mm 1.8mm;border:.3mm solid var(--ink)}
+.chips span:first-child{background:var(--ink);color:#fff}
+.contact{padding:0 0 0 4mm;border-left:.3mm solid var(--ink)}
+.contact .hd{font:900 7.6pt/1 var(--sans);text-transform:uppercase;letter-spacing:.02em;margin-bottom:.8mm}
+.contact .hd i{font-style:normal;color:var(--accent)}
+.status{color:var(--accent)}
+.status::before{content:"■  "}
+.sum{grid-template-columns:30mm 1fr;gap:5mm}
+.sum .label,.h{font:900 7pt/1 var(--sans);letter-spacing:.06em;color:var(--ink)}
+.sum .label::before,.h::before{content:attr(data-n);display:block;font:900 15pt/1 var(--sans);letter-spacing:-.04em;color:var(--accent);margin-bottom:1mm}
+.sum .label{padding-top:0}
+.sum p{font-size:8.4pt;line-height:1.45;color:#222}
+.sum b{font-weight:700}
+.h{display:block;border-top:.3mm solid var(--ink);padding-top:2mm}
+.h::before{display:inline;font-size:9pt;margin-right:2mm}
+.h small{display:inline;margin-left:2mm}
+.job{padding-bottom:2.3mm}
+.job h3{font-weight:800;color:var(--ink)}
+.job .yr{color:var(--accent)}
+.job .org{color:var(--muted)}
+.job li{color:#2A2A2A}
+.job li::before{content:"—";color:var(--accent)}
+.edu{--edu:3}
+.edu div{border-top:.6mm solid var(--ink);padding:1.8mm 0 0}
+.edu b{font-size:6.8pt}
+.grid{gap:3mm 2.6mm}
+.slot{padding:0;gap:1.2mm}
+.slot .im{background:#eee}
+.slot .tag{left:0;top:0;background:var(--ink);color:#fff}
+.slot b{padding:0;font-weight:800;border-top:.3mm solid var(--ink);padding-top:1.2mm}
+.slot small{padding:0}
+.skills .cols{gap:4mm}
+.col{padding:0;border-top:.6mm solid var(--ink)}
+.col p{padding-top:1.8mm;font-weight:900;font-size:7.4pt}
+.col p span{color:var(--accent);margin-right:1.4mm}
+.col li{color:#2A2A2A}
+.col li::before{content:"·";font-weight:900;color:var(--accent)}
+.foot{border-top:.6mm solid var(--ink)}
+.foot .go{font:900 8pt/1 var(--sans);text-transform:uppercase}
+.foot .go i{font-style:normal;color:var(--accent)}
+.foot a{color:var(--ink)}
+.bar{display:flex;gap:0;height:3mm;width:30mm}
+.bar span{flex:1}
+.slot .im{--ar:1.12/1}
+</style>
+</head>
+<body>
+<nav class="cvbar" aria-label="Résumé"><a href="segmentos/design-grafico.html">← Back to portfolio</a><span class="sp"></span><span class="lang"><a href="curriculo_design_grafico_a4.html" hreflang="pt-BR">PT</a><a href="curriculo_design_grafico_a4_en.html" hreflang="en" aria-current="page">EN</a></span><a class="dl" href="curriculo_design_grafico_a4_en.pdf" download>↓ Download PDF</a></nav>
+<main class="sheet">
+
+  <header class="top">
+    <div class="avatar">
+      <img src="assets/erik-placido-foto.png" alt="Photo of Erik Plácido">
+      
+    </div>
+    <div class="who">
+      <p class="label">Graphic design · editorial · packaging</p>
+      <h1 class="name">Erik<br>Plácido</h1>
+      <p class="role">Senior Graphic Designer · <em>Editorial and Packaging</em></p>
+      <div class="chips"><span>Covers and interiors</span><span>CPG packaging</span><span>Pre-press</span></div>
+    </div>
+    <div class="contact"><p class="hd">Contact<i>.</i></p><p class="ct"><span>MAIL</span><a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></p><p class="ct"><span>TEL</span><a href="tel:+5511985768545">+55 11 98576-8545</a></p><p class="ct"><span>WEB</span><a href="https://erikplacido.com.br">erikplacido.com.br</a></p><p class="ct"><span>LOC</span>São Paulo, SP · Brazil</p><p class="status">Open to publishers,<br>industry, and agencies</p></div>
+  </header>
+
+  <section class="sum">
+    <p class="label" data-n="01">Profile</p>
+    <p>Over 20 years of precise graphic design: more than a decade at <b>WMF Martins Fontes</b> on covers and book design (including the <b>restoration of Mauricio de Sousa’s first three books</b>), <b>packaging</b> lines for the food and pet industries, and the technical file prep that makes print come out as designed.</p>
+  </section>
+
+  <div class="main">
+    <section class="exp">
+      <h2 class="h" data-n="02" data-token="">Experience <small>2005 – now</small></h2>
+      <article class="job on" data-n="1"><div class="meta"><h3>Art Producer &amp; Editorial Designer</h3><span class="yr">2005 – 2018</span></div><p class="org">Editora WMF Martins Fontes (full-time)</p><ul><li><b>Covers:</b> cover designs for classics of literature and philosophy, including box sets.</li><li><b>Mauricio — O Início:</b> cover, interior, and digital restoration of the pages of the first three books.</li><li><b>Pre-press:</b> color proofs, CMYK and Pantone, paper stock, and finishes (hot foil, spot UV, blind embossing).</li></ul></article><article class="job" data-n="2"><div class="meta"><h3>Art Director &amp; Packaging Designer</h3><span class="yr">2021 – 2026</span></div><p class="org">Itaiquara Alimentos S/A</p><ul><li><b>Full product lines:</b> labels, sachets, boxes, and sacks for baking, confectionery, and retail.</li><li><b>ANVISA labeling:</b> nutrition tables, front-of-pack labels, and barcodes, with files for the converter.</li></ul></article><article class="job" data-n="3"><div class="meta"><h3>Art Director · Packaging</h3><span class="yr">2020 – 2021</span></div><p class="org">Global Pet Distribuidora</p><ul><li><b>Maxcote line:</b> packaging system and visual identity for pet products.</li></ul></article><article class="job" data-n="4"><div class="meta"><h3>Graphic Designer &amp; Layout Artist</h3><span class="yr">2008 – 2012</span></div><p class="org">Editora Devir Livraria (full-time)</p><ul><li><b>Layout at scale:</b> dozens of manga, comics, and RPG titles in InDesign.</li></ul></article>
+      <div class="edu" style="--edu:3"><div><b>BA in Graphic Design</b><span>FMU / FIAM-FAAM · 2003 – 2006</span></div><div><b>Advanced Editorial InDesign</b><span>Impacta Tecnologia</span></div><div><b>Typography and Illustration</b><span>Belas Artes de São Paulo</span></div></div>
+    </section>
+
+    <section class="works">
+      <h2 class="h" data-n="03" data-token="">Work <small>6 projects</small></h2>
+      <div class="grid"><div class="slot"><div class="im"><img src="editorial/assets/card.jpg" alt=""><span class="tag real">Editorial</span></div><b>Editorial · Capas</b><small>11 covers and the Mauricio restoration</small></div><div class="slot"><div class="im"><img src="itaiquara-untaforma/assets/card.jpg" alt=""><span class="tag real">Packaging</span></div><b>Itaiquara · Untaforma</b><small>Aerosol can label printed on metal</small></div><div class="slot"><div class="im"><img src="ram-rotulos/assets/card.jpg" alt=""><span class="tag real">Labels</span></div><b>RAM · Rótulos de bar</b><small>18 labels for fictional drinks</small></div><div class="slot"><div class="im"><img src="editora-terceiro-nome/assets/card.jpg" alt=""><span class="tag real">Art direction</span></div><b>Editora Terceiro Nome</b><small>A 178-book catalog on the web</small></div><div class="slot"><div class="im"><img src="loony-races/assets/card.jpg" alt=""><span class="tag real">Identity</span></div><b>Loony Races</b><small>Brand, illustration, bilingual rulebook</small></div><div class="slot"><div class="im"><img src="magal-e-os-formigas/assets/card.jpg" alt=""><span class="tag real">Film</span></div><b>Magal e os Formigas</b><small>Poster, record sleeve, and portraits</small></div></div>
+    </section>
+  </div>
+
+  <section class="skills">
+    <h2 class="h" data-n="04" data-token="">Skills <small>technical</small></h2>
+    <div class="cols"><div class="col"><p><span>01</span>Editorial</p><ul><li>Advanced InDesign</li><li>Book covers</li><li>Typography and microtypography</li><li>Grids and styles</li></ul></div><div class="col"><p><span>02</span>Packaging</p><ul><li>Labels, boxes, and sachets</li><li>Custom die lines</li><li>ANVISA labeling</li><li>Final artwork</li></ul></div><div class="col"><p><span>03</span>Pre-press</p><ul><li>CMYK and Pantone</li><li>Color proofs</li><li>Special finishes</li><li>Press checks</li></ul></div><div class="col"><p><span>04</span>Image</p><ul><li>Digital restoration</li><li>Pen tablet</li><li>Photoshop and Illustrator</li><li>Illustration</li></ul></div></div>
+  </section>
+
+  <footer class="foot">
+    <p class="go"><i>■</i> See the cases</p>
+    <span class="bar" aria-hidden="true"><span style="background:#00AEEF"></span><span style="background:#EC008C"></span><span style="background:#FFF200"></span><span style="background:#111"></span><span style="background:#B44A17"></span></span>
+    <a href="https://erikplacido.com.br/segmentos/design-grafico.html">erikplacido.com.br/segmentos/design-grafico.html</a>
+    <p class="note">Each case says whether the image is the real print, a recreation, or the final artwork.</p>
+  </footer>
+</main>
+</body>
+</html>

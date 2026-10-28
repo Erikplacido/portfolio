@@ -52,10 +52,10 @@ Clicar num segmento abre a página dele em `segmentos/<id>.html`. Não há mais 
 
 Cada uma das 5 páginas é só uma casca HTML (nav + `<section data-seg-hero>` + `<div data-seg-track>`, veja `segmentos/uxui.html` como referência); `shared/segment.js` lê `window.PORTFOLIO_GROUPS`/`PORTFOLIO_CASES` pelo `data-segment` do `<body>` e monta:
 
-1. **Hero** — ícone, título, descrição, KPI e dois botões: o currículo especializado daquele segmento (campo `resume` em `PORTFOLIO_GROUPS`, em `shared/cases.js`) e "Todos os segmentos". Termina num botão redondo de seta pra baixo (`.seg-scroll-cue`) que rola até o primeiro case.
+1. **Hero** — ícone, título, descrição, KPI e dois botões: o currículo A4 daquele segmento e "Todos os segmentos". O botão do currículo abre um menu com Português e English, cada um com "Ver" (página A4) e "PDF" (download). Ele lê o campo `cv` em `PORTFOLIO_GROUPS` (`shared/cases.js`): o caminho-base sem extensão, ex. `../curriculo_uxui_a4`, que resolve para `<cv>.html`, `<cv>_en.html`, `<cv>.pdf` e `<cv>_en.pdf` na raiz. Ao mudar o texto de um currículo, gere de novo o PDF correspondente (Chrome headless com `--print-to-pdf --no-pdf-header-footer`, servindo a pasta) e confira que saiu com 1 página. Termina num botão redondo de seta pra baixo (`.seg-scroll-cue`) que rola até o primeiro case.
 2. **Sequência de capas** — um `<section>` por case do grupo, 100vw×100vh, com `scroll-snap` (rola de um pro outro sem ponto intermediário), fade/escala ao entrar na tela (`IntersectionObserver` + classe `.in-view`) e parallax no fundo (desloca mais devagar que o scroll). Cada capa linka pro case completo. Em `prefers-reduced-motion`, o parallax e as transições somem e todas as capas já aparecem no estado final.
 
-Para adicionar um segmento novo: acrescente um objeto em `PORTFOLIO_GROUPS` (`id`, `label`, `icon`, `color`, `resume`, `desc`, `kpi`) e copie um dos arquivos de `segmentos/` trocando só `data-segment` e os textos do `<title>`/nav — o nome do arquivo deve ser `segmentos/<id>.html`, igual ao `id` do grupo.
+Para adicionar um segmento novo: acrescente um objeto em `PORTFOLIO_GROUPS` (`id`, `label`, `icon`, `color`, `cv`, `desc`, `kpi`) e copie um dos arquivos de `segmentos/` trocando só `data-segment` e os textos do `<title>`/nav — o nome do arquivo deve ser `segmentos/<id>.html`, igual ao `id` do grupo.
 
 ## Chat do site
 

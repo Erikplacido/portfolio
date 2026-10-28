@@ -20,6 +20,18 @@
   var scrollToEl = function(el){ window.scrollTo({ top: scrollY + el.getBoundingClientRect().top, behavior:'smooth' }) };
   if (g) document.documentElement.style.setProperty('--seg-color', g.color);
 
+  // Botão do currículo: abre um menu com a versão PT e EN, cada uma com
+  // "ver" (página A4) e "PDF" (download).
+  function cvMenu(base){
+    var row = function(lang, label, view, file){
+      return '<div class="seg-cv-row" lang="' + lang + '"><span>' + label + '</span>' +
+        '<a href="' + file + '.html">' + view + '</a>' +
+        '<a href="' + file + '.pdf" download><i class="fa-solid fa-download" aria-hidden="true"></i> PDF</a></div>';
+    };
+    return '<details class="seg-cv"><summary class="seg-btn primary"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Currículo deste segmento <i class="fa-solid fa-chevron-down seg-cv-caret" aria-hidden="true"></i></summary>' +
+      '<div class="seg-cv-menu">' + row('pt-BR', 'Português', 'Ver', base) + row('en', 'English', 'View', base + '_en') + '</div></details>';
+  }
+
   var hero = g && document.querySelector('[data-seg-hero]');
   if (hero) {
     hero.innerHTML =
@@ -29,7 +41,7 @@
       '<p class="lede">' + esc(g.desc) + '</p>' +
       '<p class="seg-hero-kpi"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>' + esc(g.kpi) + '</p>' +
       '<div class="seg-hero-actions">' +
-        (g.resume ? '<a class="seg-btn primary" href="' + g.resume + '"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Currículo deste segmento</a>' : '') +
+        (g.cv ? cvMenu(g.cv) : '') +
         '<a class="seg-btn ghost" href="' + root + 'index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Todos os segmentos</a>' +
       '</div>' +
       '<button type="button" class="seg-scroll-cue" id="seg-scroll-cue" aria-label="Rolar para ver os cases"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>';
@@ -41,6 +53,14 @@
     es: 'Ver caso completo',
     fr: 'Voir le projet'
   };
+
+  var cv = hero && hero.querySelector('.seg-cv');
+  if (cv) {
+    document.addEventListener('click', function(e){ if (cv.open && !cv.contains(e.target)) cv.open = false });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && cv.open) { cv.open = false; cv.querySelector('summary').focus() }
+    });
+  }
 
   var track = document.querySelector('[data-seg-track]');
   var cue = document.getElementById('seg-scroll-cue');

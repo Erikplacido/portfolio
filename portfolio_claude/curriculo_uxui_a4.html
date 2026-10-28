@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erik Plácido · Currículo UX/UI (A4)</title>
+<meta name="description" content="Currículo de Erik Plácido para Product Design e UX/UI: design systems, fluxos transacionais e protótipos em código, numa página A4.">
+<link rel="alternate" hreflang="en" href="curriculo_uxui_a4_en.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* One A4 sheet (210 × 297 mm). Everything is sized in mm so the screen view
+   and the PDF match. Generated with the other segment résumés; the layout
+   block is shared, the theme block below it is this segment's look. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{background:var(--desk);font-family:var(--sans);color:var(--ink);padding:0 0 10mm}
+@page{size:A4;margin:0}
+a{color:inherit}
+
+/* screen-only toolbar: back to the segment, PT/EN, PDF download */
+.cvbar{width:210mm;margin:0 auto;padding:4mm 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 13px/1 'Inter',system-ui,sans-serif}
+.cvbar a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:99px;text-decoration:none;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.cvbar a:hover{background:rgba(255,255,255,.2)}
+.cvbar .sp{flex:1}
+.cvbar .lang{display:inline-flex;border-radius:99px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.cvbar .lang a{border:0;border-radius:0;background:transparent}
+.cvbar .lang a[aria-current]{background:#fff;color:#111}
+.cvbar a.dl{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (max-width:820px){.cvbar{width:auto;padding:12px 16px}}
+@media screen and (max-width:820px){body{overflow-x:auto}}
+
+.sheet{position:relative;width:210mm;height:297mm;margin:0 auto;overflow:hidden;background:var(--paper);
+  box-shadow:0 20px 60px rgba(0,0,0,.45);padding:10mm 11mm 8mm;
+  display:grid;grid-template-rows:auto auto 1fr auto auto;gap:4.2mm}
+.sheet > *{position:relative}
+
+.top{display:grid;grid-template-columns:34mm 1fr 54mm;gap:5mm;align-items:stretch}
+.avatar{position:relative;display:flex;min-height:0}
+.avatar img{display:block;width:100%;flex:1;min-height:0;object-fit:cover;object-position:50% 20%}
+.who{display:flex;flex-direction:column;justify-content:center;gap:2.2mm}
+.name{font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:1.4mm}
+.chips span{white-space:nowrap}
+.contact{display:flex;flex-direction:column;gap:1.8mm;padding:3.2mm 3.6mm}
+.ct{display:grid;grid-template-columns:9mm 1fr;align-items:baseline;font-size:7.4pt;line-height:1.3}
+.ct span{font:700 5.8pt/1 var(--mono);letter-spacing:.12em;opacity:.6}
+.ct a{text-decoration:none;word-break:break-all}
+.status{margin-top:auto;font:600 6.4pt/1.35 var(--mono);letter-spacing:.03em}
+
+.sum{display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start}
+.sum p{font-size:8.5pt;line-height:1.47}
+.label{font:700 6.4pt/1 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.sum .label{padding-top:.9mm}
+
+.main{display:grid;grid-template-columns:1fr 80mm;gap:6mm;min-height:0}
+.exp{display:flex;flex-direction:column;min-height:0}
+.h{display:flex;align-items:baseline;gap:2.4mm;margin-bottom:2.8mm;text-transform:uppercase}
+.h small{margin-left:auto;font:500 6.2pt/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.job{position:relative;padding:0 0 3.4mm}
+.job:last-of-type{padding-bottom:0}
+.job .meta{display:flex;justify-content:space-between;gap:3mm;align-items:baseline}
+.job h3{font:700 9pt/1.25 var(--sans)}
+.job .yr{flex:none;font:700 6.4pt/1 var(--mono);letter-spacing:.06em}
+.job .org{font:600 7.2pt/1.3 var(--mono);margin:.8mm 0 1.5mm}
+.job ul{list-style:none;display:grid;gap:.9mm}
+.job li{position:relative;padding-left:3mm;font-size:7.5pt;line-height:1.4}
+.job li::before{position:absolute;left:0;top:0}
+.job li b{font-weight:600}
+.edu{margin-top:auto;padding-top:2.4mm;display:grid;grid-template-columns:repeat(var(--edu,2),1fr);gap:2.4mm}
+.edu div{padding:2.2mm 2.6mm}
+.edu b{display:block;font:700 7pt/1.3 var(--sans)}
+.edu span{display:block;margin-top:.7mm;font:500 6.2pt/1.35 var(--mono);opacity:.7}
+
+.works{display:flex;flex-direction:column;min-height:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;align-content:start}
+.slot{position:relative;display:grid;gap:1mm;padding:1.4mm 1.4mm 1.7mm}
+.slot .im{position:relative;aspect-ratio:var(--ar,1.8/1);overflow:hidden;background:#000}
+.slot .im img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .tag{position:absolute;left:1mm;top:1mm;font:700 5.2pt/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:.9mm 1.3mm}
+.slot b{font:700 7.3pt/1.2 var(--sans);padding:0 .4mm}
+.slot small{font-size:6pt;line-height:1.3;padding:0 .4mm;opacity:.75}
+
+.skills .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.col{padding:2.4mm 3mm 2.6mm}
+.col p{font:700 7.2pt/1 var(--sans);margin-bottom:2.2mm}
+.col ul{list-style:none;display:grid;gap:1.05mm}
+.col li{position:relative;padding-left:3mm;font-size:7pt;line-height:1.3}
+.col li::before{position:absolute;left:0}
+
+.foot{display:flex;align-items:center;justify-content:space-between;gap:4mm;padding-top:3mm}
+.foot .go{font-weight:700;white-space:nowrap}
+.foot a{text-decoration:none;font:700 7.4pt/1 var(--mono);white-space:nowrap}
+.foot p.note{font-size:5.8pt;line-height:1.35;max-width:64mm;text-align:right;opacity:.65}
+@media print{body{background:none;padding:0}.sheet{box-shadow:none;margin:0}.cvbar{display:none}}
+
+/* ===== theme: uxui ===== */
+:root{--desk:#1B2430;--paper:#F7F8FA;--panel:#FFFFFF;--line:#DCE1E8;--ink:#0F172A;--muted:#5B6576;
+  --accent:#0F766E;--accent-2:#14B8A6;--red:#E5484D;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+.sheet{background:radial-gradient(circle,rgba(15,23,42,.10) .25mm,transparent .3mm) 0 0/4mm 4mm,var(--paper)}
+.sheet::before,.sheet::after{content:"";position:absolute;width:8mm;height:8mm;border:0 solid var(--red);pointer-events:none}
+.sheet::before{left:5mm;top:5mm;border-left-width:.3mm;border-top-width:.3mm}
+.sheet::after{right:5mm;bottom:5mm;border-right-width:.3mm;border-bottom-width:.3mm}
+.avatar{background:var(--panel);border:.3mm solid var(--line);border-radius:3mm;padding:1.6mm}
+.avatar img{border-radius:2mm}
+.avatar .dim{position:absolute;left:0;right:0;bottom:-3.2mm;text-align:center;font:500 5.2pt/1 var(--mono);color:var(--red)}
+.avatar .dim::before{content:"";position:absolute;left:1mm;right:1mm;top:50%;border-top:.25mm solid var(--red);z-index:-1}
+.avatar .dim span{background:var(--paper);padding:0 1mm}
+.who .label{color:var(--accent)}
+.name{font:800 25pt/.95 var(--sans);letter-spacing:-.03em;color:var(--ink)}
+.name em{font-style:normal;color:var(--accent)}
+.role{font:600 8.8pt/1.3 var(--sans);color:var(--ink)}
+.role em{font-style:normal;color:var(--accent)}
+.chips span{font:600 6.4pt/1 var(--mono);padding:1.3mm 2.2mm;border-radius:99px;background:#E6F4F1;color:var(--accent);border:.25mm solid #BFE3DC}
+.contact{background:var(--panel);border:.3mm solid var(--line);border-radius:3mm}
+.contact .hd{font:700 6.4pt/1 var(--mono);color:var(--muted);letter-spacing:.06em;margin-bottom:.6mm}
+.contact .hd i{font-style:normal;color:var(--accent)}
+.ct span{color:var(--muted);opacity:1}
+.status{color:var(--accent)}
+.status::before{content:"●  ";color:var(--accent-2)}
+.sum{background:var(--panel);border:.3mm solid var(--line);border-left:1mm solid var(--accent);border-radius:2mm;padding:2.8mm 4mm}
+.sum .label{color:var(--accent)}
+.sum p{color:#2B3445}
+.sum b{color:var(--ink);font-weight:600}
+.h{font:800 9.5pt/1 var(--sans);letter-spacing:-.01em;color:var(--ink);text-transform:none}
+.h::before{content:attr(data-token);font:500 6.2pt/1 var(--mono);color:var(--accent);letter-spacing:0;order:2;margin-left:1mm}
+.h small{order:3}
+.job{padding-left:5mm;border-left:.3mm solid var(--line);margin-left:1.2mm}
+.job::before{content:"";position:absolute;left:-1.35mm;top:.7mm;width:2.4mm;height:2.4mm;border-radius:50%;background:var(--paper);border:.5mm solid var(--accent)}
+.job.on::before{background:var(--accent)}
+.job h3{color:var(--ink)}
+.job .yr{color:var(--accent)}
+.job .org{color:var(--muted)}
+.job li{color:#3A4456}
+.job li::before{content:"–";color:var(--accent)}
+.job li b{color:var(--ink)}
+.edu div{background:var(--panel);border:.3mm solid var(--line);border-radius:2mm}
+.edu b{color:var(--ink)}
+.slot{background:var(--panel);border:.3mm solid var(--line);border-radius:2.4mm}
+.slot .im{border-radius:1.6mm}
+.slot .tag{border-radius:99px;background:rgba(255,255,255,.94);color:var(--ink)}
+.slot .tag.real{color:var(--accent)}
+.slot .tag.concept{color:#7C3AED}
+.slot b{color:var(--ink)}
+.slot small{color:var(--muted)}
+.col{background:var(--panel);border:.3mm solid var(--line);border-radius:2.4mm}
+.col p{color:var(--accent);font-family:var(--mono);font-size:6.8pt}
+.col li{color:#2B3445}
+.col li::before{content:"";top:1.1mm;width:1.5mm;height:1.5mm;border-radius:.4mm;background:var(--accent);opacity:.35}
+.foot{border-top:.3mm solid var(--line)}
+.foot .go{font:800 8pt/1 var(--sans);color:var(--ink)}
+.foot .go i{font-style:normal;color:var(--accent)}
+.foot a{color:var(--accent)}
+.foot p.note{color:var(--muted);opacity:1}
+.slot .im{--ar:1.22/1}
+</style>
+</head>
+<body>
+<nav class="cvbar" aria-label="Currículo"><a href="segmentos/uxui.html">← Voltar ao portfólio</a><span class="sp"></span><span class="lang"><a href="curriculo_uxui_a4.html" hreflang="pt-BR" aria-current="page">PT</a><a href="curriculo_uxui_a4_en.html" hreflang="en">EN</a></span><a class="dl" href="curriculo_uxui_a4.pdf" download>↓ Baixar PDF</a></nav>
+<main class="sheet">
+
+  <header class="top">
+    <div class="avatar">
+      <img src="assets/erik-placido-foto.png" alt="Foto de Erik Plácido">
+      
+    </div>
+    <div class="who">
+      <p class="label">Senior Product Designer</p>
+      <h1 class="name">Erik<br>Plácido<em>.</em></h1>
+      <p class="role">UI/UX &amp; AX · <em>Design Systems</em></p>
+      <div class="chips"><span>Design Systems</span><span>Fintech &amp; transacional</span><span>Protótipos em código</span></div>
+    </div>
+    <div class="contact"><p class="hd"><i>&lt;Contact</i> /&gt;</p><p class="ct"><span>MAIL</span><a href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a></p><p class="ct"><span>TEL</span><a href="tel:+5511985768545">+55 11 98576-8545</a></p><p class="ct"><span>WEB</span><a href="https://erikplacido.com.br">erikplacido.com.br</a></p><p class="ct"><span>LOC</span>São Paulo, SP · Brasil</p><p class="status">Aberto a vagas sênior e lead<br>remoto e São Paulo</p></div>
+  </header>
+
+  <section class="sum">
+    <p class="label" data-n="">Resumo</p>
+    <p>Product designer que desenha e também programa: <b>Design Systems</b> com tokens no Figma, <b>fluxos transacionais</b> (checkout, faturamento e conciliação) e <b>protótipos funcionais</b> em código. Usa IA generativa (LLMs, Cursor, Google AI Studio) para validar jornadas cedo com stakeholders e entrega um handoff que a engenharia consegue usar.</p>
+  </section>
+
+  <div class="main">
+    <section class="exp">
+      <h2 class="h" data-n="" data-token="--experience">Experiência <small>2012 – hoje</small></h2>
+      <article class="job on" data-n="1"><div class="meta"><h3>UI/UX &amp; AX Lead · Consultor de Produto Digital</h3><span class="yr">2018 – HOJE</span></div><p class="org">Studio Erik Placido · Munchausen Criações</p><ul><li><b>Design Systems:</b> bibliotecas no Figma com variáveis e tokens semânticos, em paridade com o Storybook.</li><li><b>Fluxos transacionais:</b> onboarding progressivo, checkout com Stripe Connect e faturamento automatizado.</li><li><b>Produto real de ponta a ponta:</b> sistema de vistoria securitária, do fluxo à interface, ao app web, à API e aos laudos.</li><li><b>Prototipagem com IA:</b> Cursor, LLMs e APIs para testar a jornada antes do desenvolvimento.</li></ul></article><article class="job" data-n="2"><div class="meta"><h3>Senior Product &amp; UI/UX Designer</h3><span class="yr">2021 – 2025</span></div><p class="org">Blue Facility Services · Sydney e Melbourne</p><ul><li><b>Marketplace de serviços:</b> app do cliente, app de campo com GPS em tempo real e console de operações.</li><li><b>Precificação ao vivo</b> no agendamento, calculada pela metragem, para reduzir atrito na contratação.</li><li><b>Um design system</b> para desktop, tablet e mobile, com biblioteca de componentes reutilizáveis.</li></ul></article><article class="job" data-n="3"><div class="meta"><h3>Diretor de Arte · Conferências de Tecnologia</h3><span class="yr">2012 – 2014</span></div><p class="org">InfoQ · QCon São Paulo e Rio</p><ul><li><b>Identidade e sinalização</b> para conferências de engenharia de software, orientando o fluxo de milhares de participantes.</li></ul></article>
+      <div class="edu" style="--edu:2"><div><b>Google UX Design Certificate</b><span>Google / Coursera · 2023 – 2024</span></div><div><b>Bacharelado em Design Gráfico</b><span>FMU / FIAM-FAAM · 2003 – 2006</span></div></div>
+    </section>
+
+    <section class="works">
+      <h2 class="h" data-n="" data-token="--cases">Cases <small>6 projetos</small></h2>
+      <div class="grid"><div class="slot"><div class="im"><img src="blue-services/assets/home_cleaning_banner-1024x683.webp" alt=""><span class="tag real">Real</span></div><b>Blue Services</b><small>Marketplace com diária ao vivo e GPS</small></div><div class="slot"><div class="im"><img src="vistorias-risco/assets/card.jpg" alt=""><span class="tag real">Real</span></div><b>Vistorias de Risco</b><small>Vistoria com fotos geolocalizadas e laudo</small></div><div class="slot"><div class="im"><img src="editora-terceiro-nome/assets/card.jpg" alt=""><span class="tag real">Cliente</span></div><b>Editora Terceiro Nome</b><small>Catálogo de 178 livros, busca e migração</small></div><div class="slot"><div class="im"><img src="conta-simples-ledger/assets/card.jpg" alt=""><span class="tag concept">Conceito</span></div><b>Conta Simples · Ledger</b><small>Componente documentado do token ao código</small></div><div class="slot"><div class="im"><img src="meliuz-fatura/assets/card.jpg" alt=""><span class="tag concept">Conceito</span></div><b>Méliuz · Fatura</b><small>Parcelamento com juros, IOF e CET claros</small></div><div class="slot"><div class="im"><img src="caju-cartao/assets/card.jpg" alt=""><span class="tag concept">Conceito</span></div><b>Caju · Cartão</b><small>Ativação por NFC, QR ou código, 5 edge cases</small></div></div>
+    </section>
+  </div>
+
+  <section class="skills">
+    <h2 class="h" data-n="" data-token="--stack">Stack <small>competências</small></h2>
+    <div class="cols"><div class="col"><p>design.system</p><ul><li>Figma Variables</li><li>Tokens Studio</li><li>Handoff no Storybook</li><li>Documentação de componentes</li></ul></div><div class="col"><p>product.flow</p><ul><li>Fluxos transacionais</li><li>Onboarding progressivo</li><li>Testes de usabilidade</li><li>iOS HIG e Material 3</li></ul></div><div class="col"><p>a11y.states</p><ul><li>Contraste WCAG</li><li>Estados e edge cases</li><li>Hierarquia de informação</li><li>Layout responsivo</li></ul></div><div class="col"><p>code.ai</p><ul><li>HTML, CSS e JS</li><li>Protótipos em React</li><li>Cursor e LLMs</li><li>Google AI Studio</li></ul></div></div>
+  </section>
+
+  <footer class="foot">
+    <p class="go"><i>→</i> Veja os cases interativos</p>
+    
+    <a href="https://erikplacido.com.br/segmentos/uxui.html">erikplacido.com.br/segmentos/uxui.html</a>
+    <p class="note">Cases marcados como conceito foram feitos para o portfólio, sem vínculo com as marcas citadas.</p>
+  </footer>
+</main>
+</body>
+</html>
