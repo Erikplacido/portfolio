@@ -70,6 +70,12 @@ figcaption b{color:var(--pf-ink)}
 .pf-cases a::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--pf-ink-2))}
 .pf-cases a:hover{color:var(--pf-ink)}
 .pf-cases a[aria-current="page"]{background:var(--pf-paper);color:var(--pf-ink);box-shadow:0 1px 3px rgba(16,22,31,.14)}
+/* other themes: their icon, coloured, opens the segment page; a little air apart from the dots */
+.pf-cases a.pf-seg{padding:6px 9px;color:var(--c,var(--pf-ink-2));min-height:26px}
+.pf-cases a.pf-seg::before{display:none}
+.pf-cases a.pf-seg i{font-size:12px;line-height:1}
+.pf-cases a.pf-seg:hover{background:var(--pf-paper)}
+.pf-cases a.pf-seg+a:not(.pf-seg),.pf-cases a:not(.pf-seg)+a.pf-seg{margin-left:6px}
 .pf-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(var(--p,0))}
 @media(max-width:1080px){.pf-links{display:none}.pf-cases{margin-left:auto}}
 @media(max-width:560px){.pf-id span{display:none}.pf-cases a{padding:6px 10px}

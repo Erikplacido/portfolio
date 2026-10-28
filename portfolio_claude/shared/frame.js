@@ -77,14 +77,54 @@
   }
 
   // 2. Renderers
+  // Case switcher: the cases of the current theme show as dots; every other theme collapses
+  // to its icon, which opens that theme's segment page. Pages without a theme list every case.
+  var GROUPS = window.PORTFOLIO_GROUPS || [];
+  var GROUP_NAMES = {
+    'uxui':           { en: 'UX/UI', es: 'UX/UI', fr: 'UX/UI' },
+    'tabletop':       { en: 'Tabletop', es: 'Tabletop', fr: 'Tabletop' },
+    'games':          { en: 'Digital Games', es: 'Videojuegos', fr: 'Jeux vidéo' },
+    'design-grafico': { en: 'Graphic Design', es: 'Diseño Gráfico', fr: 'Design graphique' },
+    'audiovisual':    { en: 'Film & TV', es: 'Audiovisual', fr: 'Audiovisuel' }
+  };
+  function groupName(g){
+    var lang = (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.getLang) ? window.PORTFOLIO_I18N.getLang() : 'pt';
+    return (GROUP_NAMES[g.id] && GROUP_NAMES[g.id][lang]) || g.label;
+  }
+  function currentGroup(){
+    var seg = document.body.getAttribute('data-segment');
+    if (seg) return seg;
+    var c = CASES.filter(function(x){ return x.slug===current })[0];
+    return c ? c.group : null;
+  }
+  function ensureIcons(){
+    if ($('link[href*="font-awesome"]')) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+    document.head.appendChild(l);
+  }
   function renderCasesSwitcher() {
     var sw = $('.pf-cases[data-auto]');
     if (!sw || !CASES.length) return;
-    sw.innerHTML = CASES.map(function(c){
+    var caseLink = function(c){
       var title = c.displayTitle || c.short || c.title;
       return '<a href="'+url(c)+'" style="--c:'+c.color+'"'+(c.slug===current?' aria-current="page"':'')+'>'+esc(title)+'</a>';
-    }).join('');
-    Array.prototype.forEach.call(sw.querySelectorAll('a:not([aria-current])'),function(a){ a.title = a.textContent });
+    };
+    var here = currentGroup();
+    if (here && GROUPS.length) {
+      ensureIcons();
+      sw.innerHTML = GROUPS.map(function(g){
+        var list = CASES.filter(function(c){ return c.group===g.id });
+        if (!list.length) return '';
+        if (g.id===here) return list.map(caseLink).join('');
+        var name = esc(groupName(g));
+        return '<a class="pf-seg" href="'+ROOT+'segmentos/'+g.id+'.html" style="--c:'+g.color+'" aria-label="'+name+' ('+list.length+')"><i class="fa-solid '+esc(g.icon)+'" aria-hidden="true"></i></a>';
+      }).join('');
+    } else {
+      sw.innerHTML = CASES.map(caseLink).join('');
+    }
+    Array.prototype.forEach.call(sw.querySelectorAll('a:not([aria-current])'),function(a){ a.title = a.getAttribute('aria-label') || a.textContent });
   }
 
   function renderNextCase() {
