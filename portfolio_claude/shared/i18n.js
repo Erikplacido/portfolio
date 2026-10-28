@@ -453,19 +453,124 @@
         fr: 'Couvertures pour WMF Martins Fontes et les 3 premiers livres de Mauricio de Sousa restaurés en un volume.'
       }
     },
-    'publicidade': {
-      title: { pt: 'Publicidade e TV', en: 'Advertising & TV Props', es: 'Publicidad y TV', fr: 'Publicité & Séries TV' },
+    'magal-e-os-formigas': {
+      title: { pt: 'Magal e os Formigas', en: 'Magal e os Formigas', es: 'Magal e os Formigas', fr: 'Magal e os Formigas' },
       tags: {
-        pt: ['Design gráfico de cena', 'Publicidade', 'Séries e TV'],
-        en: ['Graphic prop design', 'Commercials', 'TV & streaming'],
-        es: ['Diseño gráfico de atrezzo', 'Publicidad', 'Series de TV'],
-        fr: ['Accessoires graphiques', 'Publicité', 'Séries TV']
+        pt: ['Cinema', 'Design gráfico de cena', 'Globo Filmes'],
+        en: ['Feature film', 'Graphic prop design', 'Globo Filmes'],
+        es: ['Cine', 'Diseño gráfico de atrezzo', 'Globo Filmes'],
+        fr: ['Cinéma', 'Accessoires graphiques', 'Globo Filmes']
       },
       blurb: {
-        pt: 'Rótulos, cartazes, paredes, viaturas e mapas que não existem, feitos para aguentar o close da câmera.',
-        en: 'Fictional labels, posters, vehicle liveries, and maps crafted to withstand high-res camera close-ups.',
-        es: 'Etiquetas, carteles, murales, patrullas y mapas ficticios diseñados para resistir el primer plano de la cámara.',
-        fr: 'Étiquettes, affiches, fresques, véhicules et cartes fictives conçus pour résister au gros plan caméra.'
+        pt: 'Pôster, capa de disco e quadros de Sidney Magal para o cenário de um longa da Globo Filmes.',
+        en: 'Poster, record sleeve, and framed pictures of Sidney Magal for the set of a Globo Filmes feature.',
+        es: 'Póster, portada de disco y cuadros de Sidney Magal para el set de un largometraje de Globo Filmes.',
+        fr: 'Affiche, pochette de disque et cadres de Sidney Magal pour le décor d’un long métrage Globo Filmes.'
+      }
+    },
+    'invertidamente': {
+      title: { pt: 'Invertidamente', en: 'Invertidamente', es: 'Invertidamente', fr: 'Invertidamente' },
+      tags: {
+        pt: ['TV', 'Design gráfico de cena', 'Objetos impressos'],
+        en: ['TV', 'Graphic prop design', 'Printed props'],
+        es: ['TV', 'Diseño gráfico de atrezzo', 'Objetos impresos'],
+        fr: ['TV', 'Accessoires graphiques', 'Objets imprimés']
+      },
+      blurb: {
+        pt: 'Objetos impressos com faca, lousas e pôsteres para um cômodo que gira de cabeça para baixo no Em Família com Eliana.',
+        en: 'Die-cut printed props, chalkboards, and posters for a room that turns upside down on Em Família com Eliana.',
+        es: 'Objetos impresos con troquel, pizarras y pósteres para una habitación que gira al revés en Em Família com Eliana.',
+        fr: 'Objets imprimés à découpe, ardoises et affiches pour une pièce qui se retourne dans Em Família com Eliana.'
+      }
+    },
+    'que-seja-doce': {
+      title: { pt: 'Que Seja Doce', en: 'Que Seja Doce', es: 'Que Seja Doce', fr: 'Que Seja Doce' },
+      tags: {
+        pt: ['Direção de arte', 'GNT', 'Silhuetas'],
+        en: ['Art direction', 'GNT', 'Silhouettes'],
+        es: ['Dirección de arte', 'GNT', 'Siluetas'],
+        fr: ['Direction artistique', 'GNT', 'Silhouettes']
+      },
+      blurb: {
+        pt: 'Abertura em teatro de sombras, painéis vazados e cartas de prova para uma competição de confeitaria.',
+        en: 'A shadow-puppet opening, cut-out set panels, and challenge cards for a baking competition.',
+        es: 'Apertura en teatro de sombras, paneles calados y cartas de prueba para una competencia de repostería.',
+        fr: 'Générique en théâtre d’ombres, panneaux ajourés et cartes d’épreuve pour un concours de pâtisserie.'
+      }
+    },
+    'credo-que-delicia': {
+      title: { pt: 'Credo, que delícia!', en: 'Credo, que delícia!', es: 'Credo, que delícia!', fr: 'Credo, que delícia!' },
+      tags: {
+        pt: ['GNT', 'Marca no cenário', 'Grafismos de tela'],
+        en: ['GNT', 'Branding on set', 'On-screen graphics'],
+        es: ['GNT', 'Marca en el set', 'Grafismos en pantalla'],
+        fr: ['GNT', 'Marque sur le plateau', 'Habillage écran']
+      },
+      blurb: {
+        pt: 'Uma marca em traço de néon aplicada ao azulejo, aos ícones, ao avental bordado e às provas de um programa de confeitaria.',
+        en: 'A neon-line wordmark carried onto tiles, icons, an embroidered apron, and challenge titles for a baking show.',
+        es: 'Una marca en trazo de neón llevada al azulejo, los íconos, el delantal bordado y las pruebas de un programa de repostería.',
+        fr: 'Un logo en trait néon décliné sur le carrelage, les pictos, le tablier brodé et les épreuves d’une émission de pâtisserie.'
+      }
+    },
+    'se-sobreviver-case': {
+      title: { pt: 'Se Sobreviver, Case', en: 'Se Sobreviver, Case', es: 'Se Sobreviver, Case', fr: 'Se Sobreviver, Case' },
+      tags: {
+        pt: ['Reality', 'Mapa ilustrado', 'Manual de sobrevivência'],
+        en: ['Reality', 'Illustrated map', 'Survival manual'],
+        es: ['Reality', 'Mapa ilustrado', 'Manual de supervivencia'],
+        fr: ['Téléréalité', 'Carte illustrée', 'Manuel de survie']
+      },
+      blurb: {
+        pt: 'O mapa da ilha em 21 versões, uma para cada combinação de abrigos, e um manual de sobrevivência no mesmo papel.',
+        en: 'The island map in 21 versions, one per shelter combination, plus a survival manual on the same paper.',
+        es: 'El mapa de la isla en 21 versiones, una por combinación de refugios, y un manual de supervivencia en el mismo papel.',
+        fr: 'La carte de l’île en 21 versions, une par combinaison d’abris, et un manuel de survie sur le même papier.'
+      }
+    },
+    'rio-shore': {
+      title: { pt: 'Rio Shore', en: 'Rio Shore', es: 'Rio Shore', fr: 'Rio Shore' },
+      tags: {
+        pt: ['Reality', 'Papel de parede', 'Baralho'],
+        en: ['Reality', 'Wallpaper', 'Card deck'],
+        es: ['Reality', 'Papel tapiz', 'Baraja'],
+        fr: ['Téléréalité', 'Papier peint', 'Jeu de cartes']
+      },
+      blurb: {
+        pt: 'Paredes de até 13 metros divididas em folhas de impressão, o piso do calçadão de Copacabana e um baralho de Verdade ou Desafio.',
+        en: 'Walls up to 13 m split into print sheets, a Copacabana boardwalk floor, and a Truth or Dare deck.',
+        es: 'Paredes de hasta 13 m divididas en pliegos de impresión, el piso del paseo de Copacabana y una baraja de Verdad o Reto.',
+        fr: 'Murs jusqu’à 13 m découpés en lés d’impression, un sol façon promenade de Copacabana et un jeu Action ou Vérité.'
+      }
+    },
+    'match-nas-estrelas': {
+      title: { pt: 'Match nas Estrelas', en: 'Match nas Estrelas', es: 'Match nas Estrelas', fr: 'Match nas Estrelas' },
+      tags: {
+        pt: ['Streaming', 'Logo', 'Baralho'],
+        en: ['Streaming', 'Logo', 'Card deck'],
+        es: ['Streaming', 'Logo', 'Baraja'],
+        fr: ['Streaming', 'Logo', 'Jeu de cartes']
+      },
+      blurb: {
+        pt: 'Logo e baralho de carinhos para uma produção Amazon Original, desenhados como constelações.',
+        en: 'Logo and a deck of affection cards for an Amazon Original, drawn as constellations.',
+        es: 'Logo y baraja de caricias para una producción Amazon Original, dibujados como constelaciones.',
+        fr: 'Logo et jeu de cartes de tendresse pour un Amazon Original, dessinés comme des constellations.'
+      }
+    },
+    'ram-rotulos': {
+      title: { pt: 'RAM · Rótulos de bar', en: 'RAM · Bar labels', es: 'RAM · Etiquetas de bar', fr: 'RAM · Étiquettes de bar' },
+      tags: {
+        pt: ['Publicidade', 'Marcas fictícias', 'Rótulos'],
+        en: ['Advertising', 'Fictional brands', 'Labels'],
+        es: ['Publicidad', 'Marcas ficticias', 'Etiquetas'],
+        fr: ['Publicité', 'Marques fictives', 'Étiquettes']
+      },
+      blurb: {
+        pt: '18 rótulos de bebidas inventadas, de uísque japonês a água francesa, para a prateleira de um bar num filme da RAM.',
+        en: '18 labels for invented drinks, from Japanese whisky to French water, for a bar shelf in a RAM commercial.',
+        es: '18 etiquetas de bebidas inventadas, del whisky japonés al agua francesa, para el estante de un bar en un comercial de RAM.',
+        fr: '18 étiquettes de boissons inventées, du whisky japonais à l’eau française, pour l’étagère d’un bar dans un film RAM.'
       }
     },
     'vistorias-risco': {

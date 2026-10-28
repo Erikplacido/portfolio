@@ -124,15 +124,14 @@ window.PORTFOLIO_CASES_ALL = [
     blurb: 'Projetos de capa para a WMF Martins Fontes e restauração minuciosa dos 3 primeiros livros históricos de Mauricio de Sousa.'
   },
   {
-    slug: 'publicidade',
-    draft: true,
+    slug: 'magal-e-os-formigas',
     group: 'audiovisual',
-    title: 'Publicidade e TV',
-    short: 'Publicidade',
-    color: '#C01A6E',                      // mesma cor do --accent da página
-    cover: 'publicidade/assets/card.jpg',
-    tags: ['Design gráfico de cena', 'Publicidade', 'Séries e TV'],
-    blurb: 'Rótulos, embalagens cenográficas, documentos fictícios e cartazes de época projetados para sustentar closes em alta resolução.'
+    title: 'Magal e os Formigas',
+    color: '#B23A1E',                      // mesma cor do --accent da página
+    cover: 'magal-e-os-formigas/assets/card.jpg',
+    coverMobile: 'magal-e-os-formigas/assets/capa_mobile.jpg',
+    tags: ['Cinema', 'Design gráfico de cena', 'Globo Filmes'],
+    blurb: 'Pôster, capa de disco e quadros de Sidney Magal para o cenário de um longa da Globo Filmes.'
   },
   {
     slug: 'vistorias-risco',
@@ -247,6 +246,79 @@ window.PORTFOLIO_CASES_ALL = [
     cover: 'editora-terceiro-nome/assets/card.jpg',
     tags: ['Direção de arte', 'UI', 'Desenvolvimento'],
     blurb: 'Catálogo de 178 livros tirado do Adobe Muse: direção editorial, busca sem acento e migração auditada, sem inventar dados.'
+  },
+  {
+    slug: 'invertidamente',
+    group: 'audiovisual',
+    title: 'Invertidamente',
+    color: '#D7263D',                      // mesma cor do --accent da página
+    cover: 'invertidamente/assets/card.jpg',
+    coverMobile: 'invertidamente/assets/capa_mobile.jpg',
+    tags: ['TV', 'Design gráfico de cena', 'Objetos impressos'],
+    blurb: 'Objetos impressos com faca, lousas e pôsteres para um cômodo que gira de cabeça para baixo no Em Família com Eliana.'
+  },
+  {
+    slug: 'que-seja-doce',
+    group: 'audiovisual',
+    title: 'Que Seja Doce',
+    color: '#9B2F55',                      // mesma cor do --accent da página
+    cover: 'que-seja-doce/assets/card.jpg',
+    coverMobile: 'que-seja-doce/assets/capa_mobile.jpg',
+    tags: ['Direção de arte', 'GNT', 'Silhuetas'],
+    blurb: 'Abertura em teatro de sombras, painéis vazados e cartas de prova para uma competição de confeitaria.'
+  },
+  {
+    slug: 'credo-que-delicia',
+    group: 'audiovisual',
+    title: 'Credo, que delícia!',
+    short: 'Credo, que delícia',
+    color: '#E5197E',                      // mesma cor do --accent da página
+    cover: 'credo-que-delicia/assets/card.jpg',
+    coverMobile: 'credo-que-delicia/assets/capa_mobile.jpg',
+    tags: ['GNT', 'Marca no cenário', 'Grafismos de tela'],
+    blurb: 'Uma marca em traço de néon aplicada ao azulejo, aos ícones, ao avental bordado e às provas de um programa de confeitaria.'
+  },
+  {
+    slug: 'se-sobreviver-case',
+    group: 'audiovisual',
+    title: 'Se Sobreviver, Case',
+    short: 'Se Sobreviver',
+    color: '#B4562A',                      // mesma cor do --accent da página
+    cover: 'se-sobreviver-case/assets/card.jpg',
+    coverMobile: 'se-sobreviver-case/assets/capa_mobile.jpg',
+    tags: ['Reality', 'Mapa ilustrado', 'Manual de sobrevivência'],
+    blurb: 'O mapa da ilha em 21 versões, uma para cada combinação de abrigos, e um manual de sobrevivência no mesmo papel.'
+  },
+  {
+    slug: 'rio-shore',
+    group: 'audiovisual',
+    title: 'Rio Shore',
+    color: '#2F6DB5',                      // mesma cor do --accent da página
+    cover: 'rio-shore/assets/card.jpg',
+    coverMobile: 'rio-shore/assets/capa_mobile.jpg',
+    tags: ['Reality', 'Papel de parede', 'Baralho'],
+    blurb: 'Paredes de até 13 metros divididas em folhas de impressão, o piso do calçadão de Copacabana e um baralho de Verdade ou Desafio.'
+  },
+  {
+    slug: 'match-nas-estrelas',
+    group: 'audiovisual',
+    title: 'Match nas Estrelas',
+    color: '#2A3480',                      // mesma cor do --accent da página
+    cover: 'match-nas-estrelas/assets/card.jpg',
+    coverMobile: 'match-nas-estrelas/assets/capa_mobile.jpg',
+    tags: ['Streaming', 'Logo', 'Baralho'],
+    blurb: 'Logo e baralho de carinhos para uma produção Amazon Original, desenhados como constelações.'
+  },
+  {
+    slug: 'ram-rotulos',
+    group: 'audiovisual',
+    title: 'RAM · Rótulos de bar',
+    short: 'RAM · Rótulos',
+    color: '#9B1B30',                      // mesma cor do --accent da página
+    cover: 'ram-rotulos/assets/card.jpg',
+    coverMobile: 'ram-rotulos/assets/capa_mobile.jpg',
+    tags: ['Publicidade', 'Marcas fictícias', 'Rótulos'],
+    blurb: '18 rótulos de bebidas inventadas, de uísque japonês a água francesa, para a prateleira de um bar num filme da RAM.'
   }
 ];
 

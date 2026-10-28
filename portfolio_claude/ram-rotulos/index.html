@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAM · Rótulos de bar · Design gráfico de cena</title>
+<meta name="description" content="Design gráfico de cena para um filme publicitário da RAM, de 2023: 18 rótulos de bebidas inventadas para a prateleira de um bar, com origem, ano, teor e medida de impressão.">
+<meta property="og:title" content="RAM · Rótulos de bar — design gráfico de cena">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Below: the case's own stages. Bar-counter stage: low, warm light. */
+:root{
+  --accent:#9B1B30; --hl:#F0DF0A;
+  --dk-1:#4A2737; --dk-2:#2A1620; --dk-3:#170B11; --dk-ink:#D8C2CC;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== cover ===== */
+.pc-cover{background:#2A1620}
+.pc-cover img{width:100%;height:100%;object-fit:cover}
+
+/* ===== stages ===== */
+.st-dk{background:radial-gradient(120% 90% at 50% 0,var(--dk-1),var(--dk-2) 58%,var(--dk-3))}
+.st-gesso{background:#ECE7DF}
+.st-dk .pill{background:rgba(255,255,255,.14);color:#fff}
+.st-dk .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-gesso .pill{background:rgba(255,255,255,.8)}
+.st-gesso .pill.y{background:var(--hl)}
+
+/* ===== video as it aired ===== */
+.vd{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.vd video,.vd iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.vd-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-top:16px}
+.vd-row p{font-size:14px;line-height:1.5;color:var(--vd-ink,#D9CDD3);max-width:60ch}
+.vd-jump{display:flex;flex-wrap:wrap;gap:8px}
+.vd-jump button{border:0;padding:9px 14px;border-radius:99px;background:var(--hl);color:var(--pf-ink);font:600 13px/1 var(--pf-sans);font-variant-numeric:tabular-nums;transition:transform .3s var(--snap)}
+.vd-jump button:hover{transform:translateY(-2px)}
+.tr-btn{position:absolute;inset:0;border:0;padding:0;background:#000;display:grid;place-items:center;color:#fff}
+.tr-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;transition:opacity .4s,transform .8s var(--ease)}
+.tr-btn:hover img{opacity:.58;transform:scale(1.02)}
+.tr-btn .play{position:relative;display:grid;justify-items:center;gap:12px;font:600 15px/1.2 var(--pf-sans);letter-spacing:.04em}
+.tr-btn .play i{width:76px;height:76px;border-radius:50%;background:var(--hl);color:var(--pf-ink);display:grid;place-items:center;font-size:26px;font-style:normal;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .35s var(--snap)}
+.tr-btn:hover .play i{transform:scale(1.08)}
+.tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;color:#E9DCCB}
+
+/* ===== tiles (any gallery) ===== */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(12px,2vw,20px)}
+@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal .w2{grid-column:span 2}
+.gal .wf{grid-column:1/-1}
+.pc{--h:clamp(160px,20vw,220px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
+.pc[hidden]{display:none}
+.pc.w2{--h:clamp(170px,22vw,250px)}
+.pc.wf{--h:clamp(200px,34vw,420px)}
+.pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:10px;background:rgba(255,255,255,.62);transition:background .25s}
+.pc:hover .im{background:rgba(255,255,255,.9)}
+.pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(40,20,30,.55)}
+.pc .im img.flat{box-shadow:none}
+.pc.ph .im{padding:0;overflow:hidden;background:#111}
+.pc.ph .im img{width:100%;height:100%;max-height:none;object-fit:cover;box-shadow:none;transition:transform .8s var(--ease)}
+.pc.ph:hover .im img{transform:scale(1.03)}
+.pc b{font:600 13px/1.3 var(--pf-sans);color:#21161B}
+.pc small{display:block;font-size:12px;line-height:1.4;color:#5E4E56;margin-top:2px}
+.st-dk .pc .im{background:rgba(255,255,255,.08)}
+.st-dk .pc:hover .im{background:rgba(255,255,255,.16)}
+.st-dk .pc b{color:#F3E9EE}
+.st-dk .pc small{color:var(--dk-ink,#CDBDC5)}
+.fl-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fl-chips button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
+.fl-chips button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* ===== labels on the bar counter ===== */
+.lb-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(18px,3.4vw,40px);align-items:start}
+@media(max-width:860px){.lb-row{grid-template-columns:1fr}}
+.lb-view{position:relative;aspect-ratio:4/3;display:grid;grid-template:100% / 100%;place-items:center;border-radius:14px;background:radial-gradient(closest-side,rgba(255,220,235,.12),transparent)}
+.lb-view img{max-width:78%;max-height:84%;width:auto;height:auto;box-shadow:0 26px 40px -18px rgba(0,0,0,.85);transition:opacity .3s,transform .45s var(--snap)}
+.lb-view img.out{opacity:0;transform:translateY(12px) scale(.96)}
+.lb-info{display:grid;gap:6px;margin-top:16px;color:#F3E6EC}
+.lb-info .k{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--hl)}
+.lb-info b{font:400 clamp(30px,3.6vw,42px)/1.05 var(--pf-serif)}
+.lb-info span{font-size:14px;line-height:1.5;color:#D8C2CC}
+.lb-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:8px}
+.lb-pick button{position:relative;aspect-ratio:1;min-height:0;overflow:hidden;border-radius:10px;border:2px solid transparent;background:rgba(255,255,255,.06);padding:0;transition:background .25s,border-color .25s,transform .3s var(--snap)}
+.lb-pick button:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.lb-pick button[aria-pressed="true"]{border-color:var(--hl);background:rgba(255,255,255,.14)}
+.lb-pick img{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);object-fit:contain}
+.pc.ph.wf .im{height:auto;aspect-ratio:1672/941}
+
+/* ===== lightbox ===== */
+.lb{margin:auto;border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.lb::backdrop{background:rgba(16,10,13,.9)}
+.lb-in{display:grid;gap:12px;justify-items:center}
+.lb img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.lb-cap{max-width:60ch;font-size:14px;line-height:1.5;color:#EDE3E7;text-align:center}
+.lb-x{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font-size:22px;line-height:1;display:grid;place-items:center}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-case="ram-rotulos">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ RAM · Rótulos</span></a>
+    <ul class="pf-links">
+      <li><a href="#comercial">Comercial</a></li>
+      <li><a href="#rotulos">Rótulos</a></li>
+      <li><a href="#garrafas">Nas garrafas</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 26</b> · Design gráfico de cena · Publicidade</p>
+    <h1>Um bar de marcas que não existem, <em>para um segundo de comercial.</em></h1>
+    <p class="lede">No filme da RAM, de 2023, o bar aparece por um instante, com a prateleira cheia de garrafas. Cada uma precisava de um rótulo, e cada rótulo, de uma marca: 18 bebidas inventadas, de uísque japonês a água mineral francesa, com medida de impressão no nome do arquivo.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Designer gráfico</dd></div>
+      <div><dt>Cliente</dt><dd>RAM · filme publicitário, 2023</dd></div>
+      <div><dt>Entregas</dt><dd>18 rótulos de bebidas fictícias, marca e arte</dd></div>
+      <div><dt>Impressão</dt><dd>Papel e adesivo transparente, com faca</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover pc-cover">
+    <img src="assets/cover.jpg" width="1672" height="836" alt="Montagem gerada por IA, não é foto: sete garrafas sobre um balcão com os rótulos Aquaclair, Clarissima, Orange, Negroni, Kogane, Le Baron e Massaretti">
+  </div>
+</header>
+
+<section id="comercial" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Comercial</p>
+      <h2>A picape é a estrela. O bar aparece por um segundo.</h2>
+      <p class="lede">No filme da RAM, há um corte rápido para dentro de um bar, com a prateleira cheia de garrafas atrás do barman. O botão abaixo pula direto para esse instante.</p>
+    </div>
+    <figure class="rv" data-video id="video-fig">
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Vídeo</span><span class="pill">Como foi ao ar</span></div>
+        <div class="vd"><video controls playsinline preload="none" poster="assets/poster.jpg" aria-label="Filme publicitário da RAM"><source src="assets/video.mp4" type="video/mp4"></video></div>
+        <div class="vd-row"><div class="vd-jump"><button type="button" data-t="18.5">Ver o bar · 0:19</button></div></div>
+      </div>
+      <figcaption><b>Filme publicitário da RAM.</b> 30 segundos, como foi ao ar, sem som.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="rotulos" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Rótulos</p>
+      <h2>Uma garrafa em cena precisa de rótulo, e o rótulo precisa de uma marca.</h2>
+      <p class="lede">Uísque japonês, amaro de Milão, espumante de Reims, bourbon do Kentucky, tequila reposado, gin, vodca e água mineral: todas inventadas. Cada uma tem país de origem, ano de fundação, teor alcoólico e texto miúdo, como um rótulo de verdade. Num deles, o sobrenome do designer virou a casa produtora: Maison Placido, 1774.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk" id="lb" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Escolha um rótulo</span></div>
+        <div class="lb-row">
+          <div>
+            <div class="lb-view"><img id="lbImg" src="assets/r-kogane.webp" width="900" height="900" alt=""></div>
+            <div class="lb-info" aria-live="off" data-live><span class="k" id="lbK"></span><b id="lbN"></b><span id="lbD"></span></div>
+          </div>
+          <div class="lb-pick" id="lbPick" role="group" aria-label="Rótulos"></div>
+        </div>
+      </div>
+      <figcaption><b>Rótulos de bebidas.</b> Artes finais de impressão, reais e usadas em cena. As medidas vêm dos nomes dos arquivos; os transparentes saíram em adesivo transparente.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="garrafas" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Nas garrafas</p>
+      <h2>Os rótulos, fora da luz baixa do set.</h2>
+      <p class="lede">No comercial, a prateleira fica no escuro e passa rápido. Esta montagem mostra sete dos rótulos no tamanho de uma garrafa.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Montagem</span></div>
+        <div class="gal">
+          <button class="pc wf ph" type="button" data-zoom data-cap="Montagem gerada por IA a partir das artes finais. Não é foto de cena."><span class="im"><img src="assets/ram-mockup.webp" width="1672" height="941" alt="Montagem: sete garrafas sobre um balcão claro com os rótulos Aquaclair, Clarissima, Orange, Negroni, Kogane, Le Baron e Massaretti" loading="lazy"></span><b>Sete rótulos em garrafas</b><small>montagem, não é foto</small></button>
+        </div>
+      </div>
+      <figcaption><b>Montagem, não é foto.</b> Imagem gerada por IA a partir das artes finais, só para ver os rótulos em garrafas. As artes dos rótulos foram desenhadas sem IA.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso mostrar os arquivos de impressão e as facas de corte ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>RAM · rótulos de bar · design gráfico de cena</span></div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb-dlg" aria-label="Arte ampliada">
+  <div class="lb-in"><img id="lbBig" src="" alt=""><p class="lb-cap" id="lbCap"></p></div>
+  <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
+</dialog>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* reveal + pause loops off-screen (same pattern as the other cases) */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+  })},{threshold:.15}) : null;
+  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(watch);
+  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
+    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+
+  /* video as it aired: plays only on click; the chips jump to the moment the pieces show up */
+  $$('[data-video]').forEach(function(fig){
+    var v = $('video', fig);
+    $$('[data-t]', fig).forEach(function(b){ b.addEventListener('click',function(){
+      var t = +b.dataset.t, go = function(){ v.currentTime = t; v.play() };
+      if(v.readyState < 1){ v.addEventListener('loadedmetadata', go, {once:true}); v.load() } else go();
+    }) });
+  });
+  /* video still to come: the figure (and its section) shows up by itself once assets/video.mp4 exists */
+  $$('[data-video-soon]').forEach(function(fig){
+    var src = fig.dataset.videoSoon;
+    if(!window.fetch || location.protocol==='file:') return;
+    fetch(src,{method:'HEAD'}).then(function(r){
+      if(!r.ok || !/video/.test(r.headers.get('content-type')||'')) return;
+      $('video', fig).src = src; fig.hidden = false;
+      var sec = fig.closest('section[hidden]'); if(sec) sec.hidden = false;
+    }).catch(function(){});
+  });
+  /* trailer: the YouTube player only loads after a click */
+  $$('[data-yt]').forEach(function(b){ b.addEventListener('click',function(){
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';
+    f.title = b.dataset.title;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    b.replaceWith(f); f.focus();
+  }) });
+
+  /* ===== labels on the bar ===== */
+  var LABELS = [
+    {f:'r-kogane', k:'Uísque japonês · 14 × 14 cm', n:'Kogane', d:'Luxury golden whisky, desde 1979. Preto, dourado e um ideograma em pincel.'},
+    {f:'r-oni', k:'Uísque japonês · 13 × 12 cm', n:'The Oni', d:'Single grain whisky desde 1972, com uma máscara de oni em traço de pincel.'},
+    {f:'r-kame', k:'Uísque japonês · 13 × 10 cm', n:'Kame', d:'Da mesma família do Oni, em verde, com ideograma em pincel e uma tartaruga.'},
+    {f:'r-lebaron', k:'Espumante · 14,5 × 10,5 cm', n:'Le Baron', d:'Vin mousseux brut, A Reims, France. A casa produtora é a Maison Placido, 1774.'},
+    {f:'r-levesper', k:'Aperitivo francês · 8 × 16,5 cm', n:'Le Vesper', d:'Aperitivo à base de vinho da Gironde, established in 1872, com a Torre Eiffel entre dois leões.'},
+    {f:'r-massaretti', k:'Amaro italiano · 10 × 18 cm', n:'Massaretti', d:'Amaro Ausano Massaretti, casa fondata nel 1815, Milano.'},
+    {f:'r-donluis', k:'Tequila · 14 × 10 cm', n:'Don Luis', d:'Tequila reposado, hecho en México, 1795, com moedas douradas.'},
+    {f:'r-oldjohn', k:'Bourbon · 13 × 13,5 cm', n:'Old John', d:'Kentucky straight bourbon whiskey, 1 litro, 40% vol.'},
+    {f:'r-nirschl', k:'Bourbon', n:'Lets Nirschl', d:'Kentucky straight bourbon whiskey, com barril no centro.'},
+    {f:'r-manhattan', k:'Gin · 10 × 15 cm', n:'Manhattan', d:'Dry gin de “receita de 1761”, produced in NY, com um arranha-céu art déco no rodapé.'},
+    {f:'r-guitarrara', k:'Coquetel pronto', n:'Guitarrara', d:'Composite cocktail de gin, vermute e amaro, no mesmo desenho do Manhattan.'},
+    {f:'r-negroni', k:'Coquetel pronto', n:'Negroni', d:'Composite cocktail gin, vermut, amaro. 375 ml.'},
+    {f:'r-bridge', k:'Gin · 12 × 10 cm', n:'Bridge', d:'London dry gin, export strength, em letra cursiva verde.'},
+    {f:'r-orange', k:'Licor · 9,5 × 20 cm', n:'Orange', d:'L’esprit d’orange, Angers, France. 750 ml, 11% vol.'},
+    {f:'r-blanche', k:'Vodca · 10 × 17 cm', n:'Blanche', d:'Vodca sueca de 1 litro, 40% vol. Impresso em adesivo transparente.'},
+    {f:'r-belyy', k:'Vodca · 10 × 17 cm', n:'Belyy Volk', d:'Ten times filtered vodka, “produzida na Rússia”. Adesivo transparente, com faca de corte.'},
+    {f:'r-clarissima', k:'Água com gás · 11,5 × 6 cm', n:'Clarissima', d:'Água com gás de fonte natural, 500 ml.'},
+    {f:'r-aquaclair', k:'Água mineral · 12 × 17 cm', n:'Aquaclair', d:'Natural spring water from France, pH 8,4, com o mapa da França em aquarela.'}
+  ];
+  var lb = $('#lb');
+  if(lb){
+    var lImg = $('#lbImg'), lPick = $('#lbPick'), lCur = -1, lBusy = false;
+    lPick.innerHTML = LABELS.map(function(b){ return '<button type="button" aria-pressed="false" aria-label="'+b.n+', '+b.k+'"><img src="assets/'+b.f+'.webp" alt="" loading="lazy"></button>' }).join('');
+    var lBtns = $$('button', lPick);
+    function lShow(i, now){
+      i = (i+LABELS.length)%LABELS.length; if(i===lCur || lBusy) return;
+      var b = LABELS[i]; lCur = i;
+      lBtns.forEach(function(x,k){ x.setAttribute('aria-pressed', k===i ? 'true' : 'false') });
+      var go = function(){ lImg.src = 'assets/'+b.f+'.webp'; lImg.alt = 'Rótulo '+b.n+', '+b.k; $('#lbK').textContent = b.k; $('#lbN').textContent = b.n; $('#lbD').textContent = b.d; lImg.classList.remove('out'); lBusy = false };
+      if(RM || now){ go(); return }
+      lBusy = true; lImg.classList.add('out');
+      setTimeout(function(){ var n = new Image(); n.onload = n.onerror = go; n.src = 'assets/'+b.f+'.webp' }, 240);
+    }
+    lBtns.forEach(function(b,k){ b.addEventListener('click',function(){ lShow(k) }) });
+    lPick.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); lBusy = false; lShow(lCur+(e.key==='ArrowRight'?1:-1)); lBtns[lCur].focus() }
+    });
+    lShow(0, true);
+    autoplay(lb, 2800, function(){ lShow(lCur+1) });
+  }
+
+  /* ===== lightbox: any [data-zoom] opens the artwork larger ===== */
+  var dlg = $('#lb-dlg');
+  if(dlg && dlg.showModal){
+    var big = $('#lbBig'), cap = $('#lbCap');
+    document.addEventListener('click',function(e){
+      var b = e.target.closest('[data-zoom]'); if(!b) return;
+      var im = b.querySelector('img'); if(!im) return;
+      big.src = im.currentSrc || im.src; big.alt = im.alt; cap.textContent = b.dataset.cap || '';
+      dlg.showModal();
+    });
+    $('#lbX').addEventListener('click',function(){ dlg.close() });
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close() });
+  }
+})();
+</script>
+</body>
+</html>

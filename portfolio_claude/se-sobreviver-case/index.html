@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Se Sobreviver, Case · Design gráfico de cena</title>
+<meta name="description" content="Design gráfico de cena para o reality Se Sobreviver, Case (Multishow e Globoplay): mapa ilustrado da ilha em 21 versões e manual de sobrevivência.">
+<meta property="og:title" content="Se Sobreviver, Case — design gráfico de cena">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Below: the case's own stages. Leather-dark stage, under the aged-paper map. */
+:root{
+  --accent:#B4562A; --hl:#F5CD62;
+  --dk-1:#4A3322; --dk-2:#2E2016; --dk-3:#1B120B; --dk-ink:#D9C6B2;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== cover ===== */
+.pc-cover{background:#2E2016}
+.pc-cover img{width:100%;height:100%;object-fit:cover}
+
+/* ===== stages ===== */
+.st-dk{background:radial-gradient(120% 90% at 50% 0,var(--dk-1),var(--dk-2) 58%,var(--dk-3))}
+.st-gesso{background:#ECE7DF}
+.st-dk .pill{background:rgba(255,255,255,.14);color:#fff}
+.st-dk .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-gesso .pill{background:rgba(255,255,255,.8)}
+.st-gesso .pill.y{background:var(--hl)}
+
+/* ===== video as it aired ===== */
+.vd{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.vd video,.vd iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.vd-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-top:16px}
+.vd-row p{font-size:14px;line-height:1.5;color:var(--vd-ink,#D9CDD3);max-width:60ch}
+.vd-jump{display:flex;flex-wrap:wrap;gap:8px}
+.vd-jump button{border:0;padding:9px 14px;border-radius:99px;background:var(--hl);color:var(--pf-ink);font:600 13px/1 var(--pf-sans);font-variant-numeric:tabular-nums;transition:transform .3s var(--snap)}
+.vd-jump button:hover{transform:translateY(-2px)}
+.tr-btn{position:absolute;inset:0;border:0;padding:0;background:#000;display:grid;place-items:center;color:#fff}
+.tr-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;transition:opacity .4s,transform .8s var(--ease)}
+.tr-btn:hover img{opacity:.58;transform:scale(1.02)}
+.tr-btn .play{position:relative;display:grid;justify-items:center;gap:12px;font:600 15px/1.2 var(--pf-sans);letter-spacing:.04em}
+.tr-btn .play i{width:76px;height:76px;border-radius:50%;background:var(--hl);color:var(--pf-ink);display:grid;place-items:center;font-size:26px;font-style:normal;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .35s var(--snap)}
+.tr-btn:hover .play i{transform:scale(1.08)}
+.tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;color:#E9DCCB}
+
+/* ===== tiles (any gallery) ===== */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(12px,2vw,20px)}
+@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal .w2{grid-column:span 2}
+.gal .wf{grid-column:1/-1}
+.pc{--h:clamp(160px,20vw,220px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
+.pc[hidden]{display:none}
+.pc.w2{--h:clamp(170px,22vw,250px)}
+.pc.wf{--h:clamp(200px,34vw,420px)}
+.pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:10px;background:rgba(255,255,255,.62);transition:background .25s}
+.pc:hover .im{background:rgba(255,255,255,.9)}
+.pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(40,20,30,.55)}
+.pc .im img.flat{box-shadow:none}
+.pc.ph .im{padding:0;overflow:hidden;background:#111}
+.pc.ph .im img{width:100%;height:100%;max-height:none;object-fit:cover;box-shadow:none;transition:transform .8s var(--ease)}
+.pc.ph:hover .im img{transform:scale(1.03)}
+.pc b{font:600 13px/1.3 var(--pf-sans);color:#21161B}
+.pc small{display:block;font-size:12px;line-height:1.4;color:#5E4E56;margin-top:2px}
+.st-dk .pc .im{background:rgba(255,255,255,.08)}
+.st-dk .pc:hover .im{background:rgba(255,255,255,.16)}
+.st-dk .pc b{color:#F3E9EE}
+.st-dk .pc small{color:var(--dk-ink,#CDBDC5)}
+.fl-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fl-chips button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
+.fl-chips button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* ===== map versions ===== */
+.mp{display:grid;gap:clamp(14px,2.4vw,22px)}
+.mp-view{position:relative;container-type:inline-size;aspect-ratio:420/297;border-radius:8px;overflow:hidden;background:#C98F57;box-shadow:0 30px 50px -30px rgba(0,0,0,.9)}
+.mp-view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s var(--ease)}
+.mp-view img.out{opacity:0}
+.mp-ring{position:absolute;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 3px rgba(180,86,42,.95),0 0 22px rgba(0,0,0,.6);transform:scale(1.7);pointer-events:none;animation:ring 1.6s var(--ease) infinite alternate}
+.mp-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;color:#F3E9DE;font-size:14px}
+.mp-cap b{font:400 clamp(24px,2.8vw,32px)/1.1 var(--pf-serif)}
+.mp-cap span{color:#D9C6B2}
+.mp-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
+.mp-pick button{display:grid;gap:5px;justify-items:center;padding:8px 4px 7px;border-radius:10px;border:2px solid transparent;background:rgba(255,255,255,.07);color:#F3E9DE;font:600 13px/1 var(--pf-sans);font-variant-numeric:tabular-nums;transition:background .25s,border-color .25s}
+.mp-pick button:hover{background:rgba(255,255,255,.14)}
+.mp-pick button[aria-pressed="true"]{border-color:var(--hl);background:rgba(255,255,255,.16)}
+.mp-pick i{display:flex;gap:3px;height:9px;align-items:center}
+.mp-pick i u{width:9px;height:9px;border-radius:50%;background:var(--c);text-decoration:none}
+.mp-pick i u.bx{border-radius:2px}
+.mp-pick i u.st{background:none;width:auto;height:auto;font:700 10px/1 var(--pf-sans);color:var(--hl)}
+.mp-pick i u.no{width:12px;height:2px;border-radius:1px;background:#9C8670}
+.st-dk .pc .im{background:#2B2328}
+.st-dk .pc:hover .im{background:#3A3036}
+
+/* ===== lightbox ===== */
+.lb{margin:auto;border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.lb::backdrop{background:rgba(16,10,13,.9)}
+.lb-in{display:grid;gap:12px;justify-items:center}
+.lb img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.lb-cap{max-width:60ch;font-size:14px;line-height:1.5;color:#EDE3E7;text-align:center}
+.lb-x{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font-size:22px;line-height:1;display:grid;place-items:center}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+@keyframes ring{from{opacity:.55;transform:scale(1.5)}to{opacity:1;transform:scale(1.85)}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-case="se-sobreviver-case">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Se Sobreviver, Case</span></a>
+    <ul class="pf-links">
+      <li><a href="#no-ar">No ar</a></li>
+      <li><a href="#mapa">Mapa</a></li>
+      <li><a href="#manual">Manual</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 23</b> · Design gráfico de cena · Reality</p>
+    <h1>Um mapa da ilha, <em>em 21 versões.</em></h1>
+    <p class="lede">Se Sobreviver, Case é o reality do Multishow e do Globoplay em que casais isolados numa ilha, só com itens básicos, testam o relacionamento antes de decidir se casam. Cada casal tem um abrigo de uma cor. O mapa ilustrado da ilha saiu em 21 versões em A3, cada uma com um ou dois pontos marcados, e junto com ele veio um manual de sobrevivência ilustrado.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Designer gráfico</dd></div>
+      <div><dt>Programa</dt><dd>Se Sobreviver, Case · Multishow e Globoplay</dd></div>
+      <div><dt>Formato</dt><dd>Reality, desde 2020</dd></div>
+      <div><dt>Entregas</dt><dd>Mapa da ilha em 21 versões, manual de sobrevivência e ícones</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover pc-cover">
+    <img src="assets/cover.jpg" width="1600" height="800" alt="Mapa ilustrado da ilha, versão aberta: cânions de terra, vegetação verde e uma rosa dos ventos, sobre papel envelhecido">
+  </div>
+</header>
+
+<section id="no-ar" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · No ar</p>
+      <h2>Na chamada, o mapa vira a cartografia do programa.</h2>
+      <p class="lede">Na chamada do programa, o mapa ilustrado entra na tela com o X de cada abrigo. O botão abaixo pula direto para esse trecho.</p>
+    </div>
+    <figure class="rv" data-video id="video-fig">
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Vídeo</span><span class="pill">Como foi ao ar</span></div>
+        <div class="vd"><video controls playsinline preload="none" poster="assets/poster.jpg" aria-label="Chamada do programa Se Sobreviver, Case"><source src="assets/video.mp4" type="video/mp4"></video></div>
+        <div class="vd-row"><p>A chamada tem nudez com tarja, como foi ao ar.</p><div class="vd-jump"><button type="button" data-t="177">Ver o mapa no ar · 2:57</button></div></div>
+      </div>
+      <figcaption><b>Chamada do programa.</b> Vídeo do Multishow, como foi ao ar, sem som.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="mapa" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Mapa</p>
+      <h2>Cada versão marca um ou dois pontos.</h2>
+      <p class="lede">Abrigos das quatro cores, o abrigo cinco estrelas e as caixas. Escolha uma versão: os círculos mostram o que muda em relação ao mapa sem marcação.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk" id="mp" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Escolha uma versão</span></div>
+        <div class="mp">
+          <div class="mp-view" id="mpView"><img id="mpImg" src="assets/ss-map-1.webp" width="1200" height="849" alt=""></div>
+          <div class="mp-cap" aria-live="off" data-live><b id="mpN"></b><span id="mpD"></span></div>
+          <div class="mp-pick" id="mpPick" role="group" aria-label="Versões do mapa"></div>
+        </div>
+      </div>
+      <figcaption><b>Mapa da ilha.</b> Artes finais reais, A3. Os círculos marcam o que muda em cada versão; a posição foi calculada comparando cada arquivo com o mapa sem marcação. As versões 1 a 10 usam o mapa fechado e as 11 a 19, o aberto. Os arquivos levam a sigla SSC4.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="manual" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Manual</p>
+      <h2>Um manual de sobrevivência no mesmo papel do mapa.</h2>
+      <p class="lede">Páginas em A4 que ensinam a levantar o abrigo, filtrar água e achar comida no mangue e no semiárido. Clique para ampliar.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Manual de sobrevivência</span></div>
+        <div class="gal">
+          <button class="pc" type="button" data-zoom data-cap="Pau a pique · como levantar a parede de barro do abrigo."><span class="im"><img src="assets/ss-pau.webp" width="1300" height="919" alt="Página ilustrada sobre papel envelhecido: Pau a pique, barro, trama de varas e mãos" loading="lazy"></span><b>Pau a pique</b><small>abrigo</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Filtro de água · camadas de pedra, areia e carvão."><span class="im"><img src="assets/ss-filtro.webp" width="1300" height="919" alt="Página ilustrada: Filtro de água, garrafa cortada com camadas de pedra, areia e carvão" loading="lazy"></span><b>Filtro de água</b><small>água</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Cama suspensa · varas amarradas acima do chão."><span class="im"><img src="assets/ss-cama.webp" width="1300" height="919" alt="Página ilustrada: Cama suspensa feita de varas amarradas" loading="lazy"></span><b>Cama suspensa</b><small>abrigo</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Armadilha de peixe · caixa de varas com entrada em funil."><span class="im"><img src="assets/ss-armadilha.webp" width="1300" height="919" alt="Página ilustrada: Armadilha de peixes, estrutura de varas e passo a passo" loading="lazy"></span><b>Armadilha de peixe</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Como pegar caranguejo."><span class="im"><img src="assets/ss-caranguejo.webp" width="1300" height="919" alt="Página ilustrada em preto e branco: Como pegar caranguejo no mangue" loading="lazy"></span><b>Caranguejo</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Como coletar açaí."><span class="im"><img src="assets/ss-acai.webp" width="1300" height="919" alt="Página ilustrada: Como coletar açaí, peconha e palmeira" loading="lazy"></span><b>Coleta de açaí</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Onde achar ostra no manguezal."><span class="im"><img src="assets/ss-ostra.webp" width="1300" height="919" alt="Página ilustrada: Onde achar ostra no manguezal, raízes e mãos" loading="lazy"></span><b>Coleta de ostra</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Como encontrar turu nos troncos do mangue."><span class="im"><img src="assets/ss-turu.webp" width="1300" height="919" alt="Página ilustrada: Como encontrar turu, tronco cortado com machado" loading="lazy"></span><b>Turu</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Cactos comestíveis · quais comer e como limpar."><span class="im"><img src="assets/ss-cactos.webp" width="1300" height="919" alt="Página ilustrada: Cactos comestíveis, com sinais de certo e errado" loading="lazy"></span><b>Cactos comestíveis</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Batata do umbuzeiro."><span class="im"><img src="assets/ss-batata.webp" width="1300" height="919" alt="Página ilustrada: Batata do umbuzeiro, árvore e raiz" loading="lazy"></span><b>Batata do umbuzeiro</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Pesca noturna · tocha de folhas de carnaúba."><span class="im"><img src="assets/ss-pesca.webp" width="1300" height="919" alt="Página ilustrada: Pesca noturna com tocha" loading="lazy"></span><b>Pesca noturna</b><small>comida</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Casca medicinal."><span class="im"><img src="assets/ss-casca.webp" width="1300" height="919" alt="Página ilustrada: Casca medicinal, árvore e casca fervendo" loading="lazy"></span><b>Casca medicinal</b><small>saúde</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Tocha."><span class="im"><img src="assets/ss-tocha.webp" width="1300" height="919" alt="Página ilustrada: Tocha, com graveto, folhas e colmeia" loading="lazy"></span><b>Tocha</b><small>ferramenta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Sandália."><span class="im"><img src="assets/ss-sandalia.webp" width="1300" height="919" alt="Página ilustrada: Sandália feita com couro e cordas" loading="lazy"></span><b>Sandália</b><small>ferramenta</small></button>
+          <button class="pc wf" type="button" data-zoom data-cap="Ícones do mapa · caixa, baú e abrigo cinco estrelas."><span class="im" style="height:auto"><img class="flat" src="assets/ss-icones.webp" width="825" height="284" alt="Três ícones em preto: canoa, baú e abrigo com cinco estrelas" loading="lazy" style="max-height:120px;background:#fff;padding:10px;border-radius:6px"></span><b>Ícones do mapa</b><small>vetores</small></button>
+        </div>
+      </div>
+      <figcaption><b>Manual de sobrevivência.</b> Páginas ilustradas em A4, sobre o mesmo papel envelhecido do mapa. Artes finais reais.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso mostrar os arquivos de impressão e as facas de corte ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Se Sobreviver, Case · design gráfico de cena</span></div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb-dlg" aria-label="Arte ampliada">
+  <div class="lb-in"><img id="lbBig" src="" alt=""><p class="lb-cap" id="lbCap"></p></div>
+  <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
+</dialog>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* reveal + pause loops off-screen (same pattern as the other cases) */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+  })},{threshold:.15}) : null;
+  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(watch);
+  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
+    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+
+  /* video as it aired: plays only on click; the chips jump to the moment the pieces show up */
+  $$('[data-video]').forEach(function(fig){
+    var v = $('video', fig);
+    $$('[data-t]', fig).forEach(function(b){ b.addEventListener('click',function(){
+      var t = +b.dataset.t, go = function(){ v.currentTime = t; v.play() };
+      if(v.readyState < 1){ v.addEventListener('loadedmetadata', go, {once:true}); v.load() } else go();
+    }) });
+  });
+  /* video still to come: the figure (and its section) shows up by itself once assets/video.mp4 exists */
+  $$('[data-video-soon]').forEach(function(fig){
+    var src = fig.dataset.videoSoon;
+    if(!window.fetch || location.protocol==='file:') return;
+    fetch(src,{method:'HEAD'}).then(function(r){
+      if(!r.ok || !/video/.test(r.headers.get('content-type')||'')) return;
+      $('video', fig).src = src; fig.hidden = false;
+      var sec = fig.closest('section[hidden]'); if(sec) sec.hidden = false;
+    }).catch(function(){});
+  });
+  /* trailer: the YouTube player only loads after a click */
+  $$('[data-yt]').forEach(function(b){ b.addEventListener('click',function(){
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';
+    f.title = b.dataset.title;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    b.replaceWith(f); f.focus();
+  }) });
+
+  /* ===== map versions; rings mark what each file adds to the empty map ===== */
+  var R='#D2342C', G='#3E9B4F', Y='#E8B923', B='#3B6FC4';
+  var MAPS = [
+    {n:'Abrigo vermelho e caixa vermelha', d:'Mapa fechado', i:[['a',R],['c',R]], s:[[11.6,76.7,14.8,80.7],[27.2,76.1,30,80.7]]},
+    {n:'Abrigo verde e caixa verde', d:'Mapa fechado', i:[['a',G],['c',G]], s:[[80,74.4,83.2,78.4],[72.8,65.3,75.6,69.9]]},
+    {n:'Abrigo amarelo e caixa amarela', d:'Mapa fechado', i:[['a',Y],['c',Y]], s:[[14.4,40.9,18,44.9],[23.6,36.9,26.4,42]]},
+    {n:'Abrigo azul e caixa azul', d:'Mapa fechado', i:[['a',B],['c',B]], s:[[78,11.9,81.2,15.9],[76.4,20.5,78.8,25]]},
+    {n:'Abrigos vermelho e verde', d:'Mapa fechado', i:[['a',R],['a',G]], s:[[72.8,65.3,75.6,69.9],[27.2,76.1,30,80.7]]},
+    {n:'Abrigos vermelho e amarelo', d:'Mapa fechado', i:[['a',R],['a',Y]], s:[[23.6,36.9,26.4,42],[27.2,76.1,30,80.7]]},
+    {n:'Abrigos vermelho e azul', d:'Mapa fechado', i:[['a',R],['a',B]], s:[[27.2,76.1,30,80.7],[76.4,20.5,78.8,25]]},
+    {n:'Abrigos verde e amarelo', d:'Mapa fechado', i:[['a',G],['a',Y]], s:[[23.6,36.9,26.4,42],[72.8,65.3,75.6,69.9]]},
+    {n:'Abrigos verde e azul', d:'Mapa fechado', i:[['a',G],['a',B]], s:[[72.8,65.3,75.6,69.9],[76.4,20.5,78.8,25]]},
+    {n:'Abrigos amarelo e azul', d:'Mapa fechado', i:[['a',Y],['a',B]], s:[[23.6,36.9,26.4,42],[76.4,20.5,78.8,25]]},
+    {n:'Só o abrigo cinco estrelas', d:'Mapa aberto', i:[['s']], s:[[51.6,72.2,56,78.4]]},
+    {n:'Abrigo vermelho e abrigo cinco estrelas', d:'Mapa aberto', i:[['a',R],['s']], s:[[51.6,72.2,56,78.4],[23.6,57.4,26,62.5]]},
+    {n:'Abrigo verde e abrigo cinco estrelas', d:'Mapa aberto', i:[['a',G],['s']], s:[[51.6,72.2,56,78.4],[46.8,52.3,49.2,56.8]]},
+    {n:'Abrigo amarelo e abrigo cinco estrelas', d:'Mapa aberto', i:[['a',Y],['s']], s:[[51.6,72.2,56,78.4],[23.6,37.5,26,42]]},
+    {n:'Abrigo azul e abrigo cinco estrelas', d:'Mapa aberto', i:[['a',B],['s']], s:[[51.6,72.2,56,78.4],[49.6,28.4,52.4,33]]},
+    {n:'Caixa vermelha e abrigo vermelho', d:'Mapa aberto', i:[['c',R],['a',R]], s:[[14,60.8,17.2,64.8],[23.6,57.4,26,62.5]]},
+    {n:'Caixa verde e abrigo verde', d:'Mapa aberto', i:[['c',G],['a',G]], s:[[50.4,58,53.6,61.9],[46.8,52.3,49.2,56.8]]},
+    {n:'Caixa amarela e abrigo amarelo', d:'Mapa aberto', i:[['c',Y],['a',Y]], s:[[16,39.8,19.2,43.8],[23.6,37.5,26,42]]},
+    {n:'Caixa azul e abrigo azul', d:'Mapa aberto', i:[['c',B],['a',B]], s:[[50.4,22.7,54,26.7],[49.6,28.4,52.4,33]]},
+    {n:'Mapa aberto, sem marcação', d:'Base das versões 11 a 19', i:[['n']], s:[]},
+    {n:'Mapa fechado, sem marcação', d:'Base das versões 1 a 10', i:[['n']], s:[]}
+  ];
+  var mp = $('#mp');
+  if(mp){
+    var mView = $('#mpView'), mImg = $('#mpImg'), mPick = $('#mpPick'), mCur = -1;
+    var dot = function(x){ return x[0]==='s' ? '<u class="st">5★</u>' : x[0]==='n' ? '<u class="no"></u>' : '<u class="'+(x[0]==='c'?'bx':'')+'" style="--c:'+x[1]+'"></u>' };
+    mPick.innerHTML = MAPS.map(function(m,k){ return '<button type="button" aria-pressed="false" aria-label="Versão '+(k+1)+': '+m.n+'">'+(k+1)+'<i aria-hidden="true">'+m.i.map(dot).join('')+'</i></button>' }).join('');
+    var mBtns = $$('button', mPick);
+    function rings(m){
+      $$('.mp-ring', mView).forEach(function(r){ r.remove() });
+      m.s.forEach(function(s){
+        var r = document.createElement('i'); r.className = 'mp-ring'; r.setAttribute('aria-hidden','true');
+        var w = s[2]-s[0], h = s[3]-s[1], d = Math.max(w, h*297/420);
+        r.style.left = (s[0]+w/2-d/2)+'%'; r.style.width = d+'%';
+        r.style.top = 'calc('+(s[1]+h/2)+'% - '+(d/2)+'cqw)'; r.style.height = d+'cqw';
+        mView.appendChild(r);
+      });
+    }
+    function mShow(i, now){
+      i = (i+MAPS.length)%MAPS.length; if(i===mCur) return;
+      var m = MAPS[i]; mCur = i;
+      mBtns.forEach(function(x,k){ x.setAttribute('aria-pressed', k===i ? 'true' : 'false') });
+      $('#mpN').textContent = (i+1)+'. '+m.n; $('#mpD').textContent = m.d;
+      var go = function(){ mImg.src = 'assets/ss-map-'+(i+1)+'.webp'; mImg.alt = 'Mapa ilustrado da ilha, versão '+(i+1)+': '+m.n; mImg.classList.remove('out'); rings(m) };
+      if(RM || now){ go(); return }
+      mImg.classList.add('out');
+      var n = new Image(); n.onload = n.onerror = function(){ setTimeout(go, 120) }; n.src = 'assets/ss-map-'+(i+1)+'.webp';
+    }
+    mBtns.forEach(function(b,k){ b.addEventListener('click',function(){ mShow(k) }) });
+    mPick.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); mShow(mCur+(e.key==='ArrowRight'?1:-1)); mBtns[mCur].focus() }
+    });
+    mShow(0, true);
+    autoplay(mp, 3000, function(){ mShow(mCur+1) });
+  }
+
+  /* ===== lightbox: any [data-zoom] opens the artwork larger ===== */
+  var dlg = $('#lb-dlg');
+  if(dlg && dlg.showModal){
+    var big = $('#lbBig'), cap = $('#lbCap');
+    document.addEventListener('click',function(e){
+      var b = e.target.closest('[data-zoom]'); if(!b) return;
+      var im = b.querySelector('img'); if(!im) return;
+      big.src = im.currentSrc || im.src; big.alt = im.alt; cap.textContent = b.dataset.cap || '';
+      dlg.showModal();
+    });
+    $('#lbX').addEventListener('click',function(){ dlg.close() });
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close() });
+  }
+})();
+</script>
+</body>
+</html>

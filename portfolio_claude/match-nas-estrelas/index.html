@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Match nas Estrelas · Design gráfico de cena</title>
+<meta name="description" content="Design gráfico de cena para Match nas Estrelas, Amazon Original: logo e baralho de cartas com desenhos em forma de constelação.">
+<meta property="og:title" content="Match nas Estrelas — design gráfico de cena">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Below: the case's own stages. Night-sky stage, the colour of the card backs. */
+:root{
+  --accent:#2A3480; --hl:#6FE39A;
+  --dk-1:#1A2460; --dk-2:#0D1335; --dk-3:#070A1E; --dk-ink:#9BA6D9;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== cover ===== */
+.pc-cover{background:#0D1335}
+.pc-cover img{width:100%;height:100%;object-fit:cover}
+
+/* ===== stages ===== */
+.st-dk{background:radial-gradient(120% 90% at 50% 0,var(--dk-1),var(--dk-2) 58%,var(--dk-3))}
+.st-gesso{background:#ECE7DF}
+.st-dk .pill{background:rgba(255,255,255,.14);color:#fff}
+.st-dk .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-gesso .pill{background:rgba(255,255,255,.8)}
+.st-gesso .pill.y{background:var(--hl)}
+
+/* ===== video as it aired ===== */
+.vd{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.vd video,.vd iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.vd-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-top:16px}
+.vd-row p{font-size:14px;line-height:1.5;color:var(--vd-ink,#D9CDD3);max-width:60ch}
+.vd-jump{display:flex;flex-wrap:wrap;gap:8px}
+.vd-jump button{border:0;padding:9px 14px;border-radius:99px;background:var(--hl);color:var(--pf-ink);font:600 13px/1 var(--pf-sans);font-variant-numeric:tabular-nums;transition:transform .3s var(--snap)}
+.vd-jump button:hover{transform:translateY(-2px)}
+.tr-btn{position:absolute;inset:0;border:0;padding:0;background:#000;display:grid;place-items:center;color:#fff}
+.tr-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;transition:opacity .4s,transform .8s var(--ease)}
+.tr-btn:hover img{opacity:.58;transform:scale(1.02)}
+.tr-btn .play{position:relative;display:grid;justify-items:center;gap:12px;font:600 15px/1.2 var(--pf-sans);letter-spacing:.04em}
+.tr-btn .play i{width:76px;height:76px;border-radius:50%;background:var(--hl);color:var(--pf-ink);display:grid;place-items:center;font-size:26px;font-style:normal;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .35s var(--snap)}
+.tr-btn:hover .play i{transform:scale(1.08)}
+.tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;color:#E9DCCB}
+
+/* ===== tiles (any gallery) ===== */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(12px,2vw,20px)}
+@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal .w2{grid-column:span 2}
+.gal .wf{grid-column:1/-1}
+.pc{--h:clamp(160px,20vw,220px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
+.pc[hidden]{display:none}
+.pc.w2{--h:clamp(170px,22vw,250px)}
+.pc.wf{--h:clamp(200px,34vw,420px)}
+.pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:10px;background:rgba(255,255,255,.62);transition:background .25s}
+.pc:hover .im{background:rgba(255,255,255,.9)}
+.pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(40,20,30,.55)}
+.pc .im img.flat{box-shadow:none}
+.pc.ph .im{padding:0;overflow:hidden;background:#111}
+.pc.ph .im img{width:100%;height:100%;max-height:none;object-fit:cover;box-shadow:none;transition:transform .8s var(--ease)}
+.pc.ph:hover .im img{transform:scale(1.03)}
+.pc b{font:600 13px/1.3 var(--pf-sans);color:#21161B}
+.pc small{display:block;font-size:12px;line-height:1.4;color:#5E4E56;margin-top:2px}
+.st-dk .pc .im{background:rgba(255,255,255,.08)}
+.st-dk .pc:hover .im{background:rgba(255,255,255,.16)}
+.st-dk .pc b{color:#F3E9EE}
+.st-dk .pc small{color:var(--dk-ink,#CDBDC5)}
+.fl-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fl-chips button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
+.fl-chips button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+.mt-logo{display:grid;place-items:center;padding:clamp(20px,6vw,64px) 0}
+.mt-logo img{width:min(560px,100%);height:auto}
+.st-dk .pc .im{background:#151B42}
+.st-dk .pc:hover .im{background:#1E2659}
+
+/* ===== deck of cards ===== */
+.cd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,4vw,48px);align-items:center}
+@media(max-width:640px){.cd{grid-template-columns:1fr;justify-items:center}}
+.cd-deck{position:relative;width:clamp(180px,24vw,250px);aspect-ratio:500/700;perspective:1200px;border:0;padding:0;background:none;cursor:pointer}
+.cd-deck::before,.cd-deck::after{content:"";position:absolute;inset:0;border-radius:8px;background:url(assets/mt-verso.webp) center/cover;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
+.cd-deck::before{transform:translate(8px,8px) rotate(3deg)}
+.cd-deck::after{transform:translate(4px,4px) rotate(1.5deg)}
+.cd-card{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;transition:transform .7s var(--snap)}
+.cd-card.back{transform:rotateY(180deg)}
+.cd-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:8px;-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 22px 34px -18px rgba(0,0,0,.75)}
+.cd-card .f-back{transform:rotateY(180deg)}
+.cd-side{display:grid;gap:14px;justify-items:start}
+.cd-side p{font-size:15px;color:#D5DAF2}
+.cd-btn{border:0;border-radius:12px;height:46px;padding:0 20px;background:var(--accent);color:#fff;font:600 15px var(--pf-sans);transition:transform .3s var(--snap)}
+.cd-btn:hover{transform:translateY(-2px)}
+.cd-count{font:600 12px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;color:#9BA6D9;font-variant-numeric:tabular-nums}
+
+/* ===== lightbox ===== */
+.lb{margin:auto;border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.lb::backdrop{background:rgba(16,10,13,.9)}
+.lb-in{display:grid;gap:12px;justify-items:center}
+.lb img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.lb-cap{max-width:60ch;font-size:14px;line-height:1.5;color:#EDE3E7;text-align:center}
+.lb-x{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font-size:22px;line-height:1;display:grid;place-items:center}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-case="match-nas-estrelas">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Match nas Estrelas</span></a>
+    <ul class="pf-links">
+      <li><a href="#logo">Logo</a></li>
+      <li><a href="#baralho">Baralho</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 25</b> · Design gráfico de cena · Streaming</p>
+    <h1>Um baralho de carinhos, <em>desenhado como constelação.</em></h1>
+    <p class="lede">Match nas Estrelas é uma produção Amazon Original. O logo e as cartas usam o mesmo traço: pontos ligados por linhas, como um mapa do céu. Cada carta pede um gesto de carinho, e o desenho do gesto é uma constelação.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Designer gráfico</dd></div>
+      <div><dt>Produção</dt><dd>Match nas Estrelas · Amazon Original</dd></div>
+      <div><dt>Entregas</dt><dd>Logo e baralho de cartas</dd></div>
+      <div><dt>Linguagem</dt><dd>Pontos e linhas, como constelações</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover pc-cover">
+    <img src="assets/cover.jpg" width="2400" height="1200" alt="Montagem: logo Match nas Estrelas ao lado de quatro cartas do baralho em leque, sobre um céu estrelado">
+  </div>
+</header>
+
+<section id="no-ar" class="pf-sec" hidden>
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">No ar</p>
+      <h2>O baralho, como foi ao ar.</h2>
+      <p class="lede">Trecho do programa com o logo e as cartas em cena.</p>
+    </div>
+    <figure class="rv" data-video data-video-soon="assets/video.mp4" id="video-fig" hidden>
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Vídeo</span><span class="pill">Como foi ao ar</span></div>
+        <div class="vd"><video controls playsinline preload="none" aria-label="Trecho de Match nas Estrelas com as cartas em cena"></video></div>
+      </div>
+      <figcaption><b>Trecho do programa.</b> Vídeo como foi ao ar.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="logo" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Logo</p>
+      <h2>As letras são estrelas ligadas por linhas.</h2>
+      <p class="lede">O logo é escrito com pontos e traços finos, como uma constelação desenhada num mapa do céu. O mesmo traço vai para todas as cartas.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk">
+        <div class="mt-logo"><img src="assets/mt-logo.webp" width="606" height="412" alt="Logo Match nas Estrelas em letras feitas de pontos e linhas, com o selo Amazon Original, sobre fundo preto"></div>
+      </div>
+      <figcaption><b>Logo.</b> Arte final real.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="baralho" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Baralho</p>
+      <h2>Um gesto de carinho por carta.</h2>
+      <p class="lede">Beijinho no cantinho da boca, abraço apertado, carinho na mão, beijinho no pescoço, massagem rápida e um coringa. Cada gesto vira um desenho de constelação. Tire uma carta.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-dk" id="cd" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Tire uma carta</span></div>
+        <div class="cd">
+          <button class="cd-deck" type="button" id="cdDeck" aria-label="Tirar uma carta do baralho">
+            <span class="cd-card back" id="cdCard"><img class="f-front" id="cdFront" src="assets/mt-boca.webp" width="500" height="700" alt=""><img class="f-back" src="assets/mt-verso.webp" width="500" height="700" alt=""></span>
+          </button>
+          <div class="cd-side">
+            <span class="cd-count" id="cdCount">Baralho Match nas Estrelas</span>
+            <p id="cdText" aria-live="off" data-live>O verso leva o logo sobre o azul da noite. Na frente, um gesto e o desenho dele em constelação.</p>
+            <button class="cd-btn" type="button" id="cdBtn">Tirar uma carta</button>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Baralho.</b> Artes finais reais: o verso, cinco cartas de gesto e o coringa.</figcaption>
+    </figure>
+
+    <figure class="rv">
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Todas as cartas</span></div>
+        <div class="gal">
+          <button class="pc" type="button" data-zoom data-cap="Verso das cartas."><span class="im"><img src="assets/mt-verso.webp" width="500" height="700" alt="Verso de carta azul-noite com o logo Match nas Estrelas" loading="lazy"></span><b>Verso</b><small>baralho</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Beijinho no cantinho da boca."><span class="im"><img src="assets/mt-boca.webp" width="500" height="700" alt="Carta: coração em chamas desenhado como constelação, Beijinho no cantinho da boca" loading="lazy"></span><b>Beijinho no cantinho da boca</b><small>carta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Abraço apertado."><span class="im"><img src="assets/mt-abraco.webp" width="500" height="700" alt="Carta: coração com braços em constelação, Abraço apertado" loading="lazy"></span><b>Abraço apertado</b><small>carta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Carinho na mão."><span class="im"><img src="assets/mt-mao.webp" width="500" height="700" alt="Carta: duas mãos em constelação, Carinho na mão" loading="lazy"></span><b>Carinho na mão</b><small>carta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Beijinho no pescoço."><span class="im"><img src="assets/mt-pescoco.webp" width="500" height="700" alt="Carta: chama em constelação, Beijinho no pescoço" loading="lazy"></span><b>Beijinho no pescoço</b><small>carta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Massagem rápida."><span class="im"><img src="assets/mt-massagem.webp" width="500" height="700" alt="Carta: corações e estrela em constelação, Massagem rápida" loading="lazy"></span><b>Massagem rápida</b><small>carta</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Carta · Coringa."><span class="im"><img src="assets/mt-coringa.webp" width="500" height="700" alt="Carta: chapéu de bobo da corte em constelação, Coringa" loading="lazy"></span><b>Coringa</b><small>carta</small></button>
+        </div>
+      </div>
+      <figcaption><b>As cartas lado a lado.</b> Artes finais reais.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso mostrar os arquivos de impressão e as facas de corte ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Match nas Estrelas · design gráfico de cena</span></div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb-dlg" aria-label="Arte ampliada">
+  <div class="lb-in"><img id="lbBig" src="" alt=""><p class="lb-cap" id="lbCap"></p></div>
+  <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
+</dialog>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* reveal + pause loops off-screen (same pattern as the other cases) */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+  })},{threshold:.15}) : null;
+  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(watch);
+  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
+    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+
+  /* video as it aired: plays only on click; the chips jump to the moment the pieces show up */
+  $$('[data-video]').forEach(function(fig){
+    var v = $('video', fig);
+    $$('[data-t]', fig).forEach(function(b){ b.addEventListener('click',function(){
+      var t = +b.dataset.t, go = function(){ v.currentTime = t; v.play() };
+      if(v.readyState < 1){ v.addEventListener('loadedmetadata', go, {once:true}); v.load() } else go();
+    }) });
+  });
+  /* video still to come: the figure (and its section) shows up by itself once assets/video.mp4 exists */
+  $$('[data-video-soon]').forEach(function(fig){
+    var src = fig.dataset.videoSoon;
+    if(!window.fetch || location.protocol==='file:') return;
+    fetch(src,{method:'HEAD'}).then(function(r){
+      if(!r.ok || !/video/.test(r.headers.get('content-type')||'')) return;
+      $('video', fig).src = src; fig.hidden = false;
+      var sec = fig.closest('section[hidden]'); if(sec) sec.hidden = false;
+    }).catch(function(){});
+  });
+  /* trailer: the YouTube player only loads after a click */
+  $$('[data-yt]').forEach(function(b){ b.addEventListener('click',function(){
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';
+    f.title = b.dataset.title;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    b.replaceWith(f); f.focus();
+  }) });
+
+  /* ===== draw a card ===== */
+  var CARDS = [
+    {f:'mt-boca', t:'Carta', q:'Beijinho no cantinho da boca'},
+    {f:'mt-abraco', t:'Carta', q:'Abraço apertado'},
+    {f:'mt-mao', t:'Carta', q:'Carinho na mão'},
+    {f:'mt-pescoco', t:'Carta', q:'Beijinho no pescoço'},
+    {f:'mt-massagem', t:'Carta', q:'Massagem rápida'},
+    {f:'mt-coringa', t:'Coringa', q:'Coringa'}
+  ];
+  var cd = $('#cd');
+  if(cd){
+    var card = $('#cdCard'), front = $('#cdFront'), cCur = -1, cBusy = false;
+    function draw(){
+      if(cBusy) return; cBusy = true;
+      var i = (cCur+1)%CARDS.length, c = CARDS[i];
+      var reveal = function(){
+        front.src = 'assets/'+c.f+'.webp'; front.alt = c.t+': '+c.q; cCur = i;
+        $('#cdCount').textContent = c.t+' · carta '+(i+1)+' de '+CARDS.length;
+        $('#cdText').textContent = '“'+c.q+'”';
+        card.classList.remove('back'); setTimeout(function(){ cBusy = false }, RM ? 0 : 700);
+      };
+      if(RM || card.classList.contains('back')){ var n = new Image(); n.onload = n.onerror = reveal; n.src = 'assets/'+c.f+'.webp'; return }
+      card.classList.add('back');
+      setTimeout(function(){ var n = new Image(); n.onload = n.onerror = reveal; n.src = 'assets/'+c.f+'.webp' }, 420);
+    }
+    $('#cdDeck').addEventListener('click', draw);
+    $('#cdBtn').addEventListener('click', draw);
+    if(RM) draw();
+    autoplay(cd, 3200, draw);
+  }
+
+  /* ===== lightbox: any [data-zoom] opens the artwork larger ===== */
+  var dlg = $('#lb-dlg');
+  if(dlg && dlg.showModal){
+    var big = $('#lbBig'), cap = $('#lbCap');
+    document.addEventListener('click',function(e){
+      var b = e.target.closest('[data-zoom]'); if(!b) return;
+      var im = b.querySelector('img'); if(!im) return;
+      big.src = im.currentSrc || im.src; big.alt = im.alt; cap.textContent = b.dataset.cap || '';
+      dlg.showModal();
+    });
+    $('#lbX').addEventListener('click',function(){ dlg.close() });
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close() });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rio Shore · Design gráfico de cena</title>
+<meta name="description" content="Design gráfico de cena para o reality Rio Shore (MTV e Paramount+): papel de parede em quatro estampas dividido em folhas de impressão, piso do calçadão de Copacabana e baralho de Verdade ou Desafio.">
+<meta property="og:title" content="Rio Shore — design gráfico de cena">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+   Below: the case's own stages. Plaster stage: the walls before the glue. */
+:root{
+  --accent:#2F6DB5; --hl:#F0DF0A;
+  --dk-1:#1E3A5E; --dk-2:#10223A; --dk-3:#081322; --dk-ink:#C9D6E6;
+  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ===== cover ===== */
+.pc-cover{background:#ECE7DF}
+.pc-cover img{width:100%;height:100%;object-fit:cover}
+
+/* ===== stages ===== */
+.st-dk{background:radial-gradient(120% 90% at 50% 0,var(--dk-1),var(--dk-2) 58%,var(--dk-3))}
+.st-gesso{background:#ECE7DF}
+.st-dk .pill{background:rgba(255,255,255,.14);color:#fff}
+.st-dk .pill.y{background:var(--hl);color:var(--pf-ink)}
+.st-gesso .pill{background:rgba(255,255,255,.8)}
+.st-gesso .pill.y{background:var(--hl)}
+
+/* ===== video as it aired ===== */
+.vd{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.vd video,.vd iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.vd-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-top:16px}
+.vd-row p{font-size:14px;line-height:1.5;color:var(--vd-ink,#D9CDD3);max-width:60ch}
+.vd-jump{display:flex;flex-wrap:wrap;gap:8px}
+.vd-jump button{border:0;padding:9px 14px;border-radius:99px;background:var(--hl);color:var(--pf-ink);font:600 13px/1 var(--pf-sans);font-variant-numeric:tabular-nums;transition:transform .3s var(--snap)}
+.vd-jump button:hover{transform:translateY(-2px)}
+.tr-btn{position:absolute;inset:0;border:0;padding:0;background:#000;display:grid;place-items:center;color:#fff}
+.tr-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45;transition:opacity .4s,transform .8s var(--ease)}
+.tr-btn:hover img{opacity:.58;transform:scale(1.02)}
+.tr-btn .play{position:relative;display:grid;justify-items:center;gap:12px;font:600 15px/1.2 var(--pf-sans);letter-spacing:.04em}
+.tr-btn .play i{width:76px;height:76px;border-radius:50%;background:var(--hl);color:var(--pf-ink);display:grid;place-items:center;font-size:26px;font-style:normal;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .35s var(--snap)}
+.tr-btn:hover .play i{transform:scale(1.08)}
+.tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;color:#E9DCCB}
+
+/* ===== tiles (any gallery) ===== */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(12px,2vw,20px)}
+@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal .w2{grid-column:span 2}
+.gal .wf{grid-column:1/-1}
+.pc{--h:clamp(160px,20vw,220px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
+.pc[hidden]{display:none}
+.pc.w2{--h:clamp(170px,22vw,250px)}
+.pc.wf{--h:clamp(200px,34vw,420px)}
+.pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:10px;background:rgba(255,255,255,.62);transition:background .25s}
+.pc:hover .im{background:rgba(255,255,255,.9)}
+.pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(40,20,30,.55)}
+.pc .im img.flat{box-shadow:none}
+.pc.ph .im{padding:0;overflow:hidden;background:#111}
+.pc.ph .im img{width:100%;height:100%;max-height:none;object-fit:cover;box-shadow:none;transition:transform .8s var(--ease)}
+.pc.ph:hover .im img{transform:scale(1.03)}
+.pc b{font:600 13px/1.3 var(--pf-sans);color:#21161B}
+.pc small{display:block;font-size:12px;line-height:1.4;color:#5E4E56;margin-top:2px}
+.st-dk .pc .im{background:rgba(255,255,255,.08)}
+.st-dk .pc:hover .im{background:rgba(255,255,255,.16)}
+.st-dk .pc b{color:#F3E9EE}
+.st-dk .pc small{color:var(--dk-ink,#CDBDC5)}
+.fl-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fl-chips button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
+.fl-chips button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* ===== the wall in print sheets ===== */
+.st-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.st-tabs button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
+.st-tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+.wl-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.wl-mode{display:inline-flex;padding:3px;border-radius:99px;background:rgba(16,22,31,.08)}
+.wl-mode button{border:0;background:none;padding:8px 13px;border-radius:99px;font:600 12px/1 var(--pf-sans);color:#4A3F45}
+.wl-mode button[aria-pressed="true"]{background:#fff;color:var(--pf-ink);box-shadow:0 1px 3px rgba(16,22,31,.16)}
+.wl{--gap:0px;display:flex;justify-content:center;align-items:flex-start;gap:var(--gap);padding:6px 0 28px;transition:gap .6s var(--ease)}
+.wl.apart{--gap:clamp(5px,1.1vw,14px)}
+.wl[hidden]{display:none}
+.wl-f{position:relative;flex:1 1 0;min-width:0;max-width:150px}
+.wl-f img{width:100%;height:auto;display:block;box-shadow:0 12px 20px -14px rgba(40,20,30,.7)}
+.wl:not(.apart){filter:drop-shadow(0 14px 14px rgba(40,20,30,.28))}
+.wl:not(.apart) .wl-f img{box-shadow:none}
+.wl:not(.apart) .wl-f+.wl-f{margin-left:-1px}
+.wl-f i{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);font:600 11px/1 var(--pf-sans);font-style:normal;color:#5E4E56;opacity:0;transition:opacity .4s}
+.wl.apart .wl-f i{opacity:1}
+.wl-info{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:#4C3F45;border-top:1px dashed rgba(60,40,50,.25);padding-top:12px}
+.wl-info b{color:var(--pf-ink)}
+.fl-floor{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,1fr);gap:clamp(14px,2.4vw,24px);align-items:end}
+@media(max-width:760px){.fl-floor{grid-template-columns:1fr}}
+.pf-sec code{font:500 13px/1.4 ui-monospace,Menlo,monospace;background:rgba(47,109,181,.1);color:#1D4A80;padding:2px 6px;border-radius:5px}
+
+/* ===== deck of cards ===== */
+.cd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,4vw,48px);align-items:center}
+@media(max-width:640px){.cd{grid-template-columns:1fr;justify-items:center}}
+.cd-deck{position:relative;width:clamp(180px,24vw,250px);aspect-ratio:105/150;perspective:1200px;border:0;padding:0;background:none;cursor:pointer}
+.cd-deck::before,.cd-deck::after{content:"";position:absolute;inset:0;border-radius:8px;background:url(assets/rs-verso.webp) center/cover;box-shadow:0 10px 18px -12px rgba(0,0,0,.6)}
+.cd-deck::before{transform:translate(8px,8px) rotate(3deg)}
+.cd-deck::after{transform:translate(4px,4px) rotate(1.5deg)}
+.cd-card{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;transition:transform .7s var(--snap)}
+.cd-card.back{transform:rotateY(180deg)}
+.cd-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:8px;-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 22px 34px -18px rgba(0,0,0,.75)}
+.cd-card .f-back{transform:rotateY(180deg)}
+.cd-side{display:grid;gap:14px;justify-items:start}
+.cd-side p{font-size:15px;color:#4C3F45}
+.cd-btn{border:0;border-radius:12px;height:46px;padding:0 20px;background:var(--accent);color:#fff;font:600 15px var(--pf-sans);transition:transform .3s var(--snap)}
+.cd-btn:hover{transform:translateY(-2px)}
+.cd-count{font:600 12px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;color:#6A5860;font-variant-numeric:tabular-nums}
+
+/* ===== lightbox ===== */
+.lb{margin:auto;border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.lb::backdrop{background:rgba(16,10,13,.9)}
+.lb-in{display:grid;gap:12px;justify-items:center}
+.lb img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.lb-cap{max-width:60ch;font-size:14px;line-height:1.5;color:#EDE3E7;text-align:center}
+.lb-x{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font-size:22px;line-height:1;display:grid;place-items:center}
+
+.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body data-case="rio-shore">
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Rio Shore</span></a>
+    <ul class="pf-links">
+      <li><a href="#paredes">Paredes</a></li>
+      <li><a href="#piso">Piso</a></li>
+      <li><a href="#baralho">Baralho</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<header class="pf-hero">
+  <div class="wrap">
+    <p class="eyebrow"><b>Case 24</b> · Design gráfico de cena · Reality</p>
+    <h1>Uma parede de 13 metros <em>sai da gráfica em nove folhas.</em></h1>
+    <p class="lede">Rio Shore é o reality da MTV em que dez jovens cariocas passam as férias numa casa em Búzios. A casa ganhou papel de parede em quatro estampas, um piso com as ondas do calçadão de Copacabana e um baralho de Verdade ou Desafio.</p>
+    <dl class="pf-meta">
+      <div><dt>Papel</dt><dd>Designer gráfico</dd></div>
+      <div><dt>Programa</dt><dd>Rio Shore · MTV e Paramount+</dd></div>
+      <div><dt>Formato</dt><dd>Reality, desde 2021</dd></div>
+      <div><dt>Entregas</dt><dd>Papel de parede em quatro estampas, piso, ladrilho e baralho</dd></div>
+    </dl>
+  </div>
+  <div class="pf-cover pc-cover">
+    <img src="assets/cover.jpg" width="2400" height="1200" alt="Folhas de papel de parede lado a lado: a parede escrita em roxo e rosa com gírias do Rio, a azul, a vermelha e a amarela">
+  </div>
+</header>
+
+<section id="no-ar" class="pf-sec" hidden>
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow">No ar</p>
+      <h2>A casa, como foi ao ar.</h2>
+      <p class="lede">Trecho do programa com o papel de parede, o piso e o baralho em cena.</p>
+    </div>
+    <figure class="rv" data-video data-video-soon="assets/video.mp4" id="video-fig" hidden>
+      <div class="pf-stage st-dk">
+        <div class="tag-row"><span class="pill y">Vídeo</span><span class="pill">Como foi ao ar</span></div>
+        <div class="vd"><video controls playsinline preload="none" aria-label="Trecho do Rio Shore com o papel de parede e o piso em cena"></video></div>
+      </div>
+      <figcaption><b>Trecho do programa.</b> Vídeo como foi ao ar.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="paredes" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>01</b> · Paredes</p>
+      <h2>Quatro estampas desenhadas inteiras, em escala.</h2>
+      <p class="lede">A casa ganhou papel de parede em quatro estampas. Cada parede foi desenhada inteira, em escala 10%, e depois dividida em folhas de 1,47 m de largura, na ordem de colagem. Separe e monte.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-gesso" id="wl" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Separe e monte a parede</span></div>
+        <div class="wl-bar">
+          <div class="st-tabs" role="tablist" aria-label="Paredes">
+            <button type="button" role="tab" id="wl-t1" aria-selected="true" aria-controls="wl-p1">Azul</button>
+            <button type="button" role="tab" id="wl-t2" aria-selected="false" aria-controls="wl-p2" tabindex="-1">Vermelha</button>
+            <button type="button" role="tab" id="wl-t3" aria-selected="false" aria-controls="wl-p3" tabindex="-1">Escrita</button>
+            <button type="button" role="tab" id="wl-t4" aria-selected="false" aria-controls="wl-p4" tabindex="-1">Amarela</button>
+          </div>
+          <div class="wl-mode" role="group" aria-label="Visualização">
+            <button type="button" aria-pressed="true" data-m="apart">Folhas</button>
+            <button type="button" aria-pressed="false" data-m="whole">Parede montada</button>
+          </div>
+        </div>
+        <div class="wl apart" id="wl-p1" role="tabpanel" aria-labelledby="wl-t1" data-n="9" data-p="rs-azul" data-info="&lt;b&gt;Parede azul&lt;/b&gt;|9 folhas de 1,47 × 3 m|13,2 × 3 m montada"></div>
+        <div class="wl apart" id="wl-p2" role="tabpanel" aria-labelledby="wl-t2" data-n="7" data-p="rs-verm" data-info="&lt;b&gt;Parede vermelha&lt;/b&gt;|7 folhas de 1,47 × 5 m|10,3 × 5 m montada" hidden></div>
+        <div class="wl apart" id="wl-p3" role="tabpanel" aria-labelledby="wl-t3" data-n="6" data-p="rs-escr" data-info="&lt;b&gt;Parede escrita&lt;/b&gt;, com gírias e bairros do Rio|6 folhas de 1,47 × 2,8 m|8,8 × 2,8 m montada" hidden></div>
+        <div class="wl apart" id="wl-p4" role="tabpanel" aria-labelledby="wl-t4" data-n="4" data-p="rs-amar" data-info="&lt;b&gt;Parede amarela&lt;/b&gt;|4 folhas de 1,47 × 3 m|5,9 × 3 m montada" hidden></div>
+        <div class="wl-info" id="wlInfo" aria-live="polite"></div>
+      </div>
+      <figcaption><b>Papel de parede.</b> Artes finais reais, folha por folha, na ordem de colagem. Medidas tiradas dos arquivos de impressão.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="piso" class="pf-sec alt">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>02</b> · Piso</p>
+      <h2>Um piso de 13,5 metros num arquivo de 1,35.</h2>
+      <p class="lede">O piso tem 3 × 13,5 m e as ondas do calçadão de Copacabana. O arquivo tem 30 × 135 cm e se chama <code>piso_300x1350_escala10%</code>: grande formato vai para a gráfica em escala, com a medida real no nome.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-gesso">
+        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Piso</span></div>
+        <div class="fl-floor">
+          <button class="pc" type="button" data-zoom data-cap="Piso de 3 × 13,5 m, com as ondas do calçadão de Copacabana. Arquivo em escala 10%."><span class="im" style="height:auto"><img class="flat" src="assets/rs-piso.webp" width="1800" height="400" alt="Faixa longa de piso com o padrão de ondas azuis e brancas do calçadão de Copacabana" loading="lazy" style="width:100%;max-height:none"></span><b>Piso, 3 × 13,5 m</b><small>arquivo em escala 10%</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Ladrilho de 57 × 57 cm, o módulo do mesmo desenho."><span class="im"><img class="flat" src="assets/rs-ladrilho.webp" width="700" height="700" alt="Ladrilho quadrado com a onda azul do calçadão de Copacabana" loading="lazy"></span><b>Ladrilho, 57 × 57 cm</b><small>módulo do piso</small></button>
+        </div>
+      </div>
+      <figcaption><b>Piso.</b> Artes finais reais: a faixa inteira em escala e o ladrilho que repete o desenho.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="baralho" class="pf-sec">
+  <div class="wrap">
+    <div class="pf-head rv">
+      <p class="eyebrow"><b>03</b> · Baralho</p>
+      <h2>Cem verdades e 56 desafios.</h2>
+      <p class="lede">O baralho de Verdade ou Desafio da casa: verso com o logo do Rio Shore e da MTV sobre as ondas do calçadão, e uma pergunta ou um desafio por carta.</p>
+    </div>
+    <figure class="rv">
+      <div class="pf-stage st-gesso" id="cd" data-loop>
+        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Tire uma carta</span></div>
+        <div class="cd">
+          <button class="cd-deck" type="button" id="cdDeck" aria-label="Tirar uma carta do baralho">
+            <span class="cd-card back" id="cdCard"><img class="f-front" id="cdFront" src="assets/rs-v1.webp" width="490" height="700" alt=""><img class="f-back" src="assets/rs-verso.webp" width="490" height="700" alt=""></span>
+          </button>
+          <div class="cd-side">
+            <span class="cd-count" id="cdCount">Baralho Rio Shore</span>
+            <p id="cdText" aria-live="off" data-live>O verso leva o logo do Rio Shore e da MTV sobre as ondas do calçadão. Na frente, uma pergunta ou um desafio por carta.</p>
+            <button class="cd-btn" type="button" id="cdBtn">Tirar uma carta</button>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Baralho de Verdade ou Desafio.</b> 100 cartas de verdade, 56 de desafio e coringas para os dois montes. Artes finais reais; a página mostra só algumas das perguntas mais leves.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow">Próximo case</p>
+        <a class="pf-next" data-auto href="../index.html"></a>
+      </div>
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p>Posso mostrar os arquivos de impressão e as facas de corte ao vivo.</p>
+        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Rio Shore · design gráfico de cena</span></div>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb-dlg" aria-label="Arte ampliada">
+  <div class="lb-in"><img id="lbBig" src="" alt=""><p class="lb-cap" id="lbCap"></p></div>
+  <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
+</dialog>
+
+<script src="../shared/cases.js"></script>
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  /* reveal + pause loops off-screen (same pattern as the other cases) */
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
+    var el = e.target;
+    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
+  })},{threshold:.15}) : null;
+  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
+  function visible(el){ return !el.classList.contains('offscreen') }
+  $$('.rv').forEach(watch);
+  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+
+  /* autoplay helper: runs step() every ms while on screen, stops for good on the first touch */
+  function autoplay(root, ms, step){
+    var on = !RM, t = null;
+    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
+    function stop(){ on = false; clearTimeout(t); live() }
+    if(!on) live();
+    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
+    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
+    return { stop:stop };
+  }
+
+  /* video as it aired: plays only on click; the chips jump to the moment the pieces show up */
+  $$('[data-video]').forEach(function(fig){
+    var v = $('video', fig);
+    $$('[data-t]', fig).forEach(function(b){ b.addEventListener('click',function(){
+      var t = +b.dataset.t, go = function(){ v.currentTime = t; v.play() };
+      if(v.readyState < 1){ v.addEventListener('loadedmetadata', go, {once:true}); v.load() } else go();
+    }) });
+  });
+  /* video still to come: the figure (and its section) shows up by itself once assets/video.mp4 exists */
+  $$('[data-video-soon]').forEach(function(fig){
+    var src = fig.dataset.videoSoon;
+    if(!window.fetch || location.protocol==='file:') return;
+    fetch(src,{method:'HEAD'}).then(function(r){
+      if(!r.ok || !/video/.test(r.headers.get('content-type')||'')) return;
+      $('video', fig).src = src; fig.hidden = false;
+      var sec = fig.closest('section[hidden]'); if(sec) sec.hidden = false;
+    }).catch(function(){});
+  });
+  /* trailer: the YouTube player only loads after a click */
+  $$('[data-yt]').forEach(function(b){ b.addEventListener('click',function(){
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';
+    f.title = b.dataset.title;
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    b.replaceWith(f); f.focus();
+  }) });
+
+  /* tabs: [role=tab] buttons inside root; arrows, Home and End move between them */
+  function tabs(root, onPick){
+    var ts = $$('[role="tab"]', root);
+    function pick(t, focus){
+      ts.forEach(function(x){
+        var on = x===t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
+        $('#'+x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if(focus) t.focus();
+      if(onPick) onPick(t);
+    }
+    ts.forEach(function(t,k){
+      t.addEventListener('click',function(){ pick(t) });
+      t.addEventListener('keydown',function(e){
+        var n = e.key==='ArrowRight' ? k+1 : e.key==='ArrowLeft' ? k-1 : e.key==='Home' ? 0 : e.key==='End' ? ts.length-1 : null;
+        if(n===null) return; e.preventDefault(); pick(ts[(n+ts.length)%ts.length], true);
+      });
+    });
+    return { pick:pick, tabs:ts };
+  }
+
+  /* ===== wallpaper sheets apart or assembled ===== */
+  var wl = $('#wl');
+  if(wl){
+    var walls = $$('.wl', wl), modeBtns = $$('.wl-mode button', wl), info = $('#wlInfo'), apart = true;
+    walls.forEach(function(w){
+      var n = +w.dataset.n, p = w.dataset.p, h = '';
+      for(var i=1;i<=n;i++) h += '<span class="wl-f"><img src="assets/'+p+'-'+i+'.webp" alt="Folha '+i+' de '+n+'" loading="lazy"><i>'+i+'</i></span>';
+      w.innerHTML = h;
+    });
+    function showInfo(w){ info.innerHTML = w.dataset.info.split('|').map(function(s){ return '<span>'+s+'</span>' }).join('') }
+    function mode(a){
+      apart = a;
+      walls.forEach(function(w){ w.classList.toggle('apart', a) });
+      modeBtns.forEach(function(b){ b.setAttribute('aria-pressed', (b.dataset.m==='apart')===a ? 'true' : 'false') });
+    }
+    modeBtns.forEach(function(b){ b.addEventListener('click',function(){ mode(b.dataset.m==='apart') }) });
+    tabs(wl, function(t){ showInfo($('#'+t.getAttribute('aria-controls'))) });
+    showInfo(walls[0]);
+    mode(RM ? false : true);
+    autoplay(wl, 2200, function(){ mode(!apart) });
+  }
+
+  /* ===== draw a card ===== */
+  var CARDS = [
+    {f:'rs-v1', t:'Verdade', q:'Você se casaria por dinheiro?'},
+    {f:'rs-d1', t:'Desafio', q:'Imite a pessoa que mais te irrita na casa.'},
+    {f:'rs-v2', t:'Verdade', q:'Se tivesse que escolher um jogador pra beijar agora, quem seria?'},
+    {f:'rs-d2', t:'Desafio', q:'Escolha alguém para fazer queda de braço contigo. O perdedor bebe.'},
+    {f:'rs-cv', t:'Coringa de verdade', q:'A pessoa à sua esquerda pergunta uma verdade.'},
+    {f:'rs-d3', t:'Desafio', q:'Escolha alguém da roda para beijar. O escolhido decide onde é o beijo.'},
+    {f:'rs-cd', t:'Coringa de desafio', q:'A pessoa à sua esquerda inventa um desafio.'}
+  ];
+  var cd = $('#cd');
+  if(cd){
+    var card = $('#cdCard'), front = $('#cdFront'), cCur = -1, cBusy = false;
+    function draw(){
+      if(cBusy) return; cBusy = true;
+      var i = (cCur+1)%CARDS.length, c = CARDS[i];
+      var reveal = function(){
+        front.src = 'assets/'+c.f+'.webp'; front.alt = c.t+': '+c.q; cCur = i;
+        $('#cdCount').textContent = c.t+' · carta '+(i+1)+' de '+CARDS.length;
+        $('#cdText').textContent = '“'+c.q+'”';
+        card.classList.remove('back'); setTimeout(function(){ cBusy = false }, RM ? 0 : 700);
+      };
+      if(RM || card.classList.contains('back')){ var n = new Image(); n.onload = n.onerror = reveal; n.src = 'assets/'+c.f+'.webp'; return }
+      card.classList.add('back');
+      setTimeout(function(){ var n = new Image(); n.onload = n.onerror = reveal; n.src = 'assets/'+c.f+'.webp' }, 420);
+    }
+    $('#cdDeck').addEventListener('click', draw);
+    $('#cdBtn').addEventListener('click', draw);
+    if(RM) draw();
+    autoplay(cd, 3200, draw);
+  }
+
+  /* ===== lightbox: any [data-zoom] opens the artwork larger ===== */
+  var dlg = $('#lb-dlg');
+  if(dlg && dlg.showModal){
+    var big = $('#lbBig'), cap = $('#lbCap');
+    document.addEventListener('click',function(e){
+      var b = e.target.closest('[data-zoom]'); if(!b) return;
+      var im = b.querySelector('img'); if(!im) return;
+      big.src = im.currentSrc || im.src; big.alt = im.alt; cap.textContent = b.dataset.cap || '';
+      dlg.showModal();
+    });
+    $('#lbX').addEventListener('click',function(){ dlg.close() });
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close() });
+  }
+})();
+</script>
+</body>
+</html>

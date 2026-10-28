@@ -40,10 +40,10 @@ Este documento registra o status de materiais, dados e decisões de cada case do
 - [x] Macro close-up comparando a oxidação do papel jornal original de 1965 com o traço restaurado (`assets/macro-restauracao.jpg`) — **Concluído ✓**
 - [x] Pranchas de miolo finalizado e capas da coleção Mauricio de Sousa — **Concluído ✓**
 
-### Publicidade e TV (Cenografia e Graphic Props)
-- [x] Parede de 13 metros de *Rio Shore* com divisão modular em 9 folhas de impressão — **Concluído ✓**
-- [x] Mapa ilustrado da ilha em 21 versões para *Se Sobreviver, Case* — **Concluído ✓**
-- [x] Rótulos de época e marcas fictícias em 4K preparados para o close da câmera — **Concluído ✓**
+### Áudio Visual (antigo case Publicidade e TV)
+- [x] Case único dividido em oito cases curtos, cada um abrindo com o vídeo do programa — **Concluído ✓**
+- [x] Papel, canal e ano confirmados pelo autor; `draft: true` retirado dos oito cases — **Concluído ✓**
+- [ ] Vídeos de Rio Shore, Match nas Estrelas e Magal e os Formigas (`<slug>/assets/video.mp4`)
 
 ### Vistorias de Risco (Web App / PWA)
 - [x] Fluxograma completo da jornada ponta a ponta (campo offline com fila em `IndexedDB` → sincronização na nuvem → laudo pericial com fotos e assinatura) — **Concluído ✓**

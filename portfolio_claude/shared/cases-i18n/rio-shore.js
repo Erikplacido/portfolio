@@ -1,0 +1,125 @@
+/**
+ * Case Study Translations: Rio Shore
+ * Languages: EN, ES, FR (PT original preserved)
+ */
+(function() {
+  var CASE_SLUG = 'rio-shore';
+
+  var translations = {
+    "en": {
+      ".pf-links a[href=\"#paredes\"]": "Walls",
+      ".pf-links a[href=\"#piso\"]": "Floor",
+      ".pf-links a[href=\"#baralho\"]": "Deck",
+      ".pf-hero .eyebrow": "<b>Case 24</b> · Graphic prop design · Reality",
+      ".pf-hero h1": "A 13-metre wall <em>leaves the printer in nine sheets.</em>",
+      ".pf-hero .lede": "Rio Shore is the MTV reality show where ten young cariocas spend their holidays in a house in Búzios. The house got wallpaper in four patterns, a floor with the waves of the Copacabana boardwalk, and a Truth or Dare deck.",
+      ".pf-meta div:nth-child(1) dt": "Role",
+      ".pf-meta div:nth-child(1) dd": "Graphic designer",
+      ".pf-meta div:nth-child(2) dt": "Show",
+      ".pf-meta div:nth-child(2) dd": "Rio Shore · MTV and Paramount+",
+      ".pf-meta div:nth-child(3) dt": "Format",
+      ".pf-meta div:nth-child(3) dd": "Reality, since 2021",
+      ".pf-meta div:nth-child(4) dt": "Deliverables",
+      ".pf-meta div:nth-child(4) dd": "Wallpaper in four patterns, floor, tile, and card deck",
+      "#no-ar .eyebrow": "On air",
+      "#no-ar h2": "The house, as aired.",
+      "#no-ar .lede": "An excerpt of the show with the wallpaper, the floor, and the deck on set.",
+      "#no-ar .wrap > figure:nth-of-type(1) > figcaption": "<b>Show excerpt.</b> Video as aired.",
+      "#paredes .eyebrow": "<b>01</b> · Walls",
+      "#paredes h2": "Four patterns drawn whole, to scale.",
+      "#paredes .lede": "The house got wallpaper in four patterns. Each wall was drawn whole at 10% scale and then split into 1.47 m-wide sheets, in hanging order. Pull them apart and put them back.",
+      "#paredes .wrap > figure:nth-of-type(1) > figcaption": "<b>Wallpaper.</b> Real final artwork, sheet by sheet, in hanging order. Sizes taken from the print files.",
+      "#piso .eyebrow": "<b>02</b> · Floor",
+      "#piso h2": "A 13.5-metre floor in a 1.35-metre file.",
+      "#piso .lede": "The floor is 3 × 13.5 m with the waves of the Copacabana boardwalk. The file is 30 × 135 cm and is named <code>piso_300x1350_escala10%</code>: large formats go to the printer at scale, with the real size in the name.",
+      "#piso .wrap > figure:nth-of-type(1) > figcaption": "<b>Floor.</b> Real final artwork: the whole strip at scale and the tile that repeats the pattern.",
+      "#baralho .eyebrow": "<b>03</b> · Deck",
+      "#baralho h2": "A hundred truths and 56 dares.",
+      "#baralho .lede": "The house’s Truth or Dare deck: a back with the Rio Shore and MTV logos over the boardwalk waves, and one question or dare per card.",
+      "#baralho .wrap > figure:nth-of-type(1) > figcaption": "<b>Truth or Dare deck.</b> 100 truth cards, 56 dare cards, and wild cards for both piles. Real final artwork; the page shows only a few of the lighter questions.",
+      ".pf-footer .eyebrow": "Next case",
+      ".pf-footer h2": "Let’s talk?",
+      ".pf-fgrid > div:nth-child(2) p": "I can walk you through the print files and die lines live.",
+      ".pf-base span:nth-child(2)": "Rio Shore · graphic prop design"
+    },
+    "es": {
+      ".pf-links a[href=\"#paredes\"]": "Paredes",
+      ".pf-links a[href=\"#piso\"]": "Piso",
+      ".pf-links a[href=\"#baralho\"]": "Baraja",
+      ".pf-hero .eyebrow": "<b>Case 24</b> · Diseño gráfico de atrezzo · Reality",
+      ".pf-hero h1": "Una pared de 13 metros <em>sale de la imprenta en nueve pliegos.</em>",
+      ".pf-hero .lede": "Rio Shore es el reality de MTV en el que diez jóvenes cariocas pasan las vacaciones en una casa en Búzios. La casa recibió papel tapiz en cuatro estampados, un piso con las olas del paseo de Copacabana y una baraja de Verdad o Reto.",
+      ".pf-meta div:nth-child(1) dt": "Rol",
+      ".pf-meta div:nth-child(1) dd": "Diseñador gráfico",
+      ".pf-meta div:nth-child(2) dt": "Programa",
+      ".pf-meta div:nth-child(2) dd": "Rio Shore · MTV y Paramount+",
+      ".pf-meta div:nth-child(3) dt": "Formato",
+      ".pf-meta div:nth-child(3) dd": "Reality, desde 2021",
+      ".pf-meta div:nth-child(4) dt": "Entregables",
+      ".pf-meta div:nth-child(4) dd": "Papel tapiz en cuatro estampados, piso, baldosa y baraja",
+      "#no-ar .eyebrow": "Al aire",
+      "#no-ar h2": "La casa, tal como salió al aire.",
+      "#no-ar .lede": "Fragmento del programa con el papel tapiz, el piso y la baraja en escena.",
+      "#no-ar .wrap > figure:nth-of-type(1) > figcaption": "<b>Fragmento del programa.</b> Video tal como salió al aire.",
+      "#paredes .eyebrow": "<b>01</b> · Paredes",
+      "#paredes h2": "Cuatro estampados dibujados enteros, a escala.",
+      "#paredes .lede": "Cada pared se dibujó entera, a escala 10%, y luego se dividió en pliegos de 1,47 m de ancho, en orden de colocación. Sepáralos y vuelve a armarla.",
+      "#paredes .wrap > figure:nth-of-type(1) > figcaption": "<b>Papel tapiz.</b> Artes finales reales, pliego por pliego, en orden de colocación. Medidas tomadas de los archivos de impresión.",
+      "#piso .eyebrow": "<b>02</b> · Piso",
+      "#piso h2": "Un piso de 13,5 metros en un archivo de 1,35.",
+      "#piso .lede": "El piso mide 3 × 13,5 m y lleva las olas del paseo de Copacabana. El archivo mide 30 × 135 cm y se llama <code>piso_300x1350_escala10%</code>: el gran formato va a la imprenta a escala, con la medida real en el nombre.",
+      "#piso .wrap > figure:nth-of-type(1) > figcaption": "<b>Piso.</b> Artes finales reales: la franja entera a escala y la baldosa que repite el dibujo.",
+      "#baralho .eyebrow": "<b>03</b> · Baraja",
+      "#baralho h2": "Cien verdades y 56 retos.",
+      "#baralho .lede": "La baraja de Verdad o Reto de la casa: reverso con los logos de Rio Shore y MTV sobre las olas del paseo, y una pregunta o un reto por carta.",
+      "#baralho .wrap > figure:nth-of-type(1) > figcaption": "<b>Baraja de Verdad o Reto.</b> 100 cartas de verdad, 56 de reto y comodines para los dos mazos. Artes finales reales; la página muestra solo algunas de las preguntas más suaves.",
+      ".pf-footer .eyebrow": "Siguiente caso",
+      ".pf-footer h2": "¿Hablamos?",
+      ".pf-fgrid > div:nth-child(2) p": "Puedo mostrarte en vivo los archivos de impresión y los troqueles.",
+      ".pf-base span:nth-child(2)": "Rio Shore · diseño gráfico de atrezzo"
+    },
+    "fr": {
+      ".pf-links a[href=\"#paredes\"]": "Murs",
+      ".pf-links a[href=\"#piso\"]": "Sol",
+      ".pf-links a[href=\"#baralho\"]": "Cartes",
+      ".pf-hero .eyebrow": "<b>Case 24</b> · Graphisme de plateau · Téléréalité",
+      ".pf-hero h1": "Un mur de 13 mètres <em>sort de l’imprimerie en neuf lés.</em>",
+      ".pf-hero .lede": "Rio Shore est la téléréalité de MTV où dix jeunes cariocas passent leurs vacances dans une maison à Búzios. La maison a reçu un papier peint en quatre motifs, un sol aux vagues de la promenade de Copacabana et un jeu Action ou Vérité.",
+      ".pf-meta div:nth-child(1) dt": "Rôle",
+      ".pf-meta div:nth-child(1) dd": "Graphiste",
+      ".pf-meta div:nth-child(2) dt": "Émission",
+      ".pf-meta div:nth-child(2) dd": "Rio Shore · MTV et Paramount+",
+      ".pf-meta div:nth-child(3) dt": "Format",
+      ".pf-meta div:nth-child(3) dd": "Téléréalité, depuis 2021",
+      ".pf-meta div:nth-child(4) dt": "Livrables",
+      ".pf-meta div:nth-child(4) dd": "Papier peint en quatre motifs, sol, carreau et jeu de cartes",
+      "#no-ar .eyebrow": "À l’antenne",
+      "#no-ar h2": "La maison, telle que diffusée.",
+      "#no-ar .lede": "Extrait de l’émission avec le papier peint, le sol et les cartes à l’image.",
+      "#no-ar .wrap > figure:nth-of-type(1) > figcaption": "<b>Extrait de l’émission.</b> Vidéo telle que diffusée.",
+      "#paredes .eyebrow": "<b>01</b> · Murs",
+      "#paredes h2": "Quatre motifs dessinés en entier, à l’échelle.",
+      "#paredes .lede": "Chaque mur a été dessiné en entier à l’échelle 10 %, puis découpé en lés de 1,47 m de large, dans l’ordre de pose. Séparez-les et remontez le mur.",
+      "#paredes .wrap > figure:nth-of-type(1) > figcaption": "<b>Papier peint.</b> Fichiers définitifs réels, lé par lé, dans l’ordre de pose. Tailles tirées des fichiers d’impression.",
+      "#piso .eyebrow": "<b>02</b> · Sol",
+      "#piso h2": "Un sol de 13,5 mètres dans un fichier de 1,35.",
+      "#piso .lede": "Le sol mesure 3 × 13,5 m avec les vagues de la promenade de Copacabana. Le fichier mesure 30 × 135 cm et s’appelle <code>piso_300x1350_escala10%</code> : le grand format part à l’échelle, avec la vraie taille dans le nom.",
+      "#piso .wrap > figure:nth-of-type(1) > figcaption": "<b>Sol.</b> Fichiers définitifs réels : la bande entière à l’échelle et le carreau qui répète le motif.",
+      "#baralho .eyebrow": "<b>03</b> · Cartes",
+      "#baralho h2": "Cent vérités et 56 actions.",
+      "#baralho .lede": "Le jeu Action ou Vérité de la maison : un dos aux logos Rio Shore et MTV sur les vagues de la promenade, et une question ou une action par carte.",
+      "#baralho .wrap > figure:nth-of-type(1) > figcaption": "<b>Jeu Action ou Vérité.</b> 100 cartes vérité, 56 cartes action et des jokers pour les deux tas. Fichiers définitifs réels ; la page ne montre que quelques questions parmi les plus sages.",
+      ".pf-footer .eyebrow": "Projet suivant",
+      ".pf-footer h2": "On en parle ?",
+      ".pf-fgrid > div:nth-child(2) p": "Je peux vous montrer en direct les fichiers d’impression et les tracés de découpe.",
+      ".pf-base span:nth-child(2)": "Rio Shore · graphisme de plateau"
+    }
+  };
+
+  if (window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.registerCase) {
+    window.PORTFOLIO_I18N.registerCase(CASE_SLUG, translations);
+  } else {
+    window.PORTFOLIO_CASES_I18N = window.PORTFOLIO_CASES_I18N || {};
+    window.PORTFOLIO_CASES_I18N[CASE_SLUG] = translations;
+  }
+})();
