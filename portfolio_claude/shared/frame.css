@@ -587,3 +587,8 @@ html.pf-imm-active,html.pf-imm-active body{overflow:hidden;scroll-behavior:auto}
   .pf-imm-area{top:env(safe-area-inset-top);left:calc(60px + env(safe-area-inset-left))}
 }
 @media(prefers-reduced-motion:reduce){.pf-imm-hint svg{animation:none;transform:rotate(-90deg)}}
+
+/* meeple: Font Awesome Free has none, so the theme icon "fa-meeple" is drawn here and works
+   anywhere a <i class="fa-solid fa-meeple"> is used (home, segment pages, case switcher) */
+.fa-solid.fa-meeple::before{content:"";display:inline-block;width:1.15em;height:1.15em;vertical-align:-.18em;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a3.2 3.2 0 0 1 3.2 3.2c0 .9-.4 1.7-1 2.3 3.6.6 7.8 1.9 7.8 3.9 0 1.4-2.6 1.6-4.4 1.6l3.1 6.8c.3.7-.2 1.2-.9 1.2h-4.6L12 16.6 8.8 21H4.2c-.7 0-1.2-.5-.9-1.2l3.1-6.8C4.6 13 2 12.8 2 11.4c0-2 4.2-3.3 7.8-3.9-.6-.6-1-1.4-1-2.3A3.2 3.2 0 0 1 12 2z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a3.2 3.2 0 0 1 3.2 3.2c0 .9-.4 1.7-1 2.3 3.6.6 7.8 1.9 7.8 3.9 0 1.4-2.6 1.6-4.4 1.6l3.1 6.8c.3.7-.2 1.2-.9 1.2h-4.6L12 16.6 8.8 21H4.2c-.7 0-1.2-.5-.9-1.2l3.1-6.8C4.6 13 2 12.8 2 11.4c0-2 4.2-3.3 7.8-3.9-.6-.6-1-1.4-1-2.3A3.2 3.2 0 0 1 12 2z'/%3E%3C/svg%3E") center/contain no-repeat}

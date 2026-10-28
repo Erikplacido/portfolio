@@ -32,7 +32,7 @@ window.PORTFOLIO_GROUPS = [
     color: '#0F766E', resume: '../curriculo_product_design.html',
     desc: 'Arquitetura de informação, fluxos de onboarding, Design Systems e redução de atrito transacional em fintechs.',
     kpi: 'Design Tokens em código · Acessibilidade WCAG · Protótipos funcionais em React' },
-  { id: 'tabletop',       label: 'Tabletop',         icon: 'fa-dice-d20',
+  { id: 'tabletop',       label: 'Tabletop',         icon: 'fa-meeple',
     color: '#D97706', resume: '../tabletop.html',
     desc: 'Ergonomia física de mesa, consoles dual-layer cortados a laser, card games e iconografia para leitura rápida.',
     kpi: 'Dual-Layer rígido 3mm · Splay de 18mm · Regras visuais sem texto' },
