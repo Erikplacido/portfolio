@@ -8,7 +8,7 @@ Erik foi o **designer gráfico do filme** (placa-título e peças de cena dos an
 |---|---|---|
 | Abertura | Placa-título sobre o muro (imagem da capa do deck) | Reflexo de luz esmaltada na abertura |
 | Contexto | Sinopse, brief, 2 épocas, ~60 itens na lista de arte, 4 levas de impressão, 5 quadros cinematográficos | Toque amplia quadros em alta resolução |
-| 01 Épocas (faixa assinatura) | Vitrine interativa de 6 pares anos 50 × anos 80 (Clara rótulo, Clara cartaz, Refres Frut, cigarro Aurora → Demar, fósforo Maxlumi → Maxluli, cédula de cem cruzeiros) | Placas ANOS 50 / ANOS 80 e botão 3D ou Lado a Lado; seletor dos 6 pares; ciclo suave que pausa no primeiro toque |
+| 01 Épocas (faixa assinatura) | Vitrine interativa de 5 pares anos 50 × anos 80 (Clara rótulo, Clara cartaz, Refres Frut, cigarro Aurora, fósforo Maxlumi) | Placas ANOS 50 / ANOS 80 e botão 3D ou Lado a Lado; seletor dos 5 pares; ciclo suave que pausa no primeiro toque |
 | 02 Marcas | 2 fotos panorâmicas dos balcões de época + prateleira interativa de 13 rótulos inventados (Belezura, Austral, Cana Caí, Carminha, Didico, Mimozinha, Dona Aurea, Mariola, Coco, Aurora, Old Maltes, Demar, Wald) | Prateleira navegável com spotlight em alta fidelidade e ficha técnica |
 | 03 Especulação | Ordem de despejo e planta do edifício em destaque + mural com 10 lambes, outdoors, contrato e jornal | Toque em qualquer peça amplia em alta resolução |
 | 04 Sets | Abas esmaltadas: Bar Bleque Tais, Rádio Cruzeiro do Sul, Ruas de São Paulo (com quiosque de esquinas) e Papéis de Cena com o frame bruto da filmagem das cédulas | Abas por teclado (setas/Home/End); seletor de esquinas esmaltadas; zoom |

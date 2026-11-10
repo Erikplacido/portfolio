@@ -41,7 +41,7 @@
       // Section 01: Eras
       '#epocas .eyebrow': '<b>01</b> · Dual Eras',
       '#epocas h2': 'The exact same commercial brands, thirty years later.',
-      '#epocas .lede': 'The story shifts back and forth between the 1950s and 1980s, and the neighborhood tavern appears in both timelines. Certain legacy brands evolved naturally across three decades: Clara Beer transitioned from mid-century cursive script draft to condensed industrial pilsner cans; Refres Frut soda adopted 2-liter family plastic bottles. Others were displaced by modern competitors: Aurora cigarettes became Demar; Maxlumi matches gave way to Maxluli.',
+      '#epocas .lede': 'The story shifts back and forth between the 1950s and 1980s, and the neighborhood tavern appears in both timelines. Legacy brands evolve naturally across three decades: Clara Beer transitions from mid-century cursive script draft to condensed industrial pilsner, Refres Frut soda adopts 2-liter family bottles, and Aurora cigarettes and Maxlumi matches follow that same visual evolution.',
       '#epocas .tag-row .pill:nth-child(1)': 'Interactive',
       '#epocas .tag-row .pill:nth-child(2)': 'Comparative era showcase',
       '#epocas figcaption': '<b>Scenic evolution of brands and props between the 1950s and 1980s.</b> Authentic on-set production files from the film. Toggle between era plaques or view side by side. Tap any image to zoom in high definition.',
@@ -135,7 +135,7 @@
       // Section 01: Épocas
       '#epocas .eyebrow': '<b>01</b> · Dos Épocas',
       '#epocas h2': 'Las mismas marcas comerciales, treinta años después.',
-      '#epocas .lede': 'La trama viaja entre los años 50 y los 80, y la taberna aparece en ambos periodos. Marcas icónicas evolucionan: la cerveza Clara pasa de letras caligráficas a tipografías condensadas; el refresco de jabuticaba adopta botellas familiares de 2 litros; los cigarrillos Aurora dan paso a Demar y los fósforos Maxlumi a Maxluli.',
+      '#epocas .lede': 'La trama viaja entre los años 50 y los 80, y la taberna aparece en ambos periodos. Las marcas atraviesan el tiempo y cambian de rostro: la cerveza Clara pasa de letras caligráficas a tipografías condensadas, el refresco Refres Frut adopta botellas familiares de 2 litros, y los cigarrillos Aurora y los fósforos Maxlumi también acompañan esa evolución.',
       '#epocas .tag-row .pill:nth-child(1)': 'Interactivo',
       '#epocas .tag-row .pill:nth-child(2)': 'Vitrina comparativa de épocas',
       '#epocas figcaption': '<b>Evolución escenográfica de marcas y utilería entre los años 50 y 80.</b> Etiquetas y carteles reales utilizados en el largometraje.',
@@ -229,7 +229,7 @@
       // Section 01: Époques
       '#epocas .eyebrow': '<b>01</b> · Deux Époques',
       '#epocas h2': 'Les mêmes marques commerciales, trente ans plus tard.',
-      '#epocas .lede': 'L’histoire navigue entre les années 50 et 80, et le bistrot apparaît dans les deux décennies. Des marques de tradition se modernisent : la bière Clara troque sa calligraphie rétro contre des caractères pilsen condensés ; le soda de jabuticaba passe à la bouteille plastique de 2 litres ; les cigarettes Aurora cèdent la place à Demar et les allumettes Maxlumi à Maxluli.',
+      '#epocas .lede': 'L’histoire navigue entre les années 50 et 80, et le bistrot apparaît dans les deux décennies. Certaines marques traversent le temps et changent de visage : la bière Clara troque sa calligraphie rétro contre des caractères pilsen condensés, le soda Refres Frut passe à la bouteille familiale de 2 litres, et les cigarettes Aurora ainsi que les allumettes Maxlumi suivent également cette évolution.',
       '#epocas .tag-row .pill:nth-child(1)': 'Interactif',
       '#epocas .tag-row .pill:nth-child(2)': 'Vitrine comparative d’époques',
       '#epocas figcaption': '<b>Évolution scénographique des marques et accessoires entre les années 50 et 80.</b> Étiquettes et affiches authentiques du tournage.',
