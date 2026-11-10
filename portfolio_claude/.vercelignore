@@ -12,6 +12,7 @@ node_modules/
 # pacotes de trabalho (pesados)
 /Untaforma_600ml_15092022_Pasta/
 /Super_Batalha_Pasta/
+/terraforming-mars/
 
 # Terceiro Nome: só o site gerado (dist/) vai pro ar; código, dados e docs do projeto ficam no repositório
 /editora-terceiro-nome/site/data/

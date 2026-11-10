@@ -4,6 +4,8 @@
   "outputDirectory": ".",
   "redirects": [
     { "source": "/sanctum-armory", "destination": "/musanga", "permanent": true },
-    { "source": "/sanctum-armory/:path*", "destination": "/musanga/:path*", "permanent": true }
+    { "source": "/sanctum-armory/:path*", "destination": "/musanga/:path*", "permanent": true },
+    { "source": "/terraforming-mars", "destination": "/", "permanent": false },
+    { "source": "/terraforming-mars/:path*", "destination": "/", "permanent": false }
   ]
 }
