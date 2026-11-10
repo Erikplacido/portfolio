@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e0e10">
+<title>XETMON • cidcidoso ao vivo em SP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Press+Start+2P&family=Bungee&family=Bungee+Shade&family=Bangers&family=Pacifico&family=Monoton&family=Rubik+Glitch&family=Creepster&family=Permanent+Marker&family=Lobster&family=Shrikhand&family=VT323&family=Silkscreen:wght@400;700&family=Rubik+Mono+One&family=Righteous&family=Rampart+One&family=Rubik+Wet+Paint&family=Nabla&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="./" aria-label="XETMON início">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="6" width="34" height="24" rx="7" fill="#9147ff"/><path d="M12 30l-2 7 9-7z" fill="#9147ff"/><path d="M13 12l10 12M23 12L13 24" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="30" cy="13" r="3.4" fill="#ff3355"/></svg>
+    <span>XET<b>MON</b></span>
+  </a>
+  <nav class="topnav">
+    <button data-scroll="#stage">Ao vivo</button>
+    <button data-scroll="#dexSection">XETDEX</button>
+    <button id="help">Como jogar</button>
+  </nav>
+  <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar na XETDEX" autocomplete="off"></label>
+  <div class="top-actions">
+    <span class="points" title="Pontos de canal: +100 por XETMON filmado">◆ <b>0</b></span>
+    <button id="sound" class="btn ghost" aria-pressed="false"><i>🔇</i> <span>Som</span></button>
+    <button id="edit" class="btn primary">✎ Editar XET</button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="sidenav" aria-label="Regiões">
+    <h4>REGIÕES AO VIVO</h4>
+    <ul id="regions" class="regions"></ul>
+    <h4>FILMADOS AGORA</h4>
+    <ul id="featured" class="featured"></ul>
+  </aside>
+
+  <main class="center">
+    <section class="player" id="stage">
+      <div class="viewport">
+        <canvas id="game" width="960" height="576" tabindex="0" aria-label="Mapa de São Paulo. Use as setas ou WASD para andar, Shift para correr e E para filmar."></canvas>
+
+        <div class="ov-top">
+          <span id="liveBadge" class="live-badge">OFFLINE</span>
+          <span class="ov-pill"><i class="eye"></i><b id="viewers">1.204</b></span>
+          <span class="ov-pill mono" id="uptime">00:00:00</span>
+          <span class="ov-pill place">📍 <b id="streamPlace">AV. PAULISTA</b></span>
+        </div>
+        <div id="districtSign" class="district-sign" aria-live="polite"></div>
+        <div class="mini-wrap"><canvas id="minimap" width="128" height="88" aria-hidden="true"></canvas><span>SP • XET GPS</span></div>
+
+        <div class="facecam" id="facecam"><img class="fc-img" src="img/cid-pixel.png" alt=""><span class="fc-name">cidcidoso</span><span class="fc-rec">● REC</span></div>
+        <div class="goal"><span>META XETMON</span><b><span id="goalCount">0</span> / <span id="goalTotal">0</span></b><div class="bar"><i id="goalBar"></i></div></div>
+
+        <div id="dialog" class="gb-dialog" hidden><span id="dialogTitle"></span><p id="dialogText"></p><i aria-hidden="true">▼</i></div>
+
+        <div id="alert" class="alert" hidden role="status">
+          <div class="alert-cid"></div>
+          <div class="alert-body"><span class="alert-emoji"></span><div class="alert-name"></div><p>entrou na <b>XETDEX</b>! <span>+100 ◆</span></p></div>
+        </div>
+
+        <div id="battle" class="battle" hidden>
+          <div class="b-scene">
+          <div class="b-sky"></div>
+          <div class="b-foe-card"><div class="b-tags"><span id="bCat" class="b-cat"></span><span id="bNo"></span></div><div id="bName" class="b-name"></div><small>📍 <span id="bDist"></span></small></div>
+          <div class="b-foe"><div class="b-plat"></div><div id="bEmoji" class="b-emoji"></div><div id="bCam" class="b-cam" hidden></div></div>
+          <div class="b-me"><div class="b-plat"></div><div id="bCid" class="b-cid"></div></div>
+          <div class="b-me-card"><b>CID CIDOSO</b><span>Nv. 99 · action cam</span><div class="bat">BATERIA <i></i></div></div>
+          <div id="viewfinder" class="viewfinder" hidden>
+            <i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i>
+            <span class="vf-rec">● REC</span><span class="vf-time" id="vfTime">00:00:00</span><span class="vf-iso">4K · 60FPS · ISO 800</span>
+            <div class="focus"><span>FOCO</span><div class="focus-bar"><i id="focusZone" class="zone"></i><i id="focusNeedle" class="needle"></i></div><button id="shootBtn" class="btn primary">◉ GRAVAR</button></div>
+          </div>
+          </div>
+          <div class="b-bottom">
+            <p id="bText" class="b-text"></p>
+            <div id="bMenu" class="b-menu">
+              <button data-act="film">◉ FILMAR</button>
+              <button data-act="zoar">😜 ZOAR</button>
+              <button data-act="salve">👋 SALVE</button>
+              <button data-act="run">🏃 VAZAR</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="startScreen" class="start">
+          <div class="skyline" aria-hidden="true"></div>
+          <div class="start-cid cid-slot"></div>
+          <div class="start-box">
+            <span class="offline">OFFLINE</span>
+            <h1>Live <span>começando</span>...</h1>
+            <p>Hoje o Cidoso desce pra rua de São Paulo com a action cam pra caçar os <b>XETMON</b>: os nomes mais absurdos do chat e guardar tudo na <b>XETDEX</b>.</p>
+            <div class="start-actions"><button id="startSound" class="btn primary big">▶ ENTRAR AO VIVO <small>com som</small></button><button id="startMute" class="btn ghost">sem som</button></div>
+            <small class="keys"><kbd>WASD</kbd>/<kbd>↑↓←→</kbd> andar · <kbd>Shift</kbd> correr · <kbd>E</kbd> filmar · <kbd>X</kbd> XETDEX</small>
+          </div>
+        </div>
+      </div>
+
+      <section id="tutorial" class="tutorial" hidden aria-live="polite">
+        <span id="tutIcon" class="tut-icon" aria-hidden="true"></span>
+        <div class="tut-body"><span id="tutStep" class="tut-step"></span><b id="tutTitle"></b><p id="tutText"></p><div id="tutDots" class="tut-dots"></div></div>
+        <div class="tut-actions"><button id="tutAction" class="btn primary" hidden></button><button id="tutSkip" class="btn ghost">Pular tutorial</button></div>
+        <span class="tut-check" aria-hidden="true">✓</span>
+      </section>
+      <div class="pad" aria-label="Controles de toque">
+        <div class="dpad"><button data-dir="up" aria-label="Cima">▲</button><button data-dir="left" aria-label="Esquerda">◀</button><button data-dir="right" aria-label="Direita">▶</button><button data-dir="down" aria-label="Baixo">▼</button></div>
+        <div class="ab"><button id="padB" aria-label="Correr">B<small>correr</small></button><button id="padA" aria-label="Filmar">A<small>filmar</small></button></div>
+      </div>
+    </section>
+
+    <section class="channel">
+      <div class="ch-avatar"><div class="cid-slot"></div><span>AO VIVO</span></div>
+      <div class="ch-info">
+        <h1>cidcidoso <svg class="verified" viewBox="0 0 16 16" aria-label="verificado"><path d="M8 0l2 2h3v3l2 3-2 3v3h-3l-2 2-2-2H3v-3L1 8l2-3V2h3z" fill="#bf94ff"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none"/></svg></h1>
+        <p class="title">CAÇANDO XETMON NAS RUAS DE SP 📹 VAPO VAPO VAPO | !onde !xetdex</p>
+        <p class="meta"><a href="#dexSection">XETMON</a><span class="tag">Português</span><span class="tag">IRL</span><span class="tag">SãoPaulo</span><span class="tag">ActionCam</span><span class="tag">FunkLoFi</span></p>
+      </div>
+      <div class="ch-actions">
+        <button id="follow" class="btn ghost heart" aria-pressed="false">♥ <span>Seguir</span></button>
+        <button id="film" class="btn primary">◉ FILMAR XETMON <kbd>E</kbd></button>
+      </div>
+    </section>
+
+    <section class="dexsection" id="dexSection">
+      <div class="dex-head">
+        <div><h2>XETDEX</h2><p>Cada nome filmado vira figurinha. Os não filmados mostram onde estão à solta.</p></div>
+        <div class="dex-total"><strong id="dexCount">0</strong><span>/ <b id="dexTotal">0</b><small>NOMES ETERNIZADOS</small></span></div>
+      </div>
+      <div class="dex-bar"><i id="dexBar"></i></div>
+      <div class="dex-tools"><div id="dexChips" class="chips"></div><button id="edit2" class="btn ghost">✎ Editar nomes do XET</button></div>
+      <div id="dexGrid" class="dex-grid"></div>
+      <div class="radio"><div class="record">♫</div><div><span>TRILHA SONORA</span><b>8bit VR (instrumental)</b><small>Chiptune instrumental · ~135 BPM</small></div><span class="eq"><i></i><i></i><i></i><i></i></span></div>
+    </section>
+
+    <footer class="foot">XETMON © 2026 · Jogo de fã independente, sem afiliação com a Twitch ou com o streamer. Mapa e personagem são interpretações em pixel art.</footer>
+  </main>
+
+  <aside class="chat" aria-label="Chat da live">
+    <header><span>CHAT DA LIVE</span><span class="points" title="Pontos de canal">◆ <b>0</b></span></header>
+    <div class="pinned"><b>📌 cidcidoso</b> Chegue perto de um nome e aperte <kbd>E</kbd>. Na grama alta do Ibirapuera aparece XETMON selvagem. Digite <b>!onde</b> pra rastrear.</div>
+    <div id="chatLog" class="chat-log"></div>
+    <form id="chatForm" class="chat-form"><input id="chatInput" maxlength="140" placeholder="Enviar mensagem (!onde, !vapo, !xetdex)" autocomplete="off" aria-label="Mensagem do chat"><button class="btn primary">Chat</button></form>
+  </aside>
+</div>
+
+<dialog id="editor">
+  <form method="dialog"><button class="close" aria-label="Fechar">×</button></form>
+  <span class="eyebrow">A LISTA É SUA</span>
+  <h2>Quem tá no XET?</h2>
+  <p>Cada nome vira um XETMON. Um nome por linha, até 200 nomes com 32 caracteres cada. Nomes novos ganham categoria, emoji e fonte automaticamente. Quem já foi filmado continua na XETDEX.</p>
+  <label for="names">Nomes do chat <span id="nameCount"></span></label>
+  <textarea id="names" rows="12" spellcheck="false"></textarea>
+  <p id="editError" class="err" role="alert"></p>
+  <div class="editor-actions"><button id="resetNames" class="btn ghost" type="button">Restaurar lista padrão</button><button id="resetCaught" class="btn ghost danger" type="button">Zerar capturas</button></div>
+  <button class="btn primary wide" id="saveNames">SALVAR E VOLTAR PRA RUA ↗</button>
+</dialog>
+
+<dialog id="instructions">
+  <form method="dialog"><button class="close" aria-label="Fechar">×</button></form>
+  <span class="eyebrow">SALVE, XET!</span>
+  <h2>Como jogar</h2>
+  <ul class="howto">
+    <li><kbd>WASD</kbd> ou setas para andar pela cidade. Segure <kbd>Shift</kbd> para correr. No celular, use o direcional e os botões A/B.</li>
+    <li>Os XETMON (nomes do chat) estão espalhados por SP. Chegue perto, fique de frente e aperte <kbd>E</kbd> (ou A) para abrir a gravação.</li>
+    <li>Na gravação: <b>FILMAR</b> abre o foco — aperte de novo quando a agulha estiver na faixa roxa. <b>ZOAR</b> aumenta a faixa, <b>SALVE</b> deixa a agulha mais lenta, <b>VAZAR</b> foge.</li>
+    <li>Grama alta no Ibirapuera esconde XETMON selvagem. Aperte <kbd>E</kbd> de frente pra monumentos e placas para ler curiosidades.</li>
+    <li>No chat: <b>!onde</b> rastreia o XETMON mais perto, <b>!vapo</b> faz o chat gritar VAPO, <b>!xetdex</b> mostra o placar. Clicar numa região também rastreia.</li>
+  </ul>
+  <button id="replayTutorial" class="btn primary wide" type="button">▶ Refazer o tutorial</button>
+  <p class="local-note">Progresso salvo só neste navegador.</p>
+</dialog>
+<div id="toast" role="status"></div>
+<script src="game.js"></script>
+</body>
+</html>

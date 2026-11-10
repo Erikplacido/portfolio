@@ -1,0 +1,15 @@
+FORÇA BR — mockup 3D para apresentação
+
+Imagem final: forca-br-mockup-4k.png — 3840 × 2160, proporção 16:9.
+Cena editável: forca-br-estudio.blend — texturas incorporadas.
+
+Produzido com Blender 5.2.3, renderizador Cycles.
+A cena foi remontada em geometria simples (tabuleiro, cartões e bases)
+a partir das referências dos arquivos Adobe Dimension fornecidos.
+As artes foram extraídas de cenario.dn e minis.dn, sem geração por IA.
+Não se trata de importação integral das malhas e materiais do Dimension.
+Composição, iluminação, dimensões relativas e disposição são de apresentação,
+não uma especificação de fabricação nem demonstração das regras do jogo.
+Os arquivos .dn originais não foram modificados.
+
+Legenda sugerida: “Mockup 3D — visualização do jogo com artes originais.”

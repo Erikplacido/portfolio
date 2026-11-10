@@ -42,9 +42,9 @@
       '#epocas .eyebrow': '<b>01</b> · Dual Eras',
       '#epocas h2': 'The exact same commercial brands, thirty years later.',
       '#epocas .lede': 'The story shifts back and forth between the 1950s and 1980s, and the neighborhood tavern appears in both timelines. Legacy brands evolve naturally across three decades: Clara Beer transitions from mid-century cursive script draft to condensed industrial pilsner, Refres Frut soda adopts 2-liter family bottles, and Aurora cigarettes and Maxlumi matches follow that same visual evolution.',
-      '#epocas .tag-row .pill:nth-child(1)': 'Interactive',
-      '#epocas .tag-row .pill:nth-child(2)': 'Comparative era showcase',
-      '#epocas figcaption': '<b>Scenic evolution of brands and props between the 1950s and 1980s.</b> Authentic on-set production files from the film. Toggle between era plaques or view side by side. Tap any image to zoom in high definition.',
+      '#epocas .tag-row .pill:nth-child(1)': 'Zoom',
+      '#epocas .tag-row .pill:nth-child(2)': 'Five brands across both eras',
+      '#epocas figcaption': '<b>The same brands in the 1950s and the 1980s.</b> Real on-set final artwork from the film, side by side: the 1950s version on the left, the 1980s version on the right. Tap a piece to zoom in.',
 
       // Section 02: Fictional Brands
       '#marcas .eyebrow': '<b>02</b> · Fictional Brands',
@@ -67,11 +67,8 @@
       '#sets .eyebrow': '<b>04</b> · Set Architecture',
       '#sets h2': '60+ dedicated props, mapped set by set, scene by scene.',
       '#sets .lede': 'Graphic prop design followed a comprehensive art department breakdown listing set locations, scene numbers, run quantities, substrate specifications, and mechanical tolerances. Each filming environment possessed a unique graphic palette: Bleque Tais tavern in both eras, Cruzeiro do Sul radio station, public avenues, and period actor hand-props.',
-      '#stT-bar': 'Bleque Tais Tavern',
-      '#stT-radio': 'Cruzeiro do Sul Radio',
-      '#stT-rua': 'Streets of São Paulo',
-      '#stT-papeis': 'Hero Paper Props & Banknotes',
-      '#sets figcaption': '<b>Props organized by set.</b> Authentic pre-press files filmed on camera; banknote frame captured from uncorrected raw footage on Jan 11, 2023.',
+      '#st .st-plate': 'Streets of São Paulo',
+      '#sets figcaption': '<b>Streets and paper props.</b> Real final artwork used in the film. Singer photos and newspaper clippings about Adoniran were left out, as they are reproductions of archival material.',
 
       // Visual System
       '#sistema .eyebrow': 'Visual System',
@@ -136,9 +133,9 @@
       '#epocas .eyebrow': '<b>01</b> · Dos Épocas',
       '#epocas h2': 'Las mismas marcas comerciales, treinta años después.',
       '#epocas .lede': 'La trama viaja entre los años 50 y los 80, y la taberna aparece en ambos periodos. Las marcas atraviesan el tiempo y cambian de rostro: la cerveza Clara pasa de letras caligráficas a tipografías condensadas, el refresco Refres Frut adopta botellas familiares de 2 litros, y los cigarrillos Aurora y los fósforos Maxlumi también acompañan esa evolución.',
-      '#epocas .tag-row .pill:nth-child(1)': 'Interactivo',
-      '#epocas .tag-row .pill:nth-child(2)': 'Vitrina comparativa de épocas',
-      '#epocas figcaption': '<b>Evolución escenográfica de marcas y utilería entre los años 50 y 80.</b> Etiquetas y carteles reales utilizados en el largometraje.',
+      '#epocas .tag-row .pill:nth-child(1)': 'Ampliar',
+      '#epocas .tag-row .pill:nth-child(2)': 'Cinco marcas en las dos épocas',
+      '#epocas figcaption': '<b>Las mismas marcas en los años 50 y en los 80.</b> Artes finales reales del rodaje, lado a lado: a la izquierda la versión de los años 50, a la derecha la de los 80. Toca una pieza para ampliarla.',
 
       // Section 02: Marcas
       '#marcas .eyebrow': '<b>02</b> · Marcas Ficticias',
@@ -161,11 +158,8 @@
       '#sets .eyebrow': '<b>04</b> · Sets y Rodaje',
       '#sets h2': 'Cerca de 60 piezas gráficas, set a set, escena a escena.',
       '#sets .lede': 'El trabajo partió del desglose de arte con localización, escena, cantidad y materiales. Cada set cuenta con su atmósfera: la taberna Bleque Tais en dos épocas, la emisora de radio, el callejero y la documentación en mano de los actores.',
-      '#stT-bar': 'Bar Bleque Tais',
-      '#stT-radio': 'Rádio Cruzeiro do Sul',
-      '#stT-rua': 'Calles de São Paulo',
-      '#stT-papeis': 'Documentos de Escena y Billetes',
-      '#sets figcaption': '<b>Utilería gráfica por set.</b> Ficheros reales de rodaje.',
+      '#st .st-plate': 'Calles de São Paulo',
+      '#sets figcaption': '<b>Calles y papeles de escena.</b> Artes finales reales utilizadas en la película. Quedaron fuera las fotos de cantantes y los recortes de prensa sobre Adoniran, que son reproducciones de material de archivo.',
 
       // Sistema Visual
       '#sistema .eyebrow': 'Sistema Visual',
@@ -230,9 +224,9 @@
       '#epocas .eyebrow': '<b>01</b> · Deux Époques',
       '#epocas h2': 'Les mêmes marques commerciales, trente ans plus tard.',
       '#epocas .lede': 'L’histoire navigue entre les années 50 et 80, et le bistrot apparaît dans les deux décennies. Certaines marques traversent le temps et changent de visage : la bière Clara troque sa calligraphie rétro contre des caractères pilsen condensés, le soda Refres Frut passe à la bouteille familiale de 2 litres, et les cigarettes Aurora ainsi que les allumettes Maxlumi suivent également cette évolution.',
-      '#epocas .tag-row .pill:nth-child(1)': 'Interactif',
-      '#epocas .tag-row .pill:nth-child(2)': 'Vitrine comparative d’époques',
-      '#epocas figcaption': '<b>Évolution scénographique des marques et accessoires entre les années 50 et 80.</b> Étiquettes et affiches authentiques du tournage.',
+      '#epocas .tag-row .pill:nth-child(1)': 'Agrandir',
+      '#epocas .tag-row .pill:nth-child(2)': 'Cinq marques aux deux époques',
+      '#epocas figcaption': '<b>Les mêmes marques dans les années 50 et 80.</b> Fichiers d’exécution réels du film, côte à côte : à gauche la version des années 50, à droite celle des années 80. Touchez une pièce pour l’agrandir.',
 
       // Section 02: Marques
       '#marcas .eyebrow': '<b>02</b> · Marques Fictives',
@@ -255,11 +249,8 @@
       '#sets .eyebrow': '<b>04</b> · Décors et Tournage',
       '#sets h2': 'Une soixantaine d’accessoires graphiques, décor par décor, scène par scène.',
       '#sets .lede': 'La fabrication a suivi le dépouillement général de la régie d’art : bistrot Bleque Tais aux deux époques, station de radio, carrefours urbains et documents manipulés par les comédiens.',
-      '#stT-bar': 'Bistrot Bleque Tais',
-      '#stT-radio': 'Radio Cruzeiro do Sul',
-      '#stT-rua': 'Rues de São Paulo',
-      '#stT-papeis': 'Documents de Jeu & Billets',
-      '#sets figcaption': '<b>Accessoires par décor.</b> Fichiers réels de fabrication cinéma.',
+      '#st .st-plate': 'Rues de São Paulo',
+      '#sets figcaption': '<b>Rues et accessoires papier.</b> Fichiers d’exécution réels utilisés dans le film. Les photos de chanteurs et les coupures de presse sur Adoniran ont été écartées : ce sont des reproductions d’archives.',
 
       // Système Visuel
       '#sistema .eyebrow': 'Système Visuel',

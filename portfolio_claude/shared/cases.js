@@ -48,6 +48,7 @@ window.PORTFOLIO_GROUPS = [
     kpi: 'Grid suíço de 6 colunas · Restauração Wacom · Calibração industrial' },
   { id: 'audiovisual',    label: 'Áudio Visual',     icon: 'fa-clapperboard',
     color: '#1E2A7A', cv: '../curriculo_audiovisual_a4',
+    imdb: 'https://www.imdb.com/name/nm19036887/',
     desc: 'Direção de arte para cinema e TV: cenografia, rótulos de época e peças gráficas de cena que aguentam o close em 4K.',
     kpi: 'Rótulos e paredes em 4K pro close · Épocas de 1950 e 1980 · Peças que resistem à câmera' }
 ];

@@ -42,6 +42,7 @@
       '<p class="seg-hero-kpi"><i class="fa-solid fa-chart-line" aria-hidden="true"></i>' + esc(g.kpi) + '</p>' +
       '<div class="seg-hero-actions">' +
         (g.cv ? cvMenu(g.cv) : '') +
+        (g.imdb ? '<a class="seg-btn imdb" href="' + esc(g.imdb) + '" target="_blank" rel="noopener"><i class="fa-brands fa-imdb" aria-hidden="true"></i> Filmografia no IMDb <span aria-hidden="true">↗</span></a>' : '') +
         '<a class="seg-btn ghost" href="' + root + 'index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Todos os segmentos</a>' +
       '</div>' +
       '<button type="button" class="seg-scroll-cue" id="seg-scroll-cue" aria-label="Rolar para ver os cases"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>';

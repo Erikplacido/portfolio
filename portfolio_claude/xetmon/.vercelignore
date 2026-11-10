@@ -1,0 +1,6 @@
+.claude
+.DS_Store
+**/.DS_Store
+*.mp3
+!dist/audio/*.mp3
+README.md

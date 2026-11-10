@@ -46,6 +46,8 @@ body.seg-body .pf-nav .pf-cases a{ color:#fff }
 }
 .seg-btn.primary{ background:var(--seg-color); color:#fff }
 .seg-btn.primary:hover{ transform:translateY(-2px) }
+.seg-btn.imdb{ background:#F5C518; color:#10161F; font-weight:700 }
+.seg-btn.imdb:hover{ background:#FFD738; transform:translateY(-2px) }
 .seg-btn.ghost{ background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.22) }
 .seg-btn.ghost:hover{ background:rgba(255,255,255,.16) }
 

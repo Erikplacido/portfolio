@@ -101,6 +101,8 @@ figcaption b{color:var(--pf-ink)}
 .pf-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:24px;margin-top:56px;padding-top:28px;border-top:1px solid var(--pf-line)}
 .pf-meta dt{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--pf-ink-2);margin-bottom:8px}
 .pf-meta dd{margin:0;font-size:15px;color:var(--pf-ink);line-height:1.45}
+.pf-imdb{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 var(--pf-sans);padding:5px 10px;border-radius:6px;background:#F5C518;color:#10161F;text-decoration:none;transition:transform .25s var(--pf-ease),background .25s}
+.pf-imdb:hover{background:#FFD738;transform:translateY(-1px)}
 .pf-tools{display:inline-flex;gap:6px;margin-left:6px;vertical-align:middle}
 .pf-tools i{font:700 11px/1 var(--pf-sans);font-style:normal;width:24px;height:24px;border-radius:5px;display:grid;place-items:center;border:1.5px solid}
 .pf-cover{margin-top:56px;border-radius:var(--pf-radius);overflow:hidden;position:relative;isolation:isolate}
@@ -170,6 +172,9 @@ figcaption b{color:var(--pf-ink)}
 @media(max-width:820px){.pf-fgrid{grid-template-columns:1fr}}
 .pf-btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 22px;border-radius:12px;font:600 15px var(--pf-sans);background:var(--hl);color:var(--pf-ink);text-decoration:none;margin-top:24px;transition:transform .3s var(--pf-ease)}
 .pf-btn:hover{transform:translateY(-2px)}
+.pf-btn+.pf-btn{margin-left:10px}
+.pf-btn.imdb{background:rgba(245,197,24,.16);color:#F5C518;border:1px solid rgba(245,197,24,.4)}
+.pf-btn.imdb:hover{background:#F5C518;color:#10161F}
 .pf-next{display:grid;grid-template-columns:150px 1fr auto;gap:18px;align-items:center;margin-top:16px;padding:14px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);text-decoration:none;color:#fff;transition:background .4s var(--pf-ease),border-color .4s}
 .pf-next:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
 .pf-next img{width:150px;aspect-ratio:4/3;object-fit:cover;border-radius:12px}

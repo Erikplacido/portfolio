@@ -1,1386 +1,2514 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saudosa Maloca · Design gráfico para cinema</title>
-<meta name="description" content="Design gráfico do longa Saudosa Maloca, da Pink Flamingo Filmes, baseado nos sambas de Adoniran Barbosa: placa-título, marcas, rótulos, cartazes e letreiros de época dos anos 50 e 80.">
-<meta property="og:title" content="Saudosa Maloca — design gráfico de um filme de época">
-<meta property="og:image" content="assets/cover.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noticia+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/frame.css">
-<script src="../api/site/config"></script>
-<script src="../shared/cases.js"></script>
-<style>
-/* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saudosa Maloca · Design gráfico para cinema</title>
+  <meta name="description"
+    content="Design gráfico do longa Saudosa Maloca, da Pink Flamingo Filmes, baseado nos sambas de Adoniran Barbosa: placa-título, marcas, rótulos, cartazes e letreiros de época dos anos 50 e 80.">
+  <meta property="og:title" content="Saudosa Maloca — design gráfico de um filme de época">
+  <meta property="og:image" content="assets/cover.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noticia+Text:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../shared/frame.css">
+  <script src="../api/site/config"></script>
+  <script src="../shared/cases.js"></script>
+  <style>
+    /* Base, nav, case opening, headings, captions and footer come from ../shared/frame.css.
    Visual language of the case: enamel street signs, aged plaster, warm tavern boiserie and cinema prop design. */
-:root{
-  --accent:#1E2A7A; --hl:#F5CD62;
-  --esm:#14206A; --esm-2:#0B1452; --letra:#FCD884; --creme:#F4ECDD;
-  --tijolo:#B46E28; --reboco:#DCC8AA; --vinho:#3C1410; --verm:#B45A46;
-  --madeira:#2B1810; --madeira-2:#1A0E0A;
-  --sign:'Noticia Text',Georgia,serif;
-  --ease:var(--pf-ease); --snap:cubic-bezier(.34,1.56,.64,1);
-}
+    :root {
+      --accent: #1E2A7A;
+      --hl: #F5CD62;
+      --esm: #14206A;
+      --esm-2: #0B1452;
+      --letra: #FCD884;
+      --creme: #F4ECDD;
+      --tijolo: #B46E28;
+      --reboco: #DCC8AA;
+      --vinho: #3C1410;
+      --verm: #B45A46;
+      --madeira: #2B1810;
+      --madeira-2: #1A0E0A;
+      --sign: 'Noticia Text', Georgia, serif;
+      --ease: var(--pf-ease);
+      --snap: cubic-bezier(.34, 1.56, .64, 1);
+    }
 
-/* ===== cover: the film's title enamel sign on aged wall ===== */
-.sm-cover{background:#CDBBA0;position:relative;overflow:hidden}
-.sm-cover img{width:100%;height:100%;object-fit:cover;transform:scale(1.01);transition:transform 1.2s var(--ease)}
-.sm-cover:hover img{transform:scale(1.03)}
-.sm-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.38) 48%,transparent 60%) -120% 0/60% 100% no-repeat;mix-blend-mode:soft-light;animation:shine 2.4s 1s var(--ease) forwards;pointer-events:none}
+    /* ===== cover: the film's title enamel sign on aged wall ===== */
+    .sm-cover {
+      background: #CDBBA0;
+      position: relative;
+      overflow: hidden
+    }
 
-/* ===== stages & atmospheric backgrounds ===== */
-.st-muro{background:#C5B398 url(assets/tx-muro.jpg) center/cover;position:relative}
-.st-reboco{background:linear-gradient(180deg,#ECE2D2 0%,#DFD3BE 50%,#D3C3A9 100%);box-shadow:inset 0 0 80px rgba(70,45,20,.12)}
-.st-reboco-dark{background:radial-gradient(120% 100% at 50% 0%,#261B12 0%,#18100A 65%,#0F0A06 100%)}
-.st-vinho{background:radial-gradient(120% 90% at 50% 0,#56211A,var(--vinho) 60%,#260B07)}
-.st-balcao{background:radial-gradient(130% 90% at 50% 0,#422416,var(--madeira) 55%,var(--madeira-2));box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+    .sm-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.01);
+      transition: transform 1.2s var(--ease)
+    }
 
-/* Enamel Plaque Badges (pills) */
-.st-muro .pill,.st-reboco .pill{background:rgba(255,255,255,.9);color:#1A1208;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.st-muro .pill.y,.st-reboco .pill.y{background:var(--hl);color:#1F1500;font-weight:700}
-.st-balcao .pill,.st-vinho .pill{background:rgba(255,255,255,.14);color:#F4ECDD;backdrop-filter:blur(4px)}
-.st-balcao .pill.y,.st-vinho .pill.y{background:var(--hl);color:#1F1500;font-weight:700}
+    .sm-cover:hover img {
+      transform: scale(1.03)
+    }
 
-/* Enamel sign styling helper */
-.esm-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:linear-gradient(180deg,#202D7D 0%,var(--esm) 50%,var(--esm-2) 100%);
-  color:var(--creme);border:2px solid rgba(244,236,221,.85);border-radius:6px;
-  padding:4px 10px;font:700 11px/1.2 var(--sign);letter-spacing:.08em;text-transform:uppercase;
-  box-shadow:0 3px 8px rgba(10,15,40,.4),inset 0 1px 0 rgba(255,255,255,.3);
-}
+    .sm-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .38) 48%, transparent 60%) -120% 0/60% 100% no-repeat;
+      mix-blend-mode: soft-light;
+      animation: shine 2.4s 1s var(--ease) forwards;
+      pointer-events: none
+    }
 
-/* context counters */
-.sm-count{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
-@media(max-width:860px){.sm-count{grid-template-columns:1fr}}
-.sm-count b{display:block;font:400 clamp(46px,5.4vw,64px)/1 var(--pf-serif);color:var(--accent);font-variant-numeric:tabular-nums}
-.sm-count .pf-card p{font-size:15px;margin-top:8px}
+    /* ===== stages & atmospheric backgrounds ===== */
+    .st-muro {
+      background: #C5B398 url(assets/tx-muro.jpg) center/cover;
+      position: relative
+    }
 
-/* ===== context scenes: widescreen frames with enamel chapter signs ===== */
-.sm-scenes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(14px,2.2vw,22px)}
-.sm-sc{grid-column:span 2;display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
-.sm-sc.w3{grid-column:span 3}
-@media(max-width:860px){.sm-scenes{grid-template-columns:repeat(2,minmax(0,1fr))}.sm-sc,.sm-sc.w3{grid-column:span 1}.sm-sc.wf-m{grid-column:1/-1}}
-@media(max-width:520px){.sm-scenes{grid-template-columns:1fr}.sm-sc,.sm-sc.w3,.sm-sc.wf-m{grid-column:1/-1}}
-.sm-sc .im{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#1E140C;box-shadow:0 2px 0 rgba(0,0,0,.18),0 22px 38px -22px rgba(30,15,5,.75)}
-.sm-sc .im img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
-.sm-sc:hover .im img,.sm-sc:focus-visible .im img{transform:scale(1.03)}
-.sm-sc .cap{display:inline-flex;align-items:center;gap:6px;font:600 12px/1.35 var(--pf-sans);color:#2A1D10;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:8px;justify-self:start;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.sm-sc .cap i{font-style:normal;font-weight:500;color:#6B5640}
+    .st-reboco {
+      background: linear-gradient(180deg, #ECE2D2 0%, #DFD3BE 50%, #D3C3A9 100%);
+      box-shadow: inset 0 0 80px rgba(70, 45, 20, .12)
+    }
 
-/* ===== 01 ERAS: SIGNATURE BAND (FAIXA ASSINATURA) ===== */
-.sm-band{background:radial-gradient(120% 80% at 30% 0,#24338A,var(--esm) 55%,var(--esm-2));isolation:isolate}
-.sm-band::before{content:"";position:absolute;inset:clamp(8px,1.4vw,16px);border:3px solid rgba(244,236,221,.88);border-radius:clamp(18px,3vw,36px);pointer-events:none;z-index:-1}
-.sm-band .eyebrow{color:#C3CAEA}.sm-band .eyebrow b{color:var(--letra)}
-.sm-band h2,.sm-band .lede{color:var(--creme)}
-.sm-band figcaption{color:#C3CAEA}.sm-band figcaption b{color:#fff}
+    .st-reboco-dark {
+      background: radial-gradient(120% 100% at 50% 0%, #261B12 0%, #18100A 65%, #0F0A06 100%)
+    }
 
-/* Era showcase stage inside signature band */
-.era-vitrine{
-  background:radial-gradient(130% 100% at 50% 0%,#281E15 0%,#19120C 50%,#110B07 100%);
-  border-radius:24px;padding:clamp(20px,3.5vw,36px);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 30px 60px -20px rgba(5,7,20,.6),inset 0 1px 0 rgba(255,255,255,.15);
-}
+    .st-vinho {
+      background: radial-gradient(120% 90% at 50% 0, #56211A, var(--vinho) 60%, #260B07)
+    }
 
-/* Master era switchbar */
-.era-header{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,3vw,32px);
-  padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.12);
-}
-.era-placas{display:flex;align-items:center;gap:clamp(10px,2vw,20px)}
-.era-placa-btn{
-  height:clamp(46px,6vw,66px);background:none;border:0;padding:0;cursor:pointer;
-  transform:rotate(var(--r,0deg));filter:saturate(.2) brightness(.85);opacity:.55;
-  transition:filter .35s,opacity .35s,transform .45s var(--snap);
-}
-.era-placa-btn:hover{opacity:.9;filter:saturate(.7) brightness(1)}
-.era-placa-btn[aria-pressed="true"]{filter:none;opacity:1;transform:rotate(0deg) scale(1.07)}
-.era-placa-btn img{height:100%;width:auto;filter:drop-shadow(0 6px 12px rgba(0,0,0,.6))}
+    .st-balcao {
+      background: radial-gradient(130% 90% at 50% 0, #422416, var(--madeira) 55%, var(--madeira-2));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1)
+    }
 
-/* View modes toggle (Flip vs Lado a Lado) */
-.era-view-toggles{display:flex;gap:6px;background:rgba(0,0,0,.35);padding:4px;border-radius:99px;border:1px solid rgba(255,255,255,.1)}
-.era-mode-btn{
-  background:none;border:0;padding:7px 14px;border-radius:99px;color:rgba(255,255,255,.7);
-  font:600 12px/1 var(--pf-sans);cursor:pointer;transition:background .25s,color .25s;
-}
-.era-mode-btn[aria-pressed="true"]{background:var(--hl);color:#1A1105;font-weight:700}
+    /* Enamel Plaque Badges (pills) */
+    .st-muro .pill,
+    .st-reboco .pill {
+      background: rgba(255, 255, 255, .9);
+      color: #1A1208;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .08)
+    }
 
-/* Active pair showcase */
-.era-spotlight{
-  display:grid;grid-template-columns:1fr;gap:24px;align-items:center;
-  margin-bottom:clamp(24px,3.5vw,36px);
-}
-/* Flip mode stage */
-.era-flip-stage{
-  position:relative;width:100%;max-width:820px;margin:0 auto;
-  aspect-ratio:16/10;perspective:1400px;
-}
-@media(max-width:680px){.era-flip-stage{aspect-ratio:4/3}}
-.era-card-3d{
-  position:relative;width:100%;height:100%;transform-style:preserve-3d;
-  transition:transform .85s var(--snap);
-}
-[data-era="80"] .era-card-3d{transform:rotateY(180deg)}
-.era-face{
-  position:absolute;inset:0;display:grid;grid-template-columns:1.2fr 1fr;gap:20px;
-  align-items:center;background:radial-gradient(100% 100% at 30% 30%,#342419,#20150E);
-  border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:clamp(16px,2.5vw,28px);
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  box-shadow:0 20px 40px -15px rgba(0,0,0,.8);
-}
-@media(max-width:720px){.era-face{grid-template-columns:1fr;text-align:center}}
-.era-face.face-80{transform:rotateY(180deg);background:radial-gradient(100% 100% at 30% 30%,#1F2833,#131920)}
-.era-artwork{display:grid;place-items:center;height:100%;min-height:0}
-.era-artwork button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.era-artwork img{
-  max-width:100%;max-height:clamp(220px,28vw,380px);width:auto;height:auto;
-  object-fit:contain;border-radius:8px;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);
-  transition:transform .4s var(--ease);
-}
-.era-artwork button:hover img{transform:scale(1.03)}
-.era-info{display:grid;gap:10px;color:var(--creme)}
-.era-info .k-tag{
-  font:700 11px/1 var(--sign);letter-spacing:.14em;text-transform:uppercase;color:var(--hl);
-  display:inline-flex;align-items:center;gap:6px;
-}
-.era-info h3{font:400 clamp(24px,2.8vw,34px)/1.1 var(--pf-serif);color:#fff;margin:0}
-.era-info p{font-size:14px;line-height:1.55;color:#D8CCBA;margin:0}
-.era-meta-specs{
-  display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;
-}
-.era-spec{
-  font:600 11px/1 var(--pf-sans);padding:5px 9px;border-radius:6px;
-  background:rgba(255,255,255,.08);color:var(--creme);
-}
+    .st-muro .pill.y,
+    .st-reboco .pill.y {
+      background: var(--hl);
+      color: #1F1500;
+      font-weight: 700
+    }
 
-/* Dual (Lado a Lado) mode */
-.era-dual-grid{display:none;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,28px)}
-@media(max-width:760px){.era-dual-grid{grid-template-columns:1fr}}
-[data-view="dual"] .era-flip-stage{display:none}
-[data-view="dual"] .era-dual-grid{display:grid}
-.dual-card{
-  background:radial-gradient(120% 90% at 50% 0,#2C1E14,#19110B);
-  border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:clamp(16px,2vw,24px);
-  display:grid;gap:14px;align-content:start;box-shadow:0 16px 30px -12px rgba(0,0,0,.7);
-}
-.dual-card.c80{background:radial-gradient(120% 90% at 50% 0,#1E2732,#121820)}
-.dual-art{display:grid;place-items:center;aspect-ratio:4/3;background:rgba(0,0,0,.25);border-radius:10px;padding:12px}
-.dual-art button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.dual-art img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:4px;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+    .st-balcao .pill,
+    .st-vinho .pill {
+      background: rgba(255, 255, 255, .14);
+      color: #F4ECDD;
+      backdrop-filter: blur(4px)
+    }
 
-/* Item selector strip (5 pairs) */
-.era-selector{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.2vw,14px);
-  margin-top:20px;
-}
-@media(max-width:860px){.era-selector{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:480px){.era-selector{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.era-thumb-btn{
-  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
-  border-radius:10px;padding:8px;display:grid;gap:6px;cursor:pointer;text-align:center;
-  color:rgba(255,255,255,.75);transition:all .3s var(--ease);
-}
-.era-thumb-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff}
-.era-thumb-btn[aria-selected="true"]{
-  background:rgba(245,205,98,.12);border-color:var(--hl);color:var(--hl);box-shadow:0 0 16px rgba(245,205,98,.2);
-}
-.era-thumb-im{aspect-ratio:4/3;border-radius:6px;background:rgba(0,0,0,.3);display:grid;place-items:center;overflow:hidden}
-.era-thumb-im img{max-width:90%;max-height:90%;object-fit:contain}
-.era-thumb-lbl{font:600 11px/1.2 var(--pf-sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .st-balcao .pill.y,
+    .st-vinho .pill.y {
+      background: var(--hl);
+      color: #1F1500;
+      font-weight: 700
+    }
 
-/* ===== 02 MARCAS: BALCÃO DO BAR E PRATELEIRA INTERATIVA ===== */
-.sh-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,32px);align-items:start}
-@media(max-width:860px){.sh-grid{grid-template-columns:1fr}}
-.sh-card{display:grid;gap:14px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
-.sh-card .im{position:relative;aspect-ratio:3/2;border-radius:14px;overflow:hidden;background:#1A0F09;box-shadow:0 2px 0 rgba(0,0,0,.25),0 26px 44px -20px rgba(0,0,0,.85)}
-.sh-card .im img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
-.sh-card:hover .im img,.sh-card:focus-visible .im img{transform:scale(1.03)}
-.sh-info{display:grid;gap:6px;color:var(--creme)}
-.sh-info .k{font:600 11px/1 var(--pf-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--letra)}
-.sh-info b{font:400 clamp(26px,3vw,34px)/1.08 var(--pf-serif);color:#fff}
-.sh-info span{font-size:14px;line-height:1.5;color:#D9C9B0}
+    /* Enamel sign styling helper */
+    .esm-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(180deg, #202D7D 0%, var(--esm) 50%, var(--esm-2) 100%);
+      color: var(--creme);
+      border: 2px solid rgba(244, 236, 221, .85);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font: 700 11px/1.2 var(--sign);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      box-shadow: 0 3px 8px rgba(10, 15, 40, .4), inset 0 1px 0 rgba(255, 255, 255, .3);
+    }
 
-/* Prateleira interativa de rótulos avulsos */
-.prat-showcase{
-  margin-top:clamp(28px,4vw,48px);padding-top:clamp(20px,3vw,36px);
-  border-top:1px solid rgba(255,255,255,.12);display:grid;gap:20px;
-}
-.prat-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px}
-.prat-head h3{font:400 clamp(22px,2.5vw,28px)/1.1 var(--pf-serif);color:#fff;margin:0}
-.prat-head p{font-size:13px;color:#D9C9B0;margin:0}
+    /* context counters */
+    .sm-count {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 40px
+    }
 
-/* Spotlight do rótulo ativo */
-.prat-spotlight{
-  background:radial-gradient(80% 80% at 50% 20%,#3D2012 0%,#201007 70%,#130A04 100%);
-  border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:clamp(16px,2.5vw,32px);
-  display:grid;grid-template-columns:1fr 1.3fr;gap:clamp(18px,3vw,36px);align-items:center;
-  box-shadow:0 24px 44px -16px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.15);
-}
-@media(max-width:760px){.prat-spotlight{grid-template-columns:1fr;text-align:center}}
-.prat-im-frame{display:grid;place-items:center;min-height:220px}
-.prat-im-frame button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.prat-im-frame img{
-  max-width:100%;max-height:clamp(200px,26vw,320px);width:auto;height:auto;
-  object-fit:contain;border-radius:6px;box-shadow:0 16px 36px -12px rgba(0,0,0,.85);
-  transition:transform .4s var(--ease);
-}
-.prat-im-frame button:hover img{transform:scale(1.04)}
-.prat-details{display:grid;gap:10px;color:var(--creme)}
-.prat-details .tag-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-@media(max-width:760px){.prat-details .tag-line{justify-content:center}}
-.prat-details h4{font:400 clamp(26px,3vw,34px)/1.1 var(--pf-serif);color:#fff;margin:0}
-.prat-details p{font-size:14px;line-height:1.55;color:#E0D4C2;margin:0}
-.prat-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px;text-align:left}
-@media(max-width:520px){.prat-meta{grid-template-columns:1fr}}
-.prat-meta div{background:rgba(255,255,255,.06);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.08)}
-.prat-meta dt{font:600 11px/1 var(--pf-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--letra);margin-bottom:4px}
-.prat-meta dd{font-size:13px;line-height:1.3;color:#fff;margin:0}
+    @media(max-width:860px) {
+      .sm-count {
+        grid-template-columns: 1fr
+      }
+    }
 
-/* Prateleira carrossel/tira de miniaturas */
-.prat-shelf{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;
-  background:rgba(0,0,0,.35);padding:10px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
-}
-@media(max-width:680px){.prat-shelf{display:flex;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory}}
-.prat-item-btn{
-  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
-  border-radius:8px;padding:6px;cursor:pointer;display:grid;gap:4px;place-items:center;
-  transition:all .25s var(--ease);
-}
-@media(max-width:680px){.prat-item-btn{min-width:76px;scroll-snap-align:start}}
-.prat-item-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
-.prat-item-btn[aria-selected="true"]{
-  background:rgba(245,205,98,.16);border-color:var(--hl);box-shadow:0 0 14px rgba(245,205,98,.25);
-}
-.prat-item-btn img{height:54px;width:auto;max-width:100%;object-fit:contain}
-.prat-item-btn span{font:600 10px/1.2 var(--pf-sans);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+    .sm-count b {
+      display: block;
+      font: 400 clamp(46px, 5.4vw, 64px)/1 var(--pf-serif);
+      color: var(--accent);
+      font-variant-numeric: tabular-nums
+    }
 
-/* ===== 03 ESPECULAÇÃO: MURO DE LAMBES ===== */
-.mu-spotlight-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;
-}
-@media(max-width:760px){.mu-spotlight-row{grid-template-columns:1fr}}
-.mu-card-key{
-  background:rgba(255,255,255,.94);border-radius:14px;padding:clamp(14px,2vw,20px);
-  box-shadow:0 14px 28px -12px rgba(20,10,5,.5);display:grid;gap:10px;align-content:start;
-}
-.mu-card-key .im{
-  display:grid;place-items:center;background:#1A1108;border-radius:8px;overflow:hidden;
-  aspect-ratio:4/3;padding:8px;
-}
-.mu-card-key .im button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.mu-card-key .im img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .4s var(--ease)}
-.mu-card-key:hover .im img{transform:scale(1.03)}
-.mu-card-key b{font:600 14px/1.3 var(--pf-sans);color:#1A1208}
-.mu-card-key p{font-size:13px;line-height:1.45;color:#554433;margin:0}
+    .sm-count .pf-card p {
+      font-size: 15px;
+      margin-top: 8px
+    }
 
-.mu{columns:3 210px;column-gap:clamp(12px,2vw,24px)}
-.mu-it{display:block;width:100%;break-inside:avoid;margin:0 0 clamp(14px,2vw,24px);background:none;border:0;padding:0;text-align:left;cursor:zoom-in;transform:rotate(var(--r,0deg));transition:transform .4s var(--snap)}
-.mu-it:hover,.mu-it:focus-visible{transform:rotate(0deg) scale(1.02)}
-.mu-it img{width:100%;height:auto;border-radius:2px;box-shadow:0 14px 24px -14px rgba(30,15,5,.8)}
-.mu-it span{display:inline-block;margin-top:8px;font:600 11px/1.35 var(--pf-sans);color:#2A1D10;background:rgba(255,255,255,.9);padding:5px 8px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.mu-it span i{font-style:normal;font-weight:500;color:#6B5640}
+    /* ===== context scenes: old photo album page — black paper, deckled prints, photo corners, white-ink notes ===== */
+    .st-album {
+      --pag: #221B16;
+      background:
+        radial-gradient(140% 90% at 50% 0, rgba(255, 240, 215, .07), transparent 60%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .012) 0 2px, transparent 2px 5px),
+        linear-gradient(180deg, #2A221C, var(--pag) 55%, #18120E);
+      box-shadow: inset 0 0 90px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 235, 205, .06);
+      padding-left: clamp(44px, 6vw, 72px);
+      position: relative;
+    }
 
-/* ===== 04 SETS: ABAS ESMALTADAS E VITRINE POR CENÁRIO ===== */
-.st-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.st-tabs button{
-  border:2px solid rgba(244,236,221,.8);padding:9px 16px;border-radius:8px;
-  background:linear-gradient(180deg,#243285 0%,var(--esm) 55%,var(--esm-2) 100%);
-  font:700 12px/1.2 var(--sign);letter-spacing:.06em;text-transform:uppercase;color:var(--creme);
-  cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.25);transition:all .25s var(--ease);
-}
-.st-tabs button:hover{filter:brightness(1.15);transform:translateY(-1px)}
-.st-tabs button[aria-selected="true"]{
-  background:var(--hl);color:#1A1102;border-color:#fff;
-  box-shadow:0 4px 14px rgba(245,205,98,.4);transform:translateY(-1px);
-}
+    /* album binding: stitched spine with punched holes */
+    .st-album::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: clamp(26px, 3.6vw, 42px);
+      border-radius: inherit;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      background:
+        radial-gradient(circle at 50% 50%, #0B0806 0 4px, rgba(255, 235, 205, .18) 4.5px 5.5px, transparent 6px) center 22px/100% 46px repeat-y,
+        linear-gradient(90deg, #120D0A, #1E1712 70%, rgba(0, 0, 0, .6));
+      box-shadow: 1px 0 0 rgba(255, 235, 205, .08);
+      pointer-events: none;
+    }
 
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:clamp(12px,2vw,20px)}
-@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.gal[hidden]{display:none}
-.gal .w2{grid-column:span 2}
-.pc.w2{--h:clamp(200px,26vw,300px)}
-.gal .wf{grid-column:1/-1}
+    .st-album .pill {
+      background: rgba(244, 236, 221, .12);
+      color: #EFE5D2
+    }
 
-.pc{--h:clamp(170px,21vw,230px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in}
-.pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:12px;background:rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,0,0,.06);transition:all .25s}
-.pc:hover .im{background:rgba(255,255,255,.95);transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.1)}
-.pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(30,15,5,.6)}
-.pc.dk .im,.pc.dk:hover .im{background:#4E3B2B}
-.pc.wf .im{height:auto;padding:16px}
-.pc.wf .im img{width:100%;max-height:none}
-.pc b{font:600 13px/1.3 var(--pf-sans);color:#21160C}
-.pc small{display:block;font-size:12px;line-height:1.4;color:#5B4A38;margin-top:2px}
+    .st-album .pill.y {
+      background: var(--hl);
+      color: #1F1500;
+      font-weight: 700
+    }
 
-/* Arte em cena spotlight (comparador do frame de filmagem com a arte gráfica) */
-.arte-em-cena{
-  grid-column:1/-1;background:radial-gradient(120% 90% at 50% 0,#2A1C12,#150D08);
-  border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:clamp(16px,2.5vw,28px);
-  margin-top:10px;box-shadow:0 20px 40px -15px rgba(0,0,0,.7);display:grid;gap:16px;
-}
-.aec-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.aec-head h4{font:400 clamp(22px,2.5vw,28px)/1.1 var(--pf-serif);color:#fff;margin:0}
-.aec-head p{font-size:13px;color:#D8CCBA;margin:0}
-.aec-split{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center}
-@media(max-width:800px){.aec-split{grid-template-columns:1fr}}
-.aec-frame{aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 12px 28px rgba(0,0,0,.6)}
-.aec-frame button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.aec-frame img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.aec-frame button:hover img{transform:scale(1.03)}
-.aec-artes{display:grid;grid-template-columns:1fr;gap:12px}
-.aec-art-box{background:rgba(255,255,255,.05);border-radius:10px;padding:10px;display:grid;gap:6px;border:1px solid rgba(255,255,255,.08)}
-.aec-art-box button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.aec-art-box img{width:100%;height:auto;border-radius:4px;box-shadow:0 6px 14px rgba(0,0,0,.5)}
-.aec-art-box span{font:600 11px/1.3 var(--pf-sans);color:#D8CCBA}
+    .sm-scenes {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(26px, 3.6vw, 44px) clamp(18px, 2.8vw, 34px);
+      padding: clamp(6px, 1.2vw, 14px) clamp(4px, 1vw, 12px) 6px
+    }
 
-/* Street Signs kiosk inside Ruas tab */
-.esquinas-kiosk{
-  grid-column:1/-1;background:radial-gradient(120% 90% at 50% 0,#202A6A,#0E1540);
-  border:2px solid rgba(244,236,221,.8);border-radius:18px;padding:clamp(16px,2.5vw,28px);
-  margin-top:10px;box-shadow:0 20px 40px -15px rgba(5,10,35,.7);display:grid;gap:18px;
-}
-.esquinas-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px}
-.esquinas-head h4{font:400 clamp(22px,2.5vw,28px)/1.1 var(--pf-serif);color:#fff;margin:0}
-.esquinas-head p{font-size:13px;color:#C3CAEA;margin:0}
-.esquinas-display{
-  display:grid;place-items:center;min-height:180px;background:rgba(0,0,0,.3);
-  border-radius:14px;padding:clamp(14px,2.5vw,24px);
-}
-.esquinas-display button{border:0;background:none;padding:0;cursor:zoom-in;display:contents}
-.esquinas-display img{
-  max-width:min(90%,580px);height:auto;filter:drop-shadow(0 14px 28px rgba(0,0,0,.7));
-  transition:transform .4s var(--snap);
-}
-.esquinas-display button:hover img{transform:scale(1.04)}
-.esquinas-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.esquinas-btn{
-  border:1px solid rgba(244,236,221,.4);background:rgba(255,255,255,.08);
-  padding:6px 14px;border-radius:6px;font:700 11px/1.2 var(--sign);letter-spacing:.08em;
-  text-transform:uppercase;color:var(--creme);cursor:pointer;transition:all .25s;
-}
-.esquinas-btn:hover{background:rgba(255,255,255,.18);border-color:#fff}
-.esquinas-btn[aria-pressed="true"]{background:var(--hl);color:#141F58;border-color:#fff;font-weight:700}
+    .sm-sc {
+      grid-column: span 2;
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+      align-content: start;
+      background: none;
+      border: 0;
+      padding: 0;
+      text-align: center;
+      cursor: zoom-in;
+      min-width: 0;
+      color: inherit
+    }
 
-/* ===== LIGHTBOX FOR ARTWORK ZOOM ===== */
-.lb{margin:auto;border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
-.lb::backdrop{background:rgba(14,10,8,.9);backdrop-filter:blur(6px)}
-.lb-in{display:grid;gap:12px;justify-items:center}
-.lb img{max-width:min(92vw,1100px);max-height:80vh;width:auto;height:auto;border-radius:6px;box-shadow:0 30px 60px rgba(0,0,0,.8)}
-.lb-cap{max-width:60ch;font-size:14px;line-height:1.5;color:#EDE3D2;text-align:center}
-.lb-cap b{color:#fff}
-.lb-x{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font-size:24px;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    .sm-sc.w3 {
+      grid-column: span 3
+    }
 
-/* ===== VISUAL SYSTEM ===== */
-.sys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:48px}
-@media(max-width:900px){.sys{grid-template-columns:minmax(0,1fr)}}
-.pal{display:grid;gap:6px;margin-bottom:12px}
-.pal>span{font:600 11px/1 var(--pf-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--pf-ink-2)}
-.sw6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
-.sw6 i{min-width:0;overflow:hidden;white-space:nowrap;height:44px;border-radius:8px;padding:5px;display:flex;align-items:flex-end;font:600 10px/1 var(--pf-sans);font-style:normal;color:#fff;transition:transform .3s var(--snap)}
-.sw6 i:hover{transform:translateY(-4px) rotate(-2deg)}
-.sw6 i.dk{color:#2A1D10}
-.sys-n{font-size:13px;line-height:1.5;margin-top:12px}
-.type-s dl{margin:0;display:grid;gap:10px}
-.type-s div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px dashed var(--pf-line);padding-bottom:8px}
-.type-s dt{font-size:14px;color:var(--pf-ink);font-weight:600;min-width:0}
-.type-s dd{margin:0;font-size:12px;color:var(--pf-ink-2);text-align:right}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips span{font:500 12px/1 var(--pf-sans);padding:7px 10px;border-radius:99px;background:rgba(16,22,31,.06);color:var(--pf-ink)}
+    @media(max-width:860px) {
+      .sm-scenes {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
 
-/* ===== RESULTADO: CRONOLOGIA EM PLACAS & TRAILER ===== */
-.res-timeline{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:28px;
-}
-@media(max-width:860px){.res-timeline{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.res-timeline{grid-template-columns:1fr}}
-.res-milestone{
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;padding:14px 12px;display:grid;gap:6px;
-}
-.res-milestone .dt{font:700 11px/1.2 var(--sign);color:var(--hl);letter-spacing:.08em;text-transform:uppercase}
-.res-milestone b{font:400 19px/1.15 var(--pf-serif);color:#fff}
-.res-milestone span{font-size:12px;line-height:1.4;color:#D8CCBA}
+      .sm-sc,
+      .sm-sc.w3 {
+        grid-column: span 1
+      }
 
-.tr{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.tr-btn{position:absolute;inset:0;border:0;padding:0;background:#000;display:grid;place-items:center;color:#fff;cursor:pointer}
-.tr-btn img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42;transition:opacity .4s,transform .8s var(--ease)}
-.tr-btn:hover img{opacity:.55;transform:scale(1.02)}
-.tr-btn .play{position:relative;display:grid;justify-items:center;gap:12px;font:700 15px/1.2 var(--sign);letter-spacing:.06em;text-transform:uppercase}
-.tr-btn .play i{width:76px;height:76px;border-radius:50%;background:var(--hl);color:var(--esm-2);display:grid;place-items:center;font-size:26px;font-style:normal;padding-left:5px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .35s var(--snap)}
-.tr-btn:hover .play i{transform:scale(1.08)}
-.tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;text-transform:none;color:#E9DCCB}
-.tr iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.sm-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.sm-links a{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.12);color:#fff;text-decoration:none;font-size:14px;font-weight:600;transition:background .3s}
-.sm-links a:hover{background:rgba(255,255,255,.24)}
+      .sm-sc.wf-m {
+        grid-column: 1/-1
+      }
+    }
 
-.offscreen *,.offscreen *::before,.offscreen *::after{animation-play-state:paused!important}
-@keyframes shine{to{background-position:260% 0}}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .sm-cover::after{display:none}
-}
-</style>
+    @media(max-width:520px) {
+      .sm-scenes {
+        grid-template-columns: 1fr
+      }
+
+      .sm-sc,
+      .sm-sc.w3,
+      .sm-sc.wf-m {
+        grid-column: 1/-1
+      }
+    }
+
+    /* the print: aged white border with deckled edge (mask on .pp, shadow on .ph so it isn't clipped) */
+    .sm-sc .ph {
+      position: relative;
+      display: block;
+      width: 100%;
+      transform: rotate(var(--r, 0deg));
+      transition: transform .5s var(--ease), filter .5s var(--ease);
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .5)) drop-shadow(0 14px 16px rgba(0, 0, 0, .55));
+    }
+
+    .sm-sc .pp {
+      display: block;
+      padding: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) clamp(10px, 1.3vw, 15px);
+      background: linear-gradient(160deg, #F6EEDD, #EADDC3 70%, #E0CFB0);
+      -webkit-mask:
+        conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% 100%/6px 51% repeat-x,
+        conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% 0/6px 51% repeat-x;
+      mask:
+        conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% 100%/6px 51% repeat-x,
+        conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% 0/6px 51% repeat-x;
+    }
+
+    .sm-sc .im {
+      position: relative;
+      display: block;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #1E140C;
+      box-shadow: inset 0 0 0 1px rgba(60, 40, 20, .25)
+    }
+
+    .sm-sc .im img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(.18) saturate(.9) contrast(1.03);
+      transition: filter .6s var(--ease)
+    }
+
+    .sm-sc .im::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 120% at 50% 45%, transparent 55%, rgba(60, 35, 10, .32));
+      pointer-events: none
+    }
+
+    /* black paper photo corners holding the print */
+    .sm-sc .cn {
+      position: absolute;
+      inset: -2px;
+      pointer-events: none;
+      z-index: 2;
+      --c: #15100C;
+      --s: clamp(18px, 2.4vw, 26px);
+      background:
+        linear-gradient(135deg, var(--c) 50%, transparent 50%) left top/var(--s) var(--s) no-repeat,
+        linear-gradient(225deg, var(--c) 50%, transparent 50%) right top/var(--s) var(--s) no-repeat,
+        linear-gradient(45deg, var(--c) 50%, transparent 50%) left bottom/var(--s) var(--s) no-repeat,
+        linear-gradient(315deg, var(--c) 50%, transparent 50%) right bottom/var(--s) var(--s) no-repeat;
+      filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .6));
+    }
+
+    .sm-sc:hover .ph,
+    .sm-sc:focus-visible .ph {
+      transform: rotate(0deg) scale(1.015);
+      filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .5)) drop-shadow(0 22px 22px rgba(0, 0, 0, .6))
+    }
+
+    .sm-sc:hover .im img,
+    .sm-sc:focus-visible .im img {
+      filter: none
+    }
+
+    .sm-sc:focus-visible {
+      outline: none
+    }
+
+    .sm-sc:focus-visible .ph {
+      outline: 2px solid var(--hl);
+      outline-offset: 4px
+    }
+
+    /* white-ink handwriting on the black page */
+    .sm-sc .note {
+      font: 500 clamp(19px, 1.8vw, 23px)/1.15 'Caveat', 'Bradley Hand', 'Segoe Print', cursive;
+      color: #EDE3CF;
+      opacity: .92;
+      transform: rotate(var(--n, 0deg));
+      max-width: 30ch
+    }
+
+    .sm-sc .note b {
+      font-weight: 600;
+      color: #fff
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      .sm-sc .ph,
+      .sm-sc .im img {
+        transition: none
+      }
+
+      .sm-sc:hover .ph,
+      .sm-sc:focus-visible .ph {
+        transform: rotate(var(--r, 0deg))
+      }
+    }
+
+    /* ===== 01 ERAS: SIGNATURE BAND (FAIXA ASSINATURA) ===== */
+    .sm-band {
+      background: radial-gradient(120% 80% at 30% 0, #24338A, var(--esm) 55%, var(--esm-2));
+      isolation: isolate
+    }
+
+    .sm-band::before {
+      content: "";
+      position: absolute;
+      inset: clamp(8px, 1.4vw, 16px);
+      border: 3px solid rgba(244, 236, 221, .88);
+      border-radius: clamp(18px, 3vw, 36px);
+      pointer-events: none;
+      z-index: -1
+    }
+
+    .sm-band .eyebrow {
+      color: #C3CAEA
+    }
+
+    .sm-band .eyebrow b {
+      color: var(--letra)
+    }
+
+    .sm-band h2,
+    .sm-band .lede {
+      color: var(--creme)
+    }
+
+    .sm-band figcaption {
+      color: #C3CAEA
+    }
+
+    .sm-band figcaption b {
+      color: #fff
+    }
+
+    /* ===== 01 ÉPOCAS: a bar back-wall where each brand hangs twice, 50s on the left, 80s on the right ===== */
+    .ep-stage {
+      background:
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, .16) 0 2px, transparent 2px 120px),
+        radial-gradient(120% 70% at 50% 0, #3A2416, #24150C 55%, #150C07);
+      box-shadow: inset 0 0 0 1px rgba(255, 235, 205, .08), inset 0 40px 80px -40px rgba(255, 200, 130, .18), 0 30px 60px -24px rgba(3, 6, 25, .7);
+    }
+
+    .ep-stage .pill {
+      background: rgba(244, 236, 221, .12);
+      color: #EFE5D2
+    }
+
+    .ep-stage .pill.y {
+      background: var(--hl);
+      color: #1F1500
+    }
+
+    .ep-head {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(10px, 2vw, 22px);
+      margin: 0 0 clamp(6px, 1vw, 10px)
+    }
+
+    .ep-head img {
+      width: clamp(96px, 12vw, 140px);
+      height: auto;
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .65))
+    }
+
+    .ep-head img:first-child {
+      transform: rotate(-2.5deg)
+    }
+
+    .ep-head img:last-child {
+      transform: rotate(2deg)
+    }
+
+    .ep-span {
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      font: 700 11px/1 var(--sign);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--letra)
+    }
+
+    .ep-span::before {
+      content: "";
+      width: 100%;
+      min-width: 70px;
+      height: 12px;
+      background: var(--letra);
+      opacity: .9;
+      clip-path: polygon(0 44%, calc(100% - 10px) 44%, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, calc(100% - 10px) 56%, 0 56%)
+    }
+
+    .ep-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(20px, 3.4vw, 44px);
+      position: relative
+    }
+
+    .ep-row:last-child:nth-child(odd) {
+      grid-column: 1/-1;
+      width: min(100%, calc(50% - clamp(10px, 1.7vw, 22px)));
+      justify-self: center
+    }
+
+    @media(max-width:900px) {
+      .ep-list {
+        grid-template-columns: 1fr
+      }
+
+      .ep-row:last-child:nth-child(odd) {
+        width: 100%
+      }
+    }
+
+    .ep-row {
+      --h: clamp(130px, 15vw, 200px);
+      display: grid;
+      grid-template-columns: 1fr minmax(70px, 96px) 1fr;
+      align-items: end;
+      justify-items: center;
+      padding: clamp(14px, 2vw, 22px) 0 0;
+      position: relative
+    }
+
+    /* the shelf ledge each pair stands on */
+    .ep-row::after {
+      content: "";
+      grid-column: 1/-1;
+      justify-self: stretch;
+      height: 12px;
+      margin-top: -2px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #7A5235, #5A3A24 40%, #3A2414);
+      box-shadow: 0 1px 0 rgba(255, 220, 170, .25) inset, 0 14px 18px -8px rgba(0, 0, 0, .7)
+    }
+
+    .ep-art {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      background: none;
+      border: 0;
+      padding: 0 clamp(4px, 1vw, 12px);
+      cursor: zoom-in;
+      color: inherit;
+      min-width: 0;
+      align-self: end
+    }
+
+    .ep-fr {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: var(--h);
+      width: 100%
+    }
+
+    .ep-fr img {
+      max-height: var(--h);
+      max-width: 100%;
+      min-width: 0;
+      width: auto;
+      height: auto;
+      box-shadow: 0 2px 0 rgba(255, 255, 255, .06), 0 22px 30px -14px rgba(0, 0, 0, .9);
+      transition: transform .5s var(--ease)
+    }
+
+    .ep-art:hover .ep-fr img,
+    .ep-art:focus-visible .ep-fr img {
+      transform: translateY(-6px)
+    }
+
+    .ep-lbl {
+      display: grid;
+      gap: 1px;
+      text-align: center;
+      font: 500 11px/1.3 var(--pf-sans);
+      color: #C9B79C;
+      margin-bottom: 10px;
+      max-width: 24ch
+    }
+
+    .ep-lbl b {
+      font: 700 12px/1.25 var(--sign);
+      color: #F6EBD4
+    }
+
+    .ep-mid {
+      align-self: center;
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      text-align: center;
+      padding-bottom: 34px
+    }
+
+    .ep-brand {
+      font: 700 clamp(12px, 1.1vw, 14px)/1.1 var(--sign);
+      color: var(--creme);
+      letter-spacing: .03em;
+      padding: 6px 8px 7px;
+      text-align: center;
+      border: 2px solid rgba(244, 236, 221, .85);
+      border-radius: 6px;
+      background: linear-gradient(180deg, #25338A, var(--esm) 55%, var(--esm-2));
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .3)
+    }
+
+    .ep-kind {
+      font: 600 10px/1.2 var(--pf-sans);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #C9B79C
+    }
+
+    .ep-arrow {
+      width: 44px;
+      height: 12px;
+      color: var(--letra);
+      opacity: .85
+    }
+
+    @media(max-width:640px) {
+      .ep-head img {
+        width: 88px
+      }
+
+      .ep-row {
+        grid-template-columns: 1fr 1fr;
+        --h: clamp(110px, 34vw, 170px) !important
+      }
+
+      .ep-mid {
+        grid-column: 1/-1;
+        grid-row: 1;
+        padding: 0 0 6px;
+        grid-auto-flow: column;
+        align-items: center
+      }
+
+      .ep-arrow {
+        display: none
+      }
+    }
+
+    /* ===== 02 MARCAS: counters with era plates + a real boteco shelf ===== */
+    .sh-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(18px, 3vw, 32px);
+      align-items: start
+    }
+
+    @media(max-width:860px) {
+      .sh-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .sh-card {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      background: none;
+      border: 0;
+      padding: 0;
+      text-align: left;
+      cursor: zoom-in;
+      min-width: 0
+    }
+
+    .sh-card .im {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #1A0F09;
+      border: 6px solid #3B2515;
+      outline: 1px solid rgba(255, 220, 170, .18);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, .25), 0 26px 44px -20px rgba(0, 0, 0, .85)
+    }
+
+    .sh-card .im img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s var(--ease)
+    }
+
+    .sh-card .im .sh-plate {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      width: clamp(86px, 12vw, 130px);
+      height: auto;
+      object-fit: contain;
+      transform: rotate(2.5deg);
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .7));
+      transition: none
+    }
+
+    .sh-card:nth-child(2) .im .sh-plate {
+      transform: rotate(-2.5deg)
+    }
+
+    .sh-card:hover .im img:first-child,
+    .sh-card:focus-visible .im img:first-child {
+      transform: scale(1.03)
+    }
+
+    .sh-info {
+      display: grid;
+      gap: 6px;
+      color: var(--creme)
+    }
+
+    .sh-info .k {
+      font: 600 11px/1 var(--pf-sans);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--letra)
+    }
+
+    .sh-info b {
+      font: 400 clamp(22px, 2.3vw, 27px)/1.1 var(--pf-serif);
+      color: #fff
+    }
+
+    .sh-info span {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #D9C9B0
+    }
+
+    .prat {
+      margin-top: clamp(24px, 3.6vw, 40px);
+      border-radius: 10px;
+      padding: clamp(12px, 2vw, 20px) clamp(10px, 2.4vw, 28px) clamp(14px, 2vw, 20px);
+      background:
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, .18) 0 1px, transparent 1px 64px),
+        linear-gradient(180deg, #1C0F08, #2A170C 30%, #1C0F08);
+      border: clamp(10px, 1.4vw, 16px) solid #4A2C18;
+      border-top-width: clamp(18px, 2.4vw, 26px);
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, .8), inset 0 0 0 1px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 210, 160, .12), 0 30px 50px -24px rgba(0, 0, 0, .9)
+    }
+
+    .prat-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px 18px;
+      margin-bottom: 6px;
+      padding: 0 6px
+    }
+
+    .prat-t {
+      font: 400 clamp(24px, 2.8vw, 32px)/1.05 var(--pf-serif);
+      color: #FFF4E2
+    }
+
+    .prat-s {
+      font: 500 clamp(18px, 1.8vw, 21px)/1.1 'Caveat', cursive;
+      color: #E9D3A8
+    }
+
+    .prat-row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: flex-end;
+      padding-top: clamp(10px, 1.6vw, 16px)
+    }
+
+    .prat-it {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: grid;
+      justify-items: center;
+      align-content: end;
+      background: none;
+      border: 0;
+      padding: 0 clamp(8px, 1.2vw, 16px);
+      cursor: zoom-in;
+      position: relative;
+      color: inherit;
+      margin-top: 10px
+    }
+
+    .prat-it img {
+      max-height: var(--ph);
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 12px 10px rgba(0, 0, 0, .55));
+      transition: transform .45s var(--ease);
+      position: relative;
+      z-index: 1
+    }
+
+    .prat-it:hover img,
+    .prat-it:focus-visible img {
+      transform: translateY(-6px)
+    }
+
+    /* the plank: each item brings its own piece, they join edge to edge on every line */
+    .prat-it::after {
+      content: "";
+      order: 2;
+      justify-self: stretch;
+      margin: 0 calc(-1 * clamp(8px, 1.2vw, 16px));
+      height: 11px;
+      background: linear-gradient(180deg, #8A5E3B, #6A4428 35%, #4A2E19);
+      box-shadow: 0 1px 0 rgba(255, 220, 170, .3) inset, 0 16px 16px -10px rgba(0, 0, 0, .8)
+    }
+
+    @media(max-width:720px) {
+      .prat-row {
+        flex-wrap: wrap
+      }
+
+      .prat-it {
+        flex: 1 0 auto;
+        max-width: 100%
+      }
+    }
+
+    .prat-tag {
+      order: 3;
+      margin-top: 5px;
+      display: grid;
+      font: 600 15px/1 'Caveat', cursive;
+      color: #2A1A0C;
+      background: #D9BF8F;
+      padding: 4px 10px 5px;
+      border-radius: 2px 2px 2px 2px;
+      transform: rotate(var(--t, 0deg));
+      box-shadow: 0 3px 6px rgba(0, 0, 0, .45);
+      position: relative
+    }
+
+    .prat-tag::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -6px;
+      width: 1px;
+      height: 7px;
+      background: #C9B38C
+    }
+
+    .prat-tag small {
+      font: 600 9px/1.2 var(--pf-sans);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #6A4E2E;
+      margin-top: 2px
+    }
+
+    .prat-it:focus-visible {
+      outline: none
+    }
+
+    .prat-it:focus-visible img {
+      outline: 2px solid var(--hl);
+      outline-offset: 4px
+    }
+
+    /* ===== 03 ESPECULAÇÃO: billboards, a pasted-up wall and the paperwork on the developer's desk ===== */
+    .sp-stage .pill {
+      background: rgba(255, 255, 255, .9);
+      color: #1A1208
+    }
+
+    .sp-boards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(16px, 3vw, 36px);
+      align-items: end;
+      max-width: 720px;
+      margin: 0 auto
+    }
+
+    @media(max-width:700px) {
+      .sp-boards {
+        gap: 12px
+      }
+
+      .sp-board .sp-lbl {
+        font-size: 10.5px;
+        padding: 4px 6px
+      }
+    }
+
+    .sp-board {
+      display: grid;
+      justify-items: center;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: zoom-in;
+      color: inherit;
+      min-width: 0
+    }
+
+    .sp-bf {
+      display: block;
+      width: 100%;
+      padding: 6px;
+      background: linear-gradient(180deg, #3A3B3D, #1E1F21);
+      border-radius: 2px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .2) inset, 0 24px 30px -16px rgba(20, 10, 0, .8);
+      position: relative
+    }
+
+    .sp-bf::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: -16px;
+      height: 16px;
+      background:
+        radial-gradient(10px 6px at 50% 100%, #2A2B2D 98%, transparent) 0 0/25% 100% repeat-x;
+      opacity: .9
+    }
+
+    .sp-bf img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: filter .5s
+    }
+
+    .sp-legs {
+      width: 56%;
+      height: clamp(14px, 1.8vw, 20px);
+      background: linear-gradient(90deg, #2D2E30 0 10px, transparent 10px calc(100% - 10px), #2D2E30 calc(100% - 10px));
+    }
+
+    .sp-lbl {
+      display: inline-block;
+      margin-top: 10px;
+      font: 600 12px/1.35 var(--pf-sans);
+      color: #2A1D10;
+      background: rgba(255, 252, 244, .94);
+      padding: 6px 10px;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+      text-align: left;
+      max-width: 100%
+    }
+
+    .sp-lbl b {
+      color: #1A1208
+    }
+
+    .sp-lbl i {
+      font-style: normal;
+      font-weight: 500;
+      color: #6B5640
+    }
+
+    .sp-wall {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      margin: clamp(22px, 3.4vw, 40px) 0 0;
+      padding: 0 1%
+    }
+
+    .sp-lambe .sp-lbl {
+      font-size: 10.5px;
+      padding: 4px 6px;
+      margin-top: 8px
+    }
+
+    .sp-lambe {
+      flex: 1 1 0;
+      min-width: 0;
+      margin: 0 -.6% clamp(10px, 2vw, 18px);
+      display: grid;
+      justify-items: center;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: zoom-in;
+      color: inherit;
+      position: relative;
+      z-index: 1
+    }
+
+    .sp-lambe:hover,
+    .sp-lambe:focus-visible {
+      z-index: 3
+    }
+
+    .sp-paper {
+      display: block;
+      width: 100%;
+      transform: rotate(var(--r, 0deg));
+      filter: drop-shadow(0 2px 1px rgba(40, 20, 5, .35)) drop-shadow(0 16px 14px rgba(40, 20, 5, .35));
+      transition: transform .5s var(--ease)
+    }
+
+    .sp-paper>span {
+      display: block;
+      position: relative;
+      clip-path: polygon(0 1.2%, 6% 0, 24% .8%, 47% 0, 71% .9%, 92% 0, 100% 1%, 99.3% 24%, 100% 51%, 99.4% 78%, 100% 99%, 82% 100%, 61% 99.2%, 36% 100%, 14% 99.3%, 0 100%, .7% 72%, 0 46%, .6% 21%)
+    }
+
+    .sp-paper img {
+      display: block;
+      width: 100%;
+      height: auto;
+      mix-blend-mode: multiply
+    }
+
+    .sp-paper>span::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      background:
+        linear-gradient(97deg, transparent 30%, rgba(120, 90, 50, .12) 31%, transparent 33%, transparent 64%, rgba(120, 90, 50, .1) 65%, transparent 67%),
+        linear-gradient(176deg, transparent 40%, rgba(120, 90, 50, .1) 41%, transparent 43%),
+        radial-gradient(120% 90% at 50% 40%, transparent 60%, rgba(130, 95, 50, .22))
+    }
+
+    .sp-lambe:hover .sp-paper,
+    .sp-lambe:focus-visible .sp-paper {
+      transform: rotate(0deg) scale(1.03)
+    }
+
+    @media(max-width:760px) {
+      .sp-wall {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 0;
+        padding: 0
+      }
+
+      .sp-lambe {
+        margin: 0 -3% 14px
+      }
+    }
+
+    .sp-desk {
+      margin-top: clamp(14px, 2.4vw, 26px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: clamp(14px, 2vw, 24px);
+      padding: clamp(16px, 2.4vw, 28px);
+      border-radius: 8px;
+      border: clamp(8px, 1.2vw, 14px) solid #4A2D18;
+      background: radial-gradient(120% 90% at 40% 20%, #2F4A3B, #20362A 60%, #15241C);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .4), inset 0 0 60px rgba(0, 0, 0, .45), 0 30px 50px -24px rgba(30, 15, 5, .85)
+    }
+
+    .sp-desk-t {
+      flex: 1 1 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+      align-items: baseline;
+      justify-content: space-between
+    }
+
+    .sp-desk-t b {
+      font: 400 clamp(24px, 2.8vw, 32px)/1.05 var(--pf-serif);
+      color: #F4ECDD
+    }
+
+    .sp-desk-t span {
+      font: 500 clamp(18px, 1.8vw, 21px)/1.1 'Caveat', cursive;
+      color: #CFE0CF
+    }
+
+    .sp-doc {
+      display: grid;
+      justify-items: start;
+      gap: 10px;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: zoom-in;
+      color: inherit;
+      min-width: 0;
+      position: relative
+    }
+
+    .sp-doc>img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform: rotate(var(--r, 0deg));
+      box-shadow: 0 2px 2px rgba(0, 0, 0, .35), 0 22px 30px -12px rgba(0, 0, 0, .75);
+      transition: transform .5s var(--ease)
+    }
+
+    .sp-doc:hover>img,
+    .sp-doc:focus-visible>img {
+      transform: rotate(0deg) translateY(-4px)
+    }
+
+    .sp-planta {
+      flex: 1.415 1 0
+    }
+
+    .sp-jornal {
+      flex: 1.3 1 0
+    }
+
+    .sp-despejo,
+    .sp-contrato {
+      flex: .707 1 0
+    }
+
+    /* paper clip */
+    .sp-clip::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: -12px;
+      left: 22%;
+      width: 14px;
+      height: 44px;
+      border: 2.5px solid #B9BCC0;
+      border-radius: 8px;
+      border-bottom-color: #8E9196;
+      transform: rotate(-8deg);
+      box-shadow: 1px 2px 2px rgba(0, 0, 0, .4)
+    }
+
+    .sp-tag {
+      font: 600 10px/1.35 ui-monospace, 'Courier New', monospace;
+      letter-spacing: .02em;
+      color: #1E1A12;
+      background: #E8DCC0;
+      padding: 5px 9px;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .4)
+    }
+
+    .sp-tag i {
+      font-style: normal;
+      color: #5E5038
+    }
+
+    @media(max-width:700px) {
+
+      .sp-planta,
+      .sp-jornal {
+        flex: 1 1 100%
+      }
+
+      .sp-jornal {
+        order: 1
+      }
+
+      .sp-despejo,
+      .sp-contrato {
+        flex: 1 1 40%;
+        order: 2
+      }
+    }
+
+    /* ===== 04 SETS: enamel plate tabs and pieces taped to a plastered bar wall with a painted dado ===== */
+    .st-sets {
+      background:
+        linear-gradient(0deg, #294334 0 26px, #1B2E23 26px 29px, #C9B79A 29px 31px, transparent 31px),
+        linear-gradient(180deg, rgba(255, 250, 240, .35), rgba(150, 120, 80, .18)),
+        #DCCDB2 url(assets/tx-reboco.jpg) center/cover;
+      box-shadow: inset 0 0 90px rgba(90, 60, 25, .28)
+    }
+
+    .st-plate {
+      display: inline-block;
+      margin-bottom: clamp(18px, 2.6vw, 28px);
+      border: 2px solid rgba(244, 236, 221, .9);
+      padding: 10px 30px;
+      border-radius: 7px;
+      background:
+        radial-gradient(circle at 11px 50%, #D9D3C4 0 2.5px, #6C6A66 3px, transparent 3.5px),
+        radial-gradient(circle at calc(100% - 11px) 50%, #D9D3C4 0 2.5px, #6C6A66 3px, transparent 3.5px),
+        linear-gradient(180deg, #2A3994 0%, var(--esm) 55%, var(--esm-2) 100%);
+      font: 700 13px/1.2 var(--sign);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--creme);
+      box-shadow: 0 6px 14px rgba(30, 20, 10, .35), inset 0 1px 0 rgba(255, 255, 255, .3)
+    }
+
+    .gal {
+      columns: 6 130px;
+      column-gap: clamp(14px, 2vw, 24px);
+      padding-bottom: 6px
+    }
+
+    @media(max-width:520px) {
+      .gal {
+        columns: 3;
+        column-gap: 12px
+      }
+    }
+
+    .gal>* {
+      break-inside: avoid
+    }
+
+    .gal .wf,
+    .gal .gal-wide {
+      column-span: all
+    }
+
+    .pc {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      width: 100%;
+      margin: 0 0 clamp(18px, 2.4vw, 28px);
+      background: none;
+      border: 0;
+      padding: 12px 0 0;
+      text-align: center;
+      cursor: zoom-in;
+      color: inherit
+    }
+
+    .pc:nth-child(3n+1) {
+      --r: -1.4deg
+    }
+
+    .pc:nth-child(3n+2) {
+      --r: 1.1deg
+    }
+
+    .pc:nth-child(3n) {
+      --r: -.5deg
+    }
+
+    .pc .im {
+      position: relative;
+      display: block;
+      transform: rotate(var(--r, 0deg));
+      transition: transform .5s var(--ease)
+    }
+
+    .pc .im img {
+      display: block;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      max-height: 190px;
+      filter: drop-shadow(0 2px 2px rgba(40, 25, 10, .28)) drop-shadow(0 10px 14px rgba(40, 25, 10, .48))
+    }
+
+    /* masking tape */
+    .pc .im::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: -9px;
+      left: 50%;
+      width: min(48px, 40%);
+      height: 16px;
+      transform: translateX(-50%) rotate(-3deg);
+      background: linear-gradient(180deg, rgba(236, 226, 196, .86), rgba(222, 208, 172, .86));
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
+      -webkit-mask: conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) 0 50%/51% 5px repeat-y, conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) 100% 50%/51% 5px repeat-y;
+      mask: conic-gradient(from 45deg at left, #0000, #000 1deg 89deg, #0000 90deg) 0 50%/51% 5px repeat-y, conic-gradient(from -135deg at right, #0000, #000 1deg 89deg, #0000 90deg) 100% 50%/51% 5px repeat-y
+    }
+
+    .pc:hover .im,
+    .pc:focus-visible .im {
+      transform: rotate(0deg) translateY(-4px)
+    }
+
+    .pc.dk .im img {
+      padding: 7px;
+      background: #4E3B2B;
+      box-sizing: border-box
+    }
+
+    .pc.wf .im img {
+      max-height: none;
+      width: 100%
+    }
+
+    .pc.wf {
+      max-width: 760px;
+      margin-inline: auto
+    }
+
+    .pc.wf .im {
+      width: 100%
+    }
+
+    .pc>span:last-child {
+      display: grid;
+      gap: 2px;
+      max-width: 28ch
+    }
+
+    .pc b {
+      font: 700 11.5px/1.3 var(--sign);
+      color: #21160C
+    }
+
+    .pc small {
+      display: block;
+      font-size: 10.5px;
+      line-height: 1.4;
+      color: #5B4A38
+    }
+
+    .pc:focus-visible {
+      outline: none
+    }
+
+    .pc:focus-visible .im img {
+      outline: 2px solid var(--esm);
+      outline-offset: 4px
+    }
+
+    /* street-corner enamel plates, all six */
+    .sg-plates {
+      margin-bottom: clamp(20px, 3vw, 32px);
+      padding: clamp(14px, 2vw, 22px);
+      border-radius: 12px;
+      background: rgba(255, 252, 244, .5);
+      box-shadow: inset 0 0 0 1px rgba(90, 60, 25, .12)
+    }
+
+    .sg-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4px 16px;
+      margin-bottom: 16px
+    }
+
+    .sg-head b {
+      font: 400 clamp(22px, 2.6vw, 30px)/1.05 var(--pf-serif);
+      color: #1E150C
+    }
+
+    .sg-head span {
+      font: 500 13px/1.4 var(--pf-sans);
+      color: #5B4A38
+    }
+
+    .sg-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(14px, 2.4vw, 26px)
+    }
+
+    @media(max-width:860px) {
+      .sg-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+    }
+
+    .sg-it {
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: zoom-in;
+      display: grid;
+      gap: 6px;
+      justify-items: center
+    }
+
+    .sg-it img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 12px rgba(30, 20, 10, .45));
+      transition: transform .5s var(--ease)
+    }
+
+    .sg-it:hover img,
+    .sg-it:focus-visible img {
+      transform: translateY(-4px)
+    }
+
+    .sg-it span {
+      font: 600 11px/1.3 var(--pf-sans);
+      color: #5B4A38
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      .ep-art:hover .ep-fr img,
+      .prat-it:hover img,
+      .sp-doc:hover>img,
+      .sg-it:hover img {
+        transform: none
+      }
+    }
+
+    /* ===== LIGHTBOX FOR ARTWORK ZOOM ===== */
+    .lb {
+      margin: auto;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      max-width: none;
+      max-height: none;
+      overflow: visible
+    }
+
+    .lb::backdrop {
+      background: rgba(14, 10, 8, .9);
+      backdrop-filter: blur(6px)
+    }
+
+    .lb-in {
+      display: grid;
+      gap: 12px;
+      justify-items: center
+    }
+
+    .lb img {
+      max-width: min(92vw, 1100px);
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, .8)
+    }
+
+    .lb-cap {
+      max-width: 60ch;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #EDE3D2;
+      text-align: center
+    }
+
+    .lb-cap b {
+      color: #fff
+    }
+
+    .lb-x {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 0;
+      background: #fff;
+      color: #111;
+      font-size: 24px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .4)
+    }
+
+    /* ===== VISUAL SYSTEM ===== */
+    .sys {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 48px
+    }
+
+    @media(max-width:900px) {
+      .sys {
+        grid-template-columns: minmax(0, 1fr)
+      }
+    }
+
+    .pal {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 12px
+    }
+
+    .pal>span {
+      font: 600 11px/1 var(--pf-sans);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--pf-ink-2)
+    }
+
+    .sw6 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px
+    }
+
+    .sw6 i {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      height: 44px;
+      border-radius: 8px;
+      padding: 5px;
+      display: flex;
+      align-items: flex-end;
+      font: 600 10px/1 var(--pf-sans);
+      font-style: normal;
+      color: #fff;
+      transition: transform .3s var(--snap)
+    }
+
+    .sw6 i:hover {
+      transform: translateY(-4px) rotate(-2deg)
+    }
+
+    .sw6 i.dk {
+      color: #2A1D10
+    }
+
+    .sys-n {
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 12px
+    }
+
+    .type-s dl {
+      margin: 0;
+      display: grid;
+      gap: 10px
+    }
+
+    .type-s div {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px dashed var(--pf-line);
+      padding-bottom: 8px
+    }
+
+    .type-s dt {
+      font-size: 14px;
+      color: var(--pf-ink);
+      font-weight: 600;
+      min-width: 0
+    }
+
+    .type-s dd {
+      margin: 0;
+      font-size: 12px;
+      color: var(--pf-ink-2);
+      text-align: right
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .chips span {
+      font: 500 12px/1 var(--pf-sans);
+      padding: 7px 10px;
+      border-radius: 99px;
+      background: rgba(16, 22, 31, .06);
+      color: var(--pf-ink)
+    }
+
+    /* ===== RESULTADO: CRONOLOGIA EM PLACAS & TRAILER ===== */
+    .res-timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    @media(max-width:860px) {
+      .res-timeline {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:480px) {
+      .res-timeline {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .res-milestone {
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 12px;
+      padding: 14px 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .res-milestone .dt {
+      font: 700 11px/1.2 var(--sign);
+      color: var(--hl);
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .res-milestone b {
+      font: 400 19px/1.15 var(--pf-serif);
+      color: #fff
+    }
+
+    .res-milestone span {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #D8CCBA
+    }
+
+    .tr {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8)
+    }
+
+    .tr-btn {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      padding: 0;
+      background: #000;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      cursor: pointer
+    }
+
+    .tr-btn img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .42;
+      transition: opacity .4s, transform .8s var(--ease)
+    }
+
+    .tr-btn:hover img {
+      opacity: .55;
+      transform: scale(1.02)
+    }
+
+    .tr-btn .play {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      font: 700 15px/1.2 var(--sign);
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .tr-btn .play i {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--hl);
+      color: var(--esm-2);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      font-style: normal;
+      padding-left: 5px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+      transition: transform .35s var(--snap)
+    }
+
+    .tr-btn:hover .play i {
+      transform: scale(1.08)
+    }
+
+    .tr-btn small {
+      font: 500 12px/1.3 var(--pf-sans);
+      letter-spacing: 0;
+      text-transform: none;
+      color: #E9DCCB
+    }
+
+    .tr iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0
+    }
+
+    .sm-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px
+    }
+
+    .sm-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .3s
+    }
+
+    .sm-links a:hover {
+      background: rgba(255, 255, 255, .24)
+    }
+
+    .offscreen *,
+    .offscreen *::before,
+    .offscreen *::after {
+      animation-play-state: paused !important
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 260% 0
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important
+      }
+
+      .sm-cover::after {
+        display: none
+      }
+    }
+  </style>
 </head>
+
 <body data-case="saudosa-maloca">
 
-<nav class="pf-nav" aria-label="Portfólio">
-  <div class="wrap">
-    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Saudosa Maloca</span></a>
-    <ul class="pf-links">
-      <li><a href="#epocas">Épocas</a></li>
-      <li><a href="#marcas">Marcas</a></li>
-      <li><a href="#especulacao">Especulação</a></li>
-      <li><a href="#sets">Sets</a></li>
-    </ul>
-    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
-  </div>
-  <i class="pf-prog" aria-hidden="true"></i>
-</nav>
-
-<header class="pf-hero">
-  <div class="wrap">
-    <p class="eyebrow"><b>Case 04</b> · Design gráfico · Cinema</p>
-    <h1>Uma São Paulo que não existe mais, <em>refeita em placas e rótulos.</em></h1>
-    <p class="lede">Design gráfico de Saudosa Maloca, longa da Pink Flamingo Filmes baseado nos sambas de Adoniran Barbosa: a placa-título e as marcas, rótulos, cartazes, jornais e letreiros dos anos 50 e 80 que aparecem em cena.</p>
-    <dl class="pf-meta">
-      <div><dt>Papel</dt><dd>Designer gráfico do filme</dd></div>
-      <div><dt>Cliente</dt><dd>Pink Flamingo Filmes · 2022–2024</dd></div>
-      <div><dt>Entregas</dt><dd>Placa-título e peças gráficas de cena dos anos 50 e 80</dd></div>
-      <div><dt>Filme</dt><dd>Direção de Pedro Serrano · nos cinemas em 21 de março de 2024</dd></div>
-    </dl>
-  </div>
-  <div class="pf-cover sm-cover" data-loop>
-    <img src="assets/cover.jpg" alt="Placa esmaltada azul com o título Saudosa Maloca e o subtítulo Dá Licença de Contar, pregada num muro de reboco descascado com tijolos aparentes">
-  </div>
-</header>
-
-<section id="contexto" class="pf-sec alt">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow">O filme</p>
-      <h2>Sambas que já são roteiros prontos para filmar.</h2>
-      <p class="lede">Saudosa Maloca é uma comédia dramática baseada na obra de Adoniran Barbosa. Nos anos 80, um Adoniran já envelhecido (Paulo Miklos) conta a um jovem garçom histórias de uma cidade que já não existe: a maloca onde vivia com Joca e Mato Grosso, as rodas de samba no Bixiga, o samba na casa do Arnesto. No fim, a demolição da maloca encerra a época.</p>
+  <nav class="pf-nav" aria-label="Portfólio">
+    <div class="wrap">
+      <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Saudosa Maloca</span></a>
+      <ul class="pf-links">
+        <li><a href="#epocas">Épocas</a></li>
+        <li><a href="#marcas">Marcas</a></li>
+        <li><a href="#especulacao">Especulação</a></li>
+        <li><a href="#sets">Sets</a></li>
+      </ul>
+      <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
     </div>
-    <div class="callout rv"><b>Brief:</b> criar o universo gráfico do filme — o título e as marcas, rótulos, cartazes e impressos que aparecem em cena nas duas épocas da história.</div>
-    <div class="sm-count rv">
-      <div class="pf-card"><span class="tag">Épocas</span><b>50 e 80</b><p>A história anda entre a São Paulo dos anos 50 e a dos anos 80, e cada época pede suas próprias marcas.</p></div>
-      <div class="pf-card"><span class="tag">Lista de arte</span><b>60</b><p>itens, aproximadamente, numa lista com set, cena, quantidade, tamanho e material de cada peça.</p></div>
-      <div class="pf-card"><span class="tag">Gráfica</span><b>4</b><p>levas de arte para impressão, de 7 de dezembro de 2022 a 11 de janeiro de 2023, já com as filmagens começando.</p></div>
+    <i class="pf-prog" aria-hidden="true"></i>
+  </nav>
+
+  <header class="pf-hero">
+    <div class="wrap">
+      <p class="eyebrow"><b>Case 04</b> · Design gráfico · Cinema</p>
+      <h1>Uma São Paulo que não existe mais, <em>refeita em placas e rótulos.</em></h1>
+      <p class="lede">Design gráfico de Saudosa Maloca, longa da Pink Flamingo Filmes baseado nos sambas de Adoniran
+        Barbosa: a placa-título e as marcas, rótulos, cartazes, jornais e letreiros dos anos 50 e 80 que aparecem em
+        cena.</p>
+      <dl class="pf-meta">
+        <div>
+          <dt>Papel</dt>
+          <dd>Designer gráfico do filme</dd>
+        </div>
+        <div>
+          <dt>Cliente</dt>
+          <dd>Pink Flamingo Filmes · 2022–2024</dd>
+        </div>
+        <div>
+          <dt>Entregas</dt>
+          <dd>Placa-título e peças gráficas de cena dos anos 50 e 80</dd>
+        </div>
+        <div>
+          <dt>Filme</dt>
+          <dd>Direção de Pedro Serrano · nos cinemas em 21 de março de 2024</dd>
+        </div>
+        <div>
+          <dt>Créditos</dt>
+          <dd><a class="pf-imdb" href="https://www.imdb.com/name/nm19036887/" target="_blank" rel="noopener">IMDb · Erik Placido <span aria-hidden="true">↗</span></a></dd>
+        </div>
+      </dl>
     </div>
-    <figure class="rv">
-      <div class="pf-stage st-muro">
-        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Épocas e cenários da história</span></div>
-        <div class="sm-scenes">
-          <button class="sm-sc w3" type="button" data-zoom data-cap="Anos 50 · A rua, o sobrado e o varal na São Paulo das memórias de Adoniran."><span class="im"><img src="assets/s20.webp" width="1600" height="900" alt="Placa esmaltada Anos 50 sobre cena de rua com crianças jogando bola, varal de roupas e sobrado antigo" loading="lazy"></span><span class="cap"><span class="esm-badge">Anos 50</span> <i>a rua, o sobrado e o varal</i></span></button>
-          <button class="sm-sc w3" type="button" data-zoom data-cap="Anos 80 · Roda de samba na calçada do Bar Bleque Tais, com os letreiros de Secos &amp; Molhados na fachada."><span class="im"><img src="assets/s19.webp" width="1600" height="900" alt="Placa esmaltada Anos 80 sobre cena de roda de samba na calçada em frente às placas pintadas de Secos e Molhados e Bleque Tais" loading="lazy"></span><span class="cap"><span class="esm-badge">Anos 80</span> <i>calçada do Bar Bleque Tais</i></span></button>
-          <button class="sm-sc" type="button" data-zoom data-cap="A maloca · Adoniran, Joca e Mato Grosso jogando dominó à mesa, com recortes de jornal e retratos na parede."><span class="im"><img src="assets/s21.webp" width="1600" height="900" alt="Placa esmaltada A maloca sobre cena de Joca, Mato Grosso e Adoniran conversando à mesa com dominó e recortes na parede" loading="lazy"></span><span class="cap"><span class="esm-badge">A maloca</span> <i>Joca, Mato Grosso e Adoniran</i></span></button>
-          <button class="sm-sc" type="button" data-zoom data-cap="O boteco · Roda de samba no bar cheio nos anos 50, com cartazes e avisos de época nas paredes ao fundo."><span class="im"><img src="assets/s22.webp" width="1600" height="900" alt="Placa esmaltada O boteco sobre cena de roda de samba num bar cheio nos anos 50" loading="lazy"></span><span class="cap"><span class="esm-badge">O boteco</span> <i>roda de samba no Bixiga</i></span></button>
-          <button class="sm-sc wf-m" type="button" data-zoom data-cap="Referências cinematográficas · Os três amigos caminhando pelas ruas com violão, apresentados pelas placas esmaltadas do projeto."><span class="im"><img src="assets/s18.webp" width="1600" height="900" alt="Placa esmaltada Referências cinematográficas sobre cena dos três amigos caminhando pela rua com violão" loading="lazy"></span><span class="cap"><span class="esm-badge">Cinema</span> <i>o trio na rua com violão</i></span></button>
+    <div class="pf-cover sm-cover" data-loop>
+      <img src="assets/cover.jpg"
+        alt="Placa esmaltada azul com o título Saudosa Maloca e o subtítulo Dá Licença de Contar, pregada num muro de reboco descascado com tijolos aparentes">
+    </div>
+  </header>
+
+  <section id="contexto" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow">O filme</p>
+        <h2>Sambas que já são roteiros prontos para filmar.</h2>
+        <p class="lede">Saudosa Maloca é uma comédia dramática baseada na obra de Adoniran Barbosa. Nos anos 80, um
+          Adoniran já envelhecido (Paulo Miklos) conta a um jovem garçom histórias de uma cidade que já não existe: a
+          maloca onde vivia com Joca e Mato Grosso, as rodas de samba no Bixiga, o samba na casa do Arnesto. No fim, a
+          demolição da maloca encerra a época.</p>
+      </div>
+      <div class="callout rv"><b>Brief:</b> criar o universo gráfico do filme — o título e as marcas, rótulos, cartazes
+        e impressos que aparecem em cena nas duas épocas da história.</div>
+      <div class="sm-count rv">
+        <div class="pf-card"><span class="tag">Épocas</span><b>50 e 80</b>
+          <p>A história anda entre a São Paulo dos anos 50 e a dos anos 80, e cada época pede suas próprias marcas.</p>
+        </div>
+        <div class="pf-card"><span class="tag">Lista de arte</span><b>60</b>
+          <p>itens, aproximadamente, numa lista com set, cena, quantidade, tamanho e material de cada peça.</p>
+        </div>
+        <div class="pf-card"><span class="tag">Gráfica</span><b>4</b>
+          <p>levas de arte para impressão, de 7 de dezembro de 2022 a 11 de janeiro de 2023, já com as filmagens
+            começando.</p>
         </div>
       </div>
-      <figcaption><b>Os tempos e os lugares do filme.</b> Quadros com as placas esmaltadas azuis que abrem cada ambiente do projeto: a São Paulo dos anos 50 e dos anos 80, o interior da maloca, o boteco cheio e as ruas por onde andam os três amigos.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- 01 · ERAS (SIGNATURE BAND) -->
-<section id="epocas" class="pf-sec sm-band">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow"><b>01</b> · Épocas</p>
-      <h2>As mesmas marcas, trinta anos depois.</h2>
-      <p class="lede">A história vai e volta entre os anos 50 e os anos 80, e o bar aparece nas duas épocas. Algumas marcas atravessam o tempo e mudam de cara: a Clara troca o chope em letra cursiva por uma pilsen de letras condensadas, a Refres Frut ganha garrafa família de 2 litros, o cigarro Aurora e o fósforo Maxlumi também acompanham essa evolução.</p>
+      <figure class="rv">
+        <div class="pf-stage st-album">
+          <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Épocas e cenários da
+              história</span></div>
+          <div class="sm-scenes">
+            <button class="sm-sc w3" type="button" style="--r:-1.6deg;--n:-1deg" data-zoom
+              data-cap="Anos 50 · A rua, o sobrado e o varal na São Paulo das memórias de Adoniran."><span
+                class="ph"><span class="pp"><span class="im"><img src="assets/s20.webp" width="1600" height="900"
+                      alt="Placa esmaltada Anos 50 sobre cena de rua com crianças jogando bola, varal de roupas e sobrado antigo"
+                      loading="lazy"></span></span><span class="cn" aria-hidden="true"></span></span><span
+                class="note"><b>Anos 50</b> · a rua, o sobrado e o varal</span></button>
+            <button class="sm-sc w3" type="button" style="--r:1.4deg;--n:1deg" data-zoom
+              data-cap="Anos 80 · Roda de samba na calçada do Bar Bleque Tais, com os letreiros de Secos &amp; Molhados na fachada."><span
+                class="ph"><span class="pp"><span class="im"><img src="assets/s19.webp" width="1600" height="900"
+                      alt="Placa esmaltada Anos 80 sobre cena de roda de samba na calçada em frente às placas pintadas de Secos e Molhados e Bleque Tais"
+                      loading="lazy"></span></span><span class="cn" aria-hidden="true"></span></span><span
+                class="note"><b>Anos 80</b> · calçada do Bar Bleque Tais</span></button>
+            <button class="sm-sc" type="button" style="--r:1.2deg;--n:-.8deg" data-zoom
+              data-cap="A maloca · Adoniran, Joca e Mato Grosso jogando dominó à mesa, com recortes de jornal e retratos na parede."><span
+                class="ph"><span class="pp"><span class="im"><img src="assets/s21.webp" width="1600" height="900"
+                      alt="Placa esmaltada A maloca sobre cena de Joca, Mato Grosso e Adoniran conversando à mesa com dominó e recortes na parede"
+                      loading="lazy"></span></span><span class="cn" aria-hidden="true"></span></span><span
+                class="note"><b>A maloca</b> · Joca, Mato Grosso e Adoniran</span></button>
+            <button class="sm-sc" type="button" style="--r:-2deg;--n:.8deg" data-zoom
+              data-cap="O boteco · Roda de samba no bar cheio nos anos 50, com cartazes e avisos de época nas paredes ao fundo."><span
+                class="ph"><span class="pp"><span class="im"><img src="assets/s22.webp" width="1600" height="900"
+                      alt="Placa esmaltada O boteco sobre cena de roda de samba num bar cheio nos anos 50"
+                      loading="lazy"></span></span><span class="cn" aria-hidden="true"></span></span><span
+                class="note"><b>O boteco</b> · roda de samba no Bixiga</span></button>
+            <button class="sm-sc wf-m" type="button" style="--r:1.8deg;--n:-1.2deg" data-zoom
+              data-cap="Referências cinematográficas · Os três amigos caminhando pelas ruas com violão, apresentados pelas placas esmaltadas do projeto."><span
+                class="ph"><span class="pp"><span class="im"><img src="assets/s18.webp" width="1600" height="900"
+                      alt="Placa esmaltada Referências cinematográficas sobre cena dos três amigos caminhando pela rua com violão"
+                      loading="lazy"></span></span><span class="cn" aria-hidden="true"></span></span><span
+                class="note"><b>Cinema</b> · o trio na rua com violão</span></button>
+          </div>
+        </div>
+        <figcaption><b>Os tempos e os lugares do filme.</b> Quadros com as placas esmaltadas azuis que abrem cada
+          ambiente do projeto: a São Paulo dos anos 50 e dos anos 80, o interior da maloca, o boteco cheio e as ruas por
+          onde andam os três amigos.</figcaption>
+      </figure>
     </div>
-    <figure class="rv">
-      <div class="pf-stage era-vitrine" id="ep" data-era="50" data-view="flip" data-loop>
-        <div class="tag-row"><span class="pill y">Interativo</span><span class="pill">Vitrine comparativa de épocas</span></div>
-        
-        <!-- Controls: enamel era plates & view mode -->
-        <div class="era-header">
-          <div class="era-placas" role="group" aria-label="Alternar Época">
-            <button class="era-placa-btn" type="button" data-set-era="50" aria-pressed="true" style="--r:-2deg" aria-label="Ver Anos 50"><img src="assets/pl-anos50.webp" alt="Placa esmaltada Anos 50"></button>
-            <button class="era-placa-btn" type="button" data-set-era="80" aria-pressed="false" style="--r:2deg" aria-label="Ver Anos 80"><img src="assets/pl-anos80.webp" alt="Placa esmaltada Anos 80"></button>
-          </div>
-          <div class="era-view-toggles" role="group" aria-label="Modo de visualização">
-            <button class="era-mode-btn" type="button" data-mode="flip" aria-pressed="true">Virar (3D)</button>
-            <button class="era-mode-btn" type="button" data-mode="dual" aria-pressed="false">Lado a Lado</button>
-          </div>
-        </div>
+  </section>
 
-        <!-- Master spotlight -->
-        <div class="era-spotlight">
-          <!-- Flip Mode (3D Card) -->
-          <div class="era-flip-stage">
-            <div class="era-card-3d">
-              <div class="era-face face-50">
-                <div class="era-artwork">
-                  <button type="button" data-zoom id="epZoom50" data-cap=""><img id="epImg50" src="assets/clara-r50.webp" alt=""></button>
-                </div>
-                <div class="era-info">
-                  <span class="k-tag"><span class="esm-badge">Anos 50</span> <span id="epCat50">Cervejaria · Rótulo</span></span>
-                  <h3 id="epTitle50">Cerveja Clara Chopp</h3>
-                  <p id="epDesc50">Cia. Cervejaria Clara, estrela clássica sobre preto e Chopp desenhado em letra cursiva com ramos de cevada.</p>
-                  <div class="era-meta-specs">
-                    <span class="era-spec" id="epMat50">Adesivo para 600 ml</span>
-                    <span class="era-spec">Tipografia cursiva</span>
-                    <span class="era-spec">Litografia</span>
-                  </div>
-                </div>
-              </div>
-              <div class="era-face face-80">
-                <div class="era-artwork">
-                  <button type="button" data-zoom id="epZoom80" data-cap=""><img id="epImg80" src="assets/clara-r80.webp" alt=""></button>
-                </div>
-                <div class="era-info">
-                  <span class="k-tag"><span class="esm-badge">Anos 80</span> <span id="epCat80">Cervejaria · Rótulo</span></span>
-                  <h3 id="epTitle80">Pilsen Clara Chopp</h3>
-                  <p id="epDesc80">Oval verde com Clara Chopp em letras sem serifa condensadas e layout geométrico de grande escala.</p>
-                  <div class="era-meta-specs">
-                    <span class="era-spec" id="epMat80">Adesivo para 600 ml</span>
-                    <span class="era-spec">Letras condensadas</span>
-                    <span class="era-spec">Offset moderno</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dual Mode (Lado a Lado) -->
-          <div class="era-dual-grid">
-            <div class="dual-card c50">
-              <div class="tag-row"><span class="esm-badge">Anos 50</span><span class="pill" id="dualTag50">Rótulo original</span></div>
-              <div class="dual-art">
-                <button type="button" data-zoom id="dualZoom50" data-cap=""><img id="dualImg50" src="assets/clara-r50.webp" alt=""></button>
-              </div>
-              <div class="era-info">
-                <h3 id="dualTitle50">Cerveja Clara Chopp</h3>
-                <p id="dualDesc50">Cia. Cervejaria Clara, chopp em letra cursiva.</p>
-              </div>
-            </div>
-            <div class="dual-card c80">
-              <div class="tag-row"><span class="esm-badge">Anos 80</span><span class="pill" id="dualTag80">Evolução de época</span></div>
-              <div class="dual-art">
-                <button type="button" data-zoom id="dualZoom80" data-cap=""><img id="dualImg80" src="assets/clara-r80.webp" alt=""></button>
-              </div>
-              <div class="era-info">
-                <h3 id="dualTitle80">Pilsen Clara Chopp</h3>
-                <p id="dualDesc80">Pilsen Clara Chopp, letras condensadas.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5 Item Selector Strip -->
-        <div class="era-selector" role="tablist" aria-label="Selecione um par de marcas">
-          <button class="era-thumb-btn" type="button" role="tab" aria-selected="true" data-pair="0">
-            <span class="era-thumb-im"><img src="assets/clara-r50.webp" alt=""></span>
-            <span class="era-thumb-lbl">Clara · Rótulo</span>
-          </button>
-          <button class="era-thumb-btn" type="button" role="tab" aria-selected="false" data-pair="1">
-            <span class="era-thumb-im"><img src="assets/clara-c50.webp" alt=""></span>
-            <span class="era-thumb-lbl">Clara · Cartaz</span>
-          </button>
-          <button class="era-thumb-btn" type="button" role="tab" aria-selected="false" data-pair="2">
-            <span class="era-thumb-im"><img src="assets/refres-50.webp" alt=""></span>
-            <span class="era-thumb-lbl">Refres Frut</span>
-          </button>
-          <button class="era-thumb-btn" type="button" role="tab" aria-selected="false" data-pair="3">
-            <span class="era-thumb-im"><img src="assets/cig-50.webp" alt=""></span>
-            <span class="era-thumb-lbl">Cigarros Aurora</span>
-          </button>
-          <button class="era-thumb-btn" type="button" role="tab" aria-selected="false" data-pair="4">
-            <span class="era-thumb-im"><img src="assets/fosf-50.webp" alt=""></span>
-            <span class="era-thumb-lbl">Fósforos Maxlumi</span>
-          </button>
-        </div>
-
+  <!-- 01 · ERAS (SIGNATURE BAND) -->
+  <section id="epocas" class="pf-sec sm-band">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>01</b> · Épocas</p>
+        <h2>As mesmas marcas, trinta anos depois.</h2>
+        <p class="lede">A história vai e volta entre os anos 50 e os anos 80, e o bar aparece nas duas épocas. Algumas
+          marcas atravessam o tempo e mudam de cara: a Clara troca o chope em letra cursiva por uma pilsen de letras
+          condensadas, a Refres Frut ganha garrafa família de 2 litros, o cigarro Aurora e o fósforo Maxlumi também
+          acompanham essa evolução.</p>
       </div>
-      <figcaption><b>Evolução cenográfica de marcas e adereços entre os anos 50 e 80.</b> Artes finais reais de cena do filme. Alterne entre as placas de época ou visualize lado a lado. Toque na imagem para ampliar em alta definição.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- 02 · BRANDS -->
-<section id="marcas" class="pf-sec alt">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow"><b>02</b> · Marcas</p>
-      <h2>Marcas que nunca existiram, com cara de que sempre estiveram ali.</h2>
-      <p class="lede">As garrafas, latas, pacotes e maços do bar e da maloca levam marcas inventadas, cada uma com embalagem, slogan e endereço de fábrica de época. Os rótulos de cerveja saíram em 200 cópias para cada época, impressos em adesivo para as garrafas de 600 ml. Os nomes dos comércios da história passaram pelo jurídico da produção antes de ir para a gráfica.</p>
-    </div>
-    
-    <figure class="rv">
-      <div class="pf-stage st-balcao">
-        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Cenografia montada para as filmagens</span></div>
-        
-        <!-- Dois balcões cinematográficos -->
-        <div class="sh-grid">
-          <button class="sh-card" type="button" data-zoom data-cap="Secos e molhados · anos 50. Aguardente Belezura, cerveja Austral Chopp, banha de porco Didico, lata Clara Chopp, manteiga Mimozinha, bolachinhas Dona Aurea e doce de banana Mariola.">
-            <span class="im"><img src="assets/balcao-anos50.webp" width="1024" height="682" alt="Garrafa de aguardente Belezura, cerveja Austral Chopp, lata de banha Didico, lata de cerveja Clara Chopp, manteiga Mimozinha, bolachinhas Dona Aurea e doce Mariola sobre balcão de madeira" loading="lazy"></span>
-            <span class="sh-info">
-              <span class="k">Balcão e mercearia · anos 50</span>
-              <b>Belezura, Austral, Didico, Mimozinha, Dona Aurea e Mariola</b>
-              <span>Aguardente da Fazenda Engenho Seco, cerveja em garrafa e lata, banha de porco em lata, manteiga com sal, bolachas Lanchinho Premium e doce de banana para a carroça do Osório.</span>
-            </span>
-          </button>
-          <button class="sh-card" type="button" data-zoom data-cap="Balcão do bar · anos 80. Garrafa de 600 ml da cerveja pilsen Clara Chopp, garrafa e caixa do uísque Old Maltes e maços dos cigarros Mister Wald Luxe e Demar Extra Suave.">
-            <span class="im"><img src="assets/balcao-anos80.webp" width="1024" height="682" alt="Garrafa de cerveja Clara Chopp de 600 ml, garrafa e caixa de uísque Old Maltes e maços de cigarro Mister Wald Luxe e Demar Extra Suave sobre balcão de bar" loading="lazy"></span>
-            <span class="sh-info">
-              <span class="k">Balcão do bar · anos 80</span>
-              <b>Clara Chopp, Old Maltes, Mister Wald e Demar</b>
-              <span>Rótulo adesivo para as garrafas de 600 ml, garrafa e estojo do blended whisky Old Maltes (para o bar, a casa de Adoniran e a rádio) e maços montados em sulfite 120 g.</span>
-            </span>
-          </button>
+      <figure class="rv">
+        <div class="pf-stage ep-stage">
+          <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Cinco marcas nas duas épocas</span>
+          </div>
+          <div class="ep-head" aria-hidden="true">
+            <img src="assets/pl-anos50.webp" alt="">
+            <span class="ep-span">30 anos</span>
+            <img src="assets/pl-anos80.webp" alt="">
+          </div>
+          <ol class="ep-list">
+            <li class="ep-row" style="--h:clamp(110px,12.5vw,170px)">
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Cerveja Clara Chopp · anos 50. Cia. Cervejaria Clara, estrela clássica sobre fundo preto e chopp em letra cursiva com ramos de cevada. Adesivo para garrafa de 600 ml."><span
+                  class="ep-fr"><img src="assets/clara-r50.webp" alt="Cerveja Clara Chopp, anos 50"
+                    loading="lazy"></span><span class="ep-lbl"><b>Cerveja Clara Chopp</b>Adesivo para garrafa de 600
+                  ml</span></button>
+              <span class="ep-mid"><span class="ep-kind">Rótulo</span><svg class="ep-arrow" viewBox="0 0 64 12"
+                  aria-hidden="true">
+                  <path d="M0 6h58M52 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg></span>
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Pilsen Clara Chopp · anos 80. Oval verde com Clara Chopp em letras sem serifa condensadas. Adesivo para garrafa de 600 ml."><span
+                  class="ep-fr"><img src="assets/clara-r80.webp" alt="Pilsen Clara Chopp, anos 80"
+                    loading="lazy"></span><span class="ep-lbl"><b>Pilsen Clara Chopp</b>Adesivo para garrafa de 600
+                  ml</span></button>
+            </li>
+            <li class="ep-row">
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Cartaz da Clara Chopp · anos 50. Ilustração: boêmio de boina sorri com um copo de chope ao lado da garrafa. Cartaz A2 · ilustração."><span
+                  class="ep-fr"><img src="assets/clara-c50.webp" alt="Cartaz da Clara Chopp, anos 50"
+                    loading="lazy"></span><span class="ep-lbl"><b>Cartaz da Clara Chopp</b>Cartaz A2 ·
+                  ilustração</span></button>
+              <span class="ep-mid"><span class="ep-kind">Cartaz</span><svg class="ep-arrow" viewBox="0 0 64 12"
+                  aria-hidden="true">
+                  <path d="M0 6h58M52 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg></span>
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Cartaz da Clara Chopp · anos 80. Fotografia: copo de cerveja com espuma ao lado da lata vermelha Clara Chopp. Cartaz A2 · fotografia."><span
+                  class="ep-fr"><img src="assets/clara-c80.webp" alt="Cartaz da Clara Chopp, anos 80"
+                    loading="lazy"></span><span class="ep-lbl"><b>Cartaz da Clara Chopp</b>Cartaz A2 ·
+                  fotografia</span></button>
+            </li>
+            <li class="ep-row">
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Refres Frut · anos 50. Garrafa de vidro, mascote de tampinha e jabuticabas. Cartaz A2 · garrafa de vidro."><span
+                  class="ep-fr"><img src="assets/refres-50.webp" alt="Refres Frut, anos 50" loading="lazy"></span><span
+                  class="ep-lbl"><b>Refres Frut</b>Cartaz A2 · garrafa de vidro</span></button>
+              <span class="ep-mid"><span class="ep-kind">Cartaz</span><svg class="ep-arrow" viewBox="0 0 64 12"
+                  aria-hidden="true">
+                  <path d="M0 6h58M52 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg></span>
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Refres Frut Família 2 litros · anos 80. Foto de produto anunciando a garrafa família de 2 litros. Cartaz A2 · garrafa família."><span
+                  class="ep-fr"><img src="assets/refres-80.webp" alt="Refres Frut Família 2 litros, anos 80"
+                    loading="lazy"></span><span class="ep-lbl"><b>Refres Frut Família 2 litros</b>Cartaz A2 · garrafa
+                  família</span></button>
+            </li>
+            <li class="ep-row">
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Cigarros Aurora · anos 50. “Aurora, a sua companhia para toda hora!” Maço e cartaz · anos 50."><span
+                  class="ep-fr"><img src="assets/cig-50.webp" alt="Cigarros Aurora, anos 50" loading="lazy"></span><span
+                  class="ep-lbl"><b>Cigarros Aurora</b>Maço e cartaz · anos 50</span></button>
+              <span class="ep-mid"><span class="ep-kind">Cigarros</span><svg class="ep-arrow" viewBox="0 0 64 12"
+                  aria-hidden="true">
+                  <path d="M0 6h58M52 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg></span>
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Cigarros Aurora · anos 80. Maço Filtro de Luxo com listras quentes dos anos 80. Maço e cartaz · anos 80."><span
+                  class="ep-fr"><img src="assets/cig-80.webp" alt="Cigarros Aurora, anos 80" loading="lazy"></span><span
+                  class="ep-lbl"><b>Cigarros Aurora</b>Maço e cartaz · anos 80</span></button>
+            </li>
+            <li class="ep-row" style="--h:clamp(90px,10vw,130px)">
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Fósforos Maxlumi · anos 50. Rótulo amarelo-mostarda com letras pretas em arco. Rótulo de caixa."><span
+                  class="ep-fr"><img src="assets/fosf-50.webp" alt="Fósforos Maxlumi, anos 50"
+                    loading="lazy"></span><span class="ep-lbl"><b>Fósforos Maxlumi</b>Rótulo de caixa</span></button>
+              <span class="ep-mid"><span class="ep-kind">Fósforos</span><svg class="ep-arrow" viewBox="0 0 64 12"
+                  aria-hidden="true">
+                  <path d="M0 6h58M52 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg></span>
+              <button class="ep-art" type="button" data-zoom
+                data-cap="Fósforos Maxlumi · anos 80. Letras vermelhas com explosão amarela. Rótulo de caixa."><span
+                  class="ep-fr"><img src="assets/fosf-80.webp" alt="Fósforos Maxlumi, anos 80"
+                    loading="lazy"></span><span class="ep-lbl"><b>Fósforos Maxlumi</b>Rótulo de caixa</span></button>
+            </li>
+          </ol>
         </div>
+        <figcaption><b>As mesmas marcas nos anos 50 e nos anos 80.</b> Artes finais reais de cena do filme, lado a lado:
+          à esquerda a versão dos anos 50, à direita a dos anos 80. Toque numa peça para ampliar.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-        <!-- Prateleira interativa de rótulos avulsos -->
-        <div class="prat-showcase" id="prat" data-loop>
-          <div class="prat-head">
+  <!-- 02 · BRANDS -->
+  <section id="marcas" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>02</b> · Marcas</p>
+        <h2>Marcas que nunca existiram, com cara de que sempre estiveram ali.</h2>
+        <p class="lede">As garrafas, latas, pacotes e maços do bar e da maloca levam marcas inventadas, cada uma com
+          embalagem, slogan e endereço de fábrica de época. Os rótulos de cerveja saíram em 200 cópias para cada época,
+          impressos em adesivo para as garrafas de 600 ml. Os nomes dos comércios da história passaram pelo jurídico da
+          produção antes de ir para a gráfica.</p>
+      </div>
+
+      <figure class="rv">
+        <div class="pf-stage st-balcao mk-stage">
+          <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Cenografia montada para as
+              filmagens</span></div>
+
+          <!-- Dois balcões cinematográficos -->
+          <div class="sh-grid">
+            <button class="sh-card" type="button" data-zoom
+              data-cap="Secos e molhados · anos 50. Aguardente Belezura, cerveja Austral Chopp, banha de porco Didico, lata Clara Chopp, manteiga Mimozinha, bolachinhas Dona Aurea e doce de banana Mariola.">
+              <span class="im"><img src="assets/balcao-anos50.webp" width="1024" height="682"
+                  alt="Garrafa de aguardente Belezura, cerveja Austral Chopp, lata de banha Didico, lata de cerveja Clara Chopp, manteiga Mimozinha, bolachinhas Dona Aurea e doce Mariola sobre balcão de madeira"
+                  loading="lazy"><img class="sh-plate" src="assets/pl-anos50.webp" alt=""></span>
+              <span class="sh-info">
+                <span class="k">Balcão e mercearia · anos 50</span>
+                <b>Belezura, Austral, Didico, Mimozinha, Dona Aurea e Mariola</b>
+                <span>Aguardente da Fazenda Engenho Seco, cerveja em garrafa e lata, banha de porco em lata, manteiga
+                  com sal, bolachas Lanchinho Premium e doce de banana para a carroça do Osório.</span>
+              </span>
+            </button>
+            <button class="sh-card" type="button" data-zoom
+              data-cap="Balcão do bar · anos 80. Garrafa de 600 ml da cerveja pilsen Clara Chopp, garrafa e caixa do uísque Old Maltes e maços dos cigarros Mister Wald Luxo e Aurora Filtro de Luxo.">
+              <span class="im"><img src="assets/balcao-anos80.webp" width="1024" height="682"
+                  alt="Garrafa de cerveja Clara Chopp de 600 ml, garrafa e caixa de uísque Old Maltes e maços de cigarro Mister Wald Luxo e Aurora Filtro de Luxo sobre balcão de bar"
+                  loading="lazy"><img class="sh-plate" src="assets/pl-anos80.webp" alt=""></span>
+              <span class="sh-info">
+                <span class="k">Balcão do bar · anos 80</span>
+                <b>Clara Chopp, Old Maltes, Mister Wald e Aurora</b>
+                <span>Rótulo adesivo para as garrafas de 600 ml, garrafa e estojo do blended whisky Old Maltes (para o
+                  bar, a casa de Adoniran e a rádio) e maços montados em sulfite 120 g.</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="prat" aria-label="Prateleira do boteco com 13 rótulos inventados">
+            <div class="prat-top"><span class="prat-t">A prateleira do boteco</span><span class="prat-s">13 rótulos
+                inventados · toque para ampliar</span></div>
+            <div class="prat-row" style="--ph:clamp(70px,10vw,130px)">
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Aguardente Belezura · anos 50. Aguardente da Fazenda Engenho Seco, letras em arco."><img
+                  src="assets/m-belezura.webp" alt="Aguardente Belezura" loading="lazy"><span class="prat-tag"
+                  style="--t:-3deg">Belezura<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Aguardente Cana Caí · anos 50. “Puríssima aguardente de cana”, camponês ilustrado com enxada."><img
+                  src="assets/m-canacai.webp" alt="Aguardente Cana Caí" loading="lazy"><span class="prat-tag"
+                  style="--t:2deg">Cana Caí<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Aguardente Canna Carminha · anos 50. Rótulo de aguardente com tipografia serifada robusta."><img
+                  src="assets/m-carminha.webp" alt="Aguardente Canna Carminha" loading="lazy"><span class="prat-tag"
+                  style="--t:-1.5deg">Carminha<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Cerveja Austral Chopp · anos 50. Rótulo de cerveja do armazém dos anos 50."><img
+                  src="assets/m-austral.webp" alt="Cerveja Austral Chopp" loading="lazy"><span class="prat-tag"
+                  style="--t:3deg">Austral<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Blended whisky Old Maltes · anos 80. Rótulo e estojo para o bar, a casa de Adoniran e a rádio."><img
+                  src="assets/m-whisky.webp" alt="Blended whisky Old Maltes" loading="lazy"><span class="prat-tag"
+                  style="--t:-2deg">Old Maltes<small>anos 80</small></span></button>
+            </div>
+            <div class="prat-row" style="--ph:clamp(40px,6vw,74px)">
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Banha de porco Didico · anos 50. Rótulo de lata com porco ilustrado de colete e gravata borboleta."><img
+                  src="assets/m-banha.webp" alt="Banha de porco Didico" loading="lazy"><span class="prat-tag"
+                  style="--t:-3deg">Didico<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Gordura de coco · anos 50. Cinta de embalagem verde-água com coqueiro."><img
+                  src="assets/m-coco.webp" alt="Gordura de coco" loading="lazy"><span class="prat-tag"
+                  style="--t:2deg">Gordura de coco<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Doce de banana Mariola · anos 50. Caixa do doce de banana para a carroça do Osório."><img
+                  src="assets/m-mariola.webp" alt="Doce de banana Mariola" loading="lazy"><span class="prat-tag"
+                  style="--t:-1.5deg">Mariola<small>anos 50</small></span></button>
+            </div>
+            <div class="prat-row" style="--ph:clamp(34px,4.8vw,60px)">
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Manteiga Mimozinha · anos 50. Manteiga com sal, vaquinha e padrão xadrez vermelho."><img
+                  src="assets/m-manteiga.webp" alt="Manteiga Mimozinha" loading="lazy"><span class="prat-tag"
+                  style="--t:3deg">Mimozinha<small>anos 50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Bolachinhas Dona Aurea · anos 50. Lata das bolachinhas Lanchinho Premium."><img
+                  src="assets/m-bolacha.webp" alt="Bolachinhas Dona Aurea" loading="lazy"><span class="prat-tag"
+                  style="--t:-2deg">Dona Aurea<small>anos 50</small></span></button>
+            </div>
+            <div class="prat-row" style="--ph:clamp(52px,7.4vw,96px)">
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Cigarros Aurora · anos 50. Maço dos cigarros Aurora."><img src="assets/m-aurora.webp"
+                  alt="Cigarros Aurora" loading="lazy"><span class="prat-tag" style="--t:-3deg">Aurora<small>anos
+                    50</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Cigarros Aurora Filtro de Luxo · anos 80. Maço planificado dos cigarros Aurora para os anos 80."><img
+                  src="assets/m-demar.webp" alt="Cigarros Aurora Filtro de Luxo, anos 80" loading="lazy"><span
+                  class="prat-tag" style="--t:2deg">Aurora<small>anos 80</small></span></button>
+              <button class="prat-it" type="button" data-zoom
+                data-cap="Cigarro Mister Wald Luxe · anos 80. Maço azul-marinho com detalhes dourados."><img
+                  src="assets/m-wald.webp" alt="Cigarro Mister Wald Luxe" loading="lazy"><span class="prat-tag"
+                  style="--t:-1.5deg">Mister Wald<small>anos 80</small></span></button>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Rótulos, latas, pacotes e maços aplicados.</b> Embalagens de cena do armazém de secos e molhados
+          dos anos 50 e do balcão do bar nos anos 80. Toque numa imagem para ampliar.</figcaption>
+      </figure>
+
+      <div class="callout rv"><b>Nomes aprovados.</b> A lista de arte trazia opções de nome para cada comércio, enviadas
+        ao jurídico. Foram aprovados Madame Norita, para a loja de roupas, Café Paulistano, para a lanchonete, e Rádio
+        Cruzeiro do Sul, para a rádio.</div>
+    </div>
+  </section>
+
+  <!-- 03 · REAL ESTATE -->
+  <section id="especulacao" class="pf-sec">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>03</b> · Especulação</p>
+        <h2>A especulação imobiliária chega pelas paredes antes de chegar à maloca.</h2>
+        <p class="lede">A demolição da maloca fecha a história. Antes dela, a cidade já anuncia o que vem: lambes de
+          lançamentos nas ruas, outdoor no contraplano do bar, a planta do prédio, o contrato de compra e venda e a
+          ordem de despejo. Quase tudo assinado pela mesma construtora inventada, a Pereira &amp; Luccini, que também
+          anuncia nos jornais de época.</p>
+      </div>
+
+      <figure class="rv">
+        <div class="pf-stage st-muro sp-stage">
+          <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Documentos-chave da trama &amp;
+              campanhas de rua</span></div>
+
+          <div class="sp-boards">
+            <button class="sp-board" type="button" data-zoom
+              data-cap="Outdoor Pereira &amp; Luccini, 3 × 1,5 m, anos 50."><span class="sp-bf"><img
+                  src="assets/e-outdoor50.webp"
+                  alt="Outdoor creme da construtora Pereira &amp; Luccini com prédio ilustrado: “Últimos apartamentos!”"
+                  loading="lazy"></span><span class="sp-legs" aria-hidden="true"></span><span class="sp-lbl"><b>Outdoor
+                  Pereira &amp; Luccini</b> <i>· 3 × 1,5 m, anos 50</i></span></button>
+            <button class="sp-board" type="button" data-zoom
+              data-cap="Outdoor Edifício Mister, 3 × 1,5 m, anos 80."><span class="sp-bf"><img
+                  src="assets/e-outdoor80.webp"
+                  alt="Outdoor do Edifício Mister, uma obra de arte, com prédio desenhado e planta baixa"
+                  loading="lazy"></span><span class="sp-legs" aria-hidden="true"></span><span class="sp-lbl"><b>Outdoor
+                  Edifício Mister</b> <i>· 3 × 1,5 m, anos 80</i></span></button>
+          </div>
+
+          <div class="sp-wall">
+            <button class="sp-lambe" type="button" data-zoom data-cap="Últimos apartamentos, lambe, anos 50."><span
+                class="sp-paper" style="--r:-1.5deg"><span><img src="assets/e-cartaz2.webp"
+                    alt="Lambe em preto e branco: “Últimos apartamentos! Numa localização que vale ouro”, com prédio ilustrado e o slogan Lar próprio"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Últimos apartamentos</b> <i>· lambe, anos
+                  50</i></span></button>
+            <button class="sp-lambe" type="button" data-zoom
+              data-cap="Isto sim é negócio, lambe da Pereira &amp; Luccini."><span class="sp-paper"
+                style="--r:1.2deg"><span><img src="assets/e-cartaz4.webp"
+                    alt="Lambe “Isto sim é negócio”: prédio, balança com o slogan Sem despesa e ilustração de família feliz"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Isto sim é negócio</b> <i>· lambe da Pereira
+                  &amp; Luccini</i></span></button>
+            <button class="sp-lambe" type="button" data-zoom
+              data-cap="Condomínio Luzes Paulistanas, lambe da Pereira &amp; Luccini."><span class="sp-paper"
+                style="--r:-.6deg"><span><img src="assets/e-cartaz3.webp"
+                    alt="Lambe “Gêmeos: em localização, conforto, preço, sucesso”, segundo lançamento da Pereira &amp; Luccini, com desenho de prédio"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Condomínio Luzes Paulistanas</b> <i>· lambe da
+                  Pereira &amp; Luccini</i></span></button>
+            <button class="sp-lambe" type="button" data-zoom
+              data-cap="Reserve uma das casas, lambe da Construtora P&amp;T."><span class="sp-paper"
+                style="--r:1.8deg"><span><img src="assets/e-cartaz1.webp"
+                    alt="Lambe da Construtora P&amp;T: “Reserve em um destes bairros uma das casas que estamos construindo”, com sobrado ilustrado"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Reserve uma das casas</b> <i>· lambe da
+                  Construtora P&amp;T</i></span></button>
+            <button class="sp-lambe" type="button" data-zoom
+              data-cap="Abrace o futuro!, lambe da Construtora P&amp;T."><span class="sp-paper"
+                style="--r:-1.2deg"><span><img src="assets/e-cartaz5.webp"
+                    alt="Lambe “Abrace o futuro! São Paulo, a cidade que mais cresce no mundo”, com prédio e mapa do bairro"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Abrace o futuro!</b> <i>· lambe da Construtora
+                  P&amp;T</i></span></button>
+            <button class="sp-lambe" type="button" data-zoom data-cap="Edifício Mister, cartaz, anos 80."><span
+                class="sp-paper" style="--r:.9deg"><span><img src="assets/e-mister80.webp"
+                    alt="Cartaz dos anos 80 do Edifício Mister: “Garanta logo o seu apartamento”, com prédio e planta do apartamento"
+                    loading="lazy"></span></span><span class="sp-lbl"><b>Edifício Mister</b> <i>· cartaz, anos
+                  80</i></span></button>
+          </div>
+
+          <div class="sp-desk">
+            <div class="sp-desk-t"><b>A papelada da construtora</b><span>planta, anúncio, contrato e despejo</span>
+            </div>
+            <button class="sp-doc sp-planta" type="button" style="--r:-1deg" data-zoom
+              data-cap="Planta arquitetônica do prédio alto em papel jornal A1 com carimbo da construtora Pereira &amp; Luccini, cena 20."><img
+                src="assets/e-planta.webp"
+                alt="Planta arquitetônica com elevação de um prédio alto e plantas baixas, carimbo da Pereira &amp; Luccini"
+                loading="lazy"><span class="sp-tag">Planta do edifício <i>· papel jornal A1 · cena
+                  20</i></span></button>
+            <button class="sp-doc sp-despejo sp-clip" type="button" style="--r:2.2deg" data-zoom
+              data-cap="Ordem de despejo da maloca, papel timbrado com brasão da Prefeitura de São Paulo, A4, cenas 31 e 45."><img
+                src="assets/e-despejo.webp"
+                alt="Notificação extrajudicial para desocupação de imóvel, com brasão da Prefeitura de São Paulo"
+                loading="lazy"><span class="sp-tag">Ordem de despejo <i>· A4 · cenas 31 e 45</i></span></button>
+            <button class="sp-doc sp-jornal" type="button" style="--r:.8deg" data-zoom
+              data-cap="Anúncio no jornal, Expectador, anos 50."><img src="assets/e-jornal3.webp"
+                alt="Página dupla do jornal Expectador com o anúncio Isto sim é negócio, da Pereira &amp; Luccini"
+                loading="lazy"><span class="sp-tag">Anúncio no jornal Expectador <i>· anos 50</i></span></button>
+            <button class="sp-doc sp-contrato sp-clip" type="button" style="--r:-2deg" data-zoom
+              data-cap="Contrato de compra e venda, Pereira &amp; Luccini, A4."><img src="assets/e-contrato.webp"
+                alt="Primeira página de contrato de compra e venda de imóvel com o cabeçalho da Pereira &amp; Luccini"
+                loading="lazy"><span class="sp-tag">Contrato de compra e venda <i>· A4</i></span></button>
+          </div>
+        </div>
+        <figcaption><b>Peças da especulação imobiliária.</b> Artes finais reais. Lambes em papel lambe-lambe, de A4 a
+          A2; outdoors em lona; planta em papel jornal A1; ordem de despejo em papel timbrado.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 04 · SETS -->
+  <section id="sets" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>04</b> · Sets</p>
+        <h2>Cerca de 60 peças, set por set, cena por cena.</h2>
+        <p class="lede">A arte gráfica partiu de uma lista com o set, a cena, a quantidade, o tamanho e o material de
+          cada peça, impressa em quatro levas. Cada set tem o seu repertório: o bar Bleque Tais nas duas épocas, a
+          rádio, as ruas e a papelada que passa pela mão dos personagens.</p>
+      </div>
+
+      <figure class="rv">
+        <div class="pf-stage st-sets" id="st">
+          <span class="st-plate">Ruas de São Paulo</span>
+
+          <div class="gal">
+            <div class="sg-plates gal-wide">
+              <div class="sg-head"><b>Placas de esquina de época</b><span>57 × 30 cm, aplicadas em postes e esquinas do
+                  set</span></div>
+              <div class="sg-grid">
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua Barão de Itapetininga, 57 × 30 cm."><img
+                    src="assets/rua-barao.webp" alt="Placa de rua esmaltada azul: Barão de Itapetininga"
+                    loading="lazy"><span>Barão de Itapetininga</span></button>
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua Conselheiro Carrão, 57 × 30 cm."><img
+                    src="assets/rua-carrao.webp" alt="Placa de rua esmaltada azul: Conselheiro Carrão"
+                    loading="lazy"><span>Conselheiro Carrão</span></button>
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua Dom José de Barros, 57 × 30 cm."><img
+                    src="assets/rua-domjose.webp" alt="Placa de rua esmaltada azul: Dom José de Barros"
+                    loading="lazy"><span>Dom José de Barros</span></button>
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua São João, 57 × 30 cm."><img src="assets/rua-saojoao.webp"
+                    alt="Placa de rua esmaltada azul: São João" loading="lazy"><span>São João</span></button>
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua Dos Timbiras, 57 × 30 cm."><img
+                    src="assets/rua-timbiras.webp" alt="Placa de rua esmaltada azul: Dos Timbiras"
+                    loading="lazy"><span>Dos Timbiras</span></button>
+                <button class="sg-it" type="button" data-zoom
+                  data-cap="Placa de esquina esmaltada: Rua Aurora, 57 × 30 cm."><img src="assets/rua-nomes.webp"
+                    alt="Placa de rua esmaltada azul: Aurora" loading="lazy"><span>Aurora</span></button>
+              </div>
+            </div>
+
+            <button class="pc" type="button" data-zoom
+              data-cap="Contra-mão. Placa de 60 × 60 cm · PS adesivado sobre as placas existentes."><span
+                class="im"><img src="assets/s-transito1.webp" alt="Placa vermelha Contra-mão"
+                  loading="lazy"></span><span><b>Contra-mão</b><small>Placa de 60 × 60 cm · PS
+                  adesivado</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Proibido estacionar. Placa de 60 × 60 cm."><span
+                class="im"><img src="assets/s-transito2.webp" alt="Placa vermelha com a letra P cortada"
+                  loading="lazy"></span><span><b>Proibido estacionar</b><small>Placa de 60 × 60
+                  cm</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Vire à direita. Placa de 60 × 60 cm."><span
+                class="im"><img src="assets/s-transito3.webp"
+                  alt="Placa redonda com triângulo amarelo e seta para a direita" loading="lazy"></span><span><b>Vire à
+                  direita</b><small>Placa de 60 × 60 cm</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Automóveis. Placa de 60 × 60 cm."><span class="im"><img
+                  src="assets/s-transito5.webp" alt="Placa redonda com a silhueta de um carro antigo"
+                  loading="lazy"></span><span><b>Automóveis</b><small>Placa de 60 × 60 cm</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Parada do bonde. Placa vertical · cena 35."><span
+                class="im"><img src="assets/s-bonde.webp" alt="Placa vertical Parada do bonde com desenho de bonde"
+                  loading="lazy"></span><span><b>Parada do bonde</b><small>Placa vertical · cena
+                  35</small></span></button>
+            <button class="pc" type="button" data-zoom
+              data-cap="Destino do bonde. 84 × 14 cm, frente e verso · cena 35."><span class="im"><img
+                  src="assets/s-bondebraz.webp" alt="Letreiro preto Bráz – Mooca" loading="lazy"></span><span><b>Destino
+                  do bonde</b><small>84 × 14 cm, frente e verso</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Placa de carro. 34 × 19 cm."><span class="im"><img
+                  src="assets/s-carro.png" alt="Placa de carro laranja desbotada SP-7 7-88-76-19"
+                  loading="lazy"></span><span><b>Placa de carro</b><small>34 × 19 cm · época anos
+                  50</small></span></button>
+            <button class="pc" type="button" data-zoom data-cap="Madame Norita. Lambe dos anos 50."><span
+                class="im"><img src="assets/s-norita.webp" alt="Anúncio da loja Madame Norita com mulher de lingerie"
+                  loading="lazy"></span><span><b>Madame Norita</b><small>Lambe dos anos 50</small></span></button>
+            <button class="pc" type="button" data-zoom
+              data-cap="Placa da loja Madame Norita. 85 × 39 cm · cenas 83 a 85."><span class="im"><img
+                  src="assets/s-placanorita.webp" alt="Logotipo Madame Norita com N alto e serifado"
+                  loading="lazy"></span><span><b>Placa da loja Madame Norita</b><small>85 × 39 cm · cenas 83 a
+                  85</small></span></button>
+            <button class="pc w2" type="button" data-zoom data-cap="Outdoor da banca. 2 × 1,2 m em lona."><span
+                class="im"><img src="assets/s-alfaiataria.webp"
+                  alt="Outdoor Almeida Alfaiataria, orçamento na hora, com alfaiate ilustrado"
+                  loading="lazy"></span><span><b>Outdoor da banca</b><small>2 × 1,2 m em lona</small></span></button>
+            <button class="pc w2" type="button" data-zoom
+              data-cap="Visão Paulistana. Jornal de época · 56 × 43 cm em papel jornal."><span class="im"><img
+                  src="assets/s-jornal1.webp"
+                  alt="Página dupla do jornal Visão Paulistana com notícias e anúncios de época"
+                  loading="lazy"></span><span><b>Visão Paulistana</b><small>Jornal de época · 56 × 43 cm em papel
+                  jornal</small></span></button>
+            <button class="pc w2" type="button" data-zoom
+              data-cap="Olho da Cidade. Jornal de época · 6 capas e 2 miolos no total."><span class="im"><img
+                  src="assets/s-jornal4.webp" alt="Página dupla do jornal Olho da Cidade com foto de casamento"
+                  loading="lazy"></span><span><b>Olho da Cidade</b><small>Jornal de época · 6 capas e 2 miolos no
+                  total</small></span></button>
+            <button class="pc w2" type="button" data-zoom
+              data-cap="Sampa Hoje. Jornal de época · anúncio da Pereira &amp; Luccini."><span class="im"><img
+                  src="assets/s-jornal6.webp"
+                  alt="Página dupla do jornal Sampa Hoje com anúncio da construtora Pereira &amp; Luccini"
+                  loading="lazy"></span><span><b>Sampa Hoje</b><small>Jornal de época · anúncio da Pereira &amp;
+                  Luccini</small></span></button>
+            <button class="pc" type="button" data-zoom
+              data-cap="Panfleto do show de Adoniran. Papel jornal · cena 75."><span class="im"><img
+                  src="assets/s-panfleto.webp"
+                  alt="Panfleto: Bleque Tais, Adoniran Barbosa em apresentação, o autor de Saudosa Maloca e expoente do rádio canta seus sucessos no Bexiga"
+                  loading="lazy"></span><span><b>Panfleto do show de Adoniran</b><small>Papel jornal · cena
+                  75</small></span></button>
+            <button class="pc wf" type="button" data-zoom
+              data-cap="Outdoor da banca. 5,8 × 1,2 m em lona · cenas 83 a 85."><span class="im"><img
+                  src="assets/s-popsdente.webp" alt="Outdoor do creme dental Pops-dente: deixa um sorriso lindo"
+                  loading="lazy"></span><span><b>Outdoor da banca</b><small>5,8 × 1,2 m em lona · cenas 83 a
+                  85</small></span></button>
+          </div>
+
+        </div>
+        <figcaption><b>Ruas e papéis de cena.</b> Artes finais reais, usadas no filme. Ficaram de fora as fotos de
+          cantores e os recortes de jornal sobre Adoniran, que são reproduções de material de acervo.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- DIALOG LIGHTBOX -->
+  <dialog class="lb" id="lb" aria-label="Peça ampliada">
+    <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
+    <div class="lb-in"><img id="lbImg" src="" alt="">
+      <div class="lb-cap" id="lbCap"></div>
+    </div>
+  </dialog>
+
+  <!-- VISUAL SYSTEM -->
+  <section id="sistema" class="pf-sec">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow">Sistema visual</p>
+        <h2>Duas épocas, duas paletas.</h2>
+        <p class="lede">Os anos 50 são papel creme, ilustração e poucas cores de impressão: vermelho, verde, azul e
+          mostarda. Os anos 80 trocam a ilustração por fotografia e apostam em letras condensadas, preto, petróleo e
+          amarelo.</p>
+      </div>
+      <div class="sys">
+        <div class="pf-card rv"><span class="tag">Paleta</span>
+          <div class="pal"><span>Anos 50</span>
+            <div class="sw6">
+              <i class="dk" style="background:#F0EBD8">#F0EBD8</i><i style="background:#B85848">#B85848</i><i
+                style="background:#208078">#208078</i>
+              <i style="background:#385078">#385078</i><i class="dk" style="background:#E0A040">#E0A040</i><i
+                style="background:#784828">#784828</i>
+            </div>
+          </div>
+          <div class="pal"><span>Anos 80</span>
+            <div class="sw6">
+              <i style="background:#101818">#101818</i><i style="background:#508898">#508898</i><i class="dk"
+                style="background:#F0B850">#F0B850</i>
+              <i style="background:#581818">#581818</i><i class="dk" style="background:#F8E8B8">#F8E8B8</i><i
+                style="background:#187870">#187870</i>
+            </div>
+          </div>
+          <p class="sys-n">Cores tiradas das artes finais: Aurora, Clara, Wald, Dona Aurea e Carminha nos anos 50;
+            Clara, Refres Frut e Aurora nos anos 80.</p>
+        </div>
+        <div class="pf-card rv type-s"><span class="tag">Tipografia</span>
+          <dl>
             <div>
-              <h3>A prateleira do boteco: 13 rótulos inventados</h3>
-              <p>Explore cada embalagem gráfica desenvolvida para os armazéns e mesas do longa.</p>
+              <dt>Bogart, Retromark Script</dt>
+              <dd>cerveja</dd>
             </div>
-            <div class="tag-row"><span class="pill y">Toque para inspecionar</span></div>
-          </div>
-
-          <!-- Spotlight do rótulo ativo -->
-          <div class="prat-spotlight">
-            <div class="prat-im-frame">
-              <button type="button" data-zoom id="pratZoom" data-cap=""><img id="pratImg" src="assets/m-belezura.webp" alt="Rótulo da Aguardente Belezura"></button>
+            <div>
+              <dt>Capuche, KG Neatly Printed</dt>
+              <dd>cachaça</dd>
             </div>
-            <div class="prat-details">
-              <div class="tag-line">
-                <span class="esm-badge" id="pratEra">Anos 50</span>
-                <span class="pill" id="pratCat">Aguardente · Rótulo</span>
-              </div>
-              <h4 id="pratTitle">Aguardente Belezura</h4>
-              <p id="pratDesc">Aguardente da Fazenda Engenho Seco. Letras ornamentadas em arco com acabamento tradicional de alambique do interior paulista.</p>
-              <dl class="prat-meta">
-                <div><dt>Suporte</dt><dd id="pratMat">Adesivo fosco para garrafa</dd></div>
-                <div><dt>Onde aparece</dt><dd id="pratCena">Armazém de Secos &amp; Molhados</dd></div>
-              </dl>
+            <div>
+              <dt>DK Majolica</dt>
+              <dd>cigarro</dd>
             </div>
-          </div>
-
-          <!-- Tira de miniaturas -->
-          <div class="prat-shelf" role="tablist" aria-label="Rótulos do balcão">
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="true" data-idx="0"><img src="assets/m-belezura.webp" alt=""><span>Belezura</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="1"><img src="assets/m-austral.webp" alt=""><span>Austral</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="2"><img src="assets/m-canacai.webp" alt=""><span>Cana Caí</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="3"><img src="assets/m-carminha.webp" alt=""><span>Carminha</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="4"><img src="assets/m-banha.webp" alt=""><span>Banha Didico</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="5"><img src="assets/m-manteiga.webp" alt=""><span>Mimozinha</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="6"><img src="assets/m-bolacha.webp" alt=""><span>Dona Aurea</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="7"><img src="assets/m-mariola.webp" alt=""><span>Mariola</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="8"><img src="assets/m-coco.webp" alt=""><span>Gordura Coco</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="9"><img src="assets/m-aurora.webp" alt=""><span>Cig. Aurora</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="10"><img src="assets/m-whisky.webp" alt=""><span>Old Maltes</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="11"><img src="assets/m-demar.webp" alt=""><span>Cig. Demar</span></button>
-            <button class="prat-item-btn" type="button" role="tab" aria-selected="false" data-idx="12"><img src="assets/m-wald.webp" alt=""><span>Mister Wald</span></button>
-          </div>
+            <div>
+              <dt>Retrolight</dt>
+              <dd>rádio</dd>
+            </div>
+            <div>
+              <dt>Studio Brush</dt>
+              <dd>fachada dos anos 50</dd>
+            </div>
+            <div>
+              <dt>Ananda, Sarcaland Brusher</dt>
+              <dd>letras cursivas</dd>
+            </div>
+          </dl>
+          <p class="sys-n">Famílias separadas na pasta de desenvolvimento, por tipo de peça.</p>
         </div>
-
-      </div>
-      <figcaption><b>Rótulos, latas, pacotes e maços aplicados.</b> Embalagens de cena do armazém de secos e molhados dos anos 50 e do balcão do bar nos anos 80. Toque numa imagem para ampliar.</figcaption>
-    </figure>
-    
-    <div class="callout rv"><b>Nomes aprovados.</b> A lista de arte trazia opções de nome para cada comércio, enviadas ao jurídico. Foram aprovados Madame Norita, para a loja de roupas, Café Paulistano, para a lanchonete, e Rádio Cruzeiro do Sul, para a rádio.</div>
-  </div>
-</section>
-
-<!-- 03 · REAL ESTATE -->
-<section id="especulacao" class="pf-sec">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow"><b>03</b> · Especulação</p>
-      <h2>A especulação imobiliária chega pelas paredes antes de chegar à maloca.</h2>
-      <p class="lede">A demolição da maloca fecha a história. Antes dela, a cidade já anuncia o que vem: lambes de lançamentos nas ruas, outdoor no contraplano do bar, a planta do prédio, o contrato de compra e venda e a ordem de despejo. Quase tudo assinado pela mesma construtora inventada, a Pereira &amp; Luccini, que também anuncia nos jornais de época.</p>
-    </div>
-    
-    <figure class="rv">
-      <div class="pf-stage st-muro">
-        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">Documentos-chave da trama &amp; campanhas de rua</span></div>
-        
-        <!-- Documentos centrais da história em destaque -->
-        <div class="mu-spotlight-row">
-          <div class="mu-card-key">
-            <span class="esm-badge">Documento Oficial · Cenas 31 e 45</span>
-            <div class="im">
-              <button type="button" data-zoom data-cap="Ordem de despejo da maloca, papel timbrado com brasão da Prefeitura de São Paulo, A4, cenas 31 e 45.">
-                <img src="assets/e-despejo.webp" alt="Notificação extrajudicial para desocupação de imóvel, com brasão da Prefeitura de São Paulo" loading="lazy">
-              </button>
-            </div>
-            <b>Ordem de Despejo da Maloca</b>
-            <p>Notificação extrajudicial da Prefeitura Municipal de São Paulo, em papel timbrado oficial de época com brasão republicano. O documento que sela o destino dos três amigos.</p>
-          </div>
-          <div class="mu-card-key">
-            <span class="esm-badge">Pereira &amp; Luccini · Cena 20</span>
-            <div class="im">
-              <button type="button" data-zoom data-cap="Planta arquitetônica do prédio alto em papel jornal A1 com carimbo da construtora Pereira &amp; Luccini, cena 20.">
-                <img src="assets/e-planta.webp" alt="Planta arquitetônica com elevação de um prédio alto e plantas baixas, carimbo da Pereira &amp; Luccini" loading="lazy">
-              </button>
-            </div>
-            <b>Planta do Edifício Pereira &amp; Luccini</b>
-            <p>Papel jornal A1 com elevação frontal e plantas baixas dos apartamentos. O projeto moderno de concreto armado que substitui o casarão colonial.</p>
-          </div>
+        <div class="pf-card rv"><span class="tag">Pesquisa</span>
+          <div class="chips"><span>Anúncios</span><span>Cartazes de filme e
+              show</span><span>Embalagens</span><span>Cigarros e
+              fósforos</span><span>Jornais</span><span>Outdoors</span><span>Panfletos</span><span>Rádio</span><span>Lançamentos
+              imobiliários</span><span>Moda dos anos 50</span><span>Anos 80</span><span>Azulejo hidráulico</span></div>
+          <p class="sys-n">As referências foram organizadas em pastas por tipo de peça antes do desenho.</p>
         </div>
-
-        <!-- Muro de lambes com rotação e textura de cartaz colado -->
-        <div class="mu">
-          <button class="mu-it" type="button" style="--r:-1.5deg" data-zoom data-cap="Últimos apartamentos, lambe, anos 50."><img src="assets/e-cartaz2.webp" alt="Lambe em preto e branco: “Últimos apartamentos! Numa localização que vale ouro”, com prédio ilustrado e o slogan Lar próprio" loading="lazy"><span>Últimos apartamentos <i>· lambe, anos 50</i></span></button>
-          <button class="mu-it" type="button" style="--r:1deg" data-zoom data-cap="Outdoor Pereira &amp; Luccini, 3 × 1,5 m, anos 50."><img src="assets/e-outdoor50.webp" alt="Outdoor creme da construtora Pereira &amp; Luccini com prédio ilustrado: “Últimos apartamentos!”" loading="lazy"><span>Outdoor Pereira &amp; Luccini <i>· 3 × 1,5 m, anos 50</i></span></button>
-          <button class="mu-it" type="button" style="--r:1.5deg" data-zoom data-cap="Condomínio Luzes Paulistanas, lambe da Pereira &amp; Luccini."><img src="assets/e-cartaz3.webp" alt="Lambe “Gêmeos: em localização, conforto, preço, sucesso”, segundo lançamento da Pereira &amp; Luccini, com desenho de prédio" loading="lazy"><span>Condomínio Luzes Paulistanas <i>· lambe da Pereira &amp; Luccini</i></span></button>
-          <button class="mu-it" type="button" style="--r:-2deg" data-zoom data-cap="Isto sim é negócio, lambe da Pereira &amp; Luccini."><img src="assets/e-cartaz4.webp" alt="Lambe “Isto sim é negócio”: prédio, balança com o slogan Sem despesa e ilustração de família feliz" loading="lazy"><span>Isto sim é negócio <i>· lambe da Pereira &amp; Luccini</i></span></button>
-          <button class="mu-it" type="button" style="--r:1.5deg" data-zoom data-cap="Contrato de compra e venda, Pereira &amp; Luccini, A4."><img src="assets/e-contrato.webp" alt="Primeira página de contrato de compra e venda de imóvel com o cabeçalho da Pereira &amp; Luccini" loading="lazy"><span>Contrato de compra e venda <i>· Pereira &amp; Luccini, A4</i></span></button>
-          <button class="mu-it" type="button" style="--r:1deg" data-zoom data-cap="Reserve uma das casas, lambe da Construtora P&amp;T."><img src="assets/e-cartaz1.webp" alt="Lambe da Construtora P&amp;T: “Reserve em um destes bairros uma das casas que estamos construindo”, com sobrado ilustrado" loading="lazy"><span>Reserve uma das casas <i>· lambe da Construtora P&amp;T</i></span></button>
-          <button class="mu-it" type="button" style="--r:-1deg" data-zoom data-cap="Anúncio no jornal, Expectador, anos 50."><img src="assets/e-jornal3.webp" alt="Página dupla do jornal Expectador com o anúncio Isto sim é negócio, da Pereira &amp; Luccini" loading="lazy"><span>Anúncio no jornal <i>· Expectador, anos 50</i></span></button>
-          <button class="mu-it" type="button" style="--r:-1.5deg" data-zoom data-cap="Abrace o futuro!, lambe da Construtora P&amp;T."><img src="assets/e-cartaz5.webp" alt="Lambe “Abrace o futuro! São Paulo, a cidade que mais cresce no mundo”, com prédio e mapa do bairro" loading="lazy"><span>Abrace o futuro! <i>· lambe da Construtora P&amp;T</i></span></button>
-          <button class="mu-it" type="button" style="--r:1deg" data-zoom data-cap="Edifício Mister, cartaz, anos 80."><img src="assets/e-mister80.webp" alt="Cartaz dos anos 80 do Edifício Mister: “Garanta logo o seu apartamento”, com prédio e planta do apartamento" loading="lazy"><span>Edifício Mister <i>· cartaz, anos 80</i></span></button>
-          <button class="mu-it" type="button" style="--r:-1deg" data-zoom data-cap="Outdoor Edifício Mister, 3 × 1,5 m, anos 80."><img src="assets/e-outdoor80.webp" alt="Outdoor do Edifício Mister, uma obra de arte, com prédio desenhado e planta baixa" loading="lazy"><span>Outdoor Edifício Mister <i>· 3 × 1,5 m, anos 80</i></span></button>
-        </div>
-      </div>
-      <figcaption><b>Peças da especulação imobiliária.</b> Artes finais reais. Lambes em papel lambe-lambe, de A4 a A2; outdoors em lona; planta em papel jornal A1; ordem de despejo em papel timbrado.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- 04 · SETS -->
-<section id="sets" class="pf-sec alt">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow"><b>04</b> · Sets</p>
-      <h2>Cerca de 60 peças, set por set, cena por cena.</h2>
-      <p class="lede">A arte gráfica partiu de uma lista com o set, a cena, a quantidade, o tamanho e o material de cada peça, impressa em quatro levas. Cada set tem o seu repertório: o bar Bleque Tais nas duas épocas, a rádio, as ruas e a papelada que passa pela mão dos personagens.</p>
-    </div>
-    
-    <figure class="rv">
-      <div class="pf-stage st-reboco" id="st">
-        <!-- Enamel tab headers -->
-        <div class="st-tabs" role="tablist" aria-label="Sets de filmagem">
-          <button type="button" role="tab" id="stT-bar" aria-selected="true" aria-controls="stP-bar">Bar Bleque Tais</button>
-          <button type="button" role="tab" id="stT-radio" aria-selected="false" aria-controls="stP-radio" tabindex="-1">Rádio Cruzeiro do Sul</button>
-          <button type="button" role="tab" id="stT-rua" aria-selected="false" aria-controls="stP-rua" tabindex="-1">Ruas de São Paulo</button>
-          <button type="button" role="tab" id="stT-papeis" aria-selected="false" aria-controls="stP-papeis" tabindex="-1">Papéis de Cena &amp; Cédulas</button>
-        </div>
-
-        <!-- 01: Bar Bleque Tais -->
-        <div class="gal" role="tabpanel" id="stP-bar" aria-labelledby="stT-bar">
-          <button class="pc" type="button" data-zoom data-cap="Placa de entrada do bar. Anos 80 · caixa de luz de 60 × 35 cm, PS adesivado."><span class="im"><img src="assets/s-placabar.webp" alt="Placa vermelha: Bar Blequetais, beba Refres Frut, com o logo em letra cursiva" loading="lazy"></span><span><b>Placa de entrada do bar</b><small>Anos 80 · caixa de luz de 60 × 35 cm, PS adesivado</small></span></button>
-          <button class="pc dk" type="button" data-zoom data-cap="Escritos da fachada. Anos 50 · letra pintada."><span class="im"><img src="assets/s-fachada.webp" alt="Palavras em letra pintada creme: leite, cerveja, fumo de rolo, pinga, vinho, farinha, secos e molhados, rapadura, embutidos, queijos" loading="lazy"></span><span><b>Escritos da fachada</b><small>Anos 50 · letra pintada</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Lanchinho Premium. Cartaz de publicidade, anos 50 · A2."><span class="im"><img src="assets/b-bolacha.webp" alt="Cartaz com menino sorridente e a lata das bolachinhas Dona Aurea: Hoje tem lanchinho! Tem delícia! Tem bolachinha!" loading="lazy"></span><span><b>Lanchinho Premium</b><small>Cartaz de publicidade, anos 50 · A2</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Chocolate Feliz. Cartaz de publicidade, anos 50 · A2."><span class="im"><img src="assets/b-chocolate.webp" alt="Cartaz ilustrado com três crianças e a barra do chocolate recheado Feliz" loading="lazy"></span><span><b>Chocolate Feliz</b><small>Cartaz de publicidade, anos 50 · A2</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Leite Lilli. Cartaz de publicidade, anos 50 · A2."><span class="im"><img src="assets/b-leite.webp" alt="Cartaz com a lata de leite condensado Lilli derramando leite numa xícara de café" loading="lazy"></span><span><b>Leite Lilli</b><small>Cartaz de publicidade, anos 50 · A2</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Mister Wald. Cartaz de cigarro, anos 50 · A2."><span class="im"><img src="assets/b-wald.webp" alt="Cartaz dos cigarros Mister Wald: maço azul sobre fundo com as palavras fein, mild e duftig" loading="lazy"></span><span><b>Mister Wald</b><small>Cartaz de cigarro, anos 50 · A2</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Vigilância sanitária. Aviso para a parede do bar · A4."><span class="im"><img src="assets/s-vigi1.webp" alt="Aviso em preto e branco: Na dúvida, use máscara. Transmissão das doenças pelas vias respiratórias" loading="lazy"></span><span><b>Vigilância sanitária</b><small>Aviso para a parede do bar · A4</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Vigilância sanitária. Aviso para a parede do bar · A4."><span class="im"><img src="assets/s-vigi2.webp" alt="Aviso: O BCG protege seu bebê contra a tuberculose, com mãe e bebê ilustrados" loading="lazy"></span><span><b>Vigilância sanitária</b><small>Aviso para a parede do bar · A4</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Caderninho de pendura do Osório. Capa A7 e miolo sanfonado de 2 m."><span class="im"><img src="assets/s-caderno.webp" alt="Capa verde de caderno com a etiqueta Tabela de notas" loading="lazy"></span><span><b>Caderninho de pendura do Osório</b><small>Capa A7 e miolo sanfonado de 2 m</small></span></button>
-          <button class="pc wf" type="button" data-zoom data-cap="Barrado de ladrilho hidráulico. 190 × 30 cm · vinílico para o piso."><span class="im"><img src="assets/s-ladrilho.webp" alt="Faixa de ladrilho hidráulico cinza-chumbo com borda de losangos" loading="lazy"></span><span><b>Barrado de ladrilho hidráulico</b><small>190 × 30 cm · vinílico para o piso</small></span></button>
-        </div>
-
-        <!-- 02: Rádio Cruzeiro do Sul -->
-        <div class="gal" role="tabpanel" id="stP-radio" aria-labelledby="stT-radio" hidden>
-          <button class="pc" type="button" data-zoom data-cap="Logo da rádio. Adesivo para o vidro · 40 cm de diâmetro."><span class="im"><img src="assets/s-rcds.webp" alt="Logo circular da Rádio Cruzeiro do Sul, RCDS, com estrela" loading="lazy"></span><span><b>Logo da rádio</b><small>Adesivo para o vidro · 40 cm de diâmetro</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Porta do diretor. Adesivo de recorte · 50 cm, cena 53."><span class="im"><img src="assets/s-porta.webp" alt="Logo da rádio com o nome Dorival Mendes, diretor" loading="lazy"></span><span><b>Porta do diretor</b><small>Adesivo de recorte · 50 cm, cena 53</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Diploma do diretor. A4 em papel couché · cena 53."><span class="im"><img src="assets/s-diploma.webp" alt="Diploma da Associação Brasileira de Rádio com torre de transmissão ilustrada" loading="lazy"></span><span><b>Diploma do diretor</b><small>A4 em papel couché · cena 53</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Programação do dia. Cartaz A2 · cenas 66 a 72."><span class="im"><img src="assets/s-programacao.webp" alt="Cartaz: Hoje! Às 22hs Billy Blues de volta para RCDS. Fechando a noite com Orquestra" loading="lazy"></span><span><b>Programação do dia</b><small>Cartaz A2 · cenas 66 a 72</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Show da banda Cruzeiro do Sul. Lambe dos anos 50 · A2."><span class="im"><img src="assets/s-show.webp" alt="Cartaz vermelho da banda de metais Cruzeiro do Sul com foto antiga dos músicos" loading="lazy"></span><span><b>Show da banda Cruzeiro do Sul</b><small>Lambe dos anos 50 · A2</small></span></button>
-        </div>
-
-        <!-- 03: Ruas de São Paulo -->
-        <div class="gal" role="tabpanel" id="stP-rua" aria-labelledby="stT-rua" hidden>
-          <!-- Kiosk das esquinas do Bixiga -->
-          <div class="esquinas-kiosk">
-            <div class="esquinas-head">
-              <div>
-                <h4>As Placas de Esquina de Época (57 × 30 cm)</h4>
-                <p>Placas esmaltadas azuis aplicadas em postes e esquinas do set para reproduzir os endereços do Bixiga e Centro.</p>
-              </div>
-              <div class="tag-row"><span class="pill y">Escolha uma rua</span></div>
-            </div>
-            <div class="esquinas-display">
-              <button type="button" data-zoom id="esqZoom" data-cap="Placa de rua esmaltada de época: Barão de Itapetininga."><img id="esqImg" src="assets/rua-barao.webp" alt="Placa de rua esmaltada"></button>
-            </div>
-            <div class="esquinas-nav" role="group" aria-label="Seletor de esquinas">
-              <button class="esquinas-btn" type="button" aria-pressed="true" data-sign="assets/rua-barao.webp" data-cap="Placa de esquina esmaltada: Rua Barão de Itapetininga, 57 × 30 cm.">Barão de Itapetininga</button>
-              <button class="esquinas-btn" type="button" aria-pressed="false" data-sign="assets/rua-carrao.webp" data-cap="Placa de esquina esmaltada: Rua Conselheiro Carrão, 57 × 30 cm.">Conselheiro Carrão</button>
-              <button class="esquinas-btn" type="button" aria-pressed="false" data-sign="assets/rua-domjose.webp" data-cap="Placa de esquina esmaltada: Rua Dom José de Barros, 57 × 30 cm.">Dom José de Barros</button>
-              <button class="esquinas-btn" type="button" aria-pressed="false" data-sign="assets/rua-saojoao.webp" data-cap="Placa de esquina esmaltada: Rua São João, 57 × 30 cm.">São João</button>
-              <button class="esquinas-btn" type="button" aria-pressed="false" data-sign="assets/rua-timbiras.webp" data-cap="Placa de esquina esmaltada: Rua dos Timbiras, 57 × 30 cm.">Dos Timbiras</button>
-              <button class="esquinas-btn" type="button" aria-pressed="false" data-sign="assets/rua-nomes.webp" data-cap="Placa de esquina esmaltada: Rua Aurora, 57 × 30 cm.">Aurora</button>
-            </div>
-          </div>
-
-          <button class="pc" type="button" data-zoom data-cap="Contra-mão. Placa de 60 × 60 cm · PS adesivado sobre as placas existentes."><span class="im"><img src="assets/s-transito1.webp" alt="Placa vermelha Contra-mão" loading="lazy"></span><span><b>Contra-mão</b><small>Placa de 60 × 60 cm · PS adesivado</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Proibido estacionar. Placa de 60 × 60 cm."><span class="im"><img src="assets/s-transito2.webp" alt="Placa vermelha com a letra P cortada" loading="lazy"></span><span><b>Proibido estacionar</b><small>Placa de 60 × 60 cm</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Vire à direita. Placa de 60 × 60 cm."><span class="im"><img src="assets/s-transito3.webp" alt="Placa redonda com triângulo amarelo e seta para a direita" loading="lazy"></span><span><b>Vire à direita</b><small>Placa de 60 × 60 cm</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Automóveis. Placa de 60 × 60 cm."><span class="im"><img src="assets/s-transito5.webp" alt="Placa redonda com a silhueta de um carro antigo" loading="lazy"></span><span><b>Automóveis</b><small>Placa de 60 × 60 cm</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Parada do bonde. Placa vertical · cena 35."><span class="im"><img src="assets/s-bonde.webp" alt="Placa vertical Parada do bonde com desenho de bonde" loading="lazy"></span><span><b>Parada do bonde</b><small>Placa vertical · cena 35</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Destino do bonde. 84 × 14 cm, frente e verso · cena 35."><span class="im"><img src="assets/s-bondebraz.webp" alt="Letreiro preto Bráz – Mooca" loading="lazy"></span><span><b>Destino do bonde</b><small>84 × 14 cm, frente e verso</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Placa de carro. 34 × 19 cm."><span class="im"><img src="assets/s-carro.webp" alt="Placa de carro laranja desbotada SP-7 7-88-76-19" loading="lazy"></span><span><b>Placa de carro</b><small>34 × 19 cm · época anos 50</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Madame Norita. Lambe dos anos 50."><span class="im"><img src="assets/s-norita.webp" alt="Anúncio da loja Madame Norita com mulher de lingerie" loading="lazy"></span><span><b>Madame Norita</b><small>Lambe dos anos 50</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Placa da loja Madame Norita. 85 × 39 cm · cenas 83 a 85."><span class="im"><img src="assets/s-placanorita.webp" alt="Logotipo Madame Norita com N alto e serifado" loading="lazy"></span><span><b>Placa da loja Madame Norita</b><small>85 × 39 cm · cenas 83 a 85</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Outdoor da banca. 2 × 1,2 m em lona."><span class="im"><img src="assets/s-alfaiataria.webp" alt="Outdoor Almeida Alfaiataria, orçamento na hora, com alfaiate ilustrado" loading="lazy"></span><span><b>Outdoor da banca</b><small>2 × 1,2 m em lona</small></span></button>
-          <button class="pc wf" type="button" data-zoom data-cap="Outdoor da banca. 5,8 × 1,2 m em lona · cenas 83 a 85."><span class="im"><img src="assets/s-popsdente.webp" alt="Outdoor do creme dental Pops-dente: deixa um sorriso lindo" loading="lazy"></span><span><b>Outdoor da banca</b><small>5,8 × 1,2 m em lona · cenas 83 a 85</small></span></button>
-        </div>
-
-        <!-- 04: Papéis de Cena & Arte em Cena -->
-        <div class="gal" role="tabpanel" id="stP-papeis" aria-labelledby="stT-papeis" hidden>
-          <!-- Arte em cena: frame do filme com as cédulas impressas -->
-          <div class="arte-em-cena">
-            <div class="aec-head">
-              <div>
-                <h4>Da Arte Gráfica para o Set de Filmagem</h4>
-                <p>O teste de fogo do design de cinema: a peça impressa colocada nas mãos dos atores e na iluminação da câmera.</p>
-              </div>
-              <span class="esm-badge">Diária 11/01/2023 · Cena 57</span>
-            </div>
-            <div class="aec-split">
-              <div class="aec-frame">
-                <button type="button" data-zoom data-cap="As cédulas de cruzeiro dentro do chapéu durante a filmagem da cena de jogo. Frame bruto da diária de 11/01/2023, sem tratamento de cor.">
-                  <img src="assets/frame-cedulas.webp" alt="Frame da filmagem: cédulas de cruzeiro dentro de um chapéu sobre uma mesa de jogo verde">
-                </button>
-              </div>
-              <div class="aec-artes">
-                <div class="aec-art-box">
-                  <button type="button" data-zoom data-cap="Cédula de 100 Cruzeiros (Anos 50) com Marquês de Tamandaré, impressa em papel especial para as cenas de baralho e aposta."><img src="assets/ced-50.webp" alt="Cédula de 100 Cruzeiros dos anos 50"></button>
-                  <span>Cédula de 100 Cruzeiros (Anos 50) · arte de impressão gráfica</span>
-                </div>
-                <div class="aec-art-box">
-                  <button type="button" data-zoom data-cap="Cédula de 100 Cruzeiros (Anos 80) com Juscelino Kubitschek, aplicada nas cenas da maloca e boteco nos anos 80."><img src="assets/ced-80.webp" alt="Cédula de 100 Cruzeiros dos anos 80"></button>
-                  <span>Cédula de 100 Cruzeiros (Anos 80) · evolução monetária</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button class="pc w2" type="button" data-zoom data-cap="Visão Paulistana. Jornal de época · 56 × 43 cm em papel jornal."><span class="im"><img src="assets/s-jornal1.webp" alt="Página dupla do jornal Visão Paulistana com notícias e anúncios de época" loading="lazy"></span><span><b>Visão Paulistana</b><small>Jornal de época · 56 × 43 cm em papel jornal</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Olho da Cidade. Jornal de época · 6 capas e 2 miolos no total."><span class="im"><img src="assets/s-jornal4.webp" alt="Página dupla do jornal Olho da Cidade com foto de casamento" loading="lazy"></span><span><b>Olho da Cidade</b><small>Jornal de época · 6 capas e 2 miolos no total</small></span></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Sampa Hoje. Jornal de época · anúncio da Pereira &amp; Luccini."><span class="im"><img src="assets/s-jornal6.webp" alt="Página dupla do jornal Sampa Hoje com anúncio da construtora Pereira &amp; Luccini" loading="lazy"></span><span><b>Sampa Hoje</b><small>Jornal de época · anúncio da Pereira &amp; Luccini</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Panfleto do show de Adoniran. Papel jornal · cena 75."><span class="im"><img src="assets/s-panfleto.webp" alt="Panfleto: Bleque Tais, Adoniran Barbosa em apresentação, o autor de Saudosa Maloca e expoente do rádio canta seus sucessos no Bexiga" loading="lazy"></span><span><b>Panfleto do show de Adoniran</b><small>Papel jornal · cena 75</small></span></button>
-          <button class="pc" type="button" data-zoom data-cap="Calendário Classic Cars. Anos 50 · A4 em cartão."><span class="im"><img src="assets/s-calendario.webp" alt="Calendário com pin-up de blusa verde e o nome Classic Cars" loading="lazy"></span><span><b>Calendário Classic Cars</b><small>Anos 50 · A4 em cartão</small></span></button>
-        </div>
-
-      </div>
-      <figcaption><b>Peças por set.</b> Artes finais reais, usadas no filme; o frame das cédulas é da filmagem. Ficaram de fora as fotos de cantores e os recortes de jornal sobre Adoniran, que são reproduções de material de acervo.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- DIALOG LIGHTBOX -->
-<dialog class="lb" id="lb" aria-label="Peça ampliada">
-  <button class="lb-x" type="button" id="lbX" aria-label="Fechar">×</button>
-  <div class="lb-in"><img id="lbImg" src="" alt=""><div class="lb-cap" id="lbCap"></div></div>
-</dialog>
-
-<!-- VISUAL SYSTEM -->
-<section id="sistema" class="pf-sec">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow">Sistema visual</p>
-      <h2>Duas épocas, duas paletas.</h2>
-      <p class="lede">Os anos 50 são papel creme, ilustração e poucas cores de impressão: vermelho, verde, azul e mostarda. Os anos 80 trocam a ilustração por fotografia e apostam em letras condensadas, preto, petróleo e amarelo.</p>
-    </div>
-    <div class="sys">
-      <div class="pf-card rv"><span class="tag">Paleta</span>
-        <div class="pal"><span>Anos 50</span><div class="sw6">
-          <i class="dk" style="background:#F0EBD8">#F0EBD8</i><i style="background:#B85848">#B85848</i><i style="background:#208078">#208078</i>
-          <i style="background:#385078">#385078</i><i class="dk" style="background:#E0A040">#E0A040</i><i style="background:#784828">#784828</i></div></div>
-        <div class="pal"><span>Anos 80</span><div class="sw6">
-          <i style="background:#101818">#101818</i><i style="background:#508898">#508898</i><i class="dk" style="background:#F0B850">#F0B850</i>
-          <i style="background:#581818">#581818</i><i class="dk" style="background:#F8E8B8">#F8E8B8</i><i style="background:#187870">#187870</i></div></div>
-        <p class="sys-n">Cores tiradas das artes finais: Aurora, Clara, Wald, Dona Aurea e Carminha nos anos 50; Clara, Refres Frut e Demar nos anos 80.</p>
-      </div>
-      <div class="pf-card rv type-s"><span class="tag">Tipografia</span>
-        <dl>
-          <div><dt>Bogart, Retromark Script</dt><dd>cerveja</dd></div>
-          <div><dt>Capuche, KG Neatly Printed</dt><dd>cachaça</dd></div>
-          <div><dt>DK Majolica</dt><dd>cigarro</dd></div>
-          <div><dt>Retrolight</dt><dd>rádio</dd></div>
-          <div><dt>Studio Brush</dt><dd>fachada dos anos 50</dd></div>
-          <div><dt>Ananda, Sarcaland Brusher</dt><dd>letras cursivas</dd></div>
-        </dl>
-        <p class="sys-n">Famílias separadas na pasta de desenvolvimento, por tipo de peça.</p>
-      </div>
-      <div class="pf-card rv"><span class="tag">Pesquisa</span>
-        <div class="chips"><span>Anúncios</span><span>Cartazes de filme e show</span><span>Embalagens</span><span>Cigarros e fósforos</span><span>Jornais</span><span>Outdoors</span><span>Panfletos</span><span>Rádio</span><span>Lançamentos imobiliários</span><span>Moda dos anos 50</span><span>Anos 80</span><span>Azulejo hidráulico</span></div>
-        <p class="sys-n">As referências foram organizadas em pastas por tipo de peça antes do desenho.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- RESULTADO -->
-<section id="resultado" class="pf-sec alt">
-  <div class="wrap">
-    <div class="pf-head rv">
-      <p class="eyebrow">Resultado</p>
-      <h2>Da gráfica para o set, do set para o cinema.</h2>
-      <p class="lede">As peças foram para a gráfica em quatro levas, entre dezembro de 2022 e janeiro de 2023, e o filme foi rodado em janeiro de 2023. Saudosa Maloca passou pela 47ª Mostra Internacional de Cinema de São Paulo, em outubro de 2023, estreou nos cinemas em 21 de março de 2024, com distribuição da Elo Studios, e hoje está no Prime Video.</p>
+  <!-- RESULTADO -->
+  <section id="resultado" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow">Resultado</p>
+        <h2>Da gráfica para o set, do set para o cinema.</h2>
+        <p class="lede">As peças foram para a gráfica em quatro levas, entre dezembro de 2022 e janeiro de 2023, e o
+          filme foi rodado em janeiro de 2023. Saudosa Maloca passou pela 47ª Mostra Internacional de Cinema de São
+          Paulo, em outubro de 2023, estreou nos cinemas em 21 de março de 2024, com distribuição da Elo Studios, e hoje
+          está no Prime Video.</p>
+      </div>
+
+      <figure class="rv">
+        <div class="pf-stage st-vinho">
+          <div class="tag-row"><span class="pill y">Trajetória</span><span class="pill">Cronologia da produção</span>
+          </div>
+
+          <!-- Milestones da produção cinematográfica -->
+          <div class="res-timeline">
+            <div class="res-milestone">
+              <span class="dt">Dez 2022 · Jan 2023</span>
+              <b>4 Levas Gráficas</b>
+              <span>60 artes finais entregues para adesivação, cartazes A2 e papéis de cena.</span>
+            </div>
+            <div class="res-milestone">
+              <span class="dt">Janeiro 2023</span>
+              <b>Filmagem no Set</b>
+              <span>Diárias com Paulo Miklos, Leilah Moreno e Gero Camilo nos cenários de época.</span>
+            </div>
+            <div class="res-milestone">
+              <span class="dt">Outubro 2023</span>
+              <b>47ª Mostra SP</b>
+              <span>Primeira exibição oficial na Mostra Internacional de Cinema de São Paulo.</span>
+            </div>
+            <div class="res-milestone">
+              <span class="dt">21 Março 2024</span>
+              <b>Estreia Nacional</b>
+              <span>Lançamento em salas de cinema de todo o país pela distribuidora Elo Studios.</span>
+            </div>
+            <div class="res-milestone">
+              <span class="dt">Streaming</span>
+              <b>Prime Video</b>
+              <span>Disponível no catálogo oficial da Amazon Prime Video.</span>
+            </div>
+          </div>
+
+          <div class="tr" id="tr">
+            <button class="tr-btn" type="button" id="trBtn"
+              aria-label="Tocar o trailer oficial de Saudosa Maloca (carrega o YouTube)">
+              <img src="assets/tx-parede.jpg" alt="" loading="lazy">
+              <span class="play"><i aria-hidden="true">▶</i>Trailer oficial<small>Saudosa Maloca · Pink Flamingo
+                  Filmes</small></span>
+            </button>
+          </div>
+
+          <div class="sm-links">
+            <a href="https://www.primevideo.com/-/pt/detail/0OHJ5KHFO4W7K0BVFESFO24UID" target="_blank"
+              rel="noopener">Assistir no Prime Video <span aria-hidden="true">↗</span></a>
+            <a href="https://www.youtube.com/watch?v=IvDCuwt3e2A" target="_blank" rel="noopener">Trailer no YouTube
+              <span aria-hidden="true">↗</span></a>
+            <a href="https://www.imdb.com/name/nm19036887/" target="_blank" rel="noopener">Erik Placido no IMDb
+              <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <figcaption><b>Trailer oficial e marcos do longa.</b> Publicado pelo canal oficial da produção e ingressos.
+        </figcaption>
+      </figure>
+
+      <div class="callout rv"><b>Créditos.</b> Saudosa Maloca é um filme da Pink Flamingo Filmes, dirigido por Pedro
+        Serrano e produzido por ele e Renata Martins, com direção de arte de Cláudia Terçarolli. Design gráfico do
+        filme: Erik Placido. As fotos de elenco e de cena são material da produção.</div>
     </div>
-    
-    <figure class="rv">
-      <div class="pf-stage st-vinho">
-        <div class="tag-row"><span class="pill y">Trajetória</span><span class="pill">Cronologia da produção</span></div>
-        
-        <!-- Milestones da produção cinematográfica -->
-        <div class="res-timeline">
-          <div class="res-milestone">
-            <span class="dt">Dez 2022 · Jan 2023</span>
-            <b>4 Levas Gráficas</b>
-            <span>60 artes finais entregues para adesivação, cartazes A2 e papéis de cena.</span>
-          </div>
-          <div class="res-milestone">
-            <span class="dt">Janeiro 2023</span>
-            <b>Filmagem no Set</b>
-            <span>Diárias com Paulo Miklos, Leilah Moreno e Gero Camilo nos cenários de época.</span>
-          </div>
-          <div class="res-milestone">
-            <span class="dt">Outubro 2023</span>
-            <b>47ª Mostra SP</b>
-            <span>Primeira exibição oficial na Mostra Internacional de Cinema de São Paulo.</span>
-          </div>
-          <div class="res-milestone">
-            <span class="dt">21 Março 2024</span>
-            <b>Estreia Nacional</b>
-            <span>Lançamento em salas de cinema de todo o país pela distribuidora Elo Studios.</span>
-          </div>
-          <div class="res-milestone">
-            <span class="dt">Streaming</span>
-            <b>Prime Video</b>
-            <span>Disponível no catálogo oficial da Amazon Prime Video.</span>
-          </div>
-        </div>
+  </section>
 
-        <div class="tr" id="tr">
-          <button class="tr-btn" type="button" id="trBtn" aria-label="Tocar o trailer oficial de Saudosa Maloca (carrega o YouTube)">
-            <img src="assets/tx-parede.jpg" alt="" loading="lazy">
-            <span class="play"><i aria-hidden="true">▶</i>Trailer oficial<small>Saudosa Maloca · Pink Flamingo Filmes</small></span>
-          </button>
+  <footer class="pf-footer">
+    <div class="wrap">
+      <div class="pf-fgrid">
+        <div>
+          <p class="eyebrow">Próximo case</p>
+          <a class="pf-next" data-auto href="../index.html"></a>
         </div>
-        
-        <div class="sm-links">
-          <a href="https://www.primevideo.com/-/pt/detail/0OHJ5KHFO4W7K0BVFESFO24UID" target="_blank" rel="noopener">Assistir no Prime Video <span aria-hidden="true">↗</span></a>
-          <a href="https://www.youtube.com/watch?v=IvDCuwt3e2A" target="_blank" rel="noopener">Trailer no YouTube <span aria-hidden="true">↗</span></a>
+        <div>
+          <h2>Vamos conversar?</h2>
+          <p>Posso mostrar a lista de arte e os arquivos de impressão ao vivo.</p>
+          <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+          <a class="pf-btn imdb" href="https://www.imdb.com/name/nm19036887/" target="_blank" rel="noopener">IMDb <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <figcaption><b>Trailer oficial e marcos do longa.</b> Publicado pelo canal oficial da produção e ingressos.</figcaption>
-    </figure>
-    
-    <div class="callout rv"><b>Créditos.</b> Saudosa Maloca é um filme da Pink Flamingo Filmes, dirigido por Pedro Serrano e produzido por ele e Renata Martins, com direção de arte de Cláudia Terçarolli. Design gráfico do filme: Erik Placido. As fotos de elenco e de cena são material da produção.</div>
-  </div>
-</section>
-
-<footer class="pf-footer">
-  <div class="wrap">
-    <div class="pf-fgrid">
-      <div>
-        <p class="eyebrow">Próximo case</p>
-        <a class="pf-next" data-auto href="../index.html"></a>
-      </div>
-      <div>
-        <h2>Vamos conversar?</h2>
-        <p>Posso mostrar a lista de arte e os arquivos de impressão ao vivo.</p>
-        <a class="pf-btn" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
-      </div>
+      <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Saudosa Maloca · Pink Flamingo
+          Filmes</span></div>
     </div>
-    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span>Saudosa Maloca · Pink Flamingo Filmes</span></div>
-  </div>
-</footer>
+  </footer>
 
-<script src="../shared/cases.js"></script>
-<script src="../shared/frame.js"></script>
-<script>
-(function(){
-  'use strict';
-  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  <script src="../shared/cases.js"></script>
+  <script src="../shared/frame.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var $ = function (s, r) { return (r || document).querySelector(s) }, $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)) };
 
-  /* Reveal + pause loops offscreen */
-  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){es.forEach(function(e){
-    var el = e.target;
-    if(el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
-    if(el.dataset.loop!==undefined) el.classList.toggle('offscreen',!e.isIntersecting);
-  })},{threshold:.15}) : null;
-  function watch(el){ if(io) io.observe(el); else el.classList.add('in') }
-  function visible(el){ return !el.classList.contains('offscreen') }
-  $$('.rv').forEach(watch);
-  $$('[data-loop]').forEach(function(el){ if(io) el.classList.add('offscreen'); watch(el) });
+      /* Reveal + pause loops offscreen */
+      var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var el = e.target;
+          if (el.classList.contains('rv') && e.isIntersecting) el.classList.add('in');
+          if (el.dataset.loop !== undefined) el.classList.toggle('offscreen', !e.isIntersecting);
+        })
+      }, { threshold: .15 }) : null;
+      function watch(el) { if (io) io.observe(el); else el.classList.add('in') }
+      function visible(el) { return !el.classList.contains('offscreen') }
+      $$('.rv').forEach(watch);
+      $$('[data-loop]').forEach(function (el) { if (io) el.classList.add('offscreen'); watch(el) });
 
-  /* Autoplay helper */
-  function autoplay(root, ms, step){
-    var on = !RM, t = null;
-    function live(){ $$('[data-live]',root).forEach(function(el){ el.setAttribute('aria-live','polite') }) }
-    function stop(){ on = false; clearTimeout(t); live() }
-    if(!on) live();
-    ['pointerdown','keydown','wheel'].forEach(function(ev){ root.addEventListener(ev,stop,{capture:true,passive:true}) });
-    (function loop(){ t = setTimeout(function(){ if(!on) return; if(visible(root) && !document.hidden) step(); loop() }, ms) })();
-    return { stop:stop };
-  }
-
-  /* ===== 01 ERAS INTERACTIVE VITRINE ===== */
-  var ep = $('#ep');
-  if(ep){
-    var eraPairs = [
-      {
-        cat: 'Cervejaria · Rótulo',
-        title50: 'Cerveja Clara Chopp (1950)',
-        desc50: 'Cia. Cervejaria Clara. Estrela clássica sobre fundo preto, chopp em letra cursiva dourada com ramos de cevada.',
-        img50: 'assets/clara-r50.webp',
-        mat50: 'Adesivo garrafa 600 ml',
-        title80: 'Pilsen Clara Chopp (1980)',
-        desc80: 'Oval verde esmeralda com Clara Chopp em letras sem serifa condensadas e layout geométrico de grande escala.',
-        img80: 'assets/clara-r80.webp',
-        mat80: 'Adesivo garrafa 600 ml'
-      },
-      {
-        cat: 'Cervejaria · Cartaz A2',
-        title50: 'Cartaz Clara “Claro!” (1950)',
-        desc50: 'Ilustração litográfica: boêmio de boina sorri com um copo de chope espumante ao lado da garrafa tradicional.',
-        img50: 'assets/clara-c50.webp',
-        mat50: 'Cartaz A2 em couché fosco',
-        title80: 'Cartaz Clara “A Sede” (1980)',
-        desc80: 'Fotografia com alto contraste de iluminação: copo de cerveja com espuma ao lado da lata vermelha Clara Chopp.',
-        img80: 'assets/clara-c80.webp',
-        mat80: 'Cartaz A2 fotográfico'
-      },
-      {
-        cat: 'Refrigerante · Cartaz A2',
-        title50: 'Refres Frut de Jabuticaba (1950)',
-        desc50: 'Refrigerante genuinamente paulistano: garrafa clássica de vidro estriado, mascote de tampinha e frutos de jabuticaba.',
-        img50: 'assets/refres-50.webp',
-        mat50: 'Cartaz A2 litográfico',
-        title80: 'Refres Frut Família 2L (1980)',
-        desc80: 'A chegada das garrafas PET de 2 litros: foto de produto em estúdio anunciando o tamanho econômico para o boteco.',
-        img80: 'assets/refres-80.webp',
-        mat80: 'Cartaz A2 fotográfico'
-      },
-      {
-        cat: 'Tabacaria · Maço & Cartaz',
-        title50: 'Cigarros Aurora (1950)',
-        desc50: '“Aurora a sua companhia para toda hora! Quem tem bom gosto sempre tem Aurora.” Maço em caixa rígida ilustrada.',
-        img50: 'assets/cig-50.webp',
-        mat50: 'Maço sulfite 120 g + cartaz',
-        title80: 'Cigarros Aurora (1980)',
-        desc80: '“Aurora: a sua companhia para toda hora! Quem tem bom gosto sempre tem Aurora.” Maço flip-top Filtro de Luxo com listras quentes dos anos 80.',
-        img80: 'assets/cig-80.webp',
-        mat80: 'Maço sulfite 120 g + cartaz'
-      },
-      {
-        cat: 'Fósforos · Rótulo de Caixa',
-        title50: 'Fósforos Maxlumi (1950)',
-        desc50: 'Rótulo amarelo-mostarda com letras pretas em arco tradicional de tipografia de madeira.',
-        img50: 'assets/fosf-50.webp',
-        mat50: 'Papel adesivo para caixa',
-        title80: 'Fósforos Maxlumi (1980)',
-        desc80: 'Maxlumi, desde 1946: letras vermelhas dinâmicas com explosão amarela e acabamento gráfico industrial.',
-        img80: 'assets/fosf-80.webp',
-        mat80: 'Papel adesivo para caixa'
+      /* ===== LIGHTBOX DIALOG ===== */
+      var lb = $('#lb');
+      if (lb && lb.showModal) {
+        var lbImg = $('#lbImg'), lbCap = $('#lbCap');
+        document.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-zoom]'); if (!b) return;
+          var im = b.querySelector('img'); if (!im) return;
+          lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt || ''; lbCap.textContent = b.dataset.cap || im.alt || '';
+          lb.showModal();
+        });
+        $('#lbX').addEventListener('click', function () { lb.close() });
+        lb.addEventListener('click', function (e) { if (e.target === lb) lb.close() });
       }
-    ];
 
-    var curPair = 0;
-    var eraBtns = $$('[data-set-era]', ep);
-    var modeBtns = $$('.era-mode-btn', ep);
-    var pairBtns = $$('.era-thumb-btn', ep);
-
-    function updatePair(idx){
-      curPair = (idx + eraPairs.length) % eraPairs.length;
-      var d = eraPairs[curPair];
-
-      // Update 3D card
-      $('#epImg50').src = d.img50; $('#epImg50').alt = d.title50;
-      $('#epZoom50').dataset.cap = d.title50 + ' · ' + d.desc50;
-      $('#epCat50').textContent = d.cat;
-      $('#epTitle50').textContent = d.title50;
-      $('#epDesc50').textContent = d.desc50;
-      $('#epMat50').textContent = d.mat50;
-
-      $('#epImg80').src = d.img80; $('#epImg80').alt = d.title80;
-      $('#epZoom80').dataset.cap = d.title80 + ' · ' + d.desc80;
-      $('#epCat80').textContent = d.cat;
-      $('#epTitle80').textContent = d.title80;
-      $('#epDesc80').textContent = d.desc80;
-      $('#epMat80').textContent = d.mat80;
-
-      // Update Dual Mode
-      $('#dualImg50').src = d.img50; $('#dualImg50').alt = d.title50;
-      $('#dualZoom50').dataset.cap = d.title50 + ' · ' + d.desc50;
-      $('#dualTitle50').textContent = d.title50;
-      $('#dualDesc50').textContent = d.desc50;
-
-      $('#dualImg80').src = d.img80; $('#dualImg80').alt = d.title80;
-      $('#dualZoom80').dataset.cap = d.title80 + ' · ' + d.desc80;
-      $('#dualTitle80').textContent = d.title80;
-      $('#dualDesc80').textContent = d.desc80;
-
-      // Update tabs
-      pairBtns.forEach(function(b, i){
-        b.setAttribute('aria-selected', i === curPair ? 'true' : 'false');
+      /* ===== TRAILER YOUTUBE EMBED ===== */
+      var trBtn = $('#trBtn');
+      if (trBtn) trBtn.addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/IvDCuwt3e2A?autoplay=1&rel=0';
+        f.title = 'Trailer oficial de Saudosa Maloca';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        trBtn.replaceWith(f); f.focus();
       });
-    }
-
-    function setEra(v){
-      ep.dataset.era = v;
-      eraBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.setEra === v ? 'true' : 'false') });
-    }
-
-    function setViewMode(m){
-      ep.dataset.view = m;
-      modeBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.mode === m ? 'true' : 'false') });
-    }
-
-    eraBtns.forEach(function(b){
-      b.addEventListener('click', function(){ setEra(b.dataset.setEra) });
-    });
-
-    modeBtns.forEach(function(b){
-      b.addEventListener('click', function(){ setViewMode(b.dataset.mode) });
-    });
-
-    pairBtns.forEach(function(b, i){
-      b.addEventListener('click', function(){ updatePair(i) });
-    });
-
-    updatePair(0);
-
-    // Keyboard support for pair selector
-    ep.addEventListener('keydown', function(e){
-      if(e.key === 'ArrowRight'){ updatePair(curPair + 1); }
-      else if(e.key === 'ArrowLeft'){ updatePair(curPair - 1); }
-    });
-
-    // Autoplay pair cycle
-    autoplay(ep, 4800, function(){
-      if(ep.dataset.view === 'flip'){
-        if(ep.dataset.era === '50'){
-          setEra('80');
-        } else {
-          setEra('50');
-          updatePair((curPair + 1) % eraPairs.length);
-        }
-      } else {
-        updatePair((curPair + 1) % eraPairs.length);
-      }
-    });
-  }
-
-  /* ===== 02 BRANDS INTERACTIVE SHELF ===== */
-  var prat = $('#prat');
-  if(prat){
-    var brandItems = [
-      {
-        name: 'Aguardente Belezura',
-        era: 'Anos 50',
-        cat: 'Aguardente · Rótulo de garrafa',
-        desc: 'Aguardente da Fazenda Engenho Seco. Tipografia em arco dourado e estilo tradicional de alambique paulista para as mesas do boteco.',
-        mat: 'Adesivo vinílico para garrafa',
-        cena: 'Armazém de Secos & Molhados',
-        img: 'assets/m-belezura.webp'
-      },
-      {
-        name: 'Cerveja Austral Chopp',
-        era: 'Anos 50',
-        cat: 'Cervejaria · Rótulo de garrafa',
-        desc: 'Cerveja tipo Pilsen do armazém dos anos 50. Brasão com pinguim austral sobre losango e tipografia pesada de corte germânico.',
-        mat: 'Adesivo garrafa 600 ml',
-        cena: 'Balcão do Bar Bleque Tais',
-        img: 'assets/m-austral.webp'
-      },
-      {
-        name: 'Aguardente Cana Caí “Fogo Sobe”',
-        era: 'Anos 50',
-        cat: 'Aguardente Especial · Rótulo',
-        desc: '“Puríssima aguardente de cana das melhores procedências do Rio”. Camponês ilustrado com enxada e camisa amarela de época.',
-        mat: 'Papel couché fosco adesivado',
-        cena: 'Prateleiras do armazém',
-        img: 'assets/m-canacai.webp'
-      },
-      {
-        name: 'Aguardente Canna Carminha',
-        era: 'Anos 50',
-        cat: 'Aguardente Tradicional · Rótulo',
-        desc: 'Engarrafada em Belo Horizonte no Estado de Minas por Waldemar Plácido. Tipografia robusta serifada inspirada em gravuras de madeira.',
-        mat: 'Adesivo rústico para garrafa',
-        cena: 'Cena da carroça do Osório',
-        img: 'assets/m-carminha.webp'
-      },
-      {
-        name: 'Banha de Porco Didico',
-        era: 'Anos 50',
-        cat: 'Mercearia · Rótulo de lata cilíndrica',
-        desc: 'Embalagem cilíndrica de metal com porco ilustrado de colete e gravata borboleta, evocando as mercearias tradicionais do interior.',
-        mat: 'Adesivo impresso para lata de metal',
-        cena: 'Armazém de secos & molhados',
-        img: 'assets/m-banha.webp'
-      },
-      {
-        name: 'Manteiga Mimozinha',
-        era: 'Anos 50',
-        cat: 'Laticínios · Embalagem de tijolo',
-        desc: 'Manteiga com sal de primeira qualidade. Mascote de vaquinha e padrão de toalha xadrez vermelha característico dos armazéns paulistanos.',
-        mat: 'Papel vegetal encerado',
-        cena: 'Balcão e prateleiras de frios',
-        img: 'assets/m-manteiga.webp'
-      },
-      {
-        name: 'Bolachas Dona Aurea',
-        era: 'Anos 50',
-        cat: 'Biscoitos · Rótulo de lata retangular',
-        desc: 'Lanchinho Premium. Lata de bolachinhas presente na carroça do Osório e no armazém, em tom azul claro com gravura da matriarca.',
-        mat: 'Adesivo vinílico para lata',
-        cena: 'Carroça do Osório e armazém',
-        img: 'assets/m-bolacha.webp'
-      },
-      {
-        name: 'Doce de Banana Mariola',
-        era: 'Anos 50',
-        cat: 'Doces Caseiros · Caixa',
-        desc: 'Mariola de banana tradicional. Letras em amarelo quente sobre fundo marrom chocolate com textura de papel craft.',
-        mat: 'Cartucho de papel kraft impresso',
-        cena: 'Pote de doces do balcão',
-        img: 'assets/m-mariola.webp'
-      },
-      {
-        name: 'Gordura de Coco Vegetal',
-        era: 'Anos 50',
-        cat: 'Mercearia · Cinta de embalagem',
-        desc: 'Gordura vegetal culinária em cinta verde-água com coqueiro estilizado e selo de pureza do Ministério da Agricultura.',
-        mat: 'Cinta de papel sulfite 90 g',
-        cena: 'Prateleiras do armazém',
-        img: 'assets/m-coco.webp'
-      },
-      {
-        name: 'Cigarros Aurora',
-        era: 'Anos 50',
-        cat: 'Tabacaria · Cartaz e maço',
-        desc: '“Aurora a sua companhia para toda hora”. Marca de maço duro com coroa real e linhas aerodinâmicas da década de 50.',
-        mat: 'Sulfite 120 g montado',
-        cena: 'Mesas de jogo e balcão',
-        img: 'assets/m-aurora.webp'
-      },
-      {
-        name: 'Blended Whisky Old Maltes',
-        era: 'Anos 80',
-        cat: 'Destilados · Rótulo e estojo',
-        desc: 'Uísque refinado para as mesas de Adoniran nos anos 80, o bar e os estúdios da Rádio Cruzeiro do Sul. Brasão heráldico dourado.',
-        mat: 'Adesivo brilho e cartucho rígido',
-        cena: 'Bar, rádio e casa de Adoniran',
-        img: 'assets/m-whisky.webp'
-      },
-      {
-        name: 'Cigarro Demar Extra Suave',
-        era: 'Anos 80',
-        cat: 'Tabacaria · Maço anos 80',
-        desc: 'Maço King Size Filtro de Luxo criado para o balcão dos anos 80. Azul royal e tipografia romana moderna no estilo dos maços internacionais da década.',
-        mat: 'Cartão 250 g montado',
-        cena: 'Balcão do Bar Bleque Tais',
-        img: 'assets/m-demar.webp'
-      },
-      {
-        name: 'Cigarro Mister Wald Luxe',
-        era: 'Anos 80',
-        cat: 'Tabacaria · Maço e anúncio',
-        desc: 'Cigarros com filtro para o público elegante dos anos 80. Azul-marinho metálico com detalhes dourados em filigrana.',
-        mat: 'Cartão impresso para maço',
-        cena: 'Balcão e mesas do bar',
-        img: 'assets/m-wald.webp'
-      }
-    ];
-
-    var curBrand = 0;
-    var pratBtns = $$('.prat-item-btn', prat);
-
-    function pickBrand(idx){
-      curBrand = (idx + brandItems.length) % brandItems.length;
-      var b = brandItems[curBrand];
-      $('#pratImg').src = b.img;
-      $('#pratImg').alt = b.name;
-      $('#pratZoom').dataset.cap = b.name + ' (' + b.era + ') · ' + b.desc;
-      $('#pratEra').textContent = b.era;
-      $('#pratCat').textContent = b.cat;
-      $('#pratTitle').textContent = b.name;
-      $('#pratDesc').textContent = b.desc;
-      $('#pratMat').textContent = b.mat;
-      $('#pratCena').textContent = b.cena;
-
-      pratBtns.forEach(function(btn, i){
-        btn.setAttribute('aria-selected', i === curBrand ? 'true' : 'false');
-      });
-    }
-
-    pratBtns.forEach(function(btn, i){
-      btn.addEventListener('click', function(){ pickBrand(i) });
-    });
-
-    pickBrand(0);
-
-    autoplay(prat, 4200, function(){
-      pickBrand((curBrand + 1) % brandItems.length);
-    });
-  }
-
-  /* ===== 04 SETS: TABS & STREET SIGNS KIOSK ===== */
-  var tabs = $$('#st [role="tab"]');
-  function pickTab(t, focus){
-    tabs.forEach(function(x){
-      var on = x===t; x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
-      $('#'+x.getAttribute('aria-controls')).hidden = !on;
-    });
-    if(focus) t.focus();
-  }
-  tabs.forEach(function(t,k){
-    t.addEventListener('click',function(){ pickTab(t) });
-    t.addEventListener('keydown',function(e){
-      var n = e.key==='ArrowRight' ? k+1 : e.key==='ArrowLeft' ? k-1 : e.key==='Home' ? 0 : e.key==='End' ? tabs.length-1 : null;
-      if(n===null) return; e.preventDefault(); pickTab(tabs[(n+tabs.length)%tabs.length], true);
-    });
-  });
-
-  /* Street sign selector kiosk */
-  var esqBtns = $$('.esquinas-btn');
-  var esqImg = $('#esqImg'), esqZoom = $('#esqZoom');
-  esqBtns.forEach(function(b){
-    b.addEventListener('click', function(){
-      esqBtns.forEach(function(x){ x.setAttribute('aria-pressed', 'false') });
-      b.setAttribute('aria-pressed', 'true');
-      if(esqImg){
-        esqImg.src = b.dataset.sign;
-        esqZoom.dataset.cap = b.dataset.cap;
-      }
-    });
-  });
-
-  /* ===== LIGHTBOX DIALOG ===== */
-  var lb = $('#lb');
-  if(lb && lb.showModal){
-    var lbImg = $('#lbImg'), lbCap = $('#lbCap');
-    document.addEventListener('click',function(e){
-      var b = e.target.closest('[data-zoom]'); if(!b) return;
-      var im = b.querySelector('img'); if(!im) return;
-      lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt || ''; lbCap.textContent = b.dataset.cap || im.alt || '';
-      lb.showModal();
-    });
-    $('#lbX').addEventListener('click',function(){ lb.close() });
-    lb.addEventListener('click',function(e){ if(e.target===lb) lb.close() });
-  }
-
-  /* ===== TRAILER YOUTUBE EMBED ===== */
-  var trBtn = $('#trBtn');
-  if(trBtn) trBtn.addEventListener('click',function(){
-    var f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/IvDCuwt3e2A?autoplay=1&rel=0';
-    f.title = 'Trailer oficial de Saudosa Maloca';
-    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-    f.allowFullscreen = true;
-    trBtn.replaceWith(f); f.focus();
-  });
-})();
-</script>
+    })();
+  </script>
 </body>
+
 </html>
