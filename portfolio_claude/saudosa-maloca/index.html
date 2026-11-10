@@ -666,18 +666,24 @@
 
     .sh-card .im .sh-plate {
       position: absolute;
-      right: 12px;
       top: 12px;
       width: clamp(86px, 12vw, 130px);
       height: auto;
       object-fit: contain;
-      transform: rotate(2.5deg);
       filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .7));
       transition: none
     }
 
+    .sh-card:nth-child(1) .im .sh-plate {
+      left: 12px;
+      right: auto;
+      transform: rotate(2.5deg);
+    }
+
     .sh-card:nth-child(2) .im .sh-plate {
-      transform: rotate(-2.5deg)
+      right: 12px;
+      left: auto;
+      transform: rotate(-2.5deg);
     }
 
     .sh-card:hover .im img:first-child,
@@ -1545,131 +1551,55 @@
       color: var(--pf-ink)
     }
 
-    /* ===== RESULTADO: CRONOLOGIA EM PLACAS & TRAILER ===== */
-    .res-timeline {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    @media(max-width:860px) {
-      .res-timeline {
-        grid-template-columns: repeat(2, 1fr)
-      }
-    }
-
-    @media(max-width:480px) {
-      .res-timeline {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .res-milestone {
-      background: rgba(255, 255, 255, .07);
-      border: 1px solid rgba(255, 255, 255, .12);
-      border-radius: 12px;
-      padding: 14px 12px;
-      display: grid;
-      gap: 6px;
-    }
-
-    .res-milestone .dt {
-      font: 700 11px/1.2 var(--sign);
-      color: var(--hl);
-      letter-spacing: .08em;
-      text-transform: uppercase
-    }
-
-    .res-milestone b {
-      font: 400 19px/1.15 var(--pf-serif);
-      color: #fff
-    }
-
-    .res-milestone span {
-      font-size: 12px;
-      line-height: 1.4;
-      color: #D8CCBA
-    }
-
-    .tr {
+    /* ===== VIDEO AS IT AIRED ===== */
+    .vd {
       position: relative;
       aspect-ratio: 16/9;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       background: #000;
       box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8)
     }
 
-    .tr-btn {
+    .vd video,
+    .vd iframe {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       border: 0;
-      padding: 0;
-      background: #000;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      cursor: pointer
+      background: #000
     }
 
-    .tr-btn img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .42;
-      transition: opacity .4s, transform .8s var(--ease)
+    .vd-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 18px;
+      margin-top: 16px
     }
 
-    .tr-btn:hover img {
-      opacity: .55;
-      transform: scale(1.02)
+    .vd-jump {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
     }
 
-    .tr-btn .play {
-      position: relative;
-      display: grid;
-      justify-items: center;
-      gap: 12px;
-      font: 700 15px/1.2 var(--sign);
-      letter-spacing: .06em;
-      text-transform: uppercase
-    }
-
-    .tr-btn .play i {
-      width: 76px;
-      height: 76px;
-      border-radius: 50%;
+    .vd-jump button {
+      border: 0;
+      padding: 9px 14px;
+      border-radius: 99px;
       background: var(--hl);
-      color: var(--esm-2);
-      display: grid;
-      place-items: center;
-      font-size: 26px;
-      font-style: normal;
-      padding-left: 5px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
-      transition: transform .35s var(--snap)
+      color: var(--pf-ink);
+      font: 600 13px/1 var(--pf-sans);
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      transition: transform .3s var(--snap)
     }
 
-    .tr-btn:hover .play i {
-      transform: scale(1.08)
-    }
-
-    .tr-btn small {
-      font: 500 12px/1.3 var(--pf-sans);
-      letter-spacing: 0;
-      text-transform: none;
-      color: #E9DCCB
-    }
-
-    .tr iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0
+    .vd-jump button:hover {
+      transform: translateY(-2px)
     }
 
     .sm-links {
@@ -1731,6 +1661,7 @@
     <div class="wrap">
       <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span>/ Saudosa Maloca</span></a>
       <ul class="pf-links">
+        <li><a href="#trailer">Trailer</a></li>
         <li><a href="#epocas">Épocas</a></li>
         <li><a href="#marcas">Marcas</a></li>
         <li><a href="#especulacao">Especulação</a></li>
@@ -1845,11 +1776,48 @@
     </div>
   </section>
 
-  <!-- 01 · ERAS (SIGNATURE BAND) -->
+  <!-- 01 · NO AR (TRAILER OFICIAL) -->
+  <section id="trailer" class="pf-sec">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b>01</b> · No ar</p>
+        <h2>As peças no trailer oficial do filme.</h2>
+        <p class="lede">Trailer oficial de Saudosa Maloca em que o universo gráfico da São Paulo dos anos 50 e 80 aparece em cena: o Bar Bleque Tais, os rótulos de época, as placas de rua e a demolição da maloca.</p>
+      </div>
+
+      <figure class="rv" data-video id="video-fig">
+        <div class="pf-stage st-reboco-dark">
+          <div class="tag-row"><span class="pill y">Vídeo</span><span class="pill">Como foi ao ar</span></div>
+          <div class="vd">
+            <video controls playsinline preload="none" poster="assets/poster.jpg" aria-label="Trailer oficial de Saudosa Maloca com as peças em cena">
+              <source src="assets/video.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="vd-row">
+            <div class="vd-jump">
+              <button type="button" data-t="12">Bar Bleque Tais · 0:12</button>
+              <button type="button" data-t="24">Placas e ruas · 0:24</button>
+              <button type="button" data-t="52">Boteco anos 50 · 0:52</button>
+              <button type="button" data-t="84">Balcão e garrafas · 1:24</button>
+              <button type="button" data-t="105">Demolição da maloca · 1:45</button>
+            </div>
+          </div>
+          <div class="sm-links">
+            <a href="https://www.primevideo.com/-/pt/detail/0OHJ5KHFO4W7K0BVFESFO24UID" target="_blank" rel="noopener">Assistir no Prime Video <span aria-hidden="true">↗</span></a>
+            <a href="https://www.youtube.com/watch?v=IvDCuwt3e2A" target="_blank" rel="noopener">Trailer no YouTube <span aria-hidden="true">↗</span></a>
+            <a href="https://www.imdb.com/name/nm19036887/" target="_blank" rel="noopener">Erik Placido no IMDb <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <figcaption><b>Trailer oficial do longa-metragem.</b> Distribuído pela Elo Studios e exibido nos cinemas e no Prime Video. Use os atalhos acima para pular direto para cada momento em cena.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 02 · ERAS (SIGNATURE BAND) -->
   <section id="epocas" class="pf-sec sm-band">
     <div class="wrap">
       <div class="pf-head rv">
-        <p class="eyebrow"><b>01</b> · Épocas</p>
+        <p class="eyebrow"><b>02</b> · Épocas</p>
         <h2>As mesmas marcas, trinta anos depois.</h2>
         <p class="lede">A história vai e volta entre os anos 50 e os anos 80, e o bar aparece nas duas épocas. Algumas
           marcas atravessam o tempo e mudam de cara: a Clara troca o chope em letra cursiva por uma pilsen de letras
@@ -1949,11 +1917,11 @@
     </div>
   </section>
 
-  <!-- 02 · BRANDS -->
+  <!-- 03 · BRANDS -->
   <section id="marcas" class="pf-sec alt">
     <div class="wrap">
       <div class="pf-head rv">
-        <p class="eyebrow"><b>02</b> · Marcas</p>
+        <p class="eyebrow"><b>03</b> · Marcas</p>
         <h2>Marcas que nunca existiram, com cara de que sempre estiveram ali.</h2>
         <p class="lede">As garrafas, latas, pacotes e maços do bar e da maloca levam marcas inventadas, cada uma com
           embalagem, slogan e endereço de fábrica de época. Os rótulos de cerveja saíram em 200 cópias para cada época,
@@ -2069,11 +2037,11 @@
     </div>
   </section>
 
-  <!-- 03 · REAL ESTATE -->
+  <!-- 04 · REAL ESTATE -->
   <section id="especulacao" class="pf-sec">
     <div class="wrap">
       <div class="pf-head rv">
-        <p class="eyebrow"><b>03</b> · Especulação</p>
+        <p class="eyebrow"><b>04</b> · Especulação</p>
         <h2>A especulação imobiliária chega pelas paredes antes de chegar à maloca.</h2>
         <p class="lede">A demolição da maloca fecha a história. Antes dela, a cidade já anuncia o que vem: lambes de
           lançamentos nas ruas, outdoor no contraplano do bar, a planta do prédio, o contrato de compra e venda e a
@@ -2168,11 +2136,11 @@
     </div>
   </section>
 
-  <!-- 04 · SETS -->
+  <!-- 05 · SETS -->
   <section id="sets" class="pf-sec alt">
     <div class="wrap">
       <div class="pf-head rv">
-        <p class="eyebrow"><b>04</b> · Sets</p>
+        <p class="eyebrow"><b>05</b> · Sets</p>
         <h2>Cerca de 60 peças, set por set, cena por cena.</h2>
         <p class="lede">A arte gráfica partiu de uma lista com o set, a cena, a quantidade, o tamanho e o material de
           cada peça, impressa em quatro levas. Cada set tem o seu repertório: o bar Bleque Tais nas duas épocas, a
@@ -2366,76 +2334,6 @@
           <p class="sys-n">As referências foram organizadas em pastas por tipo de peça antes do desenho.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- RESULTADO -->
-  <section id="resultado" class="pf-sec alt">
-    <div class="wrap">
-      <div class="pf-head rv">
-        <p class="eyebrow">Resultado</p>
-        <h2>Da gráfica para o set, do set para o cinema.</h2>
-        <p class="lede">As peças foram para a gráfica em quatro levas, entre dezembro de 2022 e janeiro de 2023, e o
-          filme foi rodado em janeiro de 2023. Saudosa Maloca passou pela 47ª Mostra Internacional de Cinema de São
-          Paulo, em outubro de 2023, estreou nos cinemas em 21 de março de 2024, com distribuição da Elo Studios, e hoje
-          está no Prime Video.</p>
-      </div>
-
-      <figure class="rv">
-        <div class="pf-stage st-vinho">
-          <div class="tag-row"><span class="pill y">Trajetória</span><span class="pill">Cronologia da produção</span>
-          </div>
-
-          <!-- Milestones da produção cinematográfica -->
-          <div class="res-timeline">
-            <div class="res-milestone">
-              <span class="dt">Dez 2022 · Jan 2023</span>
-              <b>4 Levas Gráficas</b>
-              <span>60 artes finais entregues para adesivação, cartazes A2 e papéis de cena.</span>
-            </div>
-            <div class="res-milestone">
-              <span class="dt">Janeiro 2023</span>
-              <b>Filmagem no Set</b>
-              <span>Diárias com Paulo Miklos, Leilah Moreno e Gero Camilo nos cenários de época.</span>
-            </div>
-            <div class="res-milestone">
-              <span class="dt">Outubro 2023</span>
-              <b>47ª Mostra SP</b>
-              <span>Primeira exibição oficial na Mostra Internacional de Cinema de São Paulo.</span>
-            </div>
-            <div class="res-milestone">
-              <span class="dt">21 Março 2024</span>
-              <b>Estreia Nacional</b>
-              <span>Lançamento em salas de cinema de todo o país pela distribuidora Elo Studios.</span>
-            </div>
-            <div class="res-milestone">
-              <span class="dt">Streaming</span>
-              <b>Prime Video</b>
-              <span>Disponível no catálogo oficial da Amazon Prime Video.</span>
-            </div>
-          </div>
-
-          <div class="tr" id="tr">
-            <button class="tr-btn" type="button" id="trBtn"
-              aria-label="Tocar o trailer oficial de Saudosa Maloca (carrega o YouTube)">
-              <img src="assets/tx-parede.jpg" alt="" loading="lazy">
-              <span class="play"><i aria-hidden="true">▶</i>Trailer oficial<small>Saudosa Maloca · Pink Flamingo
-                  Filmes</small></span>
-            </button>
-          </div>
-
-          <div class="sm-links">
-            <a href="https://www.primevideo.com/-/pt/detail/0OHJ5KHFO4W7K0BVFESFO24UID" target="_blank"
-              rel="noopener">Assistir no Prime Video <span aria-hidden="true">↗</span></a>
-            <a href="https://www.youtube.com/watch?v=IvDCuwt3e2A" target="_blank" rel="noopener">Trailer no YouTube
-              <span aria-hidden="true">↗</span></a>
-            <a href="https://www.imdb.com/name/nm19036887/" target="_blank" rel="noopener">Erik Placido no IMDb
-              <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-        <figcaption><b>Trailer oficial e marcos do longa.</b> Publicado pelo canal oficial da produção e ingressos.
-        </figcaption>
-      </figure>
 
       <div class="callout rv"><b>Créditos.</b> Saudosa Maloca é um filme da Pink Flamingo Filmes, dirigido por Pedro
         Serrano e produzido por ele e Renata Martins, com direção de arte de Cláudia Terçarolli. Design gráfico do
@@ -2497,15 +2395,16 @@
         lb.addEventListener('click', function (e) { if (e.target === lb) lb.close() });
       }
 
-      /* ===== TRAILER YOUTUBE EMBED ===== */
-      var trBtn = $('#trBtn');
-      if (trBtn) trBtn.addEventListener('click', function () {
-        var f = document.createElement('iframe');
-        f.src = 'https://www.youtube-nocookie.com/embed/IvDCuwt3e2A?autoplay=1&rel=0';
-        f.title = 'Trailer oficial de Saudosa Maloca';
-        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-        f.allowFullscreen = true;
-        trBtn.replaceWith(f); f.focus();
+      /* ===== VIDEO CONTROLS & JUMPS ===== */
+      $$('[data-video]').forEach(function (fig) {
+        var v = $('video', fig);
+        if (!v) return;
+        $$('[data-t]', fig).forEach(function (b) {
+          b.addEventListener('click', function () {
+            var t = +b.dataset.t, go = function () { v.currentTime = t; v.play() };
+            if (v.readyState < 1) { v.addEventListener('loadedmetadata', go, { once: true }); v.load() } else go();
+          });
+        });
       });
     })();
   </script>

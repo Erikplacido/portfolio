@@ -8,6 +8,7 @@
   var translations = {
     en: {
       // Nav
+      '.pf-links a[href="#trailer"]': 'Trailer',
       '.pf-links a[href="#epocas"]': 'Dual Eras',
       '.pf-links a[href="#marcas"]': 'Brands',
       '.pf-links a[href="#especulacao"]': 'Real Estate',
@@ -38,8 +39,16 @@
       '#contexto .sm-count > div:nth-child(3) .tag': 'Print Runs',
       '#contexto .sm-count > div:nth-child(3) p': 'production batches delivered to commercial print shops between Dec 2022 and Jan 2023 as filming commenced.',
 
-      // Section 01: Eras
-      '#epocas .eyebrow': '<b>01</b> · Dual Eras',
+            // Section 01: Trailer
+      '#trailer .eyebrow': '<b>01</b> · On Screen',
+      '#trailer h2': 'The props in the official theatrical trailer.',
+      '#trailer .lede': 'Official trailer of Saudosa Maloca showcasing the graphic universe of 1950s and 1980s São Paulo on set: Bleque Tais tavern, vintage labels, street plaques, and the demolition of the maloca.',
+      '#trailer figcaption': '<b>Official theatrical trailer.</b> Distributed by Elo Studios and featured in movie theaters and on Prime Video. Use the jump shortcuts above to jump straight to each moment on set.',
+      '#trailer .sm-links a:nth-child(1)': 'Watch on Prime Video ↗',
+      '#trailer .sm-links a:nth-child(2)': 'Trailer on YouTube ↗',
+
+      // Section 02: Eras
+      '#epocas .eyebrow': '<b>02</b> · Dual Eras',
       '#epocas h2': 'The exact same commercial brands, thirty years later.',
       '#epocas .lede': 'The story shifts back and forth between the 1950s and 1980s, and the neighborhood tavern appears in both timelines. Legacy brands evolve naturally across three decades: Clara Beer transitions from mid-century cursive script draft to condensed industrial pilsner, Refres Frut soda adopts 2-liter family bottles, and Aurora cigarettes and Maxlumi matches follow that same visual evolution.',
       '#epocas .tag-row .pill:nth-child(1)': 'Zoom',
@@ -47,7 +56,7 @@
       '#epocas figcaption': '<b>The same brands in the 1950s and the 1980s.</b> Real on-set final artwork from the film, side by side: the 1950s version on the left, the 1980s version on the right. Tap a piece to zoom in.',
 
       // Section 02: Fictional Brands
-      '#marcas .eyebrow': '<b>02</b> · Fictional Brands',
+      '#marcas .eyebrow': '<b>03</b> · Fictional Brands',
       '#marcas h2': 'Fictional brands that feel like they have always been there.',
       '#marcas .lede': 'Bottles, tins, and cigarette packs dressing the tavern and the maloca feature bespoke fictional brands, each complete with era-accurate packaging, slogans, and industrial factory addresses. Beer bottle labels were printed in runs of 200 units per era on die-cut adhesive vinyl for standard 600 ml amber glass bottles. Every fictitious business name underwent legal clearances before reaching pre-press.',
       '#marcas .tag-row .pill:nth-child(1)': 'Zoom',
@@ -56,7 +65,7 @@
       '#marcas .callout': '<b>Cleared Brand Names.</b> The prop list supplied legal alternatives for every business: clearances approved Madame Norita for the boutique, Café Paulistano for the diner, and Rádio Cruzeiro do Sul for the broadcast station.',
 
       // Section 03: Real Estate Speculation
-      '#especulacao .eyebrow': '<b>03</b> · Speculation & Gentrification',
+      '#especulacao .eyebrow': '<b>04</b> · Speculation & Gentrification',
       '#especulacao h2': 'Real estate speculation encroaches on walls long before bulldozing the shack.',
       '#especulacao .lede': 'The demolition of the maloca concludes the film’s tragic arc. Prior to the wrecking ball, the visual city foreshadows the impending boom: development paste-ups plastered across brick walls, billboard hoardings behind the tavern, architectural blueprints, notarized purchase agreements, and municipal eviction notices. Nearly all bearing the corporate hallmark of fictional developer Pereira & Luccini.',
       '#especulacao .tag-row .pill:nth-child(1)': 'Zoom',
@@ -64,7 +73,7 @@
       '#especulacao figcaption': '<b>Real estate speculation props.</b> Authentic production files: fly-posters on uncalendered kraft, roadside billboards on matte vinyl, architectural blueprint on A1 newsprint, and eviction notice on city letterhead.',
 
       // Section 04: Sets
-      '#sets .eyebrow': '<b>04</b> · Set Architecture',
+      '#sets .eyebrow': '<b>05</b> · Set Architecture',
       '#sets h2': '60+ dedicated props, mapped set by set, scene by scene.',
       '#sets .lede': 'Graphic prop design followed a comprehensive art department breakdown listing set locations, scene numbers, run quantities, substrate specifications, and mechanical tolerances. Each filming environment possessed a unique graphic palette: Bleque Tais tavern in both eras, Cruzeiro do Sul radio station, public avenues, and period actor hand-props.',
       '#st .st-plate': 'Streets of São Paulo',
@@ -80,15 +89,7 @@
       '#sistema .pf-card:nth-child(1) .sys-n': 'Colors extracted from production masters: Aurora, Clara, Wald, and Dona Aurea in the 50s; Clara, Refres Frut, and Demar in the 80s.',
       '#sistema .pf-card:nth-child(2) .tag': 'Typography',
       '#sistema .pf-card:nth-child(3) .tag': 'Historical Research',
-
-      // Results
-      '#resultado .eyebrow': 'Release & Reception',
-      '#resultado h2': 'From the print shop to the set, from the set to the cinema screen.',
-      '#resultado .lede': 'Props were released in four print runs between December 2022 and January 2023, with principal photography wrapping in late January. Saudosa Maloca premiered at the 47th São Paulo International Film Festival (Mostra) in October 2023, debuted across movie theaters nationwide on March 21, 2024 via Elo Studios, and is now streaming on Prime Video.',
-      '#resultado .sm-links a:nth-child(1)': 'Watch on Prime Video ↗',
-      '#resultado .sm-links a:nth-child(2)': 'Trailer on YouTube ↗',
-      '#resultado figcaption': '<b>Official theatrical trailer.</b> Distributed by Elo Studios and Ingresso.com. Player background features peeling wall texture from the deck.',
-      '#resultado .callout': '<b>Credits.</b> Saudosa Maloca is a Pink Flamingo Filmes production directed by Pedro Serrano, produced by Serrano and Renata Martins, with production design by Cláudia Terçarolli. On-set graphic design and pitch deck: Erik Placido.',
+      '#sistema .callout': '<b>Credits.</b> Saudosa Maloca is a Pink Flamingo Filmes production directed by Pedro Serrano, produced by Serrano and Renata Martins, with production design by Cláudia Terçarolli. On-set graphic design and pitch deck: Erik Placido.',
 
       // Footer
       '.pf-footer .eyebrow': 'Next Case',
@@ -99,6 +100,7 @@
 
     es: {
       // Nav
+      '.pf-links a[href="#trailer"]': 'Tráiler',
       '.pf-links a[href="#epocas"]': 'Dos Épocas',
       '.pf-links a[href="#marcas"]': 'Marcas',
       '.pf-links a[href="#especulacao"]': 'Especulación',
@@ -129,16 +131,24 @@
       '#contexto .sm-count > div:nth-child(3) .tag': 'Imprenta',
       '#contexto .sm-count > div:nth-child(3) p': 'entregas de producción a imprenta entre diciembre de 2022 y enero de 2023 durante el inicio de rodaje.',
 
-      // Section 01: Épocas
-      '#epocas .eyebrow': '<b>01</b> · Dos Épocas',
+            // Section 01: Tráiler
+      '#trailer .eyebrow': '<b>01</b> · En Pantalla',
+      '#trailer h2': 'Las piezas en el tráiler oficial de la película.',
+      '#trailer .lede': 'Tráiler oficial de Saudosa Maloca donde el universo gráfico del São Paulo de los años 50 y 80 entra en escena: el Bar Bleque Tais, las etiquetas de época, las placas de calle y la demolición de la maloca.',
+      '#trailer figcaption': '<b>Tráiler oficial del largometraje.</b> Distribuido por Elo Studios en cines y Prime Video. Usa los accesos directos superiores para saltar a cada momento en pantalla.',
+      '#trailer .sm-links a:nth-child(1)': 'Ver en Prime Video ↗',
+      '#trailer .sm-links a:nth-child(2)': 'Tráiler en YouTube ↗',
+
+      // Section 02: Épocas
+      '#epocas .eyebrow': '<b>02</b> · Dos Épocas',
       '#epocas h2': 'Las mismas marcas comerciales, treinta años después.',
       '#epocas .lede': 'La trama viaja entre los años 50 y los 80, y la taberna aparece en ambos periodos. Las marcas atraviesan el tiempo y cambian de rostro: la cerveza Clara pasa de letras caligráficas a tipografías condensadas, el refresco Refres Frut adopta botellas familiares de 2 litros, y los cigarrillos Aurora y los fósforos Maxlumi también acompañan esa evolución.',
       '#epocas .tag-row .pill:nth-child(1)': 'Ampliar',
       '#epocas .tag-row .pill:nth-child(2)': 'Cinco marcas en las dos épocas',
       '#epocas figcaption': '<b>Las mismas marcas en los años 50 y en los 80.</b> Artes finales reales del rodaje, lado a lado: a la izquierda la versión de los años 50, a la derecha la de los 80. Toca una pieza para ampliarla.',
 
-      // Section 02: Marcas
-      '#marcas .eyebrow': '<b>02</b> · Marcas Ficticias',
+      // Section 03: Marcas
+      '#marcas .eyebrow': '<b>03</b> · Marcas Ficticias',
       '#marcas h2': 'Marcas inventadas que parecen haber existido siempre.',
       '#marcas .lede': 'Botellas, latas y cajetillas de tabaco de la taberna y la maloca portan marcas ficticias con estética de época. Las etiquetas de cerveza se imprimieron en tiradas de 200 copias en vinilo adhesivo para botellas tradicionales de 600 ml. Los nombres de comercios pasaron por el departamento jurídico de la productora.',
       '#marcas .tag-row .pill:nth-child(1)': 'Ampliar',
@@ -146,16 +156,16 @@
       '#marcas figcaption': '<b>Etiquetas, latas, paquetes y cajetillas aplicadas.</b> Artes finales de producción reales.',
       '#marcas .callout': '<b>Nombres Aprobados.</b> El departamento jurídico aprobó Madame Norita para la boutique, Café Paulistano para la casa de comidas y Rádio Cruzeiro do Sul para la emisora.',
 
-      // Section 03: Especulación
-      '#especulacao .eyebrow': '<b>03</b> · Especulación Inmobiliaria',
+      // Section 04: Especulación
+      '#especulacao .eyebrow': '<b>04</b> · Especulación Inmobiliaria',
       '#especulacao h2': 'La especulación urbana empapela las calles antes de tirar la maloca.',
       '#especulacao .lede': 'El derribo de la maloca cierra la historia. Antes de las excavadoras, la ciudad avisa lo que llega: carteles de promociones inmobiliarias, vallas publicitarias en el contraplano del bar, planos de edificios, contratos de compraventa y órdenes judiciales de desalojo de la constructora Pereira & Luccini.',
       '#especulacao .tag-row .pill:nth-child(1)': 'Ampliar',
       '#especulacao .tag-row .pill:nth-child(2)': 'Documentos clave de la trama y campañas callejeras',
       '#especulacao figcaption': '<b>Piezas de especulación inmobiliaria.</b> Carteles en papel kraft, vallas en lona y orden de desalojo en papel timbrado.',
 
-      // Section 04: Sets
-      '#sets .eyebrow': '<b>04</b> · Sets y Rodaje',
+      // Section 05: Sets
+      '#sets .eyebrow': '<b>05</b> · Sets y Rodaje',
       '#sets h2': 'Cerca de 60 piezas gráficas, set a set, escena a escena.',
       '#sets .lede': 'El trabajo partió del desglose de arte con localización, escena, cantidad y materiales. Cada set cuenta con su atmósfera: la taberna Bleque Tais en dos épocas, la emisora de radio, el callejero y la documentación en mano de los actores.',
       '#st .st-plate': 'Calles de São Paulo',
@@ -172,15 +182,6 @@
       '#sistema .pf-card:nth-child(2) .tag': 'Tipografía',
       '#sistema .pf-card:nth-child(3) .tag': 'Investigación Histórica',
 
-      // Resultado
-      '#resultado .eyebrow': 'Resultado y Estreno',
-      '#resultado h2': 'De la imprenta al plató, del plató a la gran pantalla.',
-      '#resultado .lede': 'La producción se rodó en enero de 2023. Saudosa Maloca participó en la 47ª Mostra Internacional de Cine de São Paulo en octubre de 2023, se estrenó en salas comerciales el 21 de marzo de 2024 distribuida por Elo Studios y actualmente está disponible en Prime Video.',
-      '#resultado .sm-links a:nth-child(1)': 'Ver en Prime Video ↗',
-      '#resultado .sm-links a:nth-child(2)': 'Tráiler en YouTube ↗',
-      '#resultado figcaption': '<b>Tráiler oficial de la película.</b>',
-      '#resultado .callout': '<b>Créditos.</b> Saudosa Maloca es una producción de Pink Flamingo Filmes dirigida por Pedro Serrano y producida por Serrano y Renata Martins, con dirección de arte de Cláudia Terçarolli. Diseño gráfico de escena: Erik Placido.',
-
       // Footer
       '.pf-footer .eyebrow': 'Siguiente caso',
       '.pf-footer h2': '¿Hablamos?',
@@ -190,6 +191,7 @@
 
     fr: {
       // Nav
+      '.pf-links a[href="#trailer"]': 'Bande-annonce',
       '.pf-links a[href="#epocas"]': 'Deux Époques',
       '.pf-links a[href="#marcas"]': 'Marques',
       '.pf-links a[href="#especulacao"]': 'Spéculation',
@@ -220,16 +222,24 @@
       '#contexto .sm-count > div:nth-child(3) .tag': 'Impression',
       '#contexto .sm-count > div:nth-child(3) p': 'fournées d’impression d’artisanat entre décembre 2022 et janvier 2023 au lancement du tournage.',
 
-      // Section 01: Époques
-      '#epocas .eyebrow': '<b>01</b> · Deux Époques',
+            // Section 01: Bande-annonce
+      '#trailer .eyebrow': '<b>01</b> · À l’Écran',
+      '#trailer h2': 'Les accessoires dans la bande-annonce officielle du film.',
+      '#trailer .lede': 'Bande-annonce officielle de Saudosa Maloca où l’univers graphique du São Paulo des années 50 et 80 apparaît à l’écran : le Bar Bleque Tais, les étiquettes d’époque, les plaques de rue et la démolition de la maloca.',
+      '#trailer figcaption': '<b>Bande-annonce officielle du long-métrage.</b> Distribué par Elo Studios au cinéma et sur Prime Video. Utilisez les raccourcis ci-dessus pour accéder directement à chaque moment à l’écran.',
+      '#trailer .sm-links a:nth-child(1)': 'Regarder sur Prime Video ↗',
+      '#trailer .sm-links a:nth-child(2)': 'Bande-annonce sur YouTube ↗',
+
+      // Section 02: Époques
+      '#epocas .eyebrow': '<b>02</b> · Deux Époques',
       '#epocas h2': 'Les mêmes marques commerciales, trente ans plus tard.',
       '#epocas .lede': 'L’histoire navigue entre les années 50 et 80, et le bistrot apparaît dans les deux décennies. Certaines marques traversent le temps et changent de visage : la bière Clara troque sa calligraphie rétro contre des caractères pilsen condensés, le soda Refres Frut passe à la bouteille familiale de 2 litres, et les cigarettes Aurora ainsi que les allumettes Maxlumi suivent également cette évolution.',
       '#epocas .tag-row .pill:nth-child(1)': 'Agrandir',
       '#epocas .tag-row .pill:nth-child(2)': 'Cinq marques aux deux époques',
       '#epocas figcaption': '<b>Les mêmes marques dans les années 50 et 80.</b> Fichiers d’exécution réels du film, côte à côte : à gauche la version des années 50, à droite celle des années 80. Touchez une pièce pour l’agrandir.',
 
-      // Section 02: Marques
-      '#marcas .eyebrow': '<b>02</b> · Marques Fictives',
+      // Section 03: Marques
+      '#marcas .eyebrow': '<b>03</b> · Marques Fictives',
       '#marcas h2': 'Des marques inventées qui semblent avoir toujours existé.',
       '#marcas .lede': 'Bouteilles, conserves et paquets de tabac du bar et de la maloca arborent des marques imaginées pour le film. Les étiquettes de bière ont été imprimées à 200 exemplaires par époque sur vinyle adhésif pour bouteilles en verre ambré de 600 ml. Tous les noms d’enseignes ont reçu l’aval juridique de la production.',
       '#marcas .tag-row .pill:nth-child(1)': 'Agrandir',
@@ -237,16 +247,16 @@
       '#marcas figcaption': '<b>Étiquettes, boîtes et paquets d’époque.</b> Documents d’impression authentiques.',
       '#marcas .callout': '<b>Validation Juridique.</b> Le service juridique a validé Madame Norita pour la boutique de confection, Café Paulistano pour le débit de boissons et Rádio Cruzeiro do Sul pour la station de radio.',
 
-      // Section 03: Spéculation
-      '#especulacao .eyebrow': '<b>03</b> · Spéculation Immobilière',
+      // Section 04: Spéculation
+      '#especulacao .eyebrow': '<b>04</b> · Spéculation Immobilière',
       '#especulacao h2': 'La spéculation immobilière s’affiche sur les murs avant de raser la maloca.',
       '#especulacao .lede': 'La destruction de la cabane sonne le glas de l’insouciance. En amont, l’environnement urbain annonce la mutation : affiches de programmes immobiliers collées sur la brique, panneau publicitaire dans l’axe du bar, plans d’architecte, actes de vente et arrêtés d’expulsion au nom du promoteur fictif Pereira & Luccini.',
       '#especulacao .tag-row .pill:nth-child(1)': 'Agrandir',
       '#especulacao .tag-row .pill:nth-child(2)': 'Documents clés de l’intrigue et campagnes d’affichage',
       '#especulacao figcaption': '<b>Documents de promotion immobilière.</b> Affiches sur papier kraft, bâches imprimées et avis d’expulsion sur papier à en-tête municipal.',
 
-      // Section 04: Décors
-      '#sets .eyebrow': '<b>04</b> · Décors et Tournage',
+      // Section 05: Décors
+      '#sets .eyebrow': '<b>05</b> · Décors et Tournage',
       '#sets h2': 'Une soixantaine d’accessoires graphiques, décor par décor, scène par scène.',
       '#sets .lede': 'La fabrication a suivi le dépouillement général de la régie d’art : bistrot Bleque Tais aux deux époques, station de radio, carrefours urbains et documents manipulés par les comédiens.',
       '#st .st-plate': 'Rues de São Paulo',
@@ -262,15 +272,6 @@
       '#sistema .pf-card:nth-child(1) .sys-n': 'Couleurs prélevées sur les fichiers de production cinéma.',
       '#sistema .pf-card:nth-child(2) .tag': 'Typographie',
       '#sistema .pf-card:nth-child(3) .tag': 'Recherche Historique',
-
-      // Résultat
-      '#resultado .eyebrow': 'Sortie et Accueil',
-      '#resultado h2': 'De l’atelier au plateau, du plateau aux salles de cinéma.',
-      '#resultado .lede': 'Tourné en janvier 2023, Saudosa Maloca a été présenté à la 47e Mostra Internationale de Cinéma de São Paulo en octobre 2023 avant sa sortie en salles le 21 mars 2024 distribué par Elo Studios. Le film est aujourd’hui disponible sur Prime Video.',
-      '#resultado .sm-links a:nth-child(1)': 'Regarder sur Prime Video ↗',
-      '#resultado .sm-links a:nth-child(2)': 'Bande-annonce sur YouTube ↗',
-      '#resultado figcaption': '<b>Bande-annonce officielle du film.</b>',
-      '#resultado .callout': '<b>Crédits.</b> Saudosa Maloca est un film Pink Flamingo Filmes réalisé par Pedro Serrano et produit par Serrano et Renata Martins, avec une direction artistique de Cláudia Terçarolli. Design graphique du film : Erik Placido.',
 
       // Footer
       '.pf-footer .eyebrow': 'Projet suivant',
