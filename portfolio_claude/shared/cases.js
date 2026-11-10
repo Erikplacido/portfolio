@@ -86,7 +86,6 @@ window.PORTFOLIO_CASES_ALL = [
   },
   {
     slug: 'saudosa-maloca',
-    draft: true,
     group: 'audiovisual',
     title: 'Saudosa Maloca',
     color: '#1E2A7A',                      // mesma cor do --accent da página

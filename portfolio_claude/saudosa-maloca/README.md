@@ -6,16 +6,14 @@ Erik foi o **designer gráfico do filme** (placa-título e peças de cena dos an
 
 | Seção | O que mostra | Interação |
 |---|---|---|
-| Abertura | Placa-título sobre o muro (imagem da capa do deck) | Um reflexo de luz passa uma vez |
-| Contexto | Sinopse, brief, 2 épocas, ~60 itens na lista de arte, 4 levas de impressão | — |
-| 01 Título | Placa-título + 9 placas de rua do set (57 × 30 cm) | Escolher a esquina; troca sozinho até o primeiro toque |
-| 02 Épocas (faixa assinatura) | 6 pares anos 50 × anos 80: rótulo e cartaz Clara, Refres Frut, cigarro Aurora → Demar, fósforo Maxlumi → Maxluli, cédula de cem cruzeiros | Placas ANOS 50 / ANOS 80 viram os pares; alterna sozinho até o primeiro toque |
-| 03 Marcas | 13 rótulos e maços inventados no balcão do bar, com tamanho e uso; nomes aprovados pelo jurídico | Escolher rótulo (setas no teclado); troca sozinho até o primeiro toque |
-| 04 Especulação | 12 peças da especulação imobiliária (lambes, outdoors, planta, contrato, ordem de despejo, jornal) | Toque amplia |
-| 05 Sets | Abas Bar Bleque Tais, Rádio Cruzeiro do Sul, Ruas, Papéis de cena; frame da filmagem com as cédulas | Abas (setas, Home, End); toque amplia |
-| 06 Deck | 20 slides reais do deck de captação, capítulos como placas esmaltadas | Setas e placas; troca sozinho até o primeiro toque |
-| Sistema visual | Paletas dos anos 50 e 80 (cores tiradas das artes), fontes por tipo de peça, pastas de pesquisa | — |
-| Resultado | Datas da gráfica, filmagem, Mostra e estreia; trailer que só carrega o YouTube no clique; Prime Video | — |
+| Abertura | Placa-título sobre o muro (imagem da capa do deck) | Reflexo de luz esmaltada na abertura |
+| Contexto | Sinopse, brief, 2 épocas, ~60 itens na lista de arte, 4 levas de impressão, 5 quadros cinematográficos | Toque amplia quadros em alta resolução |
+| 01 Épocas (faixa assinatura) | Vitrine interativa de 6 pares anos 50 × anos 80 (Clara rótulo, Clara cartaz, Refres Frut, cigarro Aurora → Demar, fósforo Maxlumi → Maxluli, cédula de cem cruzeiros) | Placas ANOS 50 / ANOS 80 e botão 3D ou Lado a Lado; seletor dos 6 pares; ciclo suave que pausa no primeiro toque |
+| 02 Marcas | 2 fotos panorâmicas dos balcões de época + prateleira interativa de 13 rótulos inventados (Belezura, Austral, Cana Caí, Carminha, Didico, Mimozinha, Dona Aurea, Mariola, Coco, Aurora, Old Maltes, Demar, Wald) | Prateleira navegável com spotlight em alta fidelidade e ficha técnica |
+| 03 Especulação | Ordem de despejo e planta do edifício em destaque + mural com 10 lambes, outdoors, contrato e jornal | Toque em qualquer peça amplia em alta resolução |
+| 04 Sets | Abas esmaltadas: Bar Bleque Tais, Rádio Cruzeiro do Sul, Ruas de São Paulo (com quiosque de esquinas) e Papéis de Cena com o frame bruto da filmagem das cédulas | Abas por teclado (setas/Home/End); seletor de esquinas esmaltadas; zoom |
+| Sistema visual | Paletas dos anos 50 e 80 (cores tiradas das artes), fontes por tipo de peça, pastas de pesquisa | Amostras cromáticas e tipográficas |
+| Resultado | Cronologia da produção em placas (gráfica, set, Mostra SP, estreia, Prime Video) e trailer oficial | Trailer que só carrega o player do YouTube no clique |
 
 Qualquer peça com `data-zoom` abre num `<dialog>` ampliado (Esc ou clique fora fecha). Com `prefers-reduced-motion`, nada troca sozinho e tudo aparece no estado final, com os controles funcionando. Loops pausam fora da tela.
 
