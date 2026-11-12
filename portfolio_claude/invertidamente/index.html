@@ -51,14 +51,19 @@
 .tr-btn small{font:500 12px/1.3 var(--pf-sans);letter-spacing:0;color:#E9DCCB}
 
 /* ===== tiles (any gallery) ===== */
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(12px,2vw,20px)}
-@media(max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,20px)}
+@media(max-width:760px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .gal .w2{grid-column:span 2}
 .gal .wf{grid-column:1/-1}
 .pc{--h:clamp(160px,20vw,220px);display:grid;gap:8px;align-content:start;background:none;border:0;padding:0;text-align:left;cursor:zoom-in;min-width:0}
-.pc[hidden]{display:none}
 .pc.w2{--h:clamp(170px,22vw,250px)}
 .pc.wf{--h:clamp(200px,34vw,420px)}
+/* featured piece: the envelope shown on the set, full width as a 16:9 photo */
+.pc.hero{grid-column:1/-1}
+.pc.hero .im{height:auto;aspect-ratio:16/9;padding:0;overflow:hidden;background:#1A1115;box-shadow:0 30px 50px -28px rgba(40,20,30,.7)}
+.pc.hero .im img{width:100%;height:100%;max-height:none;object-fit:cover;box-shadow:none;transition:transform .8s var(--ease)}
+.pc.hero:hover .im img,.pc.hero:focus-visible .im img{transform:scale(1.02)}
+.pc.hero b{font-size:15px}
 .pc .im{display:grid;place-items:center;height:var(--h);padding:12px;border-radius:10px;background:rgba(255,255,255,.62);transition:background .25s}
 .pc:hover .im{background:rgba(255,255,255,.9)}
 .pc .im img{max-width:100%;max-height:calc(var(--h) - 24px);width:auto;height:auto;box-shadow:0 10px 18px -10px rgba(40,20,30,.55)}
@@ -72,9 +77,39 @@
 .st-dk .pc:hover .im{background:rgba(255,255,255,.16)}
 .st-dk .pc b{color:#F3E9EE}
 .st-dk .pc small{color:var(--dk-ink,#CDBDC5)}
-.fl-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.fl-chips button{border:0;padding:9px 14px;border-radius:99px;background:rgba(255,255,255,.72);font:600 13px/1 var(--pf-sans);color:#2A2228;transition:background .25s,color .25s}
-.fl-chips button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* envelope assembly: the real die-cut file sliced along its folds and folded in 3D */
+.ef{grid-column:span 2;display:grid;gap:8px;align-content:start;min-width:0}
+.ef-view{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;perspective:1700px;background:rgba(255,255,255,.62)}
+.ef-view::after{content:"";position:absolute;left:24%;right:24%;bottom:12%;height:6%;border-radius:50%;background:radial-gradient(closest-side,rgba(40,20,30,.22),transparent);pointer-events:none}
+.ef-root{position:absolute;left:50%;top:45%;width:732px;height:598px;margin:-299px 0 0 -366px;transform-style:preserve-3d;will-change:transform}
+.ef-p{position:absolute;transform-style:preserve-3d}
+.ef-p i{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.ef-p .f{background:url(assets/iv-envelope-plano.webp) no-repeat;background-size:732px 598px}
+.ef-p .b{background:linear-gradient(160deg,#D9D1CA,#C9BFB7)}
+.ef-front{left:32px;top:69px;width:342px;height:495px}
+.ef-front .f{backface-visibility:visible;-webkit-backface-visibility:visible;background-position:-32px -69px;clip-path:polygon(2px 0,100% 0,100% 100%,14px 100%,0 483px)}
+.ef-side{left:12px;top:69px;width:20px;height:495px;transform-origin:100% 50%}
+.ef-side .f{background-position:-12px -69px;clip-path:polygon(20px 0,20px 483px,0 459px,0 21px,8px 9px)}
+.ef-side .b{transform:rotateY(180deg);clip-path:polygon(0 0,0 483px,20px 459px,20px 21px,12px 9px)}
+.ef-bottom{left:32px;top:564px;width:342px;height:21px;transform-origin:50% 0}
+.ef-bottom .f{background-position:-32px -564px;clip-path:polygon(14px 0,100% 0,100% 100%,36px 100%)}
+.ef-bottom .b{transform:rotateX(180deg);clip-path:polygon(14px 100%,100% 100%,100% 0,36px 0)}
+.ef-back{left:374px;top:69px;width:345px;height:495px;transform-origin:0 50%}
+.ef-back .f{background-position:-374px -69px;border-radius:0 12px 12px 0}
+.ef-back .b{transform:rotateY(180deg);border-radius:12px 0 0 12px}
+.ef-top{left:34px;top:12px;width:340px;height:57px;transform-origin:50% 100%}
+.ef-top .f{background-position:-34px -12px;border-radius:28px 20px 0 0}
+.ef-top .b{transform:rotateX(180deg);border-radius:0 0 20px 28px}
+.ef-ui{position:absolute;left:10px;right:10px;bottom:8px;display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:99px;background:rgba(255,255,255,.8);color:#21161B;max-width:230px;margin:0 auto;box-shadow:0 2px 8px rgba(40,20,30,.12)}
+.ef-play{flex:none;width:24px;height:24px;border-radius:50%;border:0;background:var(--hl);color:#1E1A00;display:grid;place-items:center;cursor:pointer}
+.ef-play svg{width:10px;height:10px}
+.ef-play:focus-visible,.ef-ui input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ef-ui label{flex:1;display:flex;align-items:center;gap:8px;font:600 11px/1 var(--pf-sans);letter-spacing:.03em}
+.ef-ui input{flex:1;accent-color:var(--accent);min-width:0;height:14px}
+.ef b{font:600 13px/1.3 var(--pf-sans);color:#21161B}
+.ef small{display:block;font-size:12px;line-height:1.4;color:#5E4E56;margin-top:2px}
+@media(max-width:760px){.ef-view{aspect-ratio:4/3}}
 
 /* ===== process ===== */
 .pr-vis{display:flex;align-items:flex-end;justify-content:center;gap:clamp(8px,1.6vw,16px);min-height:180px;padding:16px;border-radius:14px}
@@ -153,37 +188,44 @@
   <div class="wrap">
     <div class="pf-head rv">
       <p class="eyebrow"><b>02</b> · Peças</p>
-      <h2>Padaria, academia, banheiro, viagem: cada cômodo com suas peças.</h2>
-      <p class="lede">Lousas de giz, sacos de kraft, pôsteres de academia, plano de vacinação do pet, passagem e etiqueta de bagagem. Filtre por cômodo e clique para ampliar.</p>
+      <h2>Padaria, viagem, festa: cada cômodo com suas peças.</h2>
+      <p class="lede">Lousas de giz, sacos de kraft, plano de vacinação do pet, passagem e etiqueta de bagagem. Clique para ampliar.</p>
     </div>
     <figure class="rv">
       <div class="pf-stage st-gesso" id="iv">
-        <div class="tag-row"><span class="pill y">Filtrar e ampliar</span><span class="pill">20 peças</span></div>
-        <div class="fl-chips" role="group" aria-label="Cômodos"><button type="button" aria-pressed="true" data-f="*">Tudo</button><button type="button" aria-pressed="false" data-f="cozinha">Cozinha e banheiro</button><button type="button" aria-pressed="false" data-f="padaria">Padaria</button><button type="button" aria-pressed="false" data-f="academia">Academia</button><button type="button" aria-pressed="false" data-f="posteres">Pôsteres</button><button type="button" aria-pressed="false" data-f="viagem">Viagem</button><button type="button" aria-pressed="false" data-f="festa">Festa e quadro</button></div>
+        <div class="tag-row"><span class="pill y">Ampliar</span><span class="pill">12 peças</span></div>
         <div class="gal">
-          <button class="pc" type="button" data-zoom data-cap="Tacho de cobre · foto recortada para impressão." data-k="cozinha"><span class="im"><img class="flat" src="assets/iv-panela.webp" width="538" height="678" alt="Tacho de cobre martelado com alças, visto de cima, sem fundo" loading="lazy"></span><b>Tacho</b><small>foto recortada</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Faca do tacho · contorno de corte, 32 cm." data-k="cozinha"><span class="im"><img class="flat" src="assets/iv-panela-faca.webp" width="499" height="630" alt="Silhueta magenta do tacho: a faca de corte" loading="lazy"></span><b>Faca do tacho</b><small>32 cm</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Torneira · foto recortada para impressão." data-k="cozinha"><span class="im"><img class="flat" src="assets/iv-torneira.webp" width="257" height="550" alt="Torneira cromada com cruzeta vermelha, sem fundo" loading="lazy"></span><b>Torneira</b><small>foto recortada</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Pia de coluna · 95 × 92 cm, com faca." data-k="cozinha"><span class="im"><img class="flat" src="assets/iv-pia.webp" width="447" height="626" alt="Pia branca de coluna" loading="lazy"></span><b>Pia de coluna</b><small>95 × 92 cm</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Itens da prateleira do banheiro · frascos, sabonete e vaso, com faca." data-k="cozinha"><span class="im"><img class="flat" src="assets/iv-prateleira.webp" width="864" height="348" alt="Três frascos de sabonete líquido, sabonete em barra e vaso de suculenta, sem fundo" loading="lazy"></span><b>Prateleira do banheiro</b><small>itens com faca</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm." data-k="padaria"><span class="im"><img src="assets/iv-lousa.webp" width="713" height="900" alt="Lousa com moldura de madeira: Promoção do dia, queijo quente e suco de laranja, torta de frango com café" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm." data-k="padaria"><span class="im"><img src="assets/iv-lousa1.webp" width="713" height="892" alt="Lousa com moldura de madeira: Promoção do dia, coxinha e suco, cachorro-quente e refri, sonho com creme, frutas com açaí" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm." data-k="padaria"><span class="im"><img src="assets/iv-lousa3.webp" width="713" height="892" alt="Lousa com moldura de madeira: Promoção do dia, pastel de carne e caldo de cana, X-tudo com fritas, pão e café, misto quente" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Sacos de kraft da padaria · farinha, granola e aveia, com faca." data-k="padaria"><span class="im"><img class="flat" src="assets/iv-kraft.webp" width="978" height="489" alt="Fileira de sacos de papel kraft com rótulos de farinha de trigo, granola e aveia" loading="lazy"></span><b>Sacos de kraft</b><small>padaria, com faca</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Pôster da academia · A3." data-k="academia"><span class="im"><img src="assets/iv-gym1.webp" width="636" height="900" alt="Pôster ilustrado de um rack de anilhas e halteres, moldura vinho" loading="lazy"></span><b>Academia</b><small>pôster A3</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Pôster da academia · A3." data-k="academia"><span class="im"><img src="assets/iv-gym2.webp" width="636" height="900" alt="Pôster ilustrado de um homem com kettlebell sobre fundo amarelo" loading="lazy"></span><b>Academia</b><small>pôster A3</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Pôster da academia · A3." data-k="academia"><span class="im"><img src="assets/iv-gym6.webp" width="636" height="900" alt="Pôster ilustrado de um homem fazendo avanço com halteres sobre laranja" loading="lazy"></span><b>Academia</b><small>pôster A3</small></button>
-          <button class="pc" type="button" data-zoom data-cap="Boneco de anatomia · 155 × 90 cm." data-k="posteres"><span class="im"><img src="assets/iv-anatomia.webp" width="523" height="900" alt="Ilustração de corpo humano com órgãos à mostra" loading="lazy"></span><b>Anatomia</b><small>155 × 90 cm</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Plano de vacinação para filhotes de cachorro · 90 × 60 cm." data-k="posteres"><span class="im"><img src="assets/iv-vacina.webp" width="1000" height="667" alt="Pôster creme com tabela: Plano de vacinação para filhotes de cachorro" loading="lazy"></span><b>Plano de vacinação</b><small>90 × 60 cm</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Mapa-múndi · 90 × 60 cm." data-k="posteres"><span class="im"><img src="assets/iv-mapa.webp" width="1000" height="667" alt="Mapa-múndi em tons de marrom e terracota" loading="lazy"></span><b>Mapa-múndi</b><small>90 × 60 cm</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Passagem aérea · São Paulo para o Rio de Janeiro." data-k="viagem"><span class="im"><img src="assets/iv-ticket.webp" width="1000" height="443" alt="Passagem aérea laranja e azul com nome Eliana, de São Paulo para o Rio de Janeiro" loading="lazy"></span><b>Passagem</b><small>com faca</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Etiqueta de bagagem aérea · 20 × 9 cm, com faca." data-k="viagem"><span class="im"><img src="assets/iv-etiqueta.webp" width="1000" height="444" alt="Etiqueta de bagagem creme com ilhós, código de barras e LX123456" loading="lazy"></span><b>Etiqueta de bagagem</b><small>20 × 9 cm, com faca</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Varal Menino ou Menina." data-k="festa"><span class="im"><img class="flat" src="assets/iv-varal.webp" width="1000" height="554" alt="Letras de varal estampadas em rosa e azul: Meninoo, Meninaa" loading="lazy"></span><b>Varal</b><small>Menino ou menina</small></button>
-          <button class="pc wf" type="button" data-zoom data-cap="Varal Feliz aniversário." data-k="festa"><span class="im"><img class="flat" src="assets/iv-varal-aniversario.webp" width="1400" height="307" alt="Letras de varal estampadas: Feliz aniversário" loading="lazy"></span><b>Varal</b><small>Feliz aniversário</small></button>
-          <button class="pc w2" type="button" data-zoom data-cap="Envelope A5 com o logo do quadro." data-k="festa"><span class="im"><img src="assets/iv-envelope.webp" width="732" height="598" alt="Envelope planificado escuro com o logo Invertida Mente em vermelho" loading="lazy"></span><b>Envelope do quadro</b><small>A5</small></button>
+          <button class="pc hero" type="button" data-zoom data-cap="Envelope A5 com o logo do quadro · montagem sobre o cenário do estúdio."><span class="im"><img src="assets/iv-envelope.webp" width="1672" height="941" alt="Cartão com o logo Invertida Mente num suporte de acrílico sobre a bancada do estúdio, com o cenário do quadro desfocado ao fundo" loading="lazy"></span><b>Envelope do quadro</b><small>A5 · montagem no estúdio</small></button>
+          <div class="ef" id="ef" data-loop>
+            <div class="ef-view" role="img" aria-label="Animação: o envelope planificado dobra as abas lateral e inferior, a face de trás e a aba de cima até virar o envelope fechado com o logo Invertida Mente">
+              <div class="ef-root" aria-hidden="true">
+                <div class="ef-p ef-front"><i class="f"></i></div>
+                <div class="ef-p ef-side"><i class="f"></i><i class="b"></i></div>
+                <div class="ef-p ef-bottom"><i class="f"></i><i class="b"></i></div>
+                <div class="ef-p ef-back"><i class="f"></i><i class="b"></i></div>
+                <div class="ef-p ef-top"><i class="f"></i><i class="b"></i></div>
+              </div>
+              <div class="ef-ui">
+                <button class="ef-play" type="button" aria-pressed="true" aria-label="Pausar a montagem"><svg viewBox="0 0 14 14" aria-hidden="true"><path class="ic-pause" d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor"/><path class="ic-play" d="M3 1.5v11l9-5.5z" fill="currentColor" hidden/></svg></button>
+                <label>Dobrar <input type="range" min="0" max="1000" value="0" aria-label="Quanto o envelope está dobrado"></label>
+              </div>
+            </div>
+            <span><b>Montagem do envelope</b><small>animação feita a partir da faca real · A5</small></span>
+          </div>
+          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm."><span class="im"><img src="assets/iv-lousa.webp" width="713" height="900" alt="Lousa com moldura de madeira: Promoção do dia, queijo quente e suco de laranja, torta de frango com café" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm."><span class="im"><img src="assets/iv-lousa1.webp" width="713" height="892" alt="Lousa com moldura de madeira: Promoção do dia, coxinha e suco, cachorro-quente e refri, sonho com creme, frutas com açaí" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Lousa da padaria · Promoção do dia, 65 × 82 cm."><span class="im"><img src="assets/iv-lousa3.webp" width="713" height="892" alt="Lousa com moldura de madeira: Promoção do dia, pastel de carne e caldo de cana, X-tudo com fritas, pão e café, misto quente" loading="lazy"></span><b>Lousa da padaria</b><small>65 × 82 cm</small></button>
+          <button class="pc" type="button" data-zoom data-cap="Boneco de anatomia · 155 × 90 cm."><span class="im"><img src="assets/iv-anatomia.webp" width="523" height="900" alt="Ilustração de corpo humano com órgãos à mostra" loading="lazy"></span><b>Anatomia</b><small>155 × 90 cm</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Sacos de kraft da padaria · farinha, granola e aveia, com faca."><span class="im"><img class="flat" src="assets/iv-kraft.webp" width="978" height="489" alt="Fileira de sacos de papel kraft com rótulos de farinha de trigo, granola e aveia" loading="lazy"></span><b>Sacos de kraft</b><small>padaria, com faca</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Plano de vacinação para filhotes de cachorro · 90 × 60 cm."><span class="im"><img src="assets/iv-vacina.webp" width="1000" height="667" alt="Pôster creme com tabela: Plano de vacinação para filhotes de cachorro" loading="lazy"></span><b>Plano de vacinação</b><small>90 × 60 cm</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Mapa-múndi · 90 × 60 cm."><span class="im"><img src="assets/iv-mapa.webp" width="1000" height="667" alt="Mapa-múndi em tons de marrom e terracota" loading="lazy"></span><b>Mapa-múndi</b><small>90 × 60 cm</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Passagem aérea · São Paulo para o Rio de Janeiro."><span class="im"><img src="assets/iv-ticket.webp" width="1000" height="443" alt="Passagem aérea laranja e azul com nome Eliana, de São Paulo para o Rio de Janeiro" loading="lazy"></span><b>Passagem</b><small>com faca</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Etiqueta de bagagem aérea · 20 × 9 cm, com faca."><span class="im"><img src="assets/iv-etiqueta.webp" width="1000" height="444" alt="Etiqueta de bagagem creme com ilhós, código de barras e LX123456" loading="lazy"></span><b>Etiqueta de bagagem</b><small>20 × 9 cm, com faca</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Varal Menino ou Menina."><span class="im"><img class="flat" src="assets/iv-varal.webp" width="1000" height="554" alt="Letras de varal estampadas em rosa e azul: Meninoo, Meninaa" loading="lazy"></span><b>Varal</b><small>Menino ou menina</small></button>
+          <button class="pc w2" type="button" data-zoom data-cap="Varal Feliz aniversário."><span class="im"><img class="flat" src="assets/iv-varal-aniversario.webp" width="1400" height="307" alt="Letras de varal estampadas: Feliz aniversário" loading="lazy"></span><b>Varal</b><small>Feliz aniversário</small></button>
         </div>
       </div>
-      <figcaption><b>Peças do quadro.</b> Artes finais reais. As medidas vêm dos nomes dos arquivos.</figcaption>
+      <figcaption><b>Peças do quadro.</b> Artes finais reais; a foto do envelope no estúdio é uma montagem. As medidas vêm dos nomes dos arquivos.</figcaption>
     </figure>
   </div>
 </section>
@@ -290,15 +332,62 @@
     b.replaceWith(f); f.focus();
   }) });
 
-  /* ===== pieces: filter by room ===== */
-  var ivs = $('#iv');
-  if(ivs){
-    var chips = $$('.fl-chips button', ivs), items = $$('.pc', ivs);
-    chips.forEach(function(c){ c.addEventListener('click',function(){
-      chips.forEach(function(x){ x.setAttribute('aria-pressed', x===c ? 'true' : 'false') });
-      var f = c.dataset.f;
-      items.forEach(function(it){ it.hidden = !(f==='*' || it.dataset.k===f) });
-    }) });
+
+  /* ===== envelope assembly: progress 0 (flat die-cut) → 1 (closed envelope, turned in 3D) ===== */
+  var ef = $('#ef');
+  if(ef){
+    var root = $('.ef-root', ef), view = $('.ef-view', ef), range = $('input', ef), playBtn = $('.ef-play', ef);
+    var P = {}; ['front','side','bottom','back','top'].forEach(function(k){ var el = $('.ef-'+k, ef); P[k] = { el:el, f:$('.f',el), b:$('.b',el) } });
+    var clamp = function(v){ return v<0?0:v>1?1:v }, seg = function(p,a,b){ return clamp((p-a)/(b-a)) };
+    var ease = function(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2 };
+    var lerp = function(a,b,t){ return a+(b-a)*t };
+    function shade(part, deg){ // light falls off as a face tilts away; the inner side shows past 90°
+      var r = deg*Math.PI/180, k = Math.abs(Math.cos(r));
+      if(part.f) part.f.style.filter = 'brightness('+(.62+.38*k).toFixed(3)+')';
+      if(part.b) part.b.style.filter = 'brightness('+(.7+.3*k).toFixed(3)+')';
+      if(part.b) part.b.style.visibility = deg > 179.5 ? 'hidden' : '';   // once flat behind the front, the inner side is covered: drop it so layer sorting never shows it
+    }
+    var p = RM ? 1 : 0;
+    function render(){
+      var flaps = ease(seg(p,.04,.24)), back = ease(seg(p,.24,.54)), top = ease(seg(p,.54,.74)), turn = ease(seg(p,.76,.96));
+      var a1 = 180*flaps, a2 = 180*back, a3 = 180*top;
+      P.side.el.style.transform = 'rotateY('+(-a1)+'deg) translateZ(3px)';
+      P.bottom.el.style.transform = 'rotateX('+(-a1)+'deg) translateZ(3px)';
+      P.back.el.style.transform = 'rotateY('+a2+'deg) translateZ(6px)';
+      P.top.el.style.transform = 'rotateX('+a3+'deg) translateZ(9px)';
+      shade(P.side,a1); shade(P.bottom,a1); shade(P.back,a2); shade(P.top,a3);
+      var w = view.clientWidth, h = view.clientHeight;
+      var s0 = Math.min(w*.8/732, h*.68/598), s1 = Math.min(w*.42/342, h*.64/495);
+      var sc = lerp(s0, s1, ease(seg(p,.24,.8)));
+      var tx = lerp(0, 163, back), ty = lerp(0, -17, back);   // keep the folding sheet centred on the front panel
+      root.style.transform = 'scale('+sc.toFixed(4)+') rotateX('+(5*turn).toFixed(2)+'deg) rotateY('+(-24*turn).toFixed(2)+'deg) translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px)';
+      range.value = Math.round(p*1000);
+      range.setAttribute('aria-valuetext', 'Dobrado '+Math.round(p*100)+'%');
+    }
+    // autoplay: hold flat, fold, hold closed, unfold; only while on screen; the first touch hands over control
+    var playing = !RM, raf = 0, last = 0, t = 0, CYCLE = 9;
+    function pAt(tt){ tt = tt % CYCLE; if(tt<1) return 0; if(tt<6) return (tt-1)/5; if(tt<7.6) return 1; return 1-(tt-7.6)/1.4 }
+    function tFor(pp){ return 1 + pp*5 }
+    function setPlaying(on){
+      playing = on; playBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      playBtn.setAttribute('aria-label', on ? 'Pausar a montagem' : 'Reproduzir a montagem');
+      $('.ic-pause', playBtn).hidden = !on; $('.ic-play', playBtn).hidden = on;
+      if(on){ t = tFor(p>=1 ? 0 : p); if(p>=1) p = 0; last = 0; tick() } else cancelAnimationFrame(raf)
+    }
+    function tick(now){
+      cancelAnimationFrame(raf);
+      if(!playing) return;
+      raf = requestAnimationFrame(function(ts){
+        if(!playing) return;
+        if(visible(ef) && !document.hidden){ if(last) t += (ts-last)/1000; last = ts; p = pAt(t); render() } else last = 0;
+        tick();
+      });
+    }
+    range.addEventListener('input', function(){ if(playing) setPlaying(false); p = range.value/1000; render() });
+    playBtn.addEventListener('click', function(){ setPlaying(!playing) });
+    view.addEventListener('pointerdown', function(e){ if(e.target===view && playing) setPlaying(false) });
+    window.addEventListener('resize', render);
+    setPlaying(playing); render();
   }
 
   /* ===== lightbox: any [data-zoom] opens the artwork larger ===== */
