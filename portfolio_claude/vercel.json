@@ -2,6 +2,20 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
+  "headers": [
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/sanctum-armory", "destination": "/musanga", "permanent": true },
     { "source": "/sanctum-armory/:path*", "destination": "/musanga/:path*", "permanent": true },
