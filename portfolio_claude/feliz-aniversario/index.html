@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<script>if (location.protocol !== 'file:' && !location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) location.replace(location.pathname + '/' + location.search + location.hash);</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#30143f">
+<meta name="description" content="Uma aventura musical em pixel art, feita com carinho para Juliana. Frutinhas, cocô e uma mosquinha muito especial.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Diário da Mosca">
+<title>Diário de uma Mosca</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+@font-face { font-family: PixelFont; src: url(fonts/PixelifySans.ttf) format('truetype'); font-weight: 400 700; font-display: block; }
+:root { --ink:#2b1b3a; --cream:#fff6e6; --pink:#ff9bb8; --rose:#ff5277; --mint:#a7f070; --sky:#bfe9ff; --sun:#ffd84a; --lilac:#cdb7f6; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+html, body { margin: 0; height: 100%; background: #140d1f; overflow: hidden; overscroll-behavior: none; touch-action: none; font-family: PixelFont, monospace; color: var(--ink); }
+body { display: flex; align-items: center; justify-content: center; }
+#stage { position: relative; overflow: hidden; background: #1c2a2a; }
+#game, #ui { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#game { image-rendering: pixelated; image-rendering: crisp-edges; }
+#ui { touch-action: none; }
+#screens { position: absolute; left: 0; top: 0; width: 384px; transform-origin: 0 0; transform: scale(var(--s, 1)); pointer-events: none; }
+.scr { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; padding: 18px 20px calc(18px + env(safe-area-inset-bottom)); pointer-events: auto; }
+.scr.on { display: flex; }
+.scr.veil { background: rgba(28, 16, 44, 0.62); }
+.scr.center { justify-content: center; }
+h1, h2, h3, p { margin: 0; }
+.logo { text-align: center; margin-top: 34px; line-height: 0.95; }
+.logo small { display: block; font-size: 25px; font-weight: 700; color: #fff; letter-spacing: 3px; text-shadow: 3px 3px 0 var(--ink), -2px 0 0 var(--ink), 0 -2px 0 var(--ink), 2px 0 0 var(--ink); }
+.logo b { display: block; font-size: 78px; font-weight: 700; color: var(--sun); letter-spacing: 2px; text-shadow: 5px 5px 0 var(--ink), -3px 0 0 var(--ink), 0 -3px 0 var(--ink), 3px 0 0 var(--ink), 0 9px 0 rgba(43,27,58,.45); }
+.logo i { display: inline-block; margin-top: 12px; font-style: normal; font-size: 15px; color: #fff; background: var(--ink); padding: 3px 10px; }
+.for { margin-top: 8px; font-size: 19px; font-weight: 700; color: #fff; text-shadow: 2px 2px 0 var(--rose), 3px 3px 0 var(--ink); }
+.grow { flex: 1; }
+.btn { font-family: inherit; font-weight: 700; font-size: 22px; color: var(--ink); background: var(--cream); border: 4px solid var(--ink); border-radius: 0; padding: 12px 14px; min-height: 58px; width: 100%; box-shadow: 0 6px 0 var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; }
+.btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--ink); }
+.btn.big { font-size: 30px; min-height: 76px; background: var(--mint); }
+.btn.mint { background: var(--mint); } .btn.pink { background: var(--pink); } .btn.sky { background: var(--sky); } .btn.sun { background: var(--sun); } .btn.lilac { background: var(--lilac); }
+.btn.small { font-size: 17px; min-height: 46px; padding: 8px 10px; box-shadow: 0 4px 0 var(--ink); }
+.btn[disabled] { filter: grayscale(1); opacity: .75; }
+.col { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.row { display: flex; gap: 12px; width: 100%; }
+.row > * { flex: 1; }
+.panel { background: var(--cream); border: 4px solid var(--ink); box-shadow: 0 6px 0 var(--ink); padding: 16px; width: 100%; }
+.panel h2 { font-size: 26px; text-align: center; margin-bottom: 10px; }
+.panel p { font-size: 17px; line-height: 1.25; }
+.head { display: flex; align-items: center; width: 100%; gap: 10px; margin-bottom: 14px; }
+.head h2 { flex: 1; font-size: 28px; color: #fff; text-shadow: 3px 3px 0 var(--ink); }
+.head .btn { width: auto; min-width: 58px; }
+.list { width: 100%; flex: 1; overflow-y: auto; touch-action: pan-y; display: flex; flex-direction: column; gap: 12px; padding: 2px 2px 12px; -webkit-overflow-scrolling: touch; }
+.card { background: var(--cream); border: 4px solid var(--ink); box-shadow: 0 5px 0 var(--ink); padding: 10px 12px; display: flex; align-items: center; gap: 12px; font-family: inherit; color: var(--ink); text-align: left; width: 100%; min-height: 64px; cursor: pointer; }
+.card:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+.card .ico { font-size: 30px; width: 40px; text-align: center; flex: none; }
+.card .tx { flex: 1; min-width: 0; }
+.card .tx b { display: block; font-size: 21px; }
+.card .tx span { display: block; font-size: 15px; opacity: .8; line-height: 1.15; }
+.card .rt { font-size: 17px; font-weight: 700; text-align: right; flex: none; }
+.card.sel { background: var(--mint); }
+.card.locked { background: #d9d2dd; }
+.card.locked .ico { filter: grayscale(1); opacity: .6; }
+.chip { font-family: inherit; font-size: 17px; font-weight: 700; background: var(--ink); color: #fff; border: 0; padding: 10px 14px; min-height: 48px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.chip b { color: var(--sun); }
+.tabs { display: flex; width: 100%; gap: 6px; margin-bottom: 12px; }
+.tabs button { flex: 1; font-family: inherit; font-weight: 700; font-size: 15px; padding: 10px 2px; min-height: 46px; border: 4px solid var(--ink); background: #d9d2dd; color: var(--ink); cursor: pointer; }
+.tabs button.on { background: var(--sun); }
+.rk { display: flex; align-items: center; gap: 10px; background: var(--cream); border: 4px solid var(--ink); padding: 8px 10px; font-size: 19px; font-weight: 700; }
+.rk.me { background: #ffe3ec; }
+.rk .pos { width: 30px; text-align: center; } .rk .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rk .lt { width: 26px; text-align: center; color: var(--rose); } .rk small { font-size: 13px; opacity: .7; font-weight: 400; display: block; }
+.empty { color: #fff; text-align: center; font-size: 18px; margin-top: 30px; text-shadow: 2px 2px 0 var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+.stk { background: var(--cream); border: 4px solid var(--ink); padding: 8px 4px; text-align: center; min-height: 96px; }
+.stk .e { font-size: 34px; line-height: 1.1; } .stk b { display: block; font-size: 13px; line-height: 1.05; margin-top: 2px; } .stk span { display: block; font-size: 11px; opacity: .75; line-height: 1.05; margin-top: 2px; }
+.stk.off { background: #cfc7d6; } .stk.off .e { filter: grayscale(1) brightness(.4); opacity: .5; }
+.accs { display: flex; gap: 8px; width: 100%; margin: 4px 0 14px; }
+.accs button { flex: 1; font-family: inherit; font-size: 13px; font-weight: 700; min-height: 54px; border: 4px solid var(--ink); background: var(--cream); color: var(--ink); padding: 2px; cursor: pointer; }
+.accs button.on { background: var(--mint); } .accs button[disabled] { background: #cfc7d6; opacity: .8; }
+.sub { color: #fff; font-size: 16px; text-shadow: 2px 2px 0 var(--ink); margin: 6px 0; text-align: center; }
+.big-rank { font-size: 96px; font-weight: 700; line-height: 1; color: var(--sun); text-shadow: 5px 5px 0 var(--ink), -3px 0 0 var(--ink), 0 -3px 0 var(--ink), 3px 0 0 var(--ink); }
+.stats { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; font-size: 18px; width: 100%; }
+.stats b { text-align: right; }
+.new { background: var(--rose); color: #fff; font-weight: 700; padding: 2px 8px; font-size: 15px; display: inline-block; }
+.tip { display: flex; gap: 12px; align-items: center; font-size: 17px; line-height: 1.2; margin: 9px 0; }
+.tip .e { font-size: 30px; width: 40px; text-align: center; flex: none; }
+input[type=text] { font-family: inherit; font-size: 22px; font-weight: 700; border: 4px solid var(--ink); padding: 10px; width: 100%; background: #fff; color: var(--ink); border-radius: 0; user-select: text; -webkit-user-select: text; min-height: 56px; }
+input[type=range] { width: 100%; height: 40px; accent-color: var(--rose); touch-action: pan-x; }
+label { font-size: 18px; font-weight: 700; display: block; }
+#btnPause { position: absolute; right: 0; top: 0; width: 13%; aspect-ratio: 1; margin: 2.5% 2%; font-family: inherit; font-weight: 700; font-size: calc(22px * var(--s, 1)); background: rgba(43,27,58,.7); color: #fff; border: 0; display: none; cursor: pointer; padding: 0; }
+body.playing #btnPause { display: block; }
+#loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; background: #2b1b3a; z-index: 5; }
+.card-gift { text-align: center; }
+.card-gift .e { font-size: 64px; line-height: 1.1; }
+.card-gift h2 { font-size: 30px; margin: 6px 0 10px; }
+.card-gift p { margin-bottom: 10px; }
+.scroll-y { overflow-y: auto; touch-action: pan-y; }
+</style>
+<link rel="stylesheet" href="pixel-polish.css?v=5">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game"></canvas>
+  <canvas id="ui"></canvas>
+  <button id="btnPause" aria-label="Pausar">II</button>
+  <button id="btnDash" aria-label="Zunir para escapar">ZUNIR</button>
+  <div id="screens"></div>
+  <div id="loading">Preparando seu presente…<small>um pequeno voo cheio de carinho</small></div>
+</div>
+<script src="js/music-data.js?v=5"></script>
+<script src="js/audio.js?v=5"></script>
+<script src="js/core.js?v=5"></script>
+<script src="js/characters.js?v=5"></script>
+<script src="js/game.js?v=5"></script>
+<script src="js/pwa.js?v=5"></script>
+<script src="js/ui.js?v=5"></script>
+</body>
+</html>
