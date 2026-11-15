@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>if (location.protocol !== 'file:' && !location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) location.replace(location.pathname + '/' + location.search + location.hash);</script>
+<script>try{const s=JSON.parse(localStorage.getItem('diario_da_mosca_v1')||'{}');if(!s.seenEnvelope)document.documentElement.classList.add('envelope-mode');}catch(_){document.documentElement.classList.add('envelope-mode');}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#30143f">
 <meta name="description" content="Uma aventura musical em pixel art, feita com carinho para Juliana. Frutinhas, cocô e uma mosquinha muito especial.">
@@ -14,6 +15,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" as="image" href="assets/envelope.png">
 <style>
 @font-face { font-family: PixelFont; src: url(fonts/PixelifySans.ttf) format('truetype'); font-weight: 400 700; font-display: block; }
 :root { --ink:#2b1b3a; --cream:#fff6e6; --pink:#ff9bb8; --rose:#ff5277; --mint:#a7f070; --sky:#bfe9ff; --sun:#ffd84a; --lilac:#cdb7f6; }
@@ -97,7 +99,7 @@ body.playing #btnPause { display: block; }
 .card-gift p { margin-bottom: 10px; }
 .scroll-y { overflow-y: auto; touch-action: pan-y; }
 </style>
-<link rel="stylesheet" href="pixel-polish.css?v=5">
+<link rel="stylesheet" href="pixel-polish.css?v=6">
 </head>
 <body>
 <div id="stage">
@@ -108,12 +110,12 @@ body.playing #btnPause { display: block; }
   <div id="screens"></div>
   <div id="loading">Preparando seu presente…<small>um pequeno voo cheio de carinho</small></div>
 </div>
-<script src="js/music-data.js?v=5"></script>
-<script src="js/audio.js?v=5"></script>
-<script src="js/core.js?v=5"></script>
-<script src="js/characters.js?v=5"></script>
-<script src="js/game.js?v=5"></script>
-<script src="js/pwa.js?v=5"></script>
-<script src="js/ui.js?v=5"></script>
+<script src="js/music-data.js?v=6"></script>
+<script src="js/audio.js?v=6"></script>
+<script src="js/core.js?v=6"></script>
+<script src="js/characters.js?v=6"></script>
+<script src="js/game.js?v=6"></script>
+<script src="js/pwa.js?v=6"></script>
+<script src="js/ui.js?v=6"></script>
 </body>
 </html>

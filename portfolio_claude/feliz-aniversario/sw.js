@@ -1,12 +1,12 @@
 /* Uma versão completa por cache. Atualizações só entram quando o jogador permite. */
 'use strict';
-const VERSION = 'v5-pixel-legivel-6';
+const VERSION = 'v6-envelope-1';
 const PREFIX = 'diario-mosca:' + new URL(self.registration.scope).pathname + ':';
 const CACHE = PREFIX + VERSION;
 const FILES = [
   './', 'index.html', 'pixel-polish.css', 'manifest.webmanifest', 'fonts/PixelifySans.ttf',
   'js/music-data.js', 'js/audio.js', 'js/core.js', 'js/characters.js', 'js/game.js', 'js/pwa.js', 'js/ui.js',
-  'assets/characters/fly.png', 'assets/characters/enemies.png', 'assets/characters/props.png',
+  'assets/envelope.png', 'assets/characters/fly.png', 'assets/characters/enemies.png', 'assets/characters/props.png',
   'assets/pixel/garden.webp', 'assets/pixel/night.webp', 'assets/pixel/pond.webp',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png',
 ];
@@ -15,14 +15,19 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     await cache.addAll(FILES.map(path => new Request(new URL(path, self.registration.scope), { cache: 'reload' })));
-    if (!self.registration.active) await self.skipWaiting();
+    await self.skipWaiting();
   })());
 });
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith(PREFIX) && key !== CACHE).map(key => caches.delete(key)));
+    const old = keys.filter(key => key.startsWith(PREFIX) && key !== CACHE);
+    await Promise.all(old.map(key => caches.delete(key)));
     await self.clients.claim();
+    if (old.length && self.clients.matchAll) {
+      const clients = await self.clients.matchAll({ type: 'window' });
+      await Promise.all(clients.map(c => c.navigate ? c.navigate(c.url).catch(() => {}) : null));
+    }
   })());
 });
 self.addEventListener('message', event => {

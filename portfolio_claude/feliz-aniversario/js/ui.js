@@ -8,7 +8,7 @@
   const stage = document.getElementById('stage');
   G.DIFFS.estudo = { id: 'estudo', label: 'Estudo', tol: 11.5, hearts: 0, haz: 1, tempo: 1, mult: 1 };
 
-  const DEF = { v: 1, who: OWNER, guests: [], runs: [], stickers: {}, days: [], plays: 0, sceneBest: {}, unlocked: {}, seenIntro: false, seenHow: false, settings: { vol: 0.85, sens: 1.25, haptic: true, motion: true, acc: '' } };
+  const DEF = { v: 1, who: OWNER, guests: [], runs: [], stickers: {}, days: [], plays: 0, sceneBest: {}, unlocked: {}, seenEnvelope: false, seenIntro: false, seenHow: false, settings: { vol: 0.85, sens: 1.25, haptic: true, motion: true, acc: '' } };
   let save = JSON.parse(JSON.stringify(DEF));
   try { const raw = localStorage.getItem(KEY); if (raw) { const o = JSON.parse(raw); save = Object.assign(save, o); save.settings = Object.assign({}, DEF.settings, o.settings || {}); } } catch (e) { }
   const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(save)); } catch (e) { } };
@@ -48,6 +48,7 @@
   function show(id, html, cls = 'veil') {
     const prev = cur;
     cur = id;
+    if (document.documentElement && document.documentElement.classList) document.documentElement.classList.toggle('envelope-mode', id === 'envelope');
     root.innerHTML = '<section class="scr on ' + cls + '" id="scr-' + id + '">' + pixelMarkup(html) + '</section>';
     G.attractFly = id === 'title' ? { x: 0.5, y: 0.46 } : null;
     document.getElementById('btnDash').style.visibility=id==='pause'?'hidden':'';
@@ -63,7 +64,7 @@
       A.stopBirthday();
     }
   }
-  function hide() { cur = null; root.innerHTML = ''; G.attractFly = null; document.getElementById('btnDash').style.visibility=''; if (A.stopBirthday) A.stopBirthday(); }
+  function hide() { cur = null; if (document.documentElement && document.documentElement.classList) document.documentElement.classList.remove('envelope-mode'); root.innerHTML = ''; G.attractFly = null; document.getElementById('btnDash').style.visibility=''; if (A.stopBirthday) A.stopBirthday(); }
   root.addEventListener('click', e => {
     const b = e.target.closest('[data-a]'); if (!b || b.disabled) return;
     A.unlock(); A.sfx.ui();
@@ -71,6 +72,9 @@
   });
 
   /* ---------- telas ---------- */
+  function envelope() {
+    show('envelope', `<div class="grow"></div><button class="envelope-btn" data-a="openEnvelope" aria-label="Abrir carta Para Ju"><div class="envelope-wrap"><img class="envelope-img" src="assets/envelope.png" alt="Para Ju"><div class="envelope-shadow" aria-hidden="true"></div></div></button><div class="grow"></div>`, 'center');
+  }
   function intro() {
     show('intro', `<div class="grow"></div><div class="panel card-gift"><div class="e">🎂</div><h2>Feliz aniversario Ju</h2>
       <p><b>40 anos sendo Cabaça!</b><br>Espero que essa mosquinha espante o tédio e traga diversão e sorrisos para os seus dias.</p>
@@ -212,7 +216,8 @@
   };
 
   const actions = {
-    title, intro, birthday, who, rank, album, study, settings: settingsScr, install:installScr,
+    title, intro, envelope, birthday, who, rank, album, study, settings: settingsScr, install:installScr,
+    openEnvelope() { save.seenEnvelope = true; save.seenIntro = true; persist(); intro(); },
     async installNow(){await window.PWA.install();if(cur==='install')installScr();},
     update(){window.PWA.applyUpdate();},
     how: () => how(''),
@@ -248,9 +253,12 @@
 
   G.boot(); fit();
   const fontReady = document.fonts && document.fonts.load ? document.fonts.load('400 20px PixelFont').catch(() => { }) : Promise.resolve();
-  Promise.all([G.load(), fontReady]).then(() => {
+  const envelopeReady = save.seenEnvelope ? Promise.resolve() : new Promise(resolve => { const img = new Image(); img.onload = img.onerror = resolve; img.src = 'assets/envelope.png'; });
+  Promise.all([G.load(), fontReady, envelopeReady]).then(() => {
     document.getElementById('loading').remove();
-    if (!save.seenIntro) { save.seenIntro = true; persist(); intro(); } else title();
+    if (!save.seenEnvelope) envelope();
+    else if (!save.seenIntro) { save.seenIntro = true; persist(); intro(); }
+    else title();
   }).catch(()=>{
     document.getElementById('loading').innerHTML='<b>O jardim não terminou de carregar.</b><small>Confira a conexão e tente outra vez.</small><button class="btn small" id="retryLoad">Tentar novamente</button>';
     document.getElementById('retryLoad').onclick=()=>location.reload();
