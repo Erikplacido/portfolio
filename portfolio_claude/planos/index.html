@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planos &amp; Assinaturas · Erik Placido — Product Designer &amp; Diretor de Arte</title>
+<meta name="description" content="Sprints rápidos em 48h, Assinatura Retainer Lite mensal e pacotes White-Label para agências e gestores de tráfego. Design sênior + frontend limpo sem letras miúdas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="../shared/frame.css">
+<script src="../api/site/config"></script>
+<script src="../shared/cases.js"></script>
+<style>
+  :root{ --accent:#0F766E; --hl:#F0DF0A; }
+
+  .visually-hidden:where(:not(:focus-within,:active)){
+    position:absolute !important;
+    clip-path:inset(50%) !important;
+    overflow:hidden !important;
+    width:1px !important;
+    height:1px !important;
+    margin:-1px !important;
+    padding:0 !important;
+    border:0 !important;
+    white-space:nowrap !important;
+  }
+  .skip-link:focus{
+    position:fixed;
+    inset-block-start:12px;
+    inset-inline-start:12px;
+    z-index:100;
+    padding:10px 18px;
+    border-radius:10px;
+    background:var(--pf-ink);
+    color:#fff;
+    font:600 14px/1.2 var(--pf-sans);
+    text-decoration:none;
+  }
+
+  /* Switcher PT / BRL <-> EN / USD */
+  .plan-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-top:32px;
+  }
+  .plan-locale{
+    display:inline-flex;
+    flex-wrap:wrap;
+    gap:4px;
+    padding:4px;
+    border-radius:99px;
+    background:rgba(16,22,31,.06);
+    border:1px solid var(--pf-line);
+  }
+  .plan-locale button{
+    min-block-size:44px;
+    padding:0 18px;
+    border:0;
+    border-radius:99px;
+    background:transparent;
+    font:600 13.5px/1.2 var(--pf-sans);
+    color:var(--pf-ink-2);
+    transition:background .25s var(--pf-ease),color .25s var(--pf-ease),box-shadow .25s var(--pf-ease);
+  }
+  .plan-locale button:hover{color:var(--pf-ink)}
+  .plan-locale button[aria-pressed="true"]{
+    background:var(--pf-paper);
+    color:var(--pf-ink);
+    box-shadow:0 2px 8px -2px rgba(16,22,31,.16);
+  }
+  .plan-locale button:focus-visible,
+  .plan-cta-wa:focus-visible,
+  .plan-cta-chat:focus-visible,
+  .plan-cta-mail:focus-visible{
+    outline:3px solid var(--accent);
+    outline-offset:3px;
+  }
+  .plan-trust-strip{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    font:500 13px/1.4 var(--pf-sans);
+    color:var(--pf-ink-2);
+  }
+
+  /* Grid de Planos com CSS Subgrid para alinhar headers, preços, listas e rodapés */
+  .plans-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(18px,2.5vw,28px);
+    margin-top:36px;
+  }
+  @media(max-width:960px){
+    .plans-grid{
+      grid-template-columns:1fr;
+    }
+  }
+  .plan-card{
+    background:var(--pf-paper);
+    border:1px solid var(--pf-line);
+    border-radius:24px;
+    padding:clamp(24px,3vw,32px);
+    display:grid;
+    grid-row:span 4;
+    grid-template-rows:auto auto 1fr auto;
+    grid-template-rows:subgrid;
+    gap:20px;
+    position:relative;
+    transition:transform .45s var(--pf-ease),box-shadow .45s var(--pf-ease);
+  }
+  .plan-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 24px 44px -26px rgba(16,22,31,.24);
+  }
+  .plan-card.is-featured{
+    border:2px solid var(--accent);
+    box-shadow:0 26px 52px -28px color-mix(in srgb,var(--accent) 42%,transparent);
+  }
+  .plan-head{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .plan-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font:700 11px/1 var(--pf-sans);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:7px 12px;
+    border-radius:99px;
+    background:rgba(16,22,31,.07);
+    color:var(--pf-ink);
+  }
+  .plan-card.is-featured .plan-badge{
+    background:var(--hl);
+    color:var(--pf-ink);
+  }
+  .plan-card.is-agency .plan-badge{
+    background:color-mix(in srgb,var(--accent) 12%,transparent);
+    color:var(--accent);
+  }
+  .plan-price-block{
+    padding-block:14px;
+    border-top:1px solid var(--pf-line);
+    border-bottom:1px solid var(--pf-line);
+  }
+  .plan-price-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .plan-price{
+    font:400 clamp(38px,4vw,48px)/1 var(--pf-serif);
+    color:var(--pf-ink);
+    letter-spacing:-.02em;
+  }
+  .plan-cadence{
+    font:500 14px/1.3 var(--pf-sans);
+    color:var(--pf-ink-2);
+  }
+  .plan-alt-offer{
+    margin-top:8px;
+    font:600 13px/1.4 var(--pf-sans);
+    color:var(--accent);
+  }
+  .plan-body{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .plan-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:grid;
+    gap:10px;
+  }
+  .plan-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font:400 15px/1.45 var(--pf-sans);
+    color:var(--pf-ink);
+  }
+  .plan-list i{
+    color:var(--accent);
+    margin-top:4px;
+    flex:none;
+    font-size:13px;
+  }
+  .plan-foot{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    padding-top:8px;
+  }
+  .plan-cta-wa{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-block-size:48px;
+    padding:0 20px;
+    border-radius:12px;
+    background:var(--pf-ink);
+    color:#fff;
+    font:600 14.5px/1.2 var(--pf-sans);
+    text-decoration:none;
+    transition:transform .25s var(--pf-ease),background .25s;
+  }
+  .plan-cta-wa:hover{
+    transform:translateY(-2px);
+    background:var(--accent);
+  }
+  .plan-card.is-featured .plan-cta-wa{
+    background:var(--accent);
+  }
+  .plan-card.is-featured .plan-cta-wa:hover{
+    background:var(--pf-ink);
+  }
+  .plan-sub-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .plan-cta-chat,
+  .plan-cta-mail{
+    flex:1 1 120px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-block-size:44px;
+    padding:0 12px;
+    border-radius:10px;
+    border:1px solid var(--pf-line);
+    background:transparent;
+    color:var(--pf-ink);
+    font:500 13px/1.2 var(--pf-sans);
+    text-decoration:none;
+    transition:border-color .25s,background .25s;
+  }
+  .plan-cta-chat:hover,
+  .plan-cta-mail:hover{
+    border-color:var(--pf-ink);
+    background:rgba(16,22,31,.04);
+  }
+
+  /* Transparência & Comparativo */
+  .fineprint-stage{
+    background:linear-gradient(155deg,#ECFDF5 0%,#F8FAFC 100%);
+    border:1px solid color-mix(in srgb,var(--accent) 18%,transparent);
+  }
+  .fineprint-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+    margin-top:24px;
+  }
+  @media(max-width:860px){
+    .fineprint-grid{grid-template-columns:1fr}
+  }
+  .fineprint-item{
+    background:var(--pf-paper);
+    border:1px solid var(--pf-line);
+    border-radius:18px;
+    padding:22px;
+  }
+  .fineprint-item h3{
+    font-size:24px;
+    margin-bottom:8px;
+  }
+
+  .steps-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(16px,2.5vw,28px);
+    margin-top:32px;
+  }
+  @media(max-width:860px){
+    .steps-grid{grid-template-columns:1fr}
+  }
+  .step-num{
+    display:inline-grid;
+    place-items:center;
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:var(--hl);
+    color:var(--pf-ink);
+    font:700 14px/1 var(--pf-sans);
+    margin-bottom:14px;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .plan-card,.plan-cta-wa,.plan-locale button{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<a href="#planos-lista" class="skip-link visually-hidden" data-i18n="skip">Pular para os planos</a>
+
+<nav class="pf-nav" aria-label="Portfólio">
+  <div class="wrap">
+    <a class="pf-id" href="../index.html"><i class="pf-mono">EP</i>Erik Placido <span data-i18n="nav_sub">/ Planos &amp; Sprints</span></a>
+    <ul class="pf-links">
+      <li><a href="#planos-lista" data-i18n="nav_plans">Planos</a></li>
+      <li><a href="#transparencia" data-i18n="nav_terms">Zero Letras Miúdas</a></li>
+      <li><a href="#como-funciona" data-i18n="nav_how">Como Funciona</a></li>
+    </ul>
+    <div class="pf-cases" role="group" aria-label="Cases" data-auto></div>
+  </div>
+  <i class="pf-prog" aria-hidden="true"></i>
+</nav>
+
+<main>
+  <header class="pf-hero">
+    <div class="wrap">
+      <p class="eyebrow"><b data-i18n="hero_badge">Sprints Rápidos &amp; Assinatura</b> · <span data-i18n="hero_exp">20+ Anos · Netflix · Blue Services · Caju</span></p>
+      <h1 data-i18n-html="hero_title">Design sênior e frontend limpo, <em>sem orçamento de agência gigante.</em></h1>
+      <p class="lede" data-i18n="hero_lede">Comece com uma entrega rápida em 48h ou ative uma assinatura mensal enxuta com escopo claro, fila sequencial e zero fidelidade escondida.</p>
+
+      <div class="plan-toolbar">
+        <div class="plan-locale" role="group" aria-label="Idioma e moeda dos planos">
+          <button type="button" id="btn-locale-pt" data-locale="pt" aria-pressed="true">Português · R$ BRL</button>
+          <button type="button" id="btn-locale-en" data-locale="en" aria-pressed="false">English · US$ USD</button>
+        </div>
+        <div class="plan-trust-strip">
+          <span class="pill y" data-i18n="pill_sla">SLA 24h–48h</span>
+          <span class="pill" data-i18n="pill_ai">Sênior + Velocidade Assistida por IA</span>
+          <span class="pill" data-i18n="pill_nocode">Código Limpo + Figma</span>
+        </div>
+      </div>
+
+      <dl class="pf-meta">
+        <div><dt data-i18n="meta_1_dt">Entrega Inicial</dt><dd data-i18n="meta_1_dd">1ª Dobra / Tela Chave em 48h</dd></div>
+        <div><dt data-i18n="meta_2_dt">Recorrência Clara</dt><dd data-i18n="meta_2_dd">Sprints fechados (sem mito de "ilimitado")</dd></div>
+        <div><dt data-i18n="meta_3_dt">Cancelamento</dt><dd data-i18n="meta_3_dd">1 clique, sem multa e sem anualidade oculta</dd></div>
+        <div><dt data-i18n="meta_4_dt">Atendimento Direto</dt><dd><a href="https://wa.me/5511985768545" target="_blank" rel="noopener noreferrer">(11) 98576-8545</a> · erik.placido@gmail.com</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <section id="planos-lista" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b data-i18n="plans_eyebrow">01 · Modelos Produtizados</b></p>
+        <h2 data-i18n="plans_heading">Escolha o ritmo ideal para o seu momento.</h2>
+        <p class="lede" data-i18n="plans_lede">Entre pagando pouco para testar velocidade e conversão na prática, ou garanta cadência mensal fixa para suas páginas, produtos e clientes.</p>
+      </div>
+
+      <div class="plans-grid rv">
+        <!-- Plano 1: Sprint Flash 48h -->
+        <article class="plan-card">
+          <header class="plan-head">
+            <span class="plan-badge" data-i18n="p1_badge">Entrada Rápida · Avulso</span>
+            <h3 data-i18n="p1_title">Sprint Flash 48h</h3>
+          </header>
+          <div class="plan-price-block">
+            <div class="plan-price-row">
+              <strong class="plan-price" data-i18n="p1_price">R$ 297</strong>
+              <span class="plan-cadence" data-i18n="p1_cadence">pagamento único</span>
+            </div>
+            <p class="plan-alt-offer" data-i18n="p1_sub">Ideal para testar sem risco antes de assinar.</p>
+          </div>
+          <div class="plan-body">
+            <p data-i18n="p1_desc">Redesign completo da 1ª dobra (Hero Section) ou de 1 tela chave do seu produto no Figma + código HTML/CSS responsivo pronto para publicar.</p>
+            <ul class="plan-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p1_f1">1ª Dobra de alta conversão ou 1 tela chave UI/UX</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p1_f2">Arquivo Figma organizado + HTML/CSS/JS limpo e leve</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p1_f3">Foco em velocidade mobile (&lt; 2s) para baixar CPC</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p1_f4">Entrega em até 48h + 1 rodada de ajuste fino</span></li>
+            </ul>
+          </div>
+          <footer class="plan-foot">
+            <a class="plan-cta-wa" id="cta-wa-p1" href="https://wa.me/5511985768545?text=Ol%C3%A1%20Erik!%20Quero%20contratar%20o%20Sprint%20Flash%2048h%20(R%24%20297)." target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              <span data-i18n="p1_cta">Pedir Sprint Flash 48h</span>
+            </a>
+            <div class="plan-sub-actions">
+              <button type="button" class="plan-cta-chat js-open-chat"><i class="fa-regular fa-comment-dots" aria-hidden="true"></i><span data-i18n="cta_chat">Chat ao vivo</span></button>
+              <a class="plan-cta-mail" href="mailto:erik.placido@gmail.com?subject=Sprint%20Flash%2048h"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-i18n="cta_email">E-mail</span></a>
+            </div>
+          </footer>
+        </article>
+
+        <!-- Plano 2: Assinatura Retainer Lite -->
+        <article class="plan-card is-featured">
+          <header class="plan-head">
+            <span class="plan-badge" data-i18n="p2_badge">Mais Popular · Recorrente</span>
+            <h3 data-i18n="p2_title">Assinatura Retainer Lite</h3>
+          </header>
+          <div class="plan-price-block">
+            <div class="plan-price-row">
+              <strong class="plan-price" data-i18n="p2_price">R$ 697</strong>
+              <span class="plan-cadence" data-i18n="p2_cadence">/ mês</span>
+            </div>
+            <p class="plan-alt-offer" data-i18n="p2_sub">4 Sprints mensais · ~R$ 174 por entrega sênior.</p>
+          </div>
+          <div class="plan-body">
+            <p data-i18n="p2_desc">Seu braço direito contínuo de UI/UX e Frontend para evoluir landing pages, criar novas seções, criativos de campanha e componentes sem contratar CLT.</p>
+            <ul class="plan-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p2_f1">4 Sprints estruturados de Design/Frontend por mês</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p2_f2">1 pedido ativo por vez com entrega em até 48h úteis</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p2_f3">Novas seções, LPs, telas de produto e tokens Figma</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p2_f4">Pause ou cancele a qualquer momento sem multa</span></li>
+            </ul>
+          </div>
+          <footer class="plan-foot">
+            <a class="plan-cta-wa" id="cta-wa-p2" href="https://wa.me/5511985768545?text=Ol%C3%A1%20Erik!%20Quero%20ativar%20a%20Assinatura%20Retainer%20Lite%20(R%24%20697%2Fm%C3%AAs)." target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              <span data-i18n="p2_cta">Assinar Retainer Lite</span>
+            </a>
+            <div class="plan-sub-actions">
+              <button type="button" class="plan-cta-chat js-open-chat"><i class="fa-regular fa-comment-dots" aria-hidden="true"></i><span data-i18n="cta_chat">Chat ao vivo</span></button>
+              <a class="plan-cta-mail" href="mailto:erik.placido@gmail.com?subject=Assinatura%20Retainer%20Lite"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-i18n="cta_email">E-mail</span></a>
+            </div>
+          </footer>
+        </article>
+
+        <!-- Plano 3: Atacado White-Label -->
+        <article class="plan-card is-agency">
+          <header class="plan-head">
+            <span class="plan-badge" data-i18n="p3_badge">Gestores de Tráfego &amp; Agências</span>
+            <h3 data-i18n="p3_title">Atacado White-Label</h3>
+          </header>
+          <div class="plan-price-block">
+            <div class="plan-price-row">
+              <strong class="plan-price" data-i18n="p3_price">R$ 1.497</strong>
+              <span class="plan-cadence" data-i18n="p3_cadence">/ mês</span>
+            </div>
+            <p class="plan-alt-offer" data-i18n="p3_sub">Ou Pacote Avulso: 3 LPs Express por R$ 997</p>
+          </div>
+          <div class="plan-body">
+            <p data-i18n="p3_desc">Produção em escala sob a sua marca para entregar páginas ultra-leves aos seus clientes de tráfego pago e multiplicar sua margem sem aumentar equipe.</p>
+            <ul class="plan-list">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p3_f1">Até 10 Sprints/mês (1 pedido ativo por vez, SLA 24h–48h)</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p3_f2">100% White-Label — entregamos sob o nome da sua agência</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p3_f3">HTML5/CSS puro para nota 95+ no PageSpeed e menor CPC</span></li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="p3_f4">Opção avulsa de entrada: 3 LPs Express por R$ 997</span></li>
+            </ul>
+          </div>
+          <footer class="plan-foot">
+            <a class="plan-cta-wa" id="cta-wa-p3" href="https://wa.me/5511985768545?text=Ol%C3%A1%20Erik!%20Tenho%20interesse%20no%20plano%20Atacado%20White-Label%20para%20Ag%C3%AAncia%2FTr%C3%A1fego." target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              <span data-i18n="p3_cta">Fechar Parceria White-Label</span>
+            </a>
+            <div class="plan-sub-actions">
+              <button type="button" class="plan-cta-chat js-open-chat"><i class="fa-regular fa-comment-dots" aria-hidden="true"></i><span data-i18n="cta_chat">Chat ao vivo</span></button>
+              <a class="plan-cta-mail" href="mailto:erik.placido@gmail.com?subject=Parceria%20White-Label"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-i18n="cta_email">E-mail</span></a>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="transparencia" class="pf-sec">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b data-i18n="terms_eyebrow">02 · Cláusula de Transparência</b></p>
+        <h2 data-i18n="terms_heading">Zero Letras Miúdas. Sem a armadilha do "ilimitado".</h2>
+        <p class="lede" data-i18n="terms_lede">Prometer "design ilimitado" é honesto para software, não para pessoas. Aqui você sabe exatamente o que compra, em quanto tempo recebe e como cancelar se quiser.</p>
+      </div>
+
+      <div class="pf-stage fineprint-stage rv">
+        <div class="tag-row">
+          <span class="pill y" data-i18n="terms_pill1">Transparência Contratual</span>
+          <span class="pill" data-i18n="terms_pill2">Escopo Previsível</span>
+        </div>
+        <div class="fineprint-grid">
+          <div class="fineprint-item">
+            <h3 data-i18n="fp1_t">Sem fidelidade oculta</h3>
+            <p data-i18n="fp1_d">Nenhum contrato anual disfarçado de mensalidade nem multa de cancelamento antecipado. Você continua apenas enquanto o retorno compensar.</p>
+          </div>
+          <div class="fineprint-item">
+            <h3 data-i18n="fp2_t">Fila sequencial real</h3>
+            <p data-i18n="fp2_d">Trabalhamos em 1 sprint ativo por vez (entrega em 24h–48h). Isso garante profundidade de Diretor de Arte Sênior sem filas intermináveis.</p>
+          </div>
+          <div class="fineprint-item">
+            <h3 data-i18n="fp3_t">Diretor Sênior + IA</h3>
+            <p data-i18n="fp3_d">20+ anos de experiência em produto, fintechs e cinema somados a fluxos modernos assistidos por IA para entregar código leve a preço acessível.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="pf-sec alt">
+    <div class="wrap">
+      <div class="pf-head rv">
+        <p class="eyebrow"><b data-i18n="how_eyebrow">03 · Fluxo em 3 Passos</b></p>
+        <h2 data-i18n="how_heading">Do briefing ao link no ar em 48 horas.</h2>
+      </div>
+      <div class="steps-grid rv">
+        <article class="pf-card">
+          <span class="step-num">01</span>
+          <h3 data-i18n="st1_t">Escolha e envie o link</h3>
+          <p data-i18n="st1_d">Chame no WhatsApp ou no chat aqui do site mandando a URL atual, Figma ou objetivo da campanha.</p>
+        </article>
+        <article class="pf-card">
+          <span class="step-num">02</span>
+          <h3 data-i18n="st2_t">Receba em até 48h</h3>
+          <p data-i18n="st2_d">Entregamos o layout e o código limpo para você validar no navegador, com foco total em clareza e conversão.</p>
+        </article>
+        <article class="pf-card">
+          <span class="step-num">03</span>
+          <h3 data-i18n="st3_t">Escale no seu ritmo</h3>
+          <p data-i18n="st3_d">Gostou do resultado? Ative o Retainer Lite ou o Atacado White-Label e tenha entregas contínuas todo mês.</p>
+        </article>
+      </div>
+      <div class="callout rv" style="margin-top:32px">
+        <b data-i18n="callout_b">Quer validar antes com cases reais?</b>
+        <span data-i18n="callout_t">Explore entregas de produto, fintechs e ativações para Netflix, Blue Services e Caju no portfólio principal.</span>
+        <a href="../index.html" style="font-weight:600;color:var(--accent);margin-left:6px" data-i18n="callout_a">Ver portfólio completo →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pf-footer">
+  <div class="wrap">
+    <div class="pf-fgrid">
+      <div>
+        <p class="eyebrow" data-i18n="foot_case_eyebrow">Case em destaque</p>
+        <a class="pf-next" href="../blue-services/index.html">
+          <img src="../blue-services/assets/home_cleaning_banner-1024x683.webp" alt="Blue Services" loading="lazy">
+          <div>
+            <b>Blue Services</b>
+            <span data-i18n="foot_case_desc">Redesign completo de fluxo de reserva e landing page mobile com carregamento abaixo de 2 segundos.</span>
+          </div>
+          <i class="arr" aria-hidden="true">→</i>
+        </a>
+      </div>
+      <div>
+        <h2 data-i18n="foot_title">Pronto para começar seu primeiro sprint?</h2>
+        <p data-i18n="foot_desc">Atendimento direto com Erik Placido via WhatsApp (11) 98576-8545, Telegram chat ao vivo ou e-mail.</p>
+        <a class="pf-btn" id="foot-wa" href="https://wa.me/5511985768545?text=Ol%C3%A1%20Erik!%20Vi%20a%20p%C3%A1gina%20de%20planos%20e%20quero%20conversar." target="_blank" rel="noopener noreferrer" data-i18n="foot_wa">Chamar no WhatsApp</a>
+        <a class="pf-btn" style="background:rgba(255,255,255,.12);color:#fff" href="mailto:erik.placido@gmail.com">erik.placido@gmail.com</a>
+      </div>
+    </div>
+    <div class="pf-base"><span>© <span data-year>2026</span> Erik Placido</span><span data-i18n="foot_tag">Planos Produtizados · Zero Letras Miúdas</span></div>
+  </div>
+</footer>
+
+<script src="../shared/frame.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var COPY = {
+    pt: {
+      htmlLang: 'pt-BR',
+      docTitle: 'Planos & Assinaturas · Erik Placido — Product Designer & Diretor de Arte',
+      skip: 'Pular para os planos',
+      nav_sub: '/ Planos & Sprints',
+      nav_plans: 'Planos',
+      nav_terms: 'Zero Letras Miúdas',
+      nav_how: 'Como Funciona',
+      hero_badge: 'Sprints Rápidos & Assinatura',
+      hero_exp: '20+ Anos · Netflix · Blue Services · Caju',
+      hero_title: 'Design sênior e frontend limpo, <em>sem orçamento de agência gigante.</em>',
+      hero_lede: 'Comece com uma entrega rápida em 48h ou ative uma assinatura mensal enxuta com escopo claro, fila sequencial e zero fidelidade escondida.',
+      pill_sla: 'SLA 24h–48h',
+      pill_ai: 'Sênior + Velocidade Assistida por IA',
+      pill_nocode: 'Código Limpo + Figma',
+      meta_1_dt: 'Entrega Inicial',
+      meta_1_dd: '1ª Dobra / Tela Chave em 48h',
+      meta_2_dt: 'Recorrência Clara',
+      meta_2_dd: 'Sprints fechados (sem mito de "ilimitado")',
+      meta_3_dt: 'Cancelamento',
+      meta_3_dd: '1 clique, sem multa e sem anualidade oculta',
+      meta_4_dt: 'Atendimento Direto',
+      plans_eyebrow: '01 · Modelos Produtizados',
+      plans_heading: 'Escolha o ritmo ideal para o seu momento.',
+      plans_lede: 'Entre pagando pouco para testar velocidade e conversão na prática, ou garanta cadência mensal fixa para suas páginas, produtos e clientes.',
+      p1_badge: 'Entrada Rápida · Avulso',
+      p1_title: 'Sprint Flash 48h',
+      p1_price: 'R$ 297',
+      p1_cadence: 'pagamento único',
+      p1_sub: 'Ideal para testar sem risco antes de assinar.',
+      p1_desc: 'Redesign completo da 1ª dobra (Hero Section) ou de 1 tela chave do seu produto no Figma + código HTML/CSS responsivo pronto para publicar.',
+      p1_f1: '1ª Dobra de alta conversão ou 1 tela chave UI/UX',
+      p1_f2: 'Arquivo Figma organizado + HTML/CSS/JS limpo e leve',
+      p1_f3: 'Foco em velocidade mobile (< 2s) para baixar CPC',
+      p1_f4: 'Entrega em até 48h + 1 rodada de ajuste fino',
+      p1_cta: 'Pedir Sprint Flash 48h',
+      p1_wa_msg: 'Olá Erik! Quero contratar o Sprint Flash 48h (R$ 297).',
+      p2_badge: 'Mais Popular · Recorrente',
+      p2_title: 'Assinatura Retainer Lite',
+      p2_price: 'R$ 697',
+      p2_cadence: '/ mês',
+      p2_sub: '4 Sprints mensais · ~R$ 174 por entrega sênior.',
+      p2_desc: 'Seu braço direito contínuo de UI/UX e Frontend para evoluir landing pages, criar novas seções, criativos de campanha e componentes sem contratar CLT.',
+      p2_f1: '4 Sprints estruturados de Design/Frontend por mês',
+      p2_f2: '1 pedido ativo por vez com entrega em até 48h úteis',
+      p2_f3: 'Novas seções, LPs, telas de produto e tokens Figma',
+      p2_f4: 'Pause ou cancele a qualquer momento sem multa',
+      p2_cta: 'Assinar Retainer Lite',
+      p2_wa_msg: 'Olá Erik! Quero ativar a Assinatura Retainer Lite (R$ 697/mês).',
+      p3_badge: 'Gestores de Tráfego & Agências',
+      p3_title: 'Atacado White-Label',
+      p3_price: 'R$ 1.497',
+      p3_cadence: '/ mês',
+      p3_sub: 'Ou Pacote Avulso: 3 LPs Express por R$ 997',
+      p3_desc: 'Produção em escala sob a sua marca para entregar páginas ultra-leves aos seus clientes de tráfego pago e multiplicar sua margem sem aumentar equipe.',
+      p3_f1: 'Até 10 Sprints/mês (1 pedido ativo por vez, SLA 24h–48h)',
+      p3_f2: '100% White-Label — entregamos sob o nome da sua agência',
+      p3_f3: 'HTML5/CSS puro para nota 95+ no PageSpeed e menor CPC',
+      p3_f4: 'Opção avulsa de entrada: 3 LPs Express por R$ 997',
+      p3_cta: 'Fechar Parceria White-Label',
+      p3_wa_msg: 'Olá Erik! Tenho interesse no plano Atacado White-Label (R$ 1.497/mês ou 3 LPs por R$ 997).',
+      cta_chat: 'Chat ao vivo',
+      cta_email: 'E-mail',
+      terms_eyebrow: '02 · Cláusula de Transparência',
+      terms_heading: 'Zero Letras Miúdas. Sem a armadilha do "ilimitado".',
+      terms_lede: 'Prometer "design ilimitado" é honesto para software, não para pessoas. Aqui você sabe exatamente o que compra, em quanto tempo recebe e como cancelar se quiser.',
+      terms_pill1: 'Transparência Contratual',
+      terms_pill2: 'Escopo Previsível',
+      fp1_t: 'Sem fidelidade oculta',
+      fp1_d: 'Nenhum contrato anual disfarçado de mensalidade nem multa de cancelamento antecipado. Você continua apenas enquanto o retorno compensar.',
+      fp2_t: 'Fila sequencial real',
+      fp2_d: 'Trabalhamos em 1 sprint ativo por vez (entrega em 24h–48h). Isso garante profundidade de Diretor de Arte Sênior sem filas intermináveis.',
+      fp3_t: 'Diretor Sênior + IA',
+      fp3_d: '20+ anos de experiência em produto, fintechs e cinema somados a fluxos modernos assistidos por IA para entregar código leve a preço acessível.',
+      how_eyebrow: '03 · Fluxo em 3 Passos',
+      how_heading: 'Do briefing ao link no ar em 48 horas.',
+      st1_t: 'Escolha e envie o link',
+      st1_d: 'Chame no WhatsApp ou no chat aqui do site mandando a URL atual, Figma ou objetivo da campanha.',
+      st2_t: 'Receba em até 48h',
+      st2_d: 'Entregamos o layout e o código limpo para você validar no navegador, com foco total em clareza e conversão.',
+      st3_t: 'Escale no seu ritmo',
+      st3_d: 'Gostou do resultado? Ative o Retainer Lite ou o Atacado White-Label e tenha entregas contínuas todo mês.',
+      callout_b: 'Quer validar antes com cases reais?',
+      callout_t: 'Explore entregas de produto, fintechs e ativações para Netflix, Blue Services e Caju no portfólio principal.',
+      callout_a: 'Ver portfólio completo →',
+      foot_case_eyebrow: 'Case em destaque',
+      foot_case_desc: 'Redesign completo de fluxo de reserva e landing page mobile com carregamento abaixo de 2 segundos.',
+      foot_title: 'Pronto para começar seu primeiro sprint?',
+      foot_desc: 'Atendimento direto com Erik Placido via WhatsApp (11) 98576-8545, Telegram chat ao vivo ou e-mail.',
+      foot_wa: 'Chamar no WhatsApp',
+      foot_wa_msg: 'Olá Erik! Vi sua página de planos e quero conversar.',
+      foot_tag: 'Planos Produtizados · Zero Letras Miúdas'
+    },
+    en: {
+      htmlLang: 'en',
+      docTitle: 'Productized Plans & Retainers · Erik Placido — Senior Product Designer',
+      skip: 'Skip to pricing plans',
+      nav_sub: '/ Plans & Sprints',
+      nav_plans: 'Plans',
+      nav_terms: 'Zero Fine Print',
+      nav_how: 'How It Works',
+      hero_badge: 'Fast Sprints & Retainers',
+      hero_exp: '20+ Years · Netflix · Blue Services · Caju',
+      hero_title: 'Senior product design & clean frontend, <em>without bloated agency pricing.</em>',
+      hero_lede: 'Start with a 48h impulse sprint or subscribe to a lean monthly retainer with clear deliverable limits, sequential turnaround, and zero lock-in traps.',
+      pill_sla: '24h–48h SLA',
+      pill_ai: 'Senior Craft + AI-Assisted Speed',
+      pill_nocode: 'Clean Code + Figma',
+      meta_1_dt: 'First Delivery',
+      meta_1_dd: 'Hero Redesign / Key Screen in 48h',
+      meta_2_dt: 'Honest Cadence',
+      meta_2_dd: 'Fixed sprint counts (no fake "unlimited")',
+      meta_3_dt: 'Cancellation',
+      meta_3_dd: '1 click, zero penalties, no hidden annual tie-in',
+      meta_4_dt: 'Direct Contact',
+      plans_eyebrow: '01 · Productized Tiers',
+      plans_heading: 'Pick the cadence that fits your stage.',
+      plans_lede: 'Enter at a low one-off rate to test conversion and speed first, or lock in predictable monthly sprints for your products and client accounts.',
+      p1_badge: 'Fast Entry · One-Off',
+      p1_title: '48h Flash Sprint',
+      p1_price: '$79',
+      p1_cadence: 'one-time',
+      p1_sub: 'Zero-risk way to test quality before subscribing.',
+      p1_desc: 'Full redesign of your landing page Hero section or 1 key product screen in Figma plus clean, responsive HTML/CSS code ready to deploy.',
+      p1_f1: 'High-converting Hero section or 1 key UI/UX screen',
+      p1_f2: 'Clean Figma file + lightweight HTML/CSS/JS hand-off',
+      p1_f3: 'Mobile-first speed (< 2s load) to lower ad CPC',
+      p1_f4: '48h delivery + 1 focused revision round',
+      p1_cta: 'Book 48h Flash Sprint',
+      p1_wa_msg: 'Hi Erik! I want to book the 48h Flash Sprint ($79).',
+      p2_badge: 'Most Popular · Monthly',
+      p2_title: 'Retainer Lite Subscription',
+      p2_price: '$199',
+      p2_cadence: '/ month',
+      p2_sub: '4 monthly sprints · ~$49 per senior deliverable.',
+      p2_desc: 'Your ongoing senior UI/UX and frontend partner for evolving landing pages, new sections, campaign visuals, and UI components without full-time overhead.',
+      p2_f1: '4 structured Design/Frontend sprints every month',
+      p2_f2: '1 active request at a time with 48h business-day SLA',
+      p2_f3: 'New sections, LPs, product flows, and Figma tokens',
+      p2_f4: 'Pause or cancel anytime with zero penalty',
+      p2_cta: 'Start Retainer Lite',
+      p2_wa_msg: 'Hi Erik! I want to start the Retainer Lite subscription ($199/mo).',
+      p3_badge: 'Media Buyers & Agencies',
+      p3_title: 'White-Label Wholesale',
+      p3_price: '$399',
+      p3_cadence: '/ month',
+      p3_sub: 'Or One-Off Pack: 3 Express LPs for $249',
+      p3_desc: 'High-velocity production under your brand so you can ship blazing-fast landing pages for ad clients and grow margins without hiring headcount.',
+      p3_f1: 'Up to 10 Sprints/month (1 active at a time, 24h–48h SLA)',
+      p3_f2: '100% White-Label — delivered under your agency brand',
+      p3_f3: 'Pure HTML5/CSS for 95+ PageSpeed and lower ad costs',
+      p3_f4: 'Starter pack option: 3 Express Landing Pages for $249',
+      p3_cta: 'Partner White-Label',
+      p3_wa_msg: 'Hi Erik! Interested in the White-Label Wholesale plan ($399/mo or 3 LPs for $249).',
+      cta_chat: 'Live Chat',
+      cta_email: 'Email',
+      terms_eyebrow: '02 · Transparency Clause',
+      terms_heading: 'Zero Fine Print. No "unlimited" traps.',
+      terms_lede: 'Promising "unlimited" makes sense for cloud software, not human craft. Here you know the exact sprint count, turnaround window, and exit freedom up front.',
+      terms_pill1: 'Clear Terms',
+      terms_pill2: 'Predictable Scope',
+      fp1_t: 'No hidden lock-in',
+      fp1_d: 'No annual contract disguised as monthly billing and zero early-cancellation fees. You stay subscribed purely because the ROI works.',
+      fp2_t: 'True sequential queue',
+      fp2_d: 'One active sprint at a time (24h–48h turnaround). This protects Senior Art Director craft without diluting quality.',
+      fp3_t: 'Senior Craft + AI Speed',
+      fp3_d: '20+ years across fintechs, apps, and film paired with modern AI-accelerated workflows to keep rates accessible.',
+      how_eyebrow: '03 · 3-Step Workflow',
+      how_heading: 'From brief to live preview in 48 hours.',
+      st1_t: 'Pick a plan & share URL',
+      st1_d: 'Message on WhatsApp or live site chat with your current landing page, Figma link, or campaign goal.',
+      st2_t: 'Get your build in 48h',
+      st2_d: 'Receive Figma screens and clean responsive code ready to test in the browser, tuned for conversion.',
+      st3_t: 'Scale on your terms',
+      st3_d: 'Love the turnaround? Switch into Retainer Lite or White-Label Wholesale for steady monthly momentum.',
+      callout_b: 'Want to inspect real case studies first?',
+      callout_t: 'Browse product, fintech, and interactive work for Netflix, Blue Services, and Caju in the main portfolio.',
+      callout_a: 'View full portfolio →',
+      foot_case_eyebrow: 'Featured Case Study',
+      foot_case_desc: 'Full booking funnel overhaul and mobile-first landing experience delivering sub-2-second load times.',
+      foot_title: 'Ready to launch your first 48h sprint?',
+      foot_desc: 'Reach Erik Placido directly via WhatsApp +55 (11) 98576-8545, live Telegram chat, or email.',
+      foot_wa: 'Message on WhatsApp',
+      foot_wa_msg: 'Hi Erik! I checked your plans page and would like to start a sprint.',
+      foot_tag: 'Productized Plans · Zero Fine Print'
+    }
+  };
+
+  var btnPt = document.getElementById('btn-locale-pt');
+  var btnEn = document.getElementById('btn-locale-en');
+
+  function setLocale(loc, syncPortfolio){
+    var lang = loc === 'en' ? 'en' : 'pt';
+    var d = COPY[lang];
+    document.documentElement.lang = d.htmlLang;
+    document.title = d.docTitle;
+
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if (d[k] !== undefined) el.textContent = d[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-html');
+      if (d[k] !== undefined) el.innerHTML = d[k];
+    });
+
+    var baseWa = 'https://wa.me/5511985768545?text=';
+    document.getElementById('cta-wa-p1').href = baseWa + encodeURIComponent(d.p1_wa_msg);
+    document.getElementById('cta-wa-p2').href = baseWa + encodeURIComponent(d.p2_wa_msg);
+    document.getElementById('cta-wa-p3').href = baseWa + encodeURIComponent(d.p3_wa_msg);
+    document.getElementById('foot-wa').href = baseWa + encodeURIComponent(d.foot_wa_msg);
+
+    btnPt.setAttribute('aria-pressed', lang === 'pt' ? 'true' : 'false');
+    btnEn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+
+    if (syncPortfolio && window.PORTFOLIO_I18N && window.PORTFOLIO_I18N.setLang) {
+      window.PORTFOLIO_I18N.setLang(lang);
+    }
+  }
+
+  btnPt.addEventListener('click', function(){ setLocale('pt', true) });
+  btnEn.addEventListener('click', function(){ setLocale('en', true) });
+
+  window.addEventListener('portfolio-lang-change', function(e){
+    var lang = e && e.detail && e.detail.lang;
+    if (lang) setLocale(lang === 'pt' ? 'pt' : 'en', false);
+  });
+
+  // Live Telegram chat trigger (clicks #chat-avatar-btn injected by shared/chat-widget.js)
+  document.querySelectorAll('.js-open-chat').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var trigger = document.getElementById('chat-avatar-btn');
+      if (trigger) {
+        trigger.click();
+      } else {
+        window.location.href = 'mailto:erik.placido@gmail.com?subject=Planos%20Erik%20Placido';
+      }
+    });
+  });
+
+  // Default: sync with stored portfolio language if English, otherwise Portuguese (BRL)
+  var initial = 'pt';
+  try {
+    var savedLang = localStorage.getItem('portfolio_lang');
+    if (savedLang && savedLang !== 'pt') initial = 'en';
+  } catch(e){}
+  setLocale(initial, false);
+
+  // Scroll reveal
+  var els = document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } }) },{threshold:.1});
+  els.forEach(function(e){ io.observe(e) });
+})();
+</script>
+</body>
+</html>
