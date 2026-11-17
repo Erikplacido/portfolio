@@ -2,6 +2,11 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/planos/", "destination": "/planos/index.html" },
+    { "source": "/planos", "destination": "/planos/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.html",
@@ -14,6 +19,19 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
+    },
+    {
+      "source": "/feliz-aniversario(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
     }
+  ],
+  "redirects": [
+    { "source": "/sanctum-armory", "destination": "/musanga", "permanent": true },
+    { "source": "/sanctum-armory/:path*", "destination": "/musanga/:path*", "permanent": true },
+    { "source": "/terraforming-mars", "destination": "/", "permanent": false },
+    { "source": "/terraforming-mars/:path*", "destination": "/", "permanent": false }
   ]
 }
